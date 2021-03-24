@@ -1,5 +1,7 @@
 # Khung sườn
 
+Khung sườn khóa luận kết thúc 6 năm luyện ngục của nvmnghia.
+
 ## 0. Bìa & các mục liên quan
 
 - Bìa
