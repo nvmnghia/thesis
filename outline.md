@@ -2,6 +2,8 @@
 
 Khung sườn khóa luận kết thúc 6 năm luyện ngục của nvmnghia.
 
+Độ dài yêu cầu: 40-50 trang.
+
 ## 0. Bìa & các mục liên quan
 
 - Bìa
@@ -10,14 +12,31 @@ Khung sườn khóa luận kết thúc 6 năm luyện ngục của nvmnghia.
 - Phê chuẩn của giảng viên hướng dẫn
 - Lời cảm ơn
 - Tóm tắt
+
+    Tại Đông Á và Đông Nam Á, văn hóa truyện tranh gốc Á được đón nhận khá tích
+    cực, đặc biệt trong giới trẻ. Nhiều tác phẩm truyện tranh Nhật (manga) thậm
+    chí đạt được sự phổ biến toàn cầu như One Piece. Ở bên kia bán cầu, với sự
+    thành công của vũ trụ điện ảnh Marvel, truyện tranh phương Tây (comic) cũng
+    được hồi sinh. Sự phát triển của truyện tranh toàn cầu trong thời đại số
+    thúc đẩy sự phát triển của các trang web truyện tranh, thỏa mãn nhu cầu đọc
+    sớm nhất có thể sau khi truyện được xuất bản. Tuy nhiên, nguồn truyện tranh
+    của những trang web này có chất lượng không cao. Một bộ phận người đọc kĩ
+    tính chọn đọc và lưu trữ những file truyện được số hóa chất lượng cao,
+    thường ở dạng file nén đuôi cbr và cbz. Xuất phát từ yêu cầu này, tôi muốn
+    viết ứng dụng yacv có thể đọc các file truyện nén trên điện thoại Android.
+    Nội dung của khóa luận sẽ trình bày những đặc điểm cơ bản của kiến trúc ứng
+    dụng Android - với cốt lõi là mẫu thiết kế MVVM - được khuyên dùng bởi
+    Google, các tính năng trong yacv, và các ca sử dụng.
+
+    Từ khóa: MVVM, Jetpack, Android, cbr, cbz, comic
+
 - Mục lục
 - Danh sách bảng
 - Danh sách hình
 - Danh sách kí hiệu, chữ viết tắt
+    - MVVM
 
 ## 1. Chương 1: Giới thiệu
-
-[//]: <> (tổng 40-50 trang)
 
 ### 1.1 Đặt vấn đề
 
