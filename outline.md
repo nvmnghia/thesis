@@ -146,8 +146,12 @@ Chương này giới thiệu sơ qua về các nền tảng trong quá trình x�
 - Tiếp theo, lựa chọn về kiến trúc tổng quan, liên quan đến giao diện của ứng
   dụng được trình bày.
 - Sau đó, cơ sở dữ liệu một số phần mở rộng của nó dùng trong ứng dụng sẽ được
-  nhắc qua
-- Cuối cùng là thông tin về `.zip` - định dạng tệp tin mà ứng dụng đọc
+  nhắc qua.
+- Cuối cùng là thông tin về `.cbz` - định dạng tệp tin mà ứng dụng đọc, gồm hai
+  phần: sơ lược về định dạng `.zip` mà `.cbz` dựa trên, và các trường metadata
+  trong tệp tin `.cbz` - nguồn thông tin quan trọng để quản lí truyện.
+
+<!-- Phần này sẽ được viết thẳng vào LaTeX, vì đa số là copypasta. -->
 
 ### 2.1. Hệ điều hành Android <a name="P2.1-android"></a>
 
@@ -165,11 +169,15 @@ Chương này giới thiệu sơ qua về các nền tảng trong quá trình x�
 
 #### 2.4.2. Room <a name="P2.4.2-room"></a>
 
-### 2.5. Định dạng tệp nén `.zip` <a name="P2.5-zip"></a>
+### 2.5. Định dạng tệp nén `.zip` và `.cbz` <a name="P2.5-zip-cbz"></a>
+
+#### 2.5.1. Định dạng tệp nén `.zip`
+
+#### 2.5.2. Định dạng tệp nén `.cbz`
 
 ## 3. Chương 3: Phân tích yêu cầu & Thiết kế <a name="P3-specification"></a>
 
-<!-- (Nếu C3 ngắn quá thì gộp Thiết kế vào) -->
+<!-- Nếu C3 ngắn quá thì gộp Thiết kế vào, nhưng giờ chắc phải tách cmnr -->
 
 Chương này phân tích yêu cầu để lập ra đặc tả yêu cầu, là bộ khung cho quá trình
 phát triển ứng dụng.
@@ -243,8 +251,9 @@ Các giới hạn này nhằm tránh cho phần mềm quá phức tạp với t�
 
 Mỗi yêu cầu đã xác định trong [mục 3.2.1.](#P3.2.1-functional-requirements) được
 coi là một ca sử dụng, được trình bày trong các tiểu mục dưới đây. Người dùng
-duy nhất trong các ca sử dụng là người đọc. Do ứng dụng hoàn toàn ngoại tuyến,
-người đọc cũng không có tương tác với nhau.
+duy nhất trong các ca sử dụng là người đọc, do đó hai cụm từ này sẽ được dùng
+hoán đổi cho nhau. Do ứng dụng hoàn toàn ngoại tuyến, người đọc cũng không có
+tương tác với nhau.
 
 #### 3.3.1. Quét các tệp truyện trên thiết bị <a name="P3.3.1-scan"></a>
 
@@ -276,7 +285,7 @@ người đọc cũng không có tương tác với nhau.
 truyện sẽ được quét từ thư mục gốc, rồi được gom lại theo thư mục theo mô tả ở
 [ca sử dụng tiếp theo](#P3.3.2-show-library).
 
-Màn hình đầu tiên khi người dùng bật lên gọi là Màn hình Thư viện (Library
+Màn hình đầu tiên khi người đọc bật lên gọi là Màn hình Thư viện (Library
 screen). Các thư mục chứa truyện, hoặc thông báo lỗi liên quan đến bản thân quá
 trình chọn truyện (đã miêu tả trong bước 6 ở trên) sẽ được hiển thị ở màn hình
 này.
@@ -289,20 +298,20 @@ này.
 
 - Mô tả từng bước:
     1. Người đọc bật ứng dụng, đã chọn thư mục gốc, đã quét được ít nhất một thư
-       mục chứa truyện.
+       mục chứa truyện (đang ở Màn hình Thư viện).
     2. Ứng dụng hiển thị *danh sách thư mục* chứa truyện cho người đọc xem và
        chọn.
     3. Người đọc chọn một thư mục.
     4. Ứng dụng hiển thị *danh sách truyện* trong thư mục đó cho người đọc xem
-       và chọn.
-    5. Người đọc chọn một truyện và đọc.
+       và chọn. Danh sách truyện cần thể hiện được tiến độ đọc của từng truyện,
+       và đánh giá yêu thích của người đọc.
 
-Đây là một trong hai ca sử dụng chính của ứng dụng, bên cạnh ca sử dụng đọc
-truyện sẽ được miêu tả tiếp theo.
+Đây là một trong hai ca sử dụng chính của ứng dụng, bên cạnh (và là tiền điều
+kiện cho) [ca sử dụng đọc truyện](#P3.3.3-read-comic) sẽ được miêu tả tiếp theo.
 
-Màn hình khi người dùng chọn một thư mục gọi là Màn hình Thư mục (Directory
+Màn hình khi người đọc chọn một thư mục gọi là Màn hình Thư mục (Directory
 screen). Cũng giống như Màn hình Thư viện, ảnh bìa và tên của truyện được hiển
-thị để người dùng chọn.
+thị để người đọc chọn.
 
 Tong ứng dụng, truyện sẽ được quản lí và duyệt theo thư mục. Có hai lí do cho
 lựa chọn thiết kế này:
@@ -329,29 +338,42 @@ mục con (cháu,...) ngang hàng với thư mục gốc. Ví dụ sau cho thấ
 phẳng cây thư mục:
 
 ```text
-| Cây thư mục gốc                   | Thư mục trong Màn hình Thư viện (đã làm phẳng) |
-|-----------------------------------|------------------------------------------------|
-| thư mục gốc                       | thư mục gốc                                    |
-| ├── Original Sin #1.cbz           | └── Original Sin #1.cbz                        |
-| └── House of M                    | House of M                                     |
-|     ├── House of M #1.cbz         | ├── House of M #1.cbz                          |
-|     ├── House of M #3.cbz         | └── House of M #3.cbz                          |
-|     └── Tie-ins                   | Tie-ins                                        |
-|         └── Black Panther #7.cbz  | └── Black Panther #7.cbz                       |
+| Cây thư mục gốc                   | yacv đã làm phẳng         |
+|-----------------------------------|---------------------------|
+| thư mục gốc                       | thư mục gốc               |
+| ├── Original Sin #1.cbz           | └── Original Sin #1.cbz   |
+| └── House of M                    | House of M                |
+|     ├── House of M #1.cbz         | ├── House of M #1.cbz     |
+|     ├── House of M #3.cbz         | └── House of M #3.cbz     |
+|     └── Tie-ins                   | Tie-ins                   |
+|         └── Black Panther #7.cbz  | └── Black Panther #7.cbz  |
 ```
 
 Bảng 1: Cách yacv làm phẳng thư mục
 
-Có ba lí do cho lựa chọn thiết kế này:
+Theo như cột phải Bảng 1, các màn hình trong yacv được tổ chức như sau:
+
+- Màn hình Thư viện: có 3 thư mục:
+    - thư mục gốc
+    - House of M
+    - Tie-ins
+- Khi chọn "House of M": chuyển sang Màn hình Thư mục tương ứng, không có thư
+  mục con, và có 2 tệp truyện:
+    - House of M #1.cbz
+    - House of M #3.cbz
+- Tương tự với các thư mục khác.
+
+ Có ba lí do cho lựa chọn thiết kế này:
 
 - Giảm độ phức tạp khi lập trình.
 - Người đọc không phải đi qua nhiều tầng thư mục để đến được tệp truyện cần đọc.
-- Không có ca sử dụng có ý nghĩa cho thư mục lồng nhau
+- Không có ca sử dụng có ý nghĩa cho thư mục lồng nhau:
 
-    Trường hợp hợp lí nhất cho việc có thư mục lồng nhau là khi lưu các tệp truyện
-    liên quan đến một bộ truyện (tie-ins), như cột trái Bảng 1:
+    Trường hợp hợp lí nhất cho việc có thư mục lồng nhau là khi lưu các tệp
+    truyện liên quan đến một bộ truyện (tie-ins), như cột trái Bảng 1:
 
-    - Thư mục cha (House of M) chứa tệp truyện và thư mục tie-ins
+    - Thư mục cha (House of M) chứa tệp truyện trong bộ truyện cùng tên và thư
+      mục tie-ins.
     - Thư mục Tie-ins chứa các tệp truyện tie-in.
 
     Tuy nhiên, bản thân các tệp tie-in lại là tệp truyện thông thường trong một
@@ -360,39 +382,197 @@ Có ba lí do cho lựa chọn thiết kế này:
 
 #### 3.3.3. Đọc truyện <a name="P3.3.3-read-comic"></a>
 
-### 3.3 Thiết kế
+- Mô tả ngắn gọn:
+
+    Người đọc chọn một truyện để xem.
+
+- Mô tả từng bước:
+    1. Người đọc bật ứng dụng, đã chọn thư mục gốc, đã quét được ít nhất một thư
+       mục chứa truyện, đã chọn một thư mục (đang ở Màn hình Thư mục).
+    2. Ứng dụng hiển thị danh sách truyện trong thư mục đó cho người đọc xem và
+       chọn.
+    3. Người đọc chọn một truyện và đọc.
+    4. Người đọc vuốt qua lại theo phương ngang để chuyển trang, có thể đánh
+       dấu trang truyện, có thể lưu lại trang truyện ở dạng ảnh.
+    5. Nếu người đọc đã đọc truyện:
+       - Ứng dụng cần đưa về chính trang truyện đang đọc dở.
+       - Nếu đã đọc đến trang cuối, tức đã đọc xong, ứng dụng cần đưa về trang
+         đầu tiên.
+
+Đây là một trong hai ca sử dụng chính của ứng dụng, bên cạnh (và là mục đích
+của) [ca sử dụng hiển thị danh sách truyện](#P3.3.2-show-library) đã được miêu
+tả ở trên.
+
+Màn hình khi người đọc đọc một truyện gọi là Màn hình Đọc truyện. Màn hình này
+cho phép người đọc duyệt các trang truyện theo phương ngang, có thêm hai tính
+năng đánh dấu và lưu trang truyện như miêu tả ở bước 4. Mục tiêu là thiết kế màn
+hình này sao cho có trải nghiệm gần giống nhất với ứng dụng Thư viện ảnh
+(Gallery) tích hợp trong mọi điện thoại Android.
+
+#### 3.3.4. Xem metadata truyện <a name="P3.3.4-view-metadata"></a>
+
+- Mô tả ngắn gọn:
+
+    Trong Màn hình Đọc truyện, người đọc ấn nút để xem metadata.
+
+- Mô tả từng bước:
+    1. Người đọc bật ứng dụng, chọn một truyện để vào đến Màn hình Đọc truyện.
+    2. Người đọc ấn nút Xem metadata.
+    3. Ứng dụng hiển thị mọi metadata, bao gồm cả những trường bị thiếu. Ảnh bìa
+       của truyện cũng được hiển thị kèm.
+    4. Người dùng có thể đánh giá truyện bằng nút Yêu thích trong màn hình này,
+       hoặc ngược lại (bỏ đánh giá Yêu thích).
+
+Đây là một ca sử dụng phụ, có thể được kích hoạt khi người dùng đang ở Màn hình
+Đọc truyện.
+
+Màn hình khi người đọc xem metadata gọi là Màn hình Metadata. Màn hình này có
+thể có chức năng sửa metadata, tùy theo tiến độ khóa luận để xem xét có cài đặt
+không.
+
+Hệ thống đánh giá của ứng dụng chỉ ở mức cơ bản, gồm duy nhất tính năng Yêu
+thích. Tính năng này cũng chỉ phục vụ hai mục đích là thể hiện sự đánh giá của
+người dùng và lọc nhanh truyện về mặt thị giác (đã nhắc đến trong phần Mô tả
+từng bước của [ca sử dụng hiển thị danh sách truyện](#P3.3.2-show-library)).
+
+Các tính năng nâng cao hơn như gợi ý không xuất hiện, do một số lí do sau:
+
+- Giảm độ phức tạp khi lập trình.
+- Người dùng không có nhu cầu: nhóm người dùng hướng đến có đặc điểm hiểu biết
+  về truyện tranh, do đó việc gợi ý có thể coi là thừa thãi.
+- Thiểu thông tin gợi ý: việc gợi ý chỉ có hiệu quả khi có một cơ sở dữ liệu về
+  các bộ truyện liên quan, hoặc lựa chọn các truyện liên quan của cộng đồng
+  người đọc, trong khi yacv là một ứng dụng hoàn toàn ngoại tuyến.
+
+#### 3.3.5. Tìm kiếm truyện <a name="P3.3.5-search-comic"></a>
+
+- Mô tả ngắn gọn:
+
+    Trong Màn hình Thư viện, người đọc ấn nút để tìm kiếm truyện.
+
+- Mô tả từng bước:
+    1. Người đọc bật ứng dụng.
+    2. Người đọc ấn nút Tìm kiếm, và gõ từ khóa cần tìm, và ấn nút Enter.
+    3. Ứng dụng hiển thị kết quả tìm kiếm theo metadata và tên tệp truyện
+       - Kết quả tìm kiểm cần được gom theo nhóm dựa vào trường metadata tìm
+         thấy được.
+       - Nếu có thể, hiển thị ảnh bìa của truyện.
+
+Đây là một ca sử dụng phụ, có thể được kích hoạt khi người dùng đang ở Màn hình
+Thư viện.
+
+Màn hình khi người đọc xem kết quả tìm kiếm gọi là Màn hình Kết quả. Màn hình
+này chỉ hiện ra khi người dùng ấn nút Enter để chính thức tìm kiếm.
+
+Màn hình kết quả phải nhóm kết quả theo trường metadata mà kết quả tìm thấy
+được. Lấy ví dụ, người dùng tìm kiếm "Watchmen" sẽ nhận được Màn hình Kết quả
+gần như sau:
+
+```text
+Truyện
+- Watchmen #1.cbz
+- Watchmen #2.cbz
+Bộ truyện
+- Watchmen
+```
+
+Hình 1. Mô tả giao diện Màn hình Kết quả khi tìm kiếm truyện.
+
+Tương tác của người đọc với Màn hình Kết quả trên diễn ra như sau:
+
+- Khi ấn vào một mục trong danh sách "Truyện", người đọc được đưa đến thẳng Màn
+  hình Đọc truyện của truyện đó (và hiển thị ở trang đọc dở như đã mô tả ở trong
+  [ca sử dụng đọc truyện](#P3.3.3-read-comic)).
+- Khi ấn vào một mục trong danh sách "Bộ truyện", người đọc được đưa đến màn
+  hình chứa danh sách những truyện trong bộ truyện đã chọn. Màn hình này cần
+  giống với Màn hình Thư mục. Sau đó, người dùng chọn một truyện để đọc như bình
+  thường.
+
+Đây chỉ là ví dụ về một từ khóa có kết quả khi tìm theo tên tệp truyện và bộ
+truyện. Các trường metadata khác nếu có kết quả phù hợp cũng sẽ thể hiện theo
+hình thức trên.
+
+Chú ý rằng bìa truyện luôn được thể hiện khi có thể. Trong ví dụ trên, chắc chắn
+phải có bìa truyện cho mọi mục con trong danh sách "Truyện".
+
+Nếu không có kết quả, cần thể hiện rõ cho người dùng biết.
+
+Khi người dùng gõ từ khóa để tìm kiếm, một số thông tin gợi ý tìm kiếm (từ khóa
+cũ, từ khóa liên quan) có thể hiện ra; tính năng này tùy theo tiến độ khóa luận
+để xem xét có cài đặt không. Chỉ khi người dùng ấn Enter, quá trình tìm kiếm mới
+bắt đầu, và hiển thị kết quả, chứ không hiển thị kết quả theo quá trình người
+dùng gõ phím. Lí do cho lựa chọn này như sau:
+
+- Giảm độ phức tạp khi lập trình.
+- Không quá cần thiết: ví dụ, bộ máy tìm kiếm của Google cũng chỉ hiện gợi ý khi
+  người dùng nhập từ khóa tìm kiếm, phải đến khi ấn Enter thì quá trình tìm kiếm
+  mới diễn ra và kết quả chi tiết được hiển thị.
+
+Với độ phức tạp dự kiến của việc hiển thị ảnh bìa truyện, đây có thể được xem là
+đánh đổi hợp lí để tăng hiệu năng ứng dụng.
+
+#### 3.3.6. Xóa truyện <a name="P3.3.6-delete-comic"></a>
+
+- Mô tả ngắn gọn
+
+    Người dùng chọn một số truyện trong một màn hình chứa danh sách truyện để
+    xóa.
+
+- Mô tả từng bước:
+    1. Người dùng truy cập vào một màn hình chứa danh sách truyện (là Màn hình
+       Thư mục hoặc Màn hình Kết quả).
+    2. Người dùng ấn và giữ vào một truyện.
+    3. Màn hình đó sẽ chuyển sang chế độ xóa, báo hiệu bằng biểu tượng Thùng rác
+       trên màn hình, và ô đánh dấu để xóa ở cạnh mỗi truyện. Truyện mà người
+       dùng ấn giữ phải được đánh dấu xóa ngay.
+    4. Người dùng có thể chọn thêm truyện để xóa nếu muốn.
+    5. Người dùng ấn nút xóa để xóa truyện.
+    6. Ứng dụng hiện ra hộp thoại xóa, ghi rõ rằng truyện sẽ được xóa khỏi bộ
+       nhớ điện thoại, số truyện sẽ xóa, và hỏi người dùng có thực sự muốn xóa
+       không.
+    7. Nếu người dùng ấn vào nút Đồng ý xóa, truyện sẽ được xóa khỏi bộ nhớ điện
+       thoại và tắt hộp thoại, nếu không thì tắt hộp thoại.
+    8. Sau khi tắt hộp thoại, màn hình trở về chế độ thông thường, biểu tượng
+       thùng rác cũng biến mất.
+
+Ca sử dụng này không có màn hình riêng biệt, mà sử dụng một chế độ của các màn
+hình hiển thị danh sách truyện.
+
+### 4. Chương 4: Thiết kế <a name="P4-design"></a>
+
+#### 4.1. Thiết kế hướng đối tượng <a name="P4.1-class-design"></a>
 
 <!-- UML, activity diagram, class diagram, sequence diagram -->
 
-### 3.4 Thiết kế CSDL
+#### 4.2. Thiết kế CSDL <a name="P4.2-db-design"></a>
 
-### 3.5 Thiết kế giao diện
+#### 4.3. Thiết kế giao diện <a name="P4.3-ui-design"></a>
 
-### 3.6 Tối ưu
+#### 4.4. Tối ưu <a name="P4.4-optimization"></a>
 
-## 4. Chương 4: Lập trình & Kiểm thử
+## 5. Chương 5: Lập trình & Kiểm thử <a name="P5-implementation"></a>
 
-### 4.1 Lập trình
+### 5.1. Lập trình <a name="P5.1-coding"></a>
 
 <!-- Mô tả một số phần quan trọng trong source -->
 
-### 4.2 Kiểm thử
+### 5.2. Kiểm thử <a name="P5.2-testing"></a>
 
-#### 4.2.1 Unit test. E2E test, auto + manual test
+#### 5.2.1 Unit test. E2E test, auto + manual test <a name="P5.2.1-functional-test"></a>
 
-#### 4.2.2 Kiểm thử phi chức năng
+#### 4.2.2 Kiểm thử phi chức năng <a name="P5.2.2-non-functional-test"></a>
 
 <!-- Bench nhanh chậm -->
 
-#### 4.2.3 Đánh giá người dùng
+### 5.3 Đánh giá người dùng <a name="P5.3-user-reviews"></a>
 
 <!-- Hình ảnh sản phẩm. -->
 
-## 5. Chương 5: Kết luận
+## 6. Chương 6: Kết luận <a name="P6-comclusion"></a>
 
 <!-- 1-2 trang -->
 
-## 6. Tài liệu tham khảo
+## 7. Tài liệu tham khảo
 
   [1]: https://play.google.com/store/apps/details?id=com.viewer.comicscreen&hl=en&gl=US
   [2]: https://play.google.com/store/apps/details?id=com.aerilys.acr.android&hl=en&gl=US
