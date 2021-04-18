@@ -95,10 +95,10 @@ Một ngoại lệ đáng kể ở đây là ứng dụng mã nguồn mở
 phần mở rộng, cho phép đọc truyện ở các trang web truyện tranh. Khi web truyện
 tranh thay đổi, hoặc hỗ trợ thêm trang mới, chỉ cần tải về phần mở rộng tương
 ứng ở dạng ứng dụng `.APK`. Tính năng này cùng với mô hình mã nguồn mở khiến
-Tachiyomi mạnh hơn toàn bộ các ứng dụng đã có và sẽ có. Tuy nhiên, Tachiyomi lại
-không thể được đưa lên Play Store, vì chính tính năng phần mở rộng đã [vi phạm
-chính sách](https://github.com/tachiyomiorg/tachiyomi/issues/1745) của Play
-Store.
+Tachiyomi mạnh hơn, và chau chuốt hơn, cập nhật nhanh hơn toàn bộ các ứng dụng
+đã có và sẽ có. Tuy nhiên, Tachiyomi lại không thể được đưa lên Play Store, vì
+chính tính năng phần mở rộng đã [vi phạm chính
+sách](https://github.com/tachiyomiorg/tachiyomi/issues/1745) của Play Store.
 
 Một điểm khác biệt quan trọng của yacv với các ứng dụng có sẵn là việc hỗ trợ
 tìm kiếm metadata của tệp truyện tranh, do các ứng dụng có sẵn trên Play Store
@@ -139,22 +139,68 @@ trong việc tích hợp thư viện đọc định dạng này.
 
 ## 3. Chương 3: Phân tích yêu cầu & Thiết kế
 
-(Nếu C3 ngắn quá thì gộp Thiết kế vào)
+<!-- (Nếu C3 ngắn quá thì gộp Thiết kế vào) -->
 
 ### 3.1 Yêu cầu đặt ra
 
-2 loại yêu cầu:
+<!-- 2 loại yêu cầu:
 
 - Chức năng:
 - Phi chức năng: tốc độ, ổn định, mượt, dễ dùng
 
 Dựa vào các ứng dụng đã có để đưa ra một số yêu cầu:
-Ai là người dùng
-Mong muốn
+- Ai là người dùng
+- Mong muốn -->
+
+Ứng dụng yacv chỉ bao gồm các tính năng liên quan đến đọc truyện ngoại tuyến,
+đọc các tệp truyện có sẵn trên điện thoại người dùng. Ứng dụng không phải là ứng
+dụng khách cho các trang đọc truyện hiện có, hay có máy chủ tập trung riêng để
+cung cấp truyện.
+
+Ứng dụng cũng tập trung vào một số ít người dùng, là một trong hai nhóm sau:
+
+- Người dùng sưu tầm truyện
+- Người dùng có yêu cầu đọc truyện với chất lượng hình ảnh cao
+
+Cả hai nhóm có điểm chung là kĩ tính, yêu cầu cao về trải nghiệm đọc truyện.
+Cũng do kĩ tính, nên cả hai nhóm không cần nhiều chức năng, tuy nhiên có yêu cầu
+cao về từng chức năng. Nhóm người dùng sưu tầm truyện còn có yêu cầu về xem
+thông tin (metadata) của tệp truyện.
+
+### 3.1.1. Yêu cầu chức năng
+
+Ứng dụng có bốn chức năng chính sau:
+
+- Quét các tệp truyện trên thiết bị
+- Hiển thị danh sách truyện
+- Đọc truyện
+- Xem metadata truyện
+- Tìm kiếm truyện
+- Xóa truyện
+
+### 3.1.2. Yêu cầu phi chức năng
+
+Ứng dụng cần đạt một số tiêu chí sau:
+
+- Phản hồi nhanh: Các thao tác cần có thời gian phản hồi nhanh. Phản hồi nhanh
+  không nhất thiết là thời gian thực thi ngắn, mà là luôn có các thông báo tiến
+  độ cho người dùng.
+    - Luôn hiện thông báo chờ khi làm việc gì đó lâu
+    - Nếu có nhiều kết quả tìm kiếm, hiển thị từ từ, đưa những kết quả đã biết
+      lên trước
+- Tốc độ xem truyện chấp nhận được: Tốc độ xem truyện gồm tốc độ mở truyện, tốc
+  độ duyệt trang tới-lui đều cần phải có tốc độ chấp nhận được để cải thiện trải
+  nghiệm.
+- Chiếm dụng ít bộ nhớ: Bộ nhớ chiếm dụng của ứng dụng gồm hai phần: bộ nhớ RAM
+  và bộ nhớ tạm, cả hai cần sử dụng ít dung lượng nhất có thể. Đây là một yêu
+  cầu đáng cân nhắc, lí do vì kích cỡ từng tệp truyện thường rất lớn (từ vài
+  chục đến hơn một trăm megabyte), tuy nhiên cần chú ý cân bằng yêu cầu này với
+  yêu cầu về tốc độ (đánh đổi không gian-thời gian).
+- Giao diện đơn giản, trực quan: Người dùng hướng đến có thể xếp vào nhóm người
+  dùng "say mê" (enthusiast), do đó giao diện chỉ cần đơn giản rõ ràng, không
+  màu mè.
 
 ### 3.2 Phân tích yêu cầu
-
-Use case (actor)
 
 ### 3.3 Thiết kế
 
