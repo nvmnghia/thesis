@@ -34,11 +34,11 @@ Khung sườn khóa luận kết thúc 6 năm luyện ngục của nvmnghia.
 - Danh sách kí hiệu, chữ viết tắt
     - MVVM
 
-## 1. Chương 1: Giới thiệu
+## 1. Chương 1: Giới thiệu <a name="P1-intro"></a>
 
-### 1.1 Đặt vấn đề
+### 1.1. Đặt vấn đề <a name="P1.1-background"></a>
 
-Hint: Tại sao lại làm đồ án ntn (1-3 đoạn)?
+<!-- Hint: Tại sao lại làm đồ án ntn (1-3 đoạn)? -->
 
 Tại Đông Á và Đông Nam Á, văn hóa truyện tranh gốc Á, nhất là truyện tranh Nhật
 (manga), được đón nhận khá tích cực, đặc biệt trong giới trẻ. Thế hệ những người
@@ -77,37 +77,38 @@ dịch là "Lại một ứng dụng xem truyện tranh nữa". Hai tính năng 
 của ứng dụng là đọc và quản lí cơ bản (tìm kiếm, xóa) tệp truyện tranh có sẵn
 trên điện thoại.
 
-### 1.2 Ứng dụng tương tự
+Cần chú ý rằng ứng dụng yacv chỉ bao gồm các tính năng liên quan đến đọc truyện
+ngoại tuyến, đọc các tệp truyện có sẵn trên điện thoại người dùng. Ứng dụng
+không phải là ứng dụng khách cho các trang đọc truyện hiện có, hay có máy chủ
+tập trung riêng để cung cấp truyện.
 
-Hiện có nhiều ứng dụng đọc truyện tranh trên chợ ứng dụng Google Play. Hai ứng
-dụng phổ biến nhất trong số này là
-[ComicScreen](https://play.google.com/store/apps/details?id=com.viewer.comicscreen&hl=en&gl=US)
-và [Astonishing Comic
-Reader](https://play.google.com/store/apps/details?id=com.aerilys.acr.android&hl=en&gl=US).
-ComicScreen là ứng dụng nổi tiếng hơn. Các tính năng của ComicScreen giống với
-các tính năng của yacv, tuy nhiên ComicScreen có thêm nhiều chức năng phụ, đáng
-kể nhất là khả năng đọc từ mạng FTP/SMB và khả năng sửa ảnh trong file.
-Astonishing Comic Reader cũng có chức năng tương tự yacv, không hơn. Cả hai đều
-miễn phí và có quảng cáo.
+### 1.2. Ứng dụng tương tự <a name="P1.2-similar-app"></a>
 
-Một ngoại lệ đáng kể ở đây là ứng dụng mã nguồn mở
-[Tachiyomi](https://github.com/tachiyomiorg/tachiyomi). Ứng dụng này có hệ thống
-phần mở rộng, cho phép đọc truyện ở các trang web truyện tranh. Khi web truyện
-tranh thay đổi, hoặc hỗ trợ thêm trang mới, chỉ cần tải về phần mở rộng tương
-ứng ở dạng ứng dụng `.APK`. Tính năng này cùng với mô hình mã nguồn mở khiến
-Tachiyomi mạnh hơn, và chau chuốt hơn, cập nhật nhanh hơn toàn bộ các ứng dụng
-đã có và sẽ có. Tuy nhiên, Tachiyomi lại không thể được đưa lên Play Store, vì
-chính tính năng phần mở rộng đã [vi phạm chính
-sách](https://github.com/tachiyomiorg/tachiyomi/issues/1745) của Play Store.
+Hiện có nhiều ứng dụng đọc truyện tranh ngoại tuyến như yacv trên chợ ứng dụng
+Google Play. Hai ứng dụng phổ biến nhất trong số này là [ComicScreen][1] và
+[Astonishing Comic Reader][2]. ComicScreen là ứng dụng nổi tiếng hơn. Các tính
+năng của ComicScreen giống với các tính năng của yacv, tuy nhiên ComicScreen có
+thêm nhiều chức năng phụ, đáng kể nhất là khả năng đọc từ mạng FTP/SMB và khả
+năng sửa ảnh trong file. Astonishing Comic Reader cũng có chức năng tương tự
+yacv, không hơn, tuy nhiên giao diện khá trau chuốt. Cả hai đều miễn phí và có
+quảng cáo, được cập nhật có thể nói là thường xuyên.
+
+Một ngoại lệ đáng kể ở đây là ứng dụng mã nguồn mở [Tachiyomi][3]. Ứng dụng này
+có hệ thống phần mở rộng, cho phép đọc truyện ở các trang web truyện tranh. Khi
+web truyện tranh thay đổi, hoặc hỗ trợ thêm trang mới, chỉ cần tải về phần mở
+rộng tương ứng ở dạng ứng dụng `.APK`. Tính năng này cùng với mô hình mã nguồn
+mở khiến Tachiyomi mạnh hơn, và chau chuốt hơn, cập nhật nhanh hơn toàn bộ các
+ứng dụng đã có và sẽ có. Tuy nhiên, Tachiyomi lại không thể được đưa lên Play
+Store, vì chính tính năng phần mở rộng đã [vi phạm chính sách][4] của Play
+Store.
 
 Một điểm khác biệt quan trọng của yacv với các ứng dụng có sẵn là việc hỗ trợ
 tìm kiếm metadata của tệp truyện tranh, do các ứng dụng có sẵn trên Play Store
 đa số bỏ qua thông tin này trong tệp truyện. Một trong số rất ít những ứng dụng
-hỗ trợ tính năng này là [Kuro
-Reader](https://play.google.com/store/apps/details?id=br.com.kurotoshiro.leitor_manga&hl=en&gl=US),
-tuy nhiên đây là một tính năng trả phí.
+hỗ trợ tính năng này là [Kuro Reader][5], tuy nhiên đây là một tính năng trả
+phí.
 
-### 1.3 Kết quả đạt được
+### 1.3. Kết quả đạt được <a name="P1.3-resulted-app"></a>
 
 Ứng dụng có các tính năng đủ dùng theo mục đích đã đề ra:
 
@@ -117,31 +118,84 @@ tuy nhiên đây là một tính năng trả phí.
 Tính năng đọc tệp truyện `.cbr` hiện mới chỉ được cài đặt một phần, do khó khăn
 trong việc tích hợp thư viện đọc định dạng này.
 
-## 2. Chương 2: Kiến thức nền tảng
+### 1.4. Cấu trúc khóa luận <a name="P1.4-outline"></a>
 
-### 2.1. Hệ điều hành Android
+Các phần còn lại của khóa luận có cấu trúc như sau:
 
-#### 2.1.1. Android Jetpack
+- Chương 2 - Kiến thức nền tảng: giới thiệu sơ lược về ba nền tảng của ứng dụng,
+  gồm hệ điều hành Android, ngôn ngữ lập trình Kotlin, và mẫu thiết kế MVVM;
+  định dạng tệp nén `.zip` cũng được giới thiệu vì liên quan trực tiếp đến ứng
+  dụng.
+- Chương 3 - Phân tích yêu cầu: phân tích nhu cầu và ca sử dụng để có đặc tả yêu
+  cầu.
+- Chương 4 - Lập trình & Kiểm thử: một số cài đặt và ca kiểm thử trong ứng dụng
+  sẽ được nêu một cách có chọn lọc.
+- Chương 5 - Kết luận: kết thúc khóa luận.
 
-### 2.2. Ngôn ngữ lập trình Kotlin
+## 2. Chương 2: Kiến thức nền tảng <a name="P2.-fundamental"></a>
 
-#### 2.2.1. Coroutine
+Chương này giới thiệu sơ qua về các nền tảng trong quá trình xây dựng ứng dụng.
 
-### 2.3. Mẫu thiết kế MVVM và Kiến trúc khuyên dùng bởi Google
+- Hai nền tảng đầu tiên liên quan đến nhau, là tiền đề cho toàn bộ ứng dụng sẽ
+  được giới thiệu trước, gồm hệ điều hành Android và ngôn ngữ lập trình Kotlin.
+- Tiếp theo, lựa chọn về kiến trúc tổng quan, liên quan đến giao diện của ứng
+  dụng được trình bày.
+- Sau đó, cơ sở dữ liệu một số phần mở rộng của nó dùng trong ứng dụng sẽ được
+  nhắc qua
+- Cuối cùng là thông tin về `.zip` - định dạng tệp tin mà ứng dụng đọc
 
-### 2.4. SQLite
+### 2.1. Hệ điều hành Android <a name="P2.1-android"></a>
 
-#### 2.4.1. Full-text Search
+#### 2.1.1. Android Jetpack <a name="P2.1.1-jetpack"></a>
 
-#### 2.4.2. Room
+### 2.2. Ngôn ngữ lập trình Kotlin <a name="P2.2-kotlin"></a>
 
-### 2.5. Định dạng tệp nén `.zip`
+#### 2.2.1. Coroutine <a name="P2.2.1-coroutine"></a>
 
-## 3. Chương 3: Phân tích yêu cầu & Thiết kế
+### 2.3. Mẫu thiết kế MVVM và Kiến trúc khuyên dùng bởi Google <a name="P2.3-mvvm"></a>
+
+### 2.4. SQLite <a name="P2.4-sqlite"></a>
+
+#### 2.4.1. Full-text Search <a name="P2.4.1-fts"></a>
+
+#### 2.4.2. Room <a name="P2.4.2-room"></a>
+
+### 2.5. Định dạng tệp nén `.zip` <a name="P2.5-zip"></a>
+
+## 3. Chương 3: Phân tích yêu cầu & Thiết kế <a name="P3-specification"></a>
 
 <!-- (Nếu C3 ngắn quá thì gộp Thiết kế vào) -->
 
-### 3.1 Yêu cầu đặt ra
+Chương này phân tích yêu cầu để lập ra đặc tả yêu cầu, là bộ khung cho quá trình
+phát triển ứng dụng.
+
+### 3.1. Mô tả chung <a name="P3.1-overall"></a>
+
+#### 3.1.1. Người dùng <a name="P3.1.1-users"></a>
+
+Ứng dụng yacv tập trung vào một số ít người dùng, là một trong hai nhóm sau:
+
+- Người dùng sưu tầm truyện
+- Người dùng có yêu cầu đọc truyện với chất lượng hình ảnh cao
+
+Cả hai nhóm có điểm chung là kĩ tính, yêu cầu cao về trải nghiệm đọc truyện.
+Cũng do kĩ tính, nên cả hai nhóm không cần nhiều chức năng, tuy nhiên có yêu cầu
+cao về từng chức năng. Nhóm người dùng sưu tầm truyện còn có yêu cầu về xem
+thông tin (metadata) của tệp truyện.
+
+#### 3.1.2. Mục đích <a name="P3.1.2-objectives"></a>
+
+Trước khi đi vào chi tiết yêu cầu ở mục tiếp theo, tôi muốn làm rõ mục đích của
+sản phẩm đã nhắc ở [mục 1.1](#P1.1-background).
+
+- Ứng dụng yacv chỉ bao gồm các tính năng liên quan đến đọc truyện ngoại tuyến,
+  đọc các tệp truyện có sẵn trên điện thoại người dùng.
+- Ứng dụng không phải là ứng dụng khách cho các trang đọc truyện hiện có, hay có
+  máy chủ tập trung riêng để cung cấp truyện.
+
+Giới hạn này phù hợp với nhu cầu người dùng đã nêu ở [mục 3.1.1](#P3.1.1-users).
+
+### 3.2. Yêu cầu đặt ra <a name="P3.2-requirements"></a>
 
 <!-- 2 loại yêu cầu:
 
@@ -152,24 +206,9 @@ Dựa vào các ứng dụng đã có để đưa ra một số yêu cầu:
 - Ai là người dùng
 - Mong muốn -->
 
-Ứng dụng yacv chỉ bao gồm các tính năng liên quan đến đọc truyện ngoại tuyến,
-đọc các tệp truyện có sẵn trên điện thoại người dùng. Ứng dụng không phải là ứng
-dụng khách cho các trang đọc truyện hiện có, hay có máy chủ tập trung riêng để
-cung cấp truyện.
+#### 3.2.1. Yêu cầu chức năng <a name="P3.2.1-functional-requirements"></a>
 
-Ứng dụng cũng tập trung vào một số ít người dùng, là một trong hai nhóm sau:
-
-- Người dùng sưu tầm truyện
-- Người dùng có yêu cầu đọc truyện với chất lượng hình ảnh cao
-
-Cả hai nhóm có điểm chung là kĩ tính, yêu cầu cao về trải nghiệm đọc truyện.
-Cũng do kĩ tính, nên cả hai nhóm không cần nhiều chức năng, tuy nhiên có yêu cầu
-cao về từng chức năng. Nhóm người dùng sưu tầm truyện còn có yêu cầu về xem
-thông tin (metadata) của tệp truyện.
-
-### 3.1.1. Yêu cầu chức năng
-
-Ứng dụng có bốn chức năng chính sau:
+Ứng dụng có các chức năng chính sau:
 
 - Quét các tệp truyện trên thiết bị
 - Hiển thị danh sách truyện
@@ -178,7 +217,7 @@ thông tin (metadata) của tệp truyện.
 - Tìm kiếm truyện
 - Xóa truyện
 
-### 3.1.2. Yêu cầu phi chức năng
+#### 3.2.2. Yêu cầu phi chức năng <a name="P3.2.2-non-functional-requirement"></a>
 
 Ứng dụng cần đạt một số tiêu chí sau:
 
@@ -198,13 +237,17 @@ thông tin (metadata) của tệp truyện.
   yêu cầu về tốc độ (đánh đổi không gian-thời gian).
 - Giao diện đơn giản, trực quan: Người dùng hướng đến có thể xếp vào nhóm người
   dùng "say mê" (enthusiast), do đó giao diện chỉ cần đơn giản rõ ràng, không
-  màu mè.
+  màu mè, tập trung vào tính năng.
 
-### 3.2 Phân tích yêu cầu
+### 3.3 Phân tích yêu cầu 
+
+#### 3.3.1. Quét các tệp truyện trên thiết bị
+
+
 
 ### 3.3 Thiết kế
 
-UML, activity diagram, class diagram, sequence diagram
+<!-- UML, activity diagram, class diagram, sequence diagram -->
 
 ### 3.4 Thiết kế CSDL
 
@@ -216,7 +259,7 @@ UML, activity diagram, class diagram, sequence diagram
 
 ### 4.1 Lập trình
 
-Mô tả một số phần quan trọng trong source
+<!-- Mô tả một số phần quan trọng trong source -->
 
 ### 4.2 Kiểm thử
 
@@ -224,14 +267,20 @@ Mô tả một số phần quan trọng trong source
 
 #### 4.2.2 Kiểm thử phi chức năng
 
-bench nhanh chậm
+<!-- Bench nhanh chậm -->
 
 #### 4.2.3 Đánh giá người dùng
 
-Hình ảnh sản phẩm.
+<!-- Hình ảnh sản phẩm. -->
 
 ## 5. Chương 5: Kết luận
 
-1-2 trang
+<!-- 1-2 trang -->
 
 ## 6. Tài liệu tham khảo
+
+  [1]: https://play.google.com/store/apps/details?id=com.viewer.comicscreen&hl=en&gl=US
+  [2]: https://play.google.com/store/apps/details?id=com.aerilys.acr.android&hl=en&gl=US
+  [3]: https://github.com/tachiyomiorg/tachiyomi
+  [4]: https://github.com/tachiyomiorg/tachiyomi/issues/1745
+  [5]: https://play.google.com/store/apps/details?id=br.com.kurotoshiro.leitor_manga&hl=en&gl=US
