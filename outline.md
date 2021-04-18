@@ -121,6 +121,8 @@ trong việc tích hợp thư viện đọc định dạng này.
 
 ### 2.1. Hệ điều hành Android
 
+#### 2.1.1. Android Jetpack
+
 ### 2.2. Ngôn ngữ lập trình Kotlin
 
 #### 2.2.1. Coroutine
@@ -128,6 +130,10 @@ trong việc tích hợp thư viện đọc định dạng này.
 ### 2.3. Mẫu thiết kế MVVM và Kiến trúc khuyên dùng bởi Google
 
 ### 2.4. SQLite
+
+#### 2.4.1. Full-text Search
+
+#### 2.4.2. Room
 
 ### 2.5. Định dạng tệp nén `.zip`
 
