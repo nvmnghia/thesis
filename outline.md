@@ -93,11 +93,12 @@ miễn phí và có quảng cáo.
 Một ngoại lệ đáng kể ở đây là ứng dụng mã nguồn mở
 [Tachiyomi](https://github.com/tachiyomiorg/tachiyomi). Ứng dụng này có hệ thống
 phần mở rộng, cho phép đọc truyện ở các trang web truyện tranh. Khi web truyện
-tranh thay đổi, hoặc hỗ trợ thêm web mới, chỉ cần tải về tệp mở rộng tương ứng ở
-dạng ứng dụng `.APK`. Tính năng này cùng với mô hình mã nguồn mở khiến Tachiyomi
-mạnh hơn toàn bộ các ứng dụng đã có và sẽ có. Tuy nhiên, Tachiyomi lại không thể
-được đưa lên Play Store, vì chính tính năng phần mở rộng đã [vi phạm chính
-sách](https://github.com/tachiyomiorg/tachiyomi/issues/1745) của Play Store.
+tranh thay đổi, hoặc hỗ trợ thêm trang mới, chỉ cần tải về phần mở rộng tương
+ứng ở dạng ứng dụng `.APK`. Tính năng này cùng với mô hình mã nguồn mở khiến
+Tachiyomi mạnh hơn toàn bộ các ứng dụng đã có và sẽ có. Tuy nhiên, Tachiyomi lại
+không thể được đưa lên Play Store, vì chính tính năng phần mở rộng đã [vi phạm
+chính sách](https://github.com/tachiyomiorg/tachiyomi/issues/1745) của Play
+Store.
 
 Một điểm khác biệt quan trọng của yacv với các ứng dụng có sẵn là việc hỗ trợ
 tìm kiếm metadata của tệp truyện tranh, do các ứng dụng có sẵn trên Play Store
@@ -118,7 +119,17 @@ trong việc tích hợp thư viện đọc định dạng này.
 
 ## 2. Chương 2: Kiến thức nền tảng
 
-Kiến thức về Android, Kotlin
+### 2.1. Hệ điều hành Android
+
+### 2.2. Ngôn ngữ lập trình Kotlin
+
+#### 2.2.1. Coroutine
+
+### 2.3. Mẫu thiết kế MVVM và Kiến trúc khuyên dùng bởi Google
+
+### 2.4. SQLite
+
+### 2.5. Định dạng tệp nén `.zip`
 
 ## 3. Chương 3: Phân tích yêu cầu & Thiết kế
 
