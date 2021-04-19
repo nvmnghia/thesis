@@ -77,6 +77,11 @@ dịch là "Lại một ứng dụng xem truyện tranh nữa". Hai tính năng 
 của ứng dụng là đọc và quản lí cơ bản (tìm kiếm, xóa) tệp truyện tranh có sẵn
 trên điện thoại.
 
+<!-- Một chi tiết nhỏ về tên nữa là ở chữ "comic", vì cộng đồng đọc "comic" (đặc biệt
+là truyện siêu anh hùng của DC và Marvel) theo quan sát của tôi có nhu cầu cao
+về metadata hơn cộng đồng đọc "manga", do sự rối rắm trong quá trình sáng tác
+(sẽ được đề cập sau). -->
+
 Cần chú ý rằng ứng dụng yacv chỉ bao gồm các tính năng liên quan đến đọc truyện
 ngoại tuyến, đọc các tệp truyện có sẵn trên điện thoại người dùng. Ứng dụng
 không phải là ứng dụng khách cho các trang đọc truyện hiện có, hay có máy chủ
@@ -188,23 +193,18 @@ thông tin (metadata) của tệp truyện.
 Trước khi đi vào chi tiết yêu cầu ở mục tiếp theo, tôi muốn làm rõ mục đích của
 sản phẩm đã nhắc ở [mục 1.1](#P1.1-background).
 
-- Ứng dụng yacv chỉ bao gồm các tính năng liên quan đến đọc truyện ngoại tuyến,
-  đọc các tệp truyện có sẵn trên điện thoại người dùng.
-- Ứng dụng không phải là ứng dụng khách cho các trang đọc truyện hiện có, hay có
-  máy chủ tập trung riêng để cung cấp truyện.
+- Ứng dụng yacv chỉ bao gồm các tính năng liên quan đến đọc **truyện tranh**
+  ngoại tuyến (tức đọc các tệp truyện có sẵn trên điện thoại người dùng).
+- Ứng dụng *không phải* là ứng dụng khách cho các trang đọc truyện hiện có, hay
+  có máy chủ tập trung riêng để cung cấp truyện.
+- Ứng dụng *không có* khả năng đọc truyện đuôi `.pdf`, cùng với các định dạng
+  truyện thiên về chữ khác như `.txt`, `.epub`.
 
-Giới hạn này phù hợp với nhu cầu người dùng đã nêu ở [mục 3.1.1](#P3.1.1-users).
+Các giới hạn này nhằm tránh cho phần mềm quá phức tạp với tôi, đồng thời phù hợp
+(không thừa thiếu chức năng) so với nhu cầu của nhóm người dùng mục tiêu đã nêu
+ở [mục 3.1.1](#P3.1.1-users).
 
 ### 3.2. Yêu cầu đặt ra <a name="P3.2-requirements"></a>
-
-<!-- 2 loại yêu cầu:
-
-- Chức năng:
-- Phi chức năng: tốc độ, ổn định, mượt, dễ dùng
-
-Dựa vào các ứng dụng đã có để đưa ra một số yêu cầu:
-- Ai là người dùng
-- Mong muốn -->
 
 #### 3.2.1. Yêu cầu chức năng <a name="P3.2.1-functional-requirements"></a>
 
@@ -239,11 +239,126 @@ Dựa vào các ứng dụng đã có để đưa ra một số yêu cầu:
   dùng "say mê" (enthusiast), do đó giao diện chỉ cần đơn giản rõ ràng, không
   màu mè, tập trung vào tính năng.
 
-### 3.3 Phân tích yêu cầu 
+### 3.3 Phân tích yêu cầu <a name="P3.3-requirement-analysis"></a>
 
-#### 3.3.1. Quét các tệp truyện trên thiết bị
+Mỗi yêu cầu đã xác định trong [mục 3.2.1.](#P3.2.1-functional-requirements) được
+coi là một ca sử dụng, được trình bày trong các tiểu mục dưới đây. Người dùng
+duy nhất trong các ca sử dụng là người đọc. Do ứng dụng hoàn toàn ngoại tuyến,
+người đọc cũng không có tương tác với nhau.
 
+#### 3.3.1. Quét các tệp truyện trên thiết bị <a name="P3.3.1-scan"></a>
 
+- Mô tả ngắn gọn:
+
+    Người đọc chọn một thư mục trong điện thoại làm thư mục gốc. Ứng dụng sẽ
+    quét thư mục này và tìm các tệp truyện, rồi hiển thị những thư mục chứa tệp
+    truyện cho người đọc duyệt.
+
+- Mô tả từng bước:
+    1. Người đọc bật ứng dụng
+    2. Người đọc ấn vào nút thay đổi thư mục gốc.
+    3. Trình chọn thư mục của Android hiện ra, cho phép người đọc chọn thư mục
+       làm thư mục gốc.
+    4. Các thư mục chứa truyện trong thư mục gốc được hiển thị lên màn hình theo
+       tiến độ, ứng dụng quét đến đâu hiển thị đến đấy. Ảnh đại diện cho thư mục
+       là bìa một truyện bất kì tìm được trong thư mục đó. Tới đây người đọc có
+       thể duyệt theo thư mục rồi xem truyện, hoặc thực hiện các ca sử dụng
+       khác.
+    5. Nếu người đọc đã chọn một thư mục gốc, động tác chọn thư mục gốc này sẽ
+       thay thế thư mục gốc cũ bằng thư mục được chọn, và quá trình quét được
+       kích hoạt lại như lần chọn đầu tiên.
+    6. Nếu có lỗi trong bản thân quá trình chọn thư mục (gồm thư mục gốc không
+       có truyện, thư mục không tìm được, thiếu quyền), cần gợi ý người đọc chọn
+       lại. Lỗi trong quá trình quét cần phải giảm thiểu và giấu khỏi người đọc
+       nếu có.
+
+Đây là ca sử dụng đầu tiên khi người đọc khởi động ứng dụng lần đầu. Các tệp
+truyện sẽ được quét từ thư mục gốc, rồi được gom lại theo thư mục theo mô tả ở
+[ca sử dụng tiếp theo](#P3.3.2-show-library).
+
+Màn hình đầu tiên khi người dùng bật lên gọi là Màn hình Thư viện (Library
+screen). Các thư mục chứa truyện, hoặc thông báo lỗi liên quan đến bản thân quá
+trình chọn truyện (đã miêu tả trong bước 6 ở trên) sẽ được hiển thị ở màn hình
+này.
+
+#### 3.3.2. Hiển thị danh sách truyện <a name="P3.3.2-show-library"></a>
+
+- Mô tả ngắn gọn:
+
+    Người đọc duyệt truyện theo thư mục, rồi chọn truyện và xem.
+
+- Mô tả từng bước:
+    1. Người đọc bật ứng dụng, đã chọn thư mục gốc, đã quét được ít nhất một thư
+       mục chứa truyện.
+    2. Ứng dụng hiển thị *danh sách thư mục* chứa truyện cho người đọc xem và
+       chọn.
+    3. Người đọc chọn một thư mục.
+    4. Ứng dụng hiển thị *danh sách truyện* trong thư mục đó cho người đọc xem
+       và chọn.
+    5. Người đọc chọn một truyện và đọc.
+
+Đây là một trong hai ca sử dụng chính của ứng dụng, bên cạnh ca sử dụng đọc
+truyện sẽ được miêu tả tiếp theo.
+
+Màn hình khi người dùng chọn một thư mục gọi là Màn hình Thư mục (Directory
+screen). Cũng giống như Màn hình Thư viện, ảnh bìa và tên của truyện được hiển
+thị để người dùng chọn.
+
+Tong ứng dụng, truyện sẽ được quản lí và duyệt theo thư mục. Có hai lí do cho
+lựa chọn thiết kế này:
+
+- Giảm độ phức tạp khi lập trình
+- Các phương pháp duyệt khác không trực quan
+    - Các phương pháp duyệt khác chỉ bao gồm duyệt theo metadata, tức duyệt theo
+      các thông tin đi kèm như Tác giả, Nhân vật, Bộ truyện,... thì yêu cầu
+      truyện phải có đủ metadata. Trên thực tế, không phải tệp truyện nào cũng
+      có đủ thông tin này, do vậy sẽ có trường hợp rất nhiều truyện bị gom vào
+      mục "Không đủ thông tin". Hơn nữa, giả sử truyện có đi kèm metadata, ta
+      xem xét tiếp trường hợp dưới.
+    - Giả sử ta quản lí theo Nhân vật: Vậy để trực quan, yacv phải hiển thị ảnh
+      nhân vật. Hiện nay, việc nhận diện và cắt đúng ảnh phần mặt nhân vật ra để
+      tạo ảnh đại diện có thể nói là bất khả thi. Do vậy, khi duyệt theo Nhân
+      vật, người đọc chỉ có thể thấy tên, không thấy một hình ảnh gợi ý nào
+      khác, dẫn đến khó khăn khi sử dụng. Lập luận tương tự có thể dùng với các
+      cách xếp khác.
+    - Một cách xếp có thể nói là tốt là xếp theo Bộ truyện, tuy nhiên ta lại
+      quay về vấn đề thiếu metada.
+
+Hơn nữa, các thư mục cần được "làm phẳng". "Làm phẳng" có nghĩa là hiển thị thư
+mục con (cháu,...) ngang hàng với thư mục gốc. Ví dụ sau cho thấy cách yacv làm
+phẳng cây thư mục:
+
+```text
+| Cây thư mục gốc                   | Thư mục trong Màn hình Thư viện (đã làm phẳng) |
+|-----------------------------------|------------------------------------------------|
+| thư mục gốc                       | thư mục gốc                                    |
+| ├── Original Sin #1.cbz           | └── Original Sin #1.cbz                        |
+| └── House of M                    | House of M                                     |
+|     ├── House of M #1.cbz         | ├── House of M #1.cbz                          |
+|     ├── House of M #3.cbz         | └── House of M #3.cbz                          |
+|     └── Tie-ins                   | Tie-ins                                        |
+|         └── Black Panther #7.cbz  | └── Black Panther #7.cbz                       |
+```
+
+Bảng 1: Cách yacv làm phẳng thư mục
+
+Có ba lí do cho lựa chọn thiết kế này:
+
+- Giảm độ phức tạp khi lập trình.
+- Người đọc không phải đi qua nhiều tầng thư mục để đến được tệp truyện cần đọc.
+- Không có ca sử dụng có ý nghĩa cho thư mục lồng nhau
+
+    Trường hợp hợp lí nhất cho việc có thư mục lồng nhau là khi lưu các tệp truyện
+    liên quan đến một bộ truyện (tie-ins), như cột trái Bảng 1:
+
+    - Thư mục cha (House of M) chứa tệp truyện và thư mục tie-ins
+    - Thư mục Tie-ins chứa các tệp truyện tie-in.
+
+    Tuy nhiên, bản thân các tệp tie-in lại là tệp truyện thông thường trong một
+    bộ truyện khác, do đó nếu tổ chức thư mục như thế này sẽ dẫn đến tình trạng
+    lặp tệp truyện, là điều không mong muốn ngay cả với máy tính.
+
+#### 3.3.3. Đọc truyện <a name="P3.3.3-read-comic"></a>
 
 ### 3.3 Thiết kế
 
