@@ -257,13 +257,13 @@ tương tác với nhau.
 
 #### 3.3.1. Quét các tệp truyện trên thiết bị <a name="P3.3.1-scan"></a>
 
-- Mô tả ngắn gọn:
+- **Mô tả ngắn gọn**:
 
     Người đọc chọn một thư mục trong điện thoại làm thư mục gốc. Ứng dụng sẽ
     quét thư mục này và tìm các tệp truyện, rồi hiển thị những thư mục chứa tệp
     truyện cho người đọc duyệt.
 
-- Mô tả từng bước:
+- **Mô tả từng bước**:
     1. Người đọc bật ứng dụng
     2. Người đọc ấn vào nút thay đổi thư mục gốc.
     3. Trình chọn thư mục của Android hiện ra, cho phép người đọc chọn thư mục
@@ -292,11 +292,11 @@ này.
 
 #### 3.3.2. Hiển thị danh sách truyện <a name="P3.3.2-show-library"></a>
 
-- Mô tả ngắn gọn:
+- **Mô tả ngắn gọn**:
 
     Người đọc duyệt truyện theo thư mục, rồi chọn truyện và xem.
 
-- Mô tả từng bước:
+- **Mô tả từng bước**:
     1. Người đọc bật ứng dụng, đã chọn thư mục gốc, đã quét được ít nhất một thư
        mục chứa truyện (đang ở Màn hình Thư viện).
     2. Ứng dụng hiển thị *danh sách thư mục* chứa truyện cho người đọc xem và
@@ -382,11 +382,11 @@ Theo như cột phải Bảng 1, các màn hình trong yacv được tổ chức
 
 #### 3.3.3. Đọc truyện <a name="P3.3.3-read-comic"></a>
 
-- Mô tả ngắn gọn:
+- **Mô tả ngắn gọn**:
 
     Người đọc chọn một truyện để xem.
 
-- Mô tả từng bước:
+- **Mô tả từng bước**:
     1. Người đọc bật ứng dụng, đã chọn thư mục gốc, đã quét được ít nhất một thư
        mục chứa truyện, đã chọn một thư mục (đang ở Màn hình Thư mục).
     2. Ứng dụng hiển thị danh sách truyện trong thư mục đó cho người đọc xem và
@@ -411,11 +411,11 @@ hình này sao cho có trải nghiệm gần giống nhất với ứng dụng T
 
 #### 3.3.4. Xem metadata truyện <a name="P3.3.4-view-metadata"></a>
 
-- Mô tả ngắn gọn:
+- **Mô tả ngắn gọn**:
 
     Trong Màn hình Đọc truyện, người đọc ấn nút để xem metadata.
 
-- Mô tả từng bước:
+- **Mô tả từng bước**:
     1. Người đọc bật ứng dụng, chọn một truyện để vào đến Màn hình Đọc truyện.
     2. Người đọc ấn nút Xem metadata.
     3. Ứng dụng hiển thị mọi metadata, bao gồm cả những trường bị thiếu. Ảnh bìa
@@ -446,11 +446,11 @@ Các tính năng nâng cao hơn như gợi ý không xuất hiện, do một s�
 
 #### 3.3.5. Tìm kiếm truyện <a name="P3.3.5-search-comic"></a>
 
-- Mô tả ngắn gọn:
+- **Mô tả ngắn gọn**:
 
     Trong Màn hình Thư viện, người đọc ấn nút để tìm kiếm truyện.
 
-- Mô tả từng bước:
+- **Mô tả từng bước**:
     1. Người đọc bật ứng dụng.
     2. Người đọc ấn nút Tìm kiếm, và gõ từ khóa cần tìm, và ấn nút Enter.
     3. Ứng dụng hiển thị kết quả tìm kiếm theo metadata và tên tệp truyện
@@ -513,12 +513,12 @@ Với độ phức tạp dự kiến của việc hiển thị ảnh bìa truy�
 
 #### 3.3.6. Xóa truyện <a name="P3.3.6-delete-comic"></a>
 
-- Mô tả ngắn gọn
+- **Mô tả ngắn gọn**:
 
     Người dùng chọn một số truyện trong một màn hình chứa danh sách truyện để
     xóa.
 
-- Mô tả từng bước:
+- **Mô tả từng bước**:
     1. Người dùng truy cập vào một màn hình chứa danh sách truyện (là Màn hình
        Thư mục hoặc Màn hình Kết quả).
     2. Người dùng ấn và giữ vào một truyện.
@@ -538,17 +538,17 @@ Với độ phức tạp dự kiến của việc hiển thị ảnh bìa truy�
 Ca sử dụng này không có màn hình riêng biệt, mà sử dụng một chế độ của các màn
 hình hiển thị danh sách truyện.
 
-### 4. Chương 4: Thiết kế <a name="P4-design"></a>
+## 4. Chương 4: Thiết kế <a name="P4-design"></a>
 
-#### 4.1. Thiết kế hướng đối tượng <a name="P4.1-class-design"></a>
+### 4.1. Thiết kế hướng đối tượng <a name="P4.1-class-design"></a>
 
 <!-- UML, activity diagram, class diagram, sequence diagram -->
 
-#### 4.2. Thiết kế CSDL <a name="P4.2-db-design"></a>
+### 4.2. Thiết kế CSDL <a name="P4.2-db-design"></a>
 
-#### 4.3. Thiết kế giao diện <a name="P4.3-ui-design"></a>
+### 4.3. Thiết kế giao diện <a name="P4.3-ui-design"></a>
 
-#### 4.4. Tối ưu <a name="P4.4-optimization"></a>
+### 4.4. Tối ưu <a name="P4.4-optimization"></a>
 
 ## 5. Chương 5: Lập trình & Kiểm thử <a name="P5-implementation"></a>
 
