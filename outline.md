@@ -161,25 +161,21 @@ Chương này giới thiệu sơ qua về các nền tảng trong quá trình x�
 Android là một hệ điều hành do Google phát triển cho thiết bị di động, ví dụ như
 điện thoại và máy tính bảng. Android sử dụng nhân Linux và được thiết kế để dùng
 chủ yếu với màn hình cảm ứng. Cùng với iOS của Apple, Android trở thành một phần
-không thể thiếu của cuộc cách mạng di động bắt đầu vào cuối những năm 2000.
+không thể thiếu của cuộc cách mạng di động bắt đầu vào cuối những năm 2000. Giữ
+vị trí số một về thị phần từ 2011 đến nay, Play Store (chợ ứng dụng chính của
+nó) có doanh thu hàng chục tỉ USD từ 2018,... là một vài con số thể hiện sự
+thành công và độ phủ của Android.
 
-Google mua lại phiên bản Android đầu của công ty khởi nghiệp cùng tên năm vào
-năm 2005, và tham gia phát triển hệ điều hành này từ đó. Ngoài Google, hệ điều
-hành còn nhận được sự đóng góp rất lớn từ cộng đồng lập trình, do là một dự án
-mã nguồn mở (phần lớn mã nguồn dùng giấy phép Apache); tên chính thức của dự án
-là Android Open Source Project. Dù vậy, gần như mọi thiết bị Android thương mại
-đều có những ứng dụng độc quyền, ví dụ đáng kể là bộ Google Mobile Service, vốn
-chứa những ứng dụng không thể thiếu như trình duyệt Chrome hay chợ ứng dụng Play
-Store. Về mặt này, Android khá giống với Chrome: những thành phần cốt lõi về mặt
-kĩ thuật được phát triển theo mô hình mã nguồn mở (AOSP và Chromium), còn những
-thành phần liên quan đến trải nghiệm người dùng sẽ được phát triển riêng.
-
-<!-- Về thị phần, Android liên tục giữ vị trí số một trên thị trường điện thoại di
-động từ 2011 đến nay. Sau 14 năm chính thức gia nhập thị trường, hiện Android
-được cài trên hơn 70% thiết bị di động theo [statcounter][7]. Ở một số thị
-trường đang phát triển như Ấn Độ, con số này lên đến 96%. Kênh phân phối ứng
-dụng chính - Google Play - hiện có hơn 3 triệu ứng dụng, tạo ra hàng chục tỉ đô
-la doanh thu từ 2018, theo [statista][8]. -->
+Google mua lại phiên bản Android đầu của công ty khởi nghiệp cùng tên vào năm
+2005, và phát triển hệ điều hành này từ đó. Ngoài Google, Android còn nhận được
+sự đóng góp rất lớn từ cộng đồng, do là một dự án mã nguồn mở (phần lớn mã nguồn
+dùng giấy phép Apache); tên chính thức của dự án là Android Open Source Project.
+Dù vậy, gần như mọi thiết bị Android thương mại đều có những ứng dụng độc quyền,
+ví dụ đáng kể là bộ Google Mobile Service, vốn chứa những ứng dụng không thể
+thiếu như trình duyệt Chrome hay chợ ứng dụng Play Store. Về mặt này, Android
+khá giống với Chrome: những thành phần cốt lõi về mặt kĩ thuật được phát triển
+theo mô hình mã nguồn mở (AOSP và Chromium), còn những thành phần liên quan đến
+trải nghiệm người dùng sẽ được phát triển riêng.
 
 Hệ điều hành Android được phân lớp như sau:
 
@@ -191,34 +187,33 @@ Hình 1. Các phân lớp của hệ điều hành Android
 
     Đây là tầng thấp nhất. Android thường dùng các nhánh hỗ trợ dài hạn (LTS)
     của Linux. Không giống như kiểu phát triển "distro" trên máy tính (các thay
-    đổi chủ yếu ở ngoài nhân), Google thay đổi (dùng Bionic làm thư viện C thay
-    vì GNU C,...) và thêm rất nhiều phần mở rộng vào nhân Linux trước khi tích
-    hợp.
+    đổi chủ yếu ở ngoài nhân), Google sửa (dùng Bionic làm thư viện C thay vì
+    GNU C,...) và thêm nhiều thành phần vào nhân trước khi tích hợp.
 
 - Lớp phần cứng trừu tượng (Hardware Abstraction Layer):
 
-    Tầng phần mềm này "trừu tượng hóa" các chi tiết trong giao tiếp với phần
-    cứng bằng cách đưa ra các giao diện chung cho một kiểu phần cứng nào đó.
+    Tầng này "trừu tượng hóa" các chi tiết phần cứng bằng cách đưa ra các giao
+    diện chung cho một kiểu phần cứng nào đó.
 
-    Ví dụ, phần cứng máy ảnh sẽ có một số lệnh như chụp ảnh, quay phim, tuy
-    nhiên mỗi thiết bị lại có cách giao tiếp, gọi, chuyển dữ liệu,... với phần
-    cứng máy ảnh khác nhau. HAL cung cấp cho các tầng trên một vài hàm đơn giản
-    để chụp, giúp tầng trên không phải quan tâm đến cách giao tiếp, vận hành
-    phần cứng ở mức thấp nhất.
+    Ví dụ, phần cứng máy ảnh có một số lệnh như chụp ảnh, quay phim, tuy nhiên
+    mỗi thiết bị lại có cách giao tiếp, gọi, chuyển dữ liệu,... với phần cứng
+    máy ảnh khác nhau. HAL cung cấp cho các tầng trên một vài hàm đơn giản để
+    chụp, giúp tầng trên không phải quan tâm đến cách giao tiếp, vận hành phần
+    cứng ở mức thấp nhất.
 
 - Android Runtime (ART):
 
-    Do ứng dụng Android chủ yếu viết bằng Java, nó cần một ứng dụng đặc biệt để
-    chuyển bytecode thành mã máy. Trên desktop, đó là các máy ảo Java (JVM).
-    Trên Android, Android Runtime nhận nhiệm vụ này.
+    Do ứng dụng Android chủ yếu viết bằng Java, nó cần một ứng dụng để chuyển
+    bytecode thành mã máy. Trên desktop, đó là các máy ảo Java (JVM). Trên
+    Android, Android Runtime nhận nhiệm vụ này.
 
-    Điểm khác biệt quan trọng của ART với JVM là ở chỗ ART *biên dịch* bytecode
-    thành mã máy (trước khi chạy - AOT), còn JVM *thông dịch* bytecode thành mã
-    máy (trong khi chạy); đồng thời cả hai đều có tùy chọn JIT. Chú ý rằng ART
-    chỉ có từ Android 4.4; trước đó Android dùng máy ảo Dalvik - giống với máy
-    ảo Java truyền thống hơn. Ngoài ra, trong mọi bản Android, còn một bước
-    trung gian nữa giữa JVM bytecode và mã máy, đó là Dalvik bytecode (DEX) -
-    được thiết kế dành cho Android (tối ưu cho thiết bị với ít bộ nhớ).
+    Điểm khác biệt của ART với JVM là ở chỗ ART *biên dịch* bytecode thành mã
+    máy (trước khi chạy - AOT), còn JVM *thông dịch* bytecode thành mã máy
+    (trong khi chạy); đồng thời cả hai đều có tùy chọn JIT. Chú ý rằng ART chỉ
+    có từ Android 4.4; trước đó Android dùng máy ảo Dalvik - giống máy ảo Java
+    truyền thống hơn. Ngoài ra, trong mọi bản Android, còn một bước trung gian
+    nữa giữa JVM bytecode và mã máy, đó là Dalvik bytecode (DEX) - được thiết kế
+    dành cho Android (tối ưu cho thiết bị với ít bộ nhớ).
 
     ART hiện hỗ trợ đa số tính năng của Java 8.
 
@@ -234,12 +229,10 @@ Hình 1. Các phân lớp của hệ điều hành Android
     viên nhất, và các API của nó được viết bằng Java.
 
     Theo Google, lập trình viên có quyền truy cập vào lớp này tương đương với
-    các ứng dụng hệ thống (như ứng dụng SMS, trình duyệt,...), tức các ứng dụng
-    hệ thống không sử dụng API *trong khung phát triển* nào mà ứng dụng thông
-    thường không sử dụng được. Điều này có ý nghĩa là đa số ứng dụng hệ thống
-    không có khả năng đặc biệt, hay hiệu năng cao hơn ứng dụng thông thường
-    tương tự (được tối ưu tốt). Tất nhiên Google sẽ cho phép ứng dụng hệ thống
-    dùng một số API đặc biệt, nhưng có lẽ phải qua JNI.
+    các ứng dụng hệ thống (như ứng dụng SMS, trình duyệt,...). Đây có thể coi là
+    một cam kết tránh độc quyền về công nghệ, tức đa số ứng dụng hệ thống không
+    có khả năng đặc biệt, hay hiệu năng cao hơn ứng dụng thông thường tương tự
+    (được tối ưu tốt).
 
 - Ứng dụng hệ thống (System Apps)
 
@@ -255,20 +248,21 @@ dụng thành phần Content Provider, cụ thể là bộ Storage Access Framew
 
 #### 2.1.1. Android Jetpack <a name="P2.1.1-jetpack"></a>
 
-Trước khi tìm hiểu qua Jetpack, ta cần tìm hiểu một phần của nó, đồng thời là
-nền tảng kĩ thuật cho toàn bộ Jetpack, là AndroidX.
+Trước khi tìm hiểu qua Jetpack, ta tìm hiểu một phần của nó, đồng thời là nền
+tảng kĩ thuật cho toàn bộ Jetpack, là AndroidX.
 
 Mô hình phát triển của Android (cho phép tùy biến thoải mái) khiến cho thế giới
-Android trở nên phân mảnh. Sự phân mảnh khiến việc cập nhật các phiên bản hệ
-điều hành mới trở nên khó khăn hơn. Do đó, Google tạo ra các Thư viện Hỗ trợ
-(Support Library) để đưa các API mới lên các máy Android cũ. Chú ý rằng các thư
-viện này chỉ giúp ích cho lập trình viên (được sử dụng API mới, tiện hơn), chứ
-không phải đơn giản là cập nhật tính năng người dùng mới cho hệ điều hành cũ.
-AndroidX chính là Support Library đổi tên và được cập nhật đến nay.
+Android trở nên phân mảnh. Điều này khiến việc cập nhật hệ điều hành trở nên khó
+khăn hơn. Do đó, Google tạo ra các Thư viện Hỗ trợ (Support Library) để đưa các
+API mới lên các máy cũ. Chú ý rằng các thư viện này chỉ giúp ích cho lập trình
+viên (được sử dụng API mới, tiện hơn), chứ không phải đơn giản là cập nhật tính
+năng người dùng mới. AndroidX chính là Support Library đổi tên và được cập nhật
+đến nay.
 
-Jetpack gồm các thư viện giải quyết một số vấn đề thường gặp trong khi viết
-Android, giúp lập trình viên viết mã nhanh, gọn, ít lỗi hơn so với việc tự viết
-những đoạn mã có tính năng tương tự. yacv sử dụng ba thành phần sau của Jetpack:
+Jetpack gồm các thư viện giải quyết một số vấn đề thường gặp trong khi viết ứng
+dụng Android, giúp lập trình viên viết mã nhanh, gọn, ít lỗi hơn so với việc tự
+viết những đoạn mã có tính năng tương tự. yacv sử dụng ba thành phần sau của
+Jetpack:
 
 - LiveData: giúp giao diện luôn được cập nhật theo dữ liệu mới nhất
 - ViewModel: giúp tách dữ liệu và giao diện
