@@ -540,15 +540,71 @@ hình hiển thị danh sách truyện.
 
 ## 4. Chương 4: Thiết kế <a name="P4-design"></a>
 
-### 4.1. Thiết kế hướng đối tượng <a name="P4.1-class-design"></a>
+Chương này tập trung vào thiết kế của ứng dụng, là triển khai cụ thể của [Chương
+3](#P3-specification).
 
-<!-- UML, activity diagram, class diagram, sequence diagram -->
+### 4.1. Thiết kế Cơ sở dữ liệu <a name="P4.2-db-design"></a>
 
-### 4.2. Thiết kế CSDL <a name="P4.2-db-design"></a>
+yacv chọn SQLite vì đây là một cơ sở dữ liệu gọn nhẹ nhúng sẵn trong Android.
+SQLite sử dụng mô hình quan hệ, do đó thiết kế bảng cần đảm bảo được chuẩn hóa
+(normalization).
+
+Do không cần quản lí người dùng, cơ sở dữ liệu của yacv chỉ dùng để lưu thông
+tin metadata, cho phép ứng dụng quét dữ liệu ít lần hơn và tìm kiếm truyện. Theo
+như yêu cầu về metadata ở hai Phụ lục, và sau khi chuẩn hóa, ta có lược đồ cơ sở
+dữ liệu như sau:
+
+![er_diagram](images/relationships.real.large.svg)
+Hình 2: Lược đồ cơ sở dữ liệu của yacv
+
+Các bảng thực thể gồm:
+
+- `Comic`: lưu thông tin *tập truyện lẻ*, là bảng trung tâm
+- `Series`: lưu thông tin *bộ truyện*
+- `Author`: lưu tên tác giả
+- `Role`: lưu vai trò của tác giả trong một tập truyện
+- `Character`: lưu tên nhân vật
+- `Genre`: lưu tên thể loại truyện
+
+Một hạn chế quan trọng của các bảng `Character` và `Author` là chúng chỉ lưu
+thông tin tên, và chỉ phân biệt với nhau bằng tên. Nếu có hai tác giả/nhân vật
+trùng tên, yacv không thể phát hiện và hiển thị riêng.
+
+Xét bảng trung tâm `Comic`. Bảng này có một số trường không phải metadata mà
+dùng để lưu thông tin của riêng ứng dụng, gồm:
+
+- `CurrentPage`: lưu trang đang đọc
+- `Love`: lưu trạng thái Yêu thích
+- `ReadCount`: lưu số lần đọc
+
+Trong lược đồ, có nhiều trường nhìn qua không cần thiết nhưng thực tế có ích, do
+thư viện SAF đã mô tả ở Chương 2:
+
+- Trường `FileUri` trong `Comic`: Lưu đường dẫn của tệp truyện ở dạng URI.
+- Trường `FolderUri` trong `Folder`: Lưu đường dẫn của thư mục ở dạng URI.
+- Trường `Name` trong `Folder`: Tên thư mục. Thông thường nếu có đường dẫn, có
+  thể tìm ra tên thư mục rất nhanh, tuy nhiên cũng do SAF mà việc này trở nên
+  khó khăn, nên cần lưu riêng trường này.
+
+Ta xem xét đến các bảng nối:
+
+- `ComicCharacterJoin`:
+    - Mỗi tập truyện có thể có nhiều nhân vật và ngược lại, do đó `Comic` và
+       `Character` có quan hệ Nhiều - Nhiều.
+    - Chú ý rằng các nhân vật có quan hệ với tập truyện chứ không phải bộ
+      truyện, vì có nhân vật phụ (không xuất hiện trong mọi tập truyện).
+- `ComicAuthorJoin`:
+    - Mỗi tập truyện có thể có nhiều tác giả và ngược lại, do đó `Comic` và
+      `Author` có quan hệ Nhiều - Nhiều.
+    - Chú ý rằng các tác giả có quan hệ với tập truyện chứ không phải bộ truyện,
+      vì mô hình xuất bản nhiều truyện tranh là nhà xuất bản sở hữu nhân vật và
+      thuê người viết.
+    - Đồng thời, một tác giả có thể giữ vai trò khác nhau trong các bộ truyện
+      khác nhau, do đó bảng này còn nối với bảng `Role`.
+- `ComicGenreJoin`: Mỗi tập truyện có thể có nhiều thể loại khác nhau và ngược
+  lại, do đó `Comic` và `Genre` có quan hệ Nhiều - Nhiều.
 
 ### 4.3. Thiết kế giao diện <a name="P4.3-ui-design"></a>
-
-### 4.4. Tối ưu <a name="P4.4-optimization"></a>
 
 ## 5. Chương 5: Lập trình & Kiểm thử <a name="P5-implementation"></a>
 
