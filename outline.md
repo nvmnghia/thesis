@@ -337,33 +337,41 @@ yacv bằng Kotlin từ đầu.
 
 #### 2.2.1. Coroutine <a name="P2.2.1-coroutine"></a>
 
-Một thư viện quan trọng của kotlin là coroutine. Coroutine giúp viết ứng dụng có
-tính tương tranh (concurrency) và/hoặc bất đồng bộ (asynchronous), mà một ví dụ
-cụ thể là ứng dụng đa luồng, một cách đơn giản hơn.
+##### 2.2.1.1. Giới thiệu chung
+
+Một thư viện quan trọng của kotlin là *coroutine*. Coroutine giúp viết ứng dụng
+có tính tương tranh (concurrency) và/hoặc bất đồng bộ (asynchronous), mà một ví
+dụ cụ thể là ứng dụng đa luồng, một cách đơn giản hơn.
 
 Về cơ bản, coroutine giống với luồng (thread), nhưng nhẹ hơn. Coroutine được
-thiết kế từ đầu theo mô hình đa nhiệm hợp tác (cooperative multitasking), khác
+thiết kế từ đầu theo mô hình *đa nhiệm hợp tác* (cooperative multitasking), khác
 với luồng vốn hay dùng đa nhiệm ưu tiên (preemptive multitasking). Mấu chốt khác
 biệt của chúng là đa nhiệm hợp tác có các "điểm dừng"; khi thực thi đến điểm
 dừng, coroutine có thể dừng lại, chủ động giải phóng CPU cho việc khác, rồi tiếp
 tục việc đang dở vào thời điểm thích hợp sau đó. Ngược lại, đa nhiệm ưu tiên có
 thể buộc một luồng đang chạy ngừng lại bất kì lúc nào để ưu tiên chạy một luồng
-khác.
+khác. Đây cũng chính là điểm khiến coroutine nhẹ hơn: chi phí chuyển ngữ cảnh
+(context switching) được cắt giảm trong nhiều trường hợp (dù không phải tất cả),
+do chuyển sang thực thi một coroutine khác chưa chắc đã chuyển sang một luồng hệ
+điều hành khác.
 
 Với những điều cơ bản trên, coroutine chưa làm được nhiều. Roman Elizarov,
-trưởng dự án Kotlin, hướng coroutine trong Kotlin theo một ý tưởng mới: tương
-tranh có cấu trúc (structured concurrency). Ý tưởng này tiếp tục đơn giản hóa
+trưởng dự án Kotlin, hướng coroutine trong Kotlin theo một ý tưởng mới: *tương
+tranh có cấu trúc* (structured concurrency). Ý tưởng này tiếp tục đơn giản hóa
 việc viết những đoạn mã tương tranh bằng cách áp đặt một số giới hạn, cấu trúc
 cơ bản. Kết quả là coroutine trong Kotlin hỗ trợ việc xử lí lỗi và ngừng tác vụ
 bất đồng bộ tốt hơn việc dùng luồng, hay dùng callback trong các thư viện bên
 thứ ba như RxJava.
 
+##### 2.2.1.2. Bài học từ quá khứ: lập trình có cấu trúc
+
 <!-- Cite 10 -->
-Để hiểu sơ về khái niệm tương tranh có cấu trúc, ta có thể so sánh nó với lập
-trình có cấu trúc (structured programming). Trong buổi đầu của máy tính, lệnh
-nhảy `GOTO` được sử dụng rất nhiều vì phù hợp với cách máy tính chạy. Tuy vậy,
-lệnh này làm cấu trúc chương trình trở nên khó hiểu, do không thể kiểm soát quá
-trình gọi hàm. Hình sau mô tả rõ khó khăn này:
+Để hiểu sơ về tương tranh có cấu trúc, ta có thể so sánh nó với *lập trình có cấu
+trúc* (structured programming). Để hiểu sơ về lập trình có cấu trúc, ta lại phải
+tìm về *lập trình phi cấu trúc* (non-structured programming). Trong buổi đầu của
+máy tính, lệnh nhảy `GOTO` được sử dụng rất nhiều vì phù hợp với cách máy tính
+chạy. Tuy vậy, lệnh này làm cấu trúc chương trình trở nên khó hiểu, do không thể
+kiểm soát quá trình thực thi. Hình 2 và 3 mô tả rõ khó khăn này:
 
 ![non-structured programming](images/sequential-and-go-to-schematic.svg)
 
@@ -373,42 +381,53 @@ Hình 2: Lập trình không có cấu trúc với `GOTO`
 
 Hình 3: Sự lộn xộn của lập trình phi cấu trúc
 
-Lập trình phi cấu trúc cho phép dùng `GOTO`, từ đó có "cấu trúc" rất tự do: khi
+Lập trình phi cấu trúc cho phép dùng `GOTO`, từ đó có "cấu trúc" quá tự do: khi
 đã chạy lệnh `GOTO`, những lệnh phía sau nó không biết khi nào mới được chạy, vì
 đơn giản là chương trình chuyển sang chạy những dòng lệnh hoàn toàn khác mà
-không trở lại. Hậu quả là luồng chương trình rất khó nắm bắt, và mã trở thành
-một đống "mì trộn" như Hình 3. Tệ hơn, ta xét ví dụ Java sau về quản lí tài
-nguyên tự động:
+không trở lại.
 
-```java
-try (Scanner scanner = new Scanner(new File("test.txt"))) {
-    jumpSomewhere();    // Giả sử Java có lệnh nhảy, và hàm này dùng nó
-}
-```
+Vấn đề/hậu quả của `GOTO` có thể tóm gọn như sau:
 
-Do không hứa hẹn trả lại luồng điều khiển, việc đóng luồng nhập từ tệp cũng
-không chắc chắn xảy ra, dẫn đến rò rỉ tài nguyên. Điều gần tương tự cũng khiến
-việc xử lí ngoại lệ và nhiều tính năng khác trở nên rất khó đạt được khi ngôn
-ngữ cho phép `GOTO`.
+- Khó nắm bắt luồng chương trình: mã trở thành một đống "mì trộn" như Hình 3.
+- Không cài đặt được các chức năng mới (ngoại lệ, quản lí tài nguyên tự động,...)
 
-Để đơn giản hóa luồng chạy, lập trình có cấu trúc giới hạn các lệnh nhảy còn
-`if` và `for` và gọi hàm. Khác biệt mấu chốt của ba lệnh này so với lệnh nhảy
+    Xét ví dụ Java sau về quản lí tài nguyên tự động:
+
+    ```java
+    try (Scanner scanner = new Scanner(new File("test.txt"))) {
+        jumpSomewhere();    // Giả sử Java có GOTO, và hàm này dùng nó
+    }
+    ```
+
+    Do không hứa hẹn trả lại luồng điều khiển, việc đóng luồng nhập từ tệp cũng
+    không chắc chắn xảy ra, dẫn đến rò rỉ tài nguyên, làm khối lệnh vô dụng.
+
+    Điều gần tương tự cũng khiến việc xử lí ngoại lệ và nhiều tính năng khác trở
+    nên rất khó đạt được, một khi ngôn ngữ cho phép `GOTO`.
+
+Lập trình có cấu trúc đơn giản hóa luồng chạy bằng việc giới hạn các lệnh nhảy
+còn `if`, `for` và gọi hàm. Khác biệt mấu chốt của ba lệnh này so với lệnh nhảy
 cấp thấp `GOTO` là chúng *trả luồng điều khiển* về điểm gọi. Từ đó, ta được phép
 nghĩ một lệnh như một hộp đen, tức không cần quan tâm chi tiết bên trong, vì
-chắc chắn một lúc sau lệnh kế tiếp sẽ được thực hiện. Hình 4 thể hiện rõ điều
-này, đặc biệt khi so sánh lại với Hình 2. Và đột nhiên, những tính năng vốn
-không thể làm với lập trình phi cấu trúc như xử lí ngoại lệ nay có thể được dùng
-trong lập trình có cấu trúc.
+chắc chắn một lúc sau lệnh kế tiếp sẽ được thực hiện, thay vì nhảy lung tung.
+Hình 4 thể hiện rõ điều này, đặc biệt khi so sánh với Hình 2.
 
-![spagetti of goto](images/control-schematics.svg)
+Theo định nghĩa, ba lệnh trên giải quyết được hậu quả đầu tiên. Đồng thời, các
+hậu quả số hai cũng được giải quyết, do ngôn ngữ đã có cấu trúc (cụ thể là có
+call stack).
+
+![3 basic constructs](images/control-schematics.svg)
 
 Hình 4: Ba cấu trúc cơ bản của lập trình có cấu trúc: rẽ nhánh `if`, lặp `for` và gọi hàm
 
-Ngày nay, ba cấu trúc cơ bản trên đã trở thành phần không thể thiếu trong mọi
+Ngày nay, ba cấu trúc cơ bản này đã trở thành phần không thể thiếu trong mọi
 ngôn ngữ lập trình, và `GOTO` chỉ còn dùng trong hợp ngữ. Bài học quá khứ cho
 thấy nếu áp dụng một số cấu trúc, giới hạn, ta có thể giải quyết vấn đề một cách
-tinh tế và gọn gàng. Trong trường hợp này, tương tranh có cấu trúc có thể giải
-quyết một số điểm yếu của các API tương tranh/bất đồng bộ truyền thống.
+tinh tế và gọn gàng. Trong trường hợp này, tương tranh có cấu trúc có thể loại
+bỏ một số điểm yếu của các API tương tranh/bất đồng bộ truyền thống, giống như
+cách lập trình cấu trúc đã làm.
+
+##### 2.2.1.3. Áp dụng vào hiện tại: tương tranh có cấu trúc
 
 Trước hết, ta xem xét hai kiểu API tương tranh hay dùng hiện nay:
 
@@ -426,9 +445,20 @@ lại với hai API trên:
 
 Hình 5: Tương tranh không cấu trúc với `goroutine` - API thuộc kiểu tương tranh.
 
-Trên thực tế, có những cách để "truyền" ngoại lệ trong môi trường bất đồng bộ,
-ví dụ như `Promise.catch` trong ES6. Tuy nhiên đây vẫn là những cách xử lí
-riêng, chứ không dựa vào cấu trúc `try-catch` sẵn có của ngôn ngữ.
+Trên thực tế, có cách để thực hiện một số chức năng trên (bắt ngoại lệ,...) với
+API hiện tại, tuy nhiên đây vẫn là những cách xử lí riêng, do đó chưa thực sự
+thuận tiện khi dùng. Ví dụ, ES6 có `Promise.catch()` để bắt ngoại lệ trong
+`Promise` mà không (thể) dùng cấu trúc `try-catch` sẵn có của JS. Với tương
+tranh có cấu trúc, các vấn đề này đều được giải quyết.
+
+Ta xét một đoạn mã tương tranh đơn giản dùng coroutine trong Kotlin:
+
+![kotlin coroutine](images/kotlin-coroutine.svg)
+
+Hình 6: Tương tranh có cấu trúc dùng coroutine trong Kotlin
+
+Hình 6 thể hiện cách giải quyết các vấn đề trên của coroutine trong Kotlin: *trả
+luồng điều khiển*, như lập trình có cấu trúc.
 
 ### 2.3. Mẫu thiết kế MVVM và Kiến trúc khuyên dùng bởi Google <a name="P2.3-mvvm"></a>
 
