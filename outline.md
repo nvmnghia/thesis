@@ -35,6 +35,9 @@ Khung sườn khóa luận kết thúc 6 năm luyện ngục của nvmnghia.
     - MVVM
     - AOT
     - JIT
+    - API
+    - JS
+    - ES6
 
 ## 1. Chương 1: Giới thiệu <a name="P1-intro"></a>
 
@@ -188,7 +191,7 @@ Hình 1. Các phân lớp của hệ điều hành Android
     Đây là tầng thấp nhất. Android thường dùng các nhánh hỗ trợ dài hạn (LTS)
     của Linux. Không giống như kiểu phát triển "distro" trên máy tính (các thay
     đổi chủ yếu ở ngoài nhân), Google sửa (dùng Bionic làm thư viện C thay vì
-    GNU C,...) và thêm nhiều thành phần vào nhân trước khi tích hợp.
+    GNU C,...) và thêm bớt nhiều thành phần vào nhân trước khi tích hợp.
 
 - Lớp phần cứng trừu tượng (Hardware Abstraction Layer):
 
@@ -251,18 +254,34 @@ dụng thành phần Content Provider, cụ thể là bộ Storage Access Framew
 Trước khi tìm hiểu qua Jetpack, ta tìm hiểu một phần của nó, đồng thời là nền
 tảng kĩ thuật cho toàn bộ Jetpack, là AndroidX.
 
-Mô hình phát triển của Android (cho phép tùy biến thoải mái) khiến cho thế giới
-Android trở nên phân mảnh. Điều này khiến việc cập nhật hệ điều hành trở nên khó
-khăn hơn. Do đó, Google tạo ra các Thư viện Hỗ trợ (Support Library) để đưa các
-API mới lên các máy cũ. Chú ý rằng các thư viện này chỉ giúp ích cho lập trình
-viên (được sử dụng API mới, tiện hơn), chứ không phải đơn giản là cập nhật tính
-năng người dùng mới. AndroidX chính là Support Library đổi tên và được cập nhật
-đến nay.
+Mô hình phát triển của Android (cho phép nhà sản xuất tùy biến thoải mái) khiến
+cho thế giới Android trở nên phân mảnh. Hậu quả là việc cập nhật hệ điều hành
+trở nên khó khăn hơn. Do đó, Google tạo ra các Thư viện Hỗ trợ (Support Library)
+để đưa các API mới lên các máy cũ. Chú ý rằng các thư viện này chỉ giúp ích cho
+lập trình viên (được sử dụng API mới, tiện hơn), chứ không hề cập nhật tính năng
+hệ điều hành. AndroidX chính là Support Library đổi tên và được cập nhật đến
+nay.
 
 Jetpack gồm các thư viện giải quyết một số vấn đề thường gặp trong khi viết ứng
 dụng Android, giúp lập trình viên viết mã nhanh, gọn, ít lỗi hơn so với việc tự
-viết những đoạn mã có tính năng tương tự. yacv sử dụng ba thành phần sau của
-Jetpack:
+viết những đoạn mã có tính năng tương tự. Các thư viện này được chia làm 4 nhóm
+theo bảng sau:
+
+<!-- Cite [9] -->
+| Tên nhóm                | Mục tiêu                      | Thư viện ví dụ             |
+|:----------------------  |:------------------------------|:--------------------       |
+| Foundation Components   | Tương thích ngược, test nhanh | AppCompat                  |
+| Architecture Components | Chống lỗi, dễ bảo trì         | LiveData, Room, Navigation |
+| Behavior Components     | Tương tác với dịch vụ cơ bản như thông báo, chia sẻ,... | Notifications |
+| UI Components           | Tăng trải nghiệm người dùng   | Animation                  |
+
+Bảng 1: Phân nhóm các thư viện trong Jetpack
+
+Tuy hiện nay cách phân nhóm này không còn được áp dụng do chồng lấn chức năng
+(hiện tất cả được gọi chung là Architecture Components), nhưng các thư viện vẫn
+giữ nguyên, và Bảng 1 vẫn có giá trị tham khảo.
+
+yacv sử dụng nhiều thành phần của Jetpack, trong đó đáng kể đến ba thư viện sau:
 
 - LiveData: giúp giao diện luôn được cập nhật theo dữ liệu mới nhất
 - ViewModel: giúp tách dữ liệu và giao diện
@@ -273,7 +292,143 @@ Room là một phần quan trọng của yacv, do đó sẽ được giới thi�
 
 ### 2.2. Ngôn ngữ lập trình Kotlin <a name="P2.2-kotlin"></a>
 
+Java là ngôn ngữ lập trình đầu tiên được hỗ trợ trên Android, nhưng không phải
+là duy nhất. Từ giữa 2019, Google đã hỗ trợ đầy đủ và khuyến khích lập trình
+viên viết ứng dụng trên Kotlin, một ngôn ngữ khá mới được JetBrains phát triển.
+Lần đầu được JetBrain công khai vào năm 2011, Kotlin được định hướng trở thành
+một lựa chọn thay thế cho Java. Điều đó thể hiện ở việc Kotlin được biên dịch
+thành JVM bytecode như Java, do đó đạt được khả năng tương tác hoàn toàn với
+Java (từ Java có thể gọi sang Kotlin và ngược lại).
+
+Điểm mạnh của Kotlin so với Java là tính ngắn gọn. Do được phát triển mới,
+Kotlin không cần giữ tương thích với phiên bản trước, cho phép các kĩ sư thiết
+kế một ngôn ngữ có cú pháp hiện đại và gọn ghẽ. Ngoài ra, do được một công ty tư
+nhân phát triển, Kotlin không cần chờ đến các cuộc họp phức tạp để đạt được đồng
+thuận về tính năng mới, giúp ngôn ngữ liên tục được cải tiến. Đồng thời, công ty
+cũng mở mã nguồn của Kotlin và các công cụ liên quan, giúp đẩy nhanh quá trình
+phát triển và tạo thiện cảm cộng đồng cho một ngôn ngữ non trẻ.
+
+Sau đây là tóm tắt một số đặc điểm kĩ thuật của Kotlin:
+
+- Về mô hình, Kotlin hỗ trợ hướng đối tượng như Java, nhưng còn hỗ trợ mô hình
+  hàm.
+- Về hệ thống kiểu, Kotlin giống hệt Java:
+    - Là kiểu tĩnh (statically typed), tức kiểu được kiểm tra khi biên dịch
+      (thay vì khi chạy, như Python, JavaScript,...)
+    - Là kiểu mạnh (strongly typed), tức không cho phép chuyển kiểu ngầm
+- Về cú pháp, Kotlin có cú pháp mới, gọn, hiện đại, vay mượn ý tưởng từ những
+  ngôn ngữ được đánh giá là dễ viết hơn như Python, ví dụ như:
+    - bỏ dấu `;`
+    - hàm ẩn danh (lambda)
+    - khai báo bằng trích xuất thuộc tính (destructuring declaration)
+- Về tính năng, Kotlin luôn nhấn mạnh và được quảng cáo về khả năng chống lỗi
+  `NullPointerException`. Kotlin "né" lỗi này do buộc người viết đánh dấu cụ thể
+  rằng một đối tượng có thể nhận giá trị `null` bằng hậu tố `?` ở khai báo kiểu,
+  từ đó người viết luôn biết chính xác đối tượng có thể nhận giá trị `null` hay
+  không, và buộc xử lí trường hợp này nếu có. Kiểu của đối tượng lúc này gọi là
+  Nullable, và gần như tương tự với `Optional` trong Swift.
+- Về nền tảng hỗ trợ, ngoài máy ảo Java, Kotlin còn hỗ trợ biên dịch sang
+  JavaScript, WebAssembly, và mã máy (Kotlin/Native). Trừ JVM, các nền tảng còn
+  lại đều đang ở giai đoạn thử nghiệm.
+
+Với việc Google khuyên dùng Kotlin khi viết ứng dụng Android, tôi cho rằng khóa
+luận này là một cơ hội phù hợp để thử sử dụng Kotlin, và đã quyết định chọn viết
+yacv bằng Kotlin từ đầu.
+
 #### 2.2.1. Coroutine <a name="P2.2.1-coroutine"></a>
+
+Một thư viện quan trọng của kotlin là coroutine. Coroutine giúp viết ứng dụng có
+tính tương tranh (concurrency) và/hoặc bất đồng bộ (asynchronous), mà một ví dụ
+cụ thể là ứng dụng đa luồng, một cách đơn giản hơn.
+
+Về cơ bản, coroutine giống với luồng (thread), nhưng nhẹ hơn. Coroutine được
+thiết kế từ đầu theo mô hình đa nhiệm hợp tác (cooperative multitasking), khác
+với luồng vốn hay dùng đa nhiệm ưu tiên (preemptive multitasking). Mấu chốt khác
+biệt của chúng là đa nhiệm hợp tác có các "điểm dừng"; khi thực thi đến điểm
+dừng, coroutine có thể dừng lại, chủ động giải phóng CPU cho việc khác, rồi tiếp
+tục việc đang dở vào thời điểm thích hợp sau đó. Ngược lại, đa nhiệm ưu tiên có
+thể buộc một luồng đang chạy ngừng lại bất kì lúc nào để ưu tiên chạy một luồng
+khác.
+
+Với những điều cơ bản trên, coroutine chưa làm được nhiều. Roman Elizarov,
+trưởng dự án Kotlin, hướng coroutine trong Kotlin theo một ý tưởng mới: tương
+tranh có cấu trúc (structured concurrency). Ý tưởng này tiếp tục đơn giản hóa
+việc viết những đoạn mã tương tranh bằng cách áp đặt một số giới hạn, cấu trúc
+cơ bản. Kết quả là coroutine trong Kotlin hỗ trợ việc xử lí lỗi và ngừng tác vụ
+bất đồng bộ tốt hơn việc dùng luồng, hay dùng callback trong các thư viện bên
+thứ ba như RxJava.
+
+<!-- Cite 10 -->
+Để hiểu sơ về khái niệm tương tranh có cấu trúc, ta có thể so sánh nó với lập
+trình có cấu trúc (structured programming). Trong buổi đầu của máy tính, lệnh
+nhảy `GOTO` được sử dụng rất nhiều vì phù hợp với cách máy tính chạy. Tuy vậy,
+lệnh này làm cấu trúc chương trình trở nên khó hiểu, do không thể kiểm soát quá
+trình gọi hàm. Hình sau mô tả rõ khó khăn này:
+
+![non-structured programming](images/sequential-and-go-to-schematic.svg)
+
+Hình 2: Lập trình không có cấu trúc với `GOTO`
+
+![spaghetti of goto](images/flow-matic-4.svg)
+
+Hình 3: Sự lộn xộn của lập trình phi cấu trúc
+
+Lập trình phi cấu trúc cho phép dùng `GOTO`, từ đó có "cấu trúc" rất tự do: khi
+đã chạy lệnh `GOTO`, những lệnh phía sau nó không biết khi nào mới được chạy, vì
+đơn giản là chương trình chuyển sang chạy những dòng lệnh hoàn toàn khác mà
+không trở lại. Hậu quả là luồng chương trình rất khó nắm bắt, và mã trở thành
+một đống "mì trộn" như Hình 3. Tệ hơn, ta xét ví dụ Java sau về quản lí tài
+nguyên tự động:
+
+```java
+try (Scanner scanner = new Scanner(new File("test.txt"))) {
+    jumpSomewhere();    // Giả sử Java có lệnh nhảy, và hàm này dùng nó
+}
+```
+
+Do không hứa hẹn trả lại luồng điều khiển, việc đóng luồng nhập từ tệp cũng
+không chắc chắn xảy ra, dẫn đến rò rỉ tài nguyên. Điều gần tương tự cũng khiến
+việc xử lí ngoại lệ và nhiều tính năng khác trở nên rất khó đạt được khi ngôn
+ngữ cho phép `GOTO`.
+
+Để đơn giản hóa luồng chạy, lập trình có cấu trúc giới hạn các lệnh nhảy còn
+`if` và `for` và gọi hàm. Khác biệt mấu chốt của ba lệnh này so với lệnh nhảy
+cấp thấp `GOTO` là chúng *trả luồng điều khiển* về điểm gọi. Từ đó, ta được phép
+nghĩ một lệnh như một hộp đen, tức không cần quan tâm chi tiết bên trong, vì
+chắc chắn một lúc sau lệnh kế tiếp sẽ được thực hiện. Hình 4 thể hiện rõ điều
+này, đặc biệt khi so sánh lại với Hình 2. Và đột nhiên, những tính năng vốn
+không thể làm với lập trình phi cấu trúc như xử lí ngoại lệ nay có thể được dùng
+trong lập trình có cấu trúc.
+
+![spagetti of goto](images/control-schematics.svg)
+
+Hình 4: Ba cấu trúc cơ bản của lập trình có cấu trúc: rẽ nhánh `if`, lặp `for` và gọi hàm
+
+Ngày nay, ba cấu trúc cơ bản trên đã trở thành phần không thể thiếu trong mọi
+ngôn ngữ lập trình, và `GOTO` chỉ còn dùng trong hợp ngữ. Bài học quá khứ cho
+thấy nếu áp dụng một số cấu trúc, giới hạn, ta có thể giải quyết vấn đề một cách
+tinh tế và gọn gàng. Trong trường hợp này, tương tranh có cấu trúc có thể giải
+quyết một số điểm yếu của các API tương tranh/bất đồng bộ truyền thống.
+
+Trước hết, ta xem xét hai kiểu API tương tranh hay dùng hiện nay:
+
+| Tên | Giải thích | Ví dụ |
+|:----|:-----------|:------|
+| Tương tranh | Chạy một hàm theo cách tương tranh với luồng chạy hiện tại | `threading.Thread(target=fn).start() # Python` |
+| Bất đồng bộ | Chạy một hàm khi có sự kiện xảy ra (callback) | `document.getElementById('id').onclick = callback; // JS` |
+
+Bảng 2: Hai kiểu API tương tranh thường thấy.
+
+Qua Hình 5, không khó để thấy rằng mọi vấn đề của lập trình phi cấu trúc đều lặp
+lại với hai API trên:
+
+![non-structured concurrency](images/sequential-and-go-to-schematic.svg)
+
+Hình 5: Tương tranh không cấu trúc với `goroutine` - API thuộc kiểu tương tranh.
+
+Trên thực tế, có những cách để "truyền" ngoại lệ trong môi trường bất đồng bộ,
+ví dụ như `Promise.catch` trong ES6. Tuy nhiên đây vẫn là những cách xử lí
+riêng, chứ không dựa vào cấu trúc `try-catch` sẵn có của ngôn ngữ.
 
 ### 2.3. Mẫu thiết kế MVVM và Kiến trúc khuyên dùng bởi Google <a name="P2.3-mvvm"></a>
 
@@ -287,7 +442,7 @@ Room là một phần quan trọng của yacv, do đó sẽ được giới thi�
 
 #### 2.5.1. Định dạng tệp nén `.zip`
 
-#### 2.5.2. Định dạng tệp nén `.cbz`
+#### 2.5.2. Định dạng tệp truyện `.cbz`
 
 ## 3. Chương 3: Phân tích yêu cầu & Thiết kế <a name="P3-specification"></a>
 
@@ -463,9 +618,9 @@ phẳng cây thư mục:
 |         └── Black Panther #7.cbz  | └── Black Panther #7.cbz  |
 ```
 
-Bảng 1: Cách yacv làm phẳng thư mục
+Bảng 3: Cách yacv làm phẳng thư mục
 
-Theo như cột phải Bảng 1, các màn hình trong yacv được tổ chức như sau:
+Theo như cột phải Bảng 3, các màn hình trong yacv được tổ chức như sau:
 
 - Màn hình Thư viện: có 3 thư mục:
     - thư mục gốc
@@ -484,7 +639,7 @@ Theo như cột phải Bảng 1, các màn hình trong yacv được tổ chức
 - Không có ca sử dụng có ý nghĩa cho thư mục lồng nhau:
 
     Trường hợp hợp lí nhất cho việc có thư mục lồng nhau là khi lưu các tệp
-    truyện liên quan đến một bộ truyện (tie-ins), như cột trái Bảng 1:
+    truyện liên quan đến một bộ truyện (tie-ins), như cột trái Bảng 3:
 
     - Thư mục cha (House of M) chứa tệp truyện trong bộ truyện cùng tên và thư
       mục tie-ins.
@@ -694,3 +849,5 @@ hình hiển thị danh sách truyện.
   [6]: https://en.wikipedia.org/wiki/Android_(operating_system)
   [7]: https://gs.statcounter.com/os-market-share/mobile/worldwide
   [8]: https://www.statista.com/statistics/444476/google-play-annual-revenue/
+  [9]: https://blog.mindorks.com/what-is-android-jetpack-and-why-should-we-use-it
+  [10]: https://vorpus.org/blog/notes-on-structured-concurrency-or-go-statement-considered-harmful/#a-surprise-benefit-removing-goto-statements-enables-new-features
