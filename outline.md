@@ -316,6 +316,7 @@ Sau đây là tóm tắt một số đặc điểm kĩ thuật của Kotlin:
     - Là kiểu tĩnh (statically typed), tức kiểu được kiểm tra khi biên dịch
       (thay vì khi chạy, như Python, JavaScript,...)
     - Là kiểu mạnh (strongly typed), tức không cho phép chuyển kiểu ngầm
+- ... tuy nhiên cũng hỗ trợ 
 - Về cú pháp, Kotlin có cú pháp mới, gọn, hiện đại, vay mượn ý tưởng từ những
   ngôn ngữ được đánh giá là dễ viết hơn như Python, ví dụ như:
     - bỏ dấu `;`
@@ -327,9 +328,9 @@ Sau đây là tóm tắt một số đặc điểm kĩ thuật của Kotlin:
   từ đó người viết luôn biết chính xác đối tượng có thể nhận giá trị `null` hay
   không, và buộc xử lí trường hợp này nếu có. Kiểu của đối tượng lúc này gọi là
   Nullable, và gần như tương tự với `Optional` trong Swift.
-- Về nền tảng hỗ trợ, ngoài máy ảo Java, Kotlin còn hỗ trợ biên dịch sang
-  JavaScript, WebAssembly, và mã máy (Kotlin/Native). Trừ JVM, các nền tảng còn
-  lại đều đang ở giai đoạn thử nghiệm.
+- Về nền tảng hỗ trợ, ngoài JVM, Kotlin còn được biên dịch sang JavaScript,
+  Wasm, , và mã máy (Kotlin/Native). Trừ JVM, các nền tảng còn lại đều đang
+  ở giai đoạn thử nghiệm.
 
 Với việc Google khuyên dùng Kotlin khi viết ứng dụng Android, tôi cho rằng khóa
 luận này là một cơ hội phù hợp để thử sử dụng Kotlin, và đã quyết định chọn viết
@@ -363,32 +364,36 @@ cơ bản. Kết quả là coroutine trong Kotlin hỗ trợ việc xử lí l�
 bất đồng bộ tốt hơn việc dùng luồng, hay dùng callback trong các thư viện bên
 thứ ba như RxJava.
 
+Coroutine được dùng để tăng tốc những đoạn mã chạy chậm trong yacv (sẽ được mô
+tả sau). Ngoài cải thiện về hiệu năng, coroutine và tương tranh có cấu trúc còn
+cho phép viết mã ngắn gọn, rõ ràng hơn. Do có tác động lớn, coroutine sẽ được
+giới thiệu kĩ hơn ở phần này.
+
 ##### 2.2.1.2. Bài học từ quá khứ: lập trình có cấu trúc
 
 <!-- Cite 10 -->
-Để hiểu sơ về tương tranh có cấu trúc, ta có thể so sánh nó với *lập trình có cấu
-trúc* (structured programming). Để hiểu sơ về lập trình có cấu trúc, ta lại phải
+Để hiểu sơ về tương tranh có cấu trúc, ta có thể so sánh nó với *lập trình có
+cấu trúc* (structured programming). Để hiểu sơ về lập trình có cấu trúc, ta phải
 tìm về *lập trình phi cấu trúc* (non-structured programming). Trong buổi đầu của
-máy tính, lệnh nhảy `GOTO` được sử dụng nhiều vì phù hợp với cách máy tính
-chạy, và kiểu lập trình này chính là lập trình phi cấu trúc.
+máy tính, lệnh nhảy `GOTO` được sử dụng nhiều vì phù hợp với cách máy tính chạy,
+và kiểu lập trình này chính là lập trình phi cấu trúc.
 
 ![non-structured programming](images/sequential-and-go-to-schematic.svg)
 
-Hình 2: Lập trình không có cấu trúc với `GOTO`
+Hình 2: Lập trình phi cấu trúc với `GOTO`
 
 ![spaghetti of goto](images/flow-matic-4.svg)
 
 Hình 3: Sự lộn xộn của lập trình phi cấu trúc
 
-Vấn đề/hậu quả của lập trình phi cấu trúc, hay của `GOTO`, có thể tóm gọn như
-sau:
+Vấn đề của lập trình phi cấu trúc, hay của `GOTO`, có thể tóm gọn như sau:
 
 - Khó nắm bắt luồng chương trình
 
     `GOTO` làm "cấu trúc" chương trình quá tự do: khi đã chạy `GOTO`, các lệnh
-    phía sau nó không biết khi nào mới được chạy, vì đơn giản là chương trình
-    chuyển sang những lệnh hoàn toàn khác mà không trở lại. Luồng chạy trở thành
-    một đống "mì trộn" như Hình 3.
+    phía sau nó không biết khi nào mới được chạy, vì chương trình chuyển sang
+    những lệnh hoàn toàn khác mà không trở lại. Luồng chạy trở thành một đống
+    "mì trộn" như Hình 3.
 
 - Không cài đặt được các chức năng mới (ngoại lệ, quản lí tài nguyên tự động,...)
 
@@ -422,11 +427,11 @@ call stack).
 Hình 4: Ba cấu trúc cơ bản của lập trình có cấu trúc: rẽ nhánh `if`, lặp `for` và gọi hàm
 
 Ngày nay, ba cấu trúc cơ bản này đã trở thành phần không thể thiếu trong mọi
-ngôn ngữ lập trình, và `GOTO` chỉ còn dùng trong hợp ngữ. Bài học quá khứ cho
-thấy nếu áp dụng một số cấu trúc, giới hạn, ta có thể giải quyết vấn đề một cách
-tinh tế và gọn gàng. Trong trường hợp này, tương tranh có cấu trúc có thể loại
-bỏ một số điểm yếu của các API tương tranh/bất đồng bộ truyền thống, giống cách
-lập trình có cấu trúc đã làm.
+ngôn ngữ lập trình, và `GOTO` chỉ còn dùng trong hợp ngữ. Quá khứ cho thấy nếu
+áp dụng một số cấu trúc, giới hạn, ta có thể giải quyết vấn đề một cách tinh tế
+và gọn gàng. Trong trường hợp này, tương tranh có cấu trúc có thể loại bỏ một số
+điểm yếu của các API tương tranh/bất đồng bộ truyền thống, giống cách lập trình
+có cấu trúc đã làm.
 
 ##### 2.2.1.3. Áp dụng vào hiện tại: tương tranh có cấu trúc
 
@@ -446,22 +451,22 @@ lại với hai API trên:
 
 Hình 5: Tương tranh không cấu trúc với `goroutine` - API thuộc kiểu tương tranh.
 
-- Ta dùng lại ví dụ về quản lí tài nguyên tự động. Nếu có một luồng thực thi
-  khác tương tranh với luồng chính, thì khi luồng chính đóng `Scanner`, có thể
-  luồng kia vẫn đang đọc nó. Vấn đề giờ không phải là rò rỉ tài nguyên, mà là
-  đọc sau khi đóng. Cuối cùng, tính năng này không thể hoạt động.
+- Ta xem lại ví dụ về quản lí tài nguyên tự động. Nếu có một luồng thực thi khác
+  tương tranh với luồng chính, thì khi luồng chính đóng `Scanner`, có thể luồng
+  kia vẫn đang đọc nó. Vấn đề giờ không phải là rò rỉ tài nguyên, mà là đọc sau
+  khi đóng. Cuối cùng, tính năng này không thể hoạt động.
 - Với tính năng bắt ngoại lệ, nếu có ngoại lệ ở luồng tương tranh, ta cũng không
   có cách nào để biết, và buộc phải kệ nó.
 
 Trên thực tế, có cách để thực hiện một số chức năng trên với API hiện tại, tuy
-nhiên đây vẫn là những cách xử lí riêng, do đó chưa thực sự thuận tiện khi dùng.
-Ví dụ, ES6 có `Promise.catch()` để bắt ngoại lệ trong `Promise` mà không (thể)
-dùng cấu trúc `try-catch` sẵn có của JS. Với tương tranh có cấu trúc, các vấn đề
-này đều được giải quyết.
+vậy đó đều là cách xử lí riêng, do đó chưa thực sự thuận tiện khi dùng. Ví dụ,
+ES6 có `Promise.catch()` để bắt ngoại lệ trong `Promise` mà không (thể) dùng cấu
+trúc `try-catch` sẵn có của JS. Với tương tranh có cấu trúc, các vấn đề này đều
+được giải quyết.
 
 Ta xét một đoạn mã tương tranh đơn giản dùng coroutine trong Kotlin, tức dùng
-tương tranh có cấu trúc (không phải coroutine trong mọi ngôn ngữ đều có tính
-năng này):
+tương tranh có cấu trúc (không phải coroutine trong mọi ngôn ngữ đều dùng mô
+hình này):
 
 ![kotlin coroutine](images/kotlin-coroutine.svg)
 
@@ -469,21 +474,18 @@ Hình 6: Tương tranh có cấu trúc dùng coroutine trong Kotlin
 
 Đoạn mã trong Hình 6 làm những việc sau:
 
-- Tạo ra một `CoroutineScope` (sẽ được mô tả sau)
 - Hàm `launch()` tạo ra các coroutine
     - Hàm `launch()` đầu tiên tạo ra coroutine *cha*
     - Hàm `launch()` thứ hai tạo ra coroutine *con*, chạy hàm `A()`
     - Tương tự, có một coroutine con chạy hàm `B()`
+- 3 coroutine chạy "song song", chính xác hơn là tương tranh
 
-Đoạn mã trong Hình 6 tuân theo nguyên tắc sau:
-
-- Cả 3 coroutine chạy "song song", hay chính xác hơn là tương tranh
-- Nếu coroutine cha xong trước, nó chờ cho đến khi mọi coroutine con chạy xong
-
-Nguyên tắc thứ hai đảm bảo rằng khi hàm dùng coroutine kết thúc, không còn các
-tác vụ chạy tương tranh nữa. Toàn bộ coroutine kết thúc (giống một lệnh `join()`
-lớn nếu dùng luồng), và trả lại luồng điều khiển cho điểm gọi. Đột nhiên, hai
-tính năng đang được xem xét hoạt động:
+Đoạn mã trong Hình 6 tuân theo nguyên tắc sau: *coroutine cha chờ đến khi mọi
+coroutine con chạy xong*, kể cả khi coroutine cha xong trước. Nguyên tắc này đảm
+bảo rằng khi hàm dùng coroutine kết thúc, không còn các tác vụ chạy tương tranh
+nữa. Các coroutine kết thúc (giống một lệnh `join()` lớn nếu dùng luồng), và trả
+lại luồng điều khiển cho điểm gọi. Đột nhiên, hai tính năng đang được xem xét
+hoạt động:
 
 - Quản lí tài nguyên tự động: do đảm bảo trả lại luồng điều khiển, tài nguyên
   chắc chắn được đóng; do không còn tác vụ con, tài nguyên không bị đọc sau
@@ -492,7 +494,27 @@ tính năng đang được xem xét hoạt động:
   vụ tương tranh là ngang hàng, không liên quan đến nhau), coroutine con có thể
   ném ngoại lệ để coroutine cha bắt.
 
-<!-- Explain about scope -->
+Cần chú ý rằng các API hiện tại không phải là không làm được nguyên tắc trên,
+vấn đề ở đây là thực hiện một cách *tự động*. Ví dụ, trong JS, để tuân theo
+nguyên tắc trên, lập trình viên phải `await` với mọi hàm `async`; nếu không,
+luồng chạy của hàm đó sẽ tách biệt hẳn với luồng chương trình, như Hình 5 mô tả.
+
+Do trong các ngôn ngữ khác, nguyên tắc trên chỉ là một ca sử dụng nhỏ, việc ép
+buộc viết theo ca sử dụng này đòi hỏi lập trình viên thay đổi suy nghĩ về mã
+tương tranh. Đổi lại, chương trình trở nên sáng rõ, giống với những đoạn mã viết
+theo kiểu tuần tự truyền thống.
+
+##### 2.2.1.4. Tóm tắt
+
+Coroutine và tương tranh có cấu trúc là một trong những tính năng quan trọng
+nhất của Kotlin, và được dùng để tăng tốc những đoạn mã chạy chậm trong yacv, do
+đó phần này được viết kĩ hơn các phần kiến thức nền khác. Mấu chốt của tương
+tranh có cấu trúc được tóm gọn trong Hình 6. Dù khá mới (Martin Sústrik, tác giả
+của ZeroMQ, đưa ra ý tưởng này năm 2016) và còn có tranh cãi, việc mô hình này
+được liên tục cải thiện, ứng dụng vào nhiều thư viện (C có libdill, Python có
+Trio, Java sắp chuẩn hóa Loom,...) cho thấy đây là một ý tưởng có tiềm năng lớn,
+giúp thay đổi tư duy về tương tranh theo hướng dễ dàng, gần với những đoạn mã
+tuần tự quen thuộc.
 
 ### 2.3. Mẫu thiết kế MVVM và Kiến trúc khuyên dùng bởi Google <a name="P2.3-mvvm"></a>
 
@@ -915,3 +937,4 @@ hình hiển thị danh sách truyện.
   [8]: https://www.statista.com/statistics/444476/google-play-annual-revenue/
   [9]: https://blog.mindorks.com/what-is-android-jetpack-and-why-should-we-use-it
   [10]: https://vorpus.org/blog/notes-on-structured-concurrency-or-go-statement-considered-harmful/#a-surprise-benefit-removing-goto-statements-enables-new-features
+  [11]: https://250bpm.com/blog:71/
