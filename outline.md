@@ -234,15 +234,15 @@ Hình 1. Các phân lớp của hệ điều hành Android
     Theo Google, lập trình viên có quyền truy cập vào lớp này tương đương với
     các ứng dụng hệ thống (như ứng dụng SMS, trình duyệt,...). Đây có thể coi là
     một cam kết tránh độc quyền về công nghệ, tức đa số ứng dụng hệ thống không
-    có khả năng đặc biệt, hay hiệu năng cao hơn ứng dụng thông thường tương tự
-    (được tối ưu tốt).
+    có khả năng đặc biệt, hay hiệu năng cao hơn ứng dụng bên thứ ba (hiểu đơn
+    giản là ứng dụng "thông thường") tương tự.
 
 - Ứng dụng hệ thống (System Apps)
 
     Android đi kèm với một số ứng dụng hệ thống như ứng dụng SMS, trình duyệt,
     lịch,... Chủ trương của Google là cho phép thay thế đa số các ứng dụng này
-    với ứng dụng bên thứ ba (hiểu đơn giản là ứng dụng "thông thường"), tuy
-    nhiên chắc chắn có một số ngoại lệ như ứng dụng Cài đặt (Settings).
+    với ứng dụng bên thứ ba, tuy nhiên chắc chắn có một số trường hợp đặc biệt
+    như ứng dụng Cài đặt (Settings).
 
 Gần như mọi ứng dụng Android cơ bản đều sử dụng thành phần View System trong
 tầng Khung phát triển để viết giao diện, và yacv không là ngoại lệ. yacv còn sử
@@ -344,16 +344,16 @@ có tính tương tranh (concurrency) và/hoặc bất đồng bộ (asynchronou
 dụ cụ thể là ứng dụng đa luồng, một cách đơn giản hơn.
 
 Về cơ bản, coroutine giống với luồng (thread), nhưng nhẹ hơn. Coroutine được
-thiết kế từ đầu theo mô hình *đa nhiệm hợp tác* (cooperative multitasking), khác
-với luồng vốn hay dùng đa nhiệm ưu tiên (preemptive multitasking). Mấu chốt khác
-biệt của chúng là đa nhiệm hợp tác có các "điểm dừng"; khi thực thi đến điểm
-dừng, coroutine có thể dừng lại, chủ động giải phóng CPU cho việc khác, rồi tiếp
-tục việc đang dở vào thời điểm thích hợp sau đó. Ngược lại, đa nhiệm ưu tiên có
-thể buộc một luồng đang chạy ngừng lại bất kì lúc nào để ưu tiên chạy một luồng
-khác. Đây cũng chính là điểm khiến coroutine nhẹ hơn: chi phí chuyển ngữ cảnh
-(context switching) được cắt giảm trong nhiều trường hợp (dù không phải tất cả),
-do chuyển sang thực thi một coroutine khác chưa chắc đã chuyển sang một luồng hệ
-điều hành khác.
+luôn dùng mô hình *đa nhiệm hợp tác* (cooperative multitasking), khác với luồng
+vốn hay dùng đa nhiệm ưu tiên (preemptive multitasking). Mấu chốt khác biệt của
+chúng là đa nhiệm hợp tác có các "điểm dừng"; do lập trình viên tao ra; khi chạy
+đến đó, coroutine có thể dừng lại, chủ động nhả CPU cho việc khác, rồi tiếp tục
+việc đang dở vào lúc thích hợp sau đó. Ngược lại, đa nhiệm ưu tiên có thể buộc
+một luồng đang chạy ngừng lại bất kì lúc nào để ưu tiên chạy một luồng khác. Đây
+cũng chính là điểm khiến coroutine nhẹ hơn: chi phí chuyển ngữ cảnh (context
+switching) được kiểm soát và cắt giảm trong nhiều trường hợp (dù không phải tất
+cả), do chuyển sang thực thi một coroutine khác chưa chắc đã chuyển sang một
+luồng hệ điều hành khác.
 
 Với những điều cơ bản trên, coroutine chưa làm được nhiều. Roman Elizarov,
 trưởng dự án Kotlin, hướng coroutine trong Kotlin theo một ý tưởng mới: *tương
@@ -369,9 +369,8 @@ thứ ba như RxJava.
 Để hiểu sơ về tương tranh có cấu trúc, ta có thể so sánh nó với *lập trình có cấu
 trúc* (structured programming). Để hiểu sơ về lập trình có cấu trúc, ta lại phải
 tìm về *lập trình phi cấu trúc* (non-structured programming). Trong buổi đầu của
-máy tính, lệnh nhảy `GOTO` được sử dụng rất nhiều vì phù hợp với cách máy tính
-chạy. Tuy vậy, lệnh này làm cấu trúc chương trình trở nên khó hiểu, do không thể
-kiểm soát quá trình thực thi. Hình 2 và 3 mô tả rõ khó khăn này:
+máy tính, lệnh nhảy `GOTO` được sử dụng nhiều vì phù hợp với cách máy tính
+chạy, và kiểu lập trình này chính là lập trình phi cấu trúc.
 
 ![non-structured programming](images/sequential-and-go-to-schematic.svg)
 
@@ -381,14 +380,16 @@ Hình 2: Lập trình không có cấu trúc với `GOTO`
 
 Hình 3: Sự lộn xộn của lập trình phi cấu trúc
 
-Lập trình phi cấu trúc cho phép dùng `GOTO`, từ đó có "cấu trúc" quá tự do: khi
-đã chạy lệnh `GOTO`, những lệnh phía sau nó không biết khi nào mới được chạy, vì
-đơn giản là chương trình chuyển sang chạy những dòng lệnh hoàn toàn khác mà
-không trở lại.
+Vấn đề/hậu quả của lập trình phi cấu trúc, hay của `GOTO`, có thể tóm gọn như
+sau:
 
-Vấn đề/hậu quả của `GOTO` có thể tóm gọn như sau:
+- Khó nắm bắt luồng chương trình
 
-- Khó nắm bắt luồng chương trình: mã trở thành một đống "mì trộn" như Hình 3.
+    `GOTO` làm "cấu trúc" chương trình quá tự do: khi đã chạy `GOTO`, các lệnh
+    phía sau nó không biết khi nào mới được chạy, vì đơn giản là chương trình
+    chuyển sang những lệnh hoàn toàn khác mà không trở lại. Luồng chạy trở thành
+    một đống "mì trộn" như Hình 3.
+
 - Không cài đặt được các chức năng mới (ngoại lệ, quản lí tài nguyên tự động,...)
 
     Xét ví dụ Java sau về quản lí tài nguyên tự động:
@@ -408,9 +409,9 @@ Vấn đề/hậu quả của `GOTO` có thể tóm gọn như sau:
 Lập trình có cấu trúc đơn giản hóa luồng chạy bằng việc giới hạn các lệnh nhảy
 còn `if`, `for` và gọi hàm. Khác biệt mấu chốt của ba lệnh này so với lệnh nhảy
 cấp thấp `GOTO` là chúng *trả luồng điều khiển* về điểm gọi. Từ đó, ta được phép
-nghĩ một lệnh như một hộp đen, tức không cần quan tâm chi tiết bên trong, vì
-chắc chắn một lúc sau lệnh kế tiếp sẽ được thực hiện, thay vì nhảy lung tung.
-Hình 4 thể hiện rõ điều này, đặc biệt khi so sánh với Hình 2.
+nghĩ một lệnh như một hộp đen, tức không cần biết chi tiết bên trong, vì chắc
+chắn lệnh kế tiếp sẽ được thực hiện, thay vì nhảy lung tung. Hình 4 thể hiện rõ
+điều này, đặc biệt khi so với Hình 2.
 
 Theo định nghĩa, ba lệnh trên giải quyết được hậu quả đầu tiên. Đồng thời, các
 hậu quả số hai cũng được giải quyết, do ngôn ngữ đã có cấu trúc (cụ thể là có
@@ -424,8 +425,8 @@ Ngày nay, ba cấu trúc cơ bản này đã trở thành phần không thể t
 ngôn ngữ lập trình, và `GOTO` chỉ còn dùng trong hợp ngữ. Bài học quá khứ cho
 thấy nếu áp dụng một số cấu trúc, giới hạn, ta có thể giải quyết vấn đề một cách
 tinh tế và gọn gàng. Trong trường hợp này, tương tranh có cấu trúc có thể loại
-bỏ một số điểm yếu của các API tương tranh/bất đồng bộ truyền thống, giống như
-cách lập trình cấu trúc đã làm.
+bỏ một số điểm yếu của các API tương tranh/bất đồng bộ truyền thống, giống cách
+lập trình có cấu trúc đã làm.
 
 ##### 2.2.1.3. Áp dụng vào hiện tại: tương tranh có cấu trúc
 
@@ -434,7 +435,7 @@ Trước hết, ta xem xét hai kiểu API tương tranh hay dùng hiện nay:
 | Tên | Giải thích | Ví dụ |
 |:----|:-----------|:------|
 | Tương tranh | Chạy một hàm theo cách tương tranh với luồng chạy hiện tại | `threading.Thread(target=fn).start() # Python` |
-| Bất đồng bộ | Chạy một hàm khi có sự kiện xảy ra (callback) | `document.getElementById('id').onclick = callback; // JS` |
+| Bất đồng bộ | Chạy một hàm khi có sự kiện xảy ra (callback) | `document.getElementById('id').onclick = cb; // JS` |
 
 Bảng 2: Hai kiểu API tương tranh thường thấy.
 
@@ -445,20 +446,53 @@ lại với hai API trên:
 
 Hình 5: Tương tranh không cấu trúc với `goroutine` - API thuộc kiểu tương tranh.
 
-Trên thực tế, có cách để thực hiện một số chức năng trên (bắt ngoại lệ,...) với
-API hiện tại, tuy nhiên đây vẫn là những cách xử lí riêng, do đó chưa thực sự
-thuận tiện khi dùng. Ví dụ, ES6 có `Promise.catch()` để bắt ngoại lệ trong
-`Promise` mà không (thể) dùng cấu trúc `try-catch` sẵn có của JS. Với tương
-tranh có cấu trúc, các vấn đề này đều được giải quyết.
+- Ta dùng lại ví dụ về quản lí tài nguyên tự động. Nếu có một luồng thực thi
+  khác tương tranh với luồng chính, thì khi luồng chính đóng `Scanner`, có thể
+  luồng kia vẫn đang đọc nó. Vấn đề giờ không phải là rò rỉ tài nguyên, mà là
+  đọc sau khi đóng. Cuối cùng, tính năng này không thể hoạt động.
+- Với tính năng bắt ngoại lệ, nếu có ngoại lệ ở luồng tương tranh, ta cũng không
+  có cách nào để biết, và buộc phải kệ nó.
 
-Ta xét một đoạn mã tương tranh đơn giản dùng coroutine trong Kotlin:
+Trên thực tế, có cách để thực hiện một số chức năng trên với API hiện tại, tuy
+nhiên đây vẫn là những cách xử lí riêng, do đó chưa thực sự thuận tiện khi dùng.
+Ví dụ, ES6 có `Promise.catch()` để bắt ngoại lệ trong `Promise` mà không (thể)
+dùng cấu trúc `try-catch` sẵn có của JS. Với tương tranh có cấu trúc, các vấn đề
+này đều được giải quyết.
+
+Ta xét một đoạn mã tương tranh đơn giản dùng coroutine trong Kotlin, tức dùng
+tương tranh có cấu trúc (không phải coroutine trong mọi ngôn ngữ đều có tính
+năng này):
 
 ![kotlin coroutine](images/kotlin-coroutine.svg)
 
 Hình 6: Tương tranh có cấu trúc dùng coroutine trong Kotlin
 
-Hình 6 thể hiện cách giải quyết các vấn đề trên của coroutine trong Kotlin: *trả
-luồng điều khiển*, như lập trình có cấu trúc.
+Đoạn mã trong Hình 6 làm những việc sau:
+
+- Tạo ra một `CoroutineScope` (sẽ được mô tả sau)
+- Hàm `launch()` tạo ra các coroutine
+    - Hàm `launch()` đầu tiên tạo ra coroutine *cha*
+    - Hàm `launch()` thứ hai tạo ra coroutine *con*, chạy hàm `A()`
+    - Tương tự, có một coroutine con chạy hàm `B()`
+
+Đoạn mã trong Hình 6 tuân theo nguyên tắc sau:
+
+- Cả 3 coroutine chạy "song song", hay chính xác hơn là tương tranh
+- Nếu coroutine cha xong trước, nó chờ cho đến khi mọi coroutine con chạy xong
+
+Nguyên tắc thứ hai đảm bảo rằng khi hàm dùng coroutine kết thúc, không còn các
+tác vụ chạy tương tranh nữa. Toàn bộ coroutine kết thúc (giống một lệnh `join()`
+lớn nếu dùng luồng), và trả lại luồng điều khiển cho điểm gọi. Đột nhiên, hai
+tính năng đang được xem xét hoạt động:
+
+- Quản lí tài nguyên tự động: do đảm bảo trả lại luồng điều khiển, tài nguyên
+  chắc chắn được đóng; do không còn tác vụ con, tài nguyên không bị đọc sau
+  đóng.
+- Bắt ngoại lệ: do cấu trúc cha-con (khác với các API hiện tại cho rằng hai tác
+  vụ tương tranh là ngang hàng, không liên quan đến nhau), coroutine con có thể
+  ném ngoại lệ để coroutine cha bắt.
+
+<!-- Explain about scope -->
 
 ### 2.3. Mẫu thiết kế MVVM và Kiến trúc khuyên dùng bởi Google <a name="P2.3-mvvm"></a>
 
