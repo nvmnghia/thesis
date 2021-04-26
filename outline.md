@@ -260,7 +260,7 @@ tương tác với nhau.
 - **Mô tả ngắn gọn**:
 
     Người đọc chọn một thư mục trong điện thoại làm thư mục gốc. Ứng dụng sẽ
-    quét thư mục này và tìm các tệp truyện, rồi hiển thị những thư mục chứa tệp
+    quét thư mục này và tìm các tệp truyện, rồi  hiển thị những thư mục chứa tệp
     truyện cho người đọc duyệt.
 
 - **Mô tả từng bước**:
@@ -543,16 +543,26 @@ hình hiển thị danh sách truyện.
 Chương này tập trung vào thiết kế của ứng dụng, là triển khai cụ thể của [Chương
 3](#P3-specification).
 
+Kiến trúc tổng quan của yacv rất đơn giản:
+
+1. yacv *quét* metadata tệp truyện và lưu kết quả quét vào *cơ sở dữ liệu*
+2. Các *Màn hình* hiển thị dữ liệu cho người dùng
+3. Khi người dùng đọc truyện, yacv trích xuất và hiển thị tệp ảnh
+
+yacv chỉ thiết kế cho *một người dùng*, do đó có rất ít tương tác, dẫn đến kiến
+trúc tối giản như trên. Các tiểu mục sau sẽ đi sâu vào các phần con rời rạc
+trong kiến trúc tổng thể.
+
 ### 4.1. Thiết kế Cơ sở dữ liệu <a name="P4.2-db-design"></a>
 
 yacv chọn SQLite vì đây là một cơ sở dữ liệu gọn nhẹ nhúng sẵn trong Android.
 SQLite sử dụng mô hình quan hệ, do đó thiết kế bảng cần đảm bảo được chuẩn hóa
 (normalization).
 
-Do không cần quản lí người dùng, cơ sở dữ liệu của yacv chỉ dùng để lưu thông
-tin metadata, cho phép ứng dụng quét dữ liệu ít lần hơn và tìm kiếm truyện. Theo
-như yêu cầu về metadata ở hai Phụ lục, và sau khi chuẩn hóa, ta có lược đồ cơ sở
-dữ liệu như sau:
+Do không cần quản lí người dùng, cơ sở dữ liệu của yacv chỉ dùng để *lưu thông
+tin metadata*, cho phép ứng dụng quét dữ liệu ít lần hơn và tìm kiếm truyện.
+Theo như yêu cầu về metadata ở hai Phụ lục, và sau khi chuẩn hóa, ta có lược đồ
+cơ sở dữ liệu như sau:
 
 ![er_diagram](images/relationships.real.large.svg)
 Hình 2: Lược đồ cơ sở dữ liệu của yacv
@@ -586,6 +596,9 @@ thư viện SAF đã mô tả ở Chương 2:
   thể tìm ra tên thư mục rất nhanh, tuy nhiên cũng do SAF mà việc này trở nên
   khó khăn, nên cần lưu riêng trường này.
 
+Các trường URI đều cần có ràng buộc `UNIQUE`, do mỗi URI trỏ đích danh đến một
+đối tượng.
+
 Ta xem xét đến các bảng nối:
 
 - `ComicCharacterJoin`:
@@ -604,7 +617,64 @@ Ta xem xét đến các bảng nối:
 - `ComicGenreJoin`: Mỗi tập truyện có thể có nhiều thể loại khác nhau và ngược
   lại, do đó `Comic` và `Genre` có quan hệ Nhiều - Nhiều.
 
-### 4.3. Thiết kế giao diện <a name="P4.3-ui-design"></a>
+### 4.2. Thiết kế kiến trúc <a name="P4.2-arch-design></a>
+
+Phần này làm rõ kiến trúc hướng đối tượng của ứng dụng.
+
+#### 4.2.1. Nguồn dữ liệu - Repository - DAO - Scanner <a name="P4.2.1-mvvm-detail">
+
+Như đã đề cập ở Chương 2, yacv sử dụng Kiến trúc Google khuyên dùng, vốn dựa
+trên MVVM. Phần này nêu rõ hơn cách triển khai MVVM của yacv trong phần nguồn dữ
+liệu (Model/Repository).
+
+Dựa vào Hình 9, ta thiết kế được 3 nguồn dữ liệu (model) sau:
+
+|            | Thành phần tương đương | Mục đích                                                |
+|:-----------|:-----------------------|:--------------------------------------------------------|
+| Parser     | Remote Data Source     | Quét tệp để lấy metadata cập nhật nhất                  |
+| DAO        | Model                  | Lấy metadata từ cơ sở dữ liệu để tránh quét đi quét lại |
+| Repository | Repository             | Tổng hợp hai nguồn trên                                 |
+
+Bảng 3: Ba nguồn dữ liệu tương đương với Hình 9
+
+Cụ thể hơn:
+
+- Parser là bộ quét metadata tệp truyện (sẽ được mô tả sau), nhận vào URI, trả
+  về metadata của tệp truyện tương ứng.
+- DAO (Data access object) là giao diện Room tạo ra giúp truy cập SQLite dễ hơn;
+  mỗi bảng tương ứng với một DAO, mỗi câu truy vấn tương ứng với một hàm trong
+  DAO.
+
+Khi cần đọc dữ liệu metadata từ tệp truyện, ba thành phần này tương tác như sau:
+
+![mvvm repo](images/MVVM_repo.svg)
+
+Hình 1: Tương tác của ba nguồn dữ liệu, mũi tên gạch đứt thể hiện tính năng data binding
+
+Mấu chốt ở đây là Parser dù có dữ liệu chính xác (trong trường hợp một ứng dụng
+khác sửa metadata tệp truyện) nhưng tốc độ rất chậm, còn cơ sở dữ liệu không
+chính xác nhưng rất nhanh, do đó *cơ sở dữ liệu làm bộ đệm cho parser*.
+
+Repository làm nhiệm vụ gọi cả hai nguồn dữ liệu trên và cập nhật cơ sở dữ liệu
+(nếu cần) thay cho View/ViewModel. Hiện tại, Repository có thể không làm được
+nhiều, tuy nhiên nó giúp ích cho *khả năng mở rộng* của ứng dụng. Ví dụ, trong
+tương lai yacv có thể liên kết với một bên thứ ba cung cấp metadata cho truyện,
+khi đó để tích hợp API thì chỉ cần sửa phần Repository.
+
+Cũng cần chú ý rằng việc đọc metadata từ tệp tin không phải là yêu cầu của mọi
+màn hình (cụ thể chỉ Màn hình Metadata cần), do đó trong đa số các ca sử dụng,
+*DAO đóng vai trò Model*, thay cho Repository. Tương tác trong Hình 11 vẫn được
+duy trì, tuy không có cả Repository lẫn Parser.
+
+##### 4.2.2. Màn hình Thư viện
+
+Như đã phân tích ở [mục 3.3.2](#P3.3.2-show-library), Màn hình Thư viện cần hiển
+thị cả lỗi và gợi ý, bên cạnh việc hiển thị danh sách thư mục và chọn thư mục
+gốc. Do đó, phần này chia ra ba phần con tương ứng.
+
+##### 4.2.2.1. Chọn thư mục gốc
+
+
 
 ## 5. Chương 5: Lập trình & Kiểm thử <a name="P5-implementation"></a>
 
@@ -635,3 +705,4 @@ Ta xem xét đến các bảng nối:
   [3]: https://github.com/tachiyomiorg/tachiyomi
   [4]: https://github.com/tachiyomiorg/tachiyomi/issues/1745
   [5]: https://play.google.com/store/apps/details?id=br.com.kurotoshiro.leitor_manga&hl=en&gl=US
+  [6]: https://material.io/
