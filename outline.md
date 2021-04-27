@@ -132,15 +132,17 @@ trong việc tích hợp thư viện đọc định dạng này.
 
 Các phần còn lại của khóa luận có cấu trúc như sau:
 
-- Chương 2 - Kiến thức nền tảng: giới thiệu sơ lược về ba nền tảng của ứng dụng,
-  gồm hệ điều hành Android, ngôn ngữ lập trình Kotlin, và mẫu thiết kế MVVM;
-  định dạng tệp nén `.zip` cũng được giới thiệu vì liên quan trực tiếp đến ứng
-  dụng.
-- Chương 3 - Phân tích yêu cầu: phân tích nhu cầu và ca sử dụng để có đặc tả yêu
-  cầu.
-- Chương 4 - Lập trình & Kiểm thử: một số cài đặt và ca kiểm thử trong ứng dụng
-  sẽ được nêu một cách có chọn lọc.
-- Chương 5 - Kết luận: kết thúc khóa luận.
+- [Chương 2  - Kiến thức nền tảng](#P2-fundamental): Giới thiệu sơ lược về ba
+  nền tảng của ứng dụng, gồm hệ điều hành Android, ngôn ngữ lập trình Kotlin, và
+  mẫu thiết kế MVVM; định dạng tệp nén `.zip` cũng được giới thiệu vì liên quan
+  trực tiếp đến ứng dụng.
+- [Chương 3 - Phân tích yêu cầu](#P3-specification): Phân tích nhu cầu và ca sử
+  dụng để có đặc tả yêu cầu.
+- [Chương 4 - Thiết kế](#P4-design): Thiết kế ứng dụng, gồm thiết kế cơ sở dữ
+  liệu, giao diện, logic nghiệp vụ.
+- [Chương 5 - Lập trình & Kiểm thử](#P5-implementation): Một số cài đặt và ca
+  kiểm thử trong ứng dụng sẽ được nêu một cách có chọn lọc.
+- [Chương 6 - Kết luận](#P6-comclusion): Kết thúc khóa luận.
 
 ## 2. Chương 2: Kiến thức nền tảng <a name="P2-fundamental"></a>
 
@@ -190,8 +192,8 @@ Hình 1. Các phân lớp của hệ điều hành Android
 
     Đây là tầng thấp nhất. Android thường dùng các nhánh hỗ trợ dài hạn (LTS)
     của Linux. Không giống như kiểu phát triển "distro" trên máy tính (các thay
-    đổi chủ yếu ở ngoài nhân), Google sửa (dùng Bionic làm thư viện C thay vì
-    GNU C,...) và thêm bớt nhiều thành phần vào nhân trước khi tích hợp.
+    đổi chủ yếu ở ngoài nhân), Google sửa (dùng Bionic làm thư viện C thay GNU
+    C,...) và thêm bớt nhiều thành phần vào nhân trước khi tích hợp.
 
 - Lớp phần cứng trừu tượng (Hardware Abstraction Layer):
 
@@ -228,8 +230,8 @@ Hình 1. Các phân lớp của hệ điều hành Android
 - Khung phát triển ứng dụng (Java API Framework):
 
     Gần như mọi ứng dụng Android sẽ dùng các tính năng liên quan đến giao diện
-    và hệ điều hành thông qua tầng phần mềm này. Đây là tầng gần với lập trình
-    viên nhất, và các API của nó được viết bằng Java.
+    và hệ điều hành thông qua tầng này. Đây là tầng gần với lập trình viên nhất,
+    và API của nó được viết bằng Java.
 
     Theo Google, lập trình viên có quyền truy cập vào lớp này tương đương với
     các ứng dụng hệ thống (như ứng dụng SMS, trình duyệt,...). Đây có thể coi là
@@ -301,7 +303,7 @@ Kotlin và ngược lại), do cùng được biên dịch thành JVM bytecode.
 
 Điểm mạnh của Kotlin so với Java là tính ngắn gọn. Do được phát triển mới,
 Kotlin không cần tương thích với phiên bản cũ, cho phép các kĩ sư thiết kế một
-ngôn ngữ có cú pháp hiện đại và gọn ghẽ. Ngoài ra, do được một công ty tư nhân
+ngôn ngữ có cú pháp hiện đại, gọn ghẽ. Ngoài ra, vì được một công ty tư nhân
 phát triển, Kotlin không cần chờ đến các cuộc họp phức tạp để đạt được đồng
 thuận về tính năng mới, giúp ngôn ngữ liên tục được cải tiến. Đồng thời, công ty
 cũng mở mã nguồn của Kotlin và chương trình dịch, giúp đẩy nhanh quá trình phát
@@ -326,8 +328,7 @@ Sau đây là tóm tắt một số đặc điểm kĩ thuật của Kotlin:
   từ đó người viết luôn biết chính xác đối tượng có thể nhận giá trị `null` hay
   không, và buộc xử lí trường hợp này nếu có.
 - Về nền tảng hỗ trợ, ngoài JVM, Kotlin còn được biên dịch sang JavaScript,
-  Wasm, và mã máy (Kotlin/Native). Trừ JVM, các nền tảng còn lại đều ở giai đoạn
-  thử nghiệm.
+  Wasm, và mã máy. Trừ JVM, các nền tảng còn lại đều ở giai đoạn thử nghiệm.
 
 Với việc Google khuyên dùng Kotlin khi viết ứng dụng Android, tôi cho rằng khóa
 luận này là một cơ hội phù hợp để thử sử dụng Kotlin, và đã quyết định chọn viết
@@ -344,7 +345,7 @@ dụ cụ thể là ứng dụng đa luồng, một cách đơn giản hơn.
 Về cơ bản, coroutine giống với luồng (thread), nhưng nhẹ hơn. Coroutine được
 luôn dùng mô hình *đa nhiệm hợp tác* (cooperative multitasking), khác với luồng
 vốn hay dùng đa nhiệm ưu tiên (preemptive multitasking). Mấu chốt khác biệt của
-chúng là đa nhiệm hợp tác có các "điểm dừng"; do lập trình viên tao ra; khi chạy
+chúng là đa nhiệm hợp tác có các "điểm dừng" do lập trình viên tao ra; khi chạy
 đến đó, coroutine có thể dừng lại, chủ động nhả CPU cho việc khác, rồi tiếp tục
 việc đang dở vào lúc thích hợp sau đó. Ngược lại, đa nhiệm ưu tiên có thể buộc
 một luồng đang chạy ngừng lại bất kì lúc nào để ưu tiên chạy một luồng khác. Đây
@@ -358,8 +359,7 @@ trưởng dự án Kotlin, hướng coroutine trong Kotlin theo một ý tưởn
 tranh có cấu trúc* (structured concurrency). Ý tưởng này tiếp tục đơn giản hóa
 việc viết những đoạn mã tương tranh bằng cách áp đặt một số giới hạn, cấu trúc
 cơ bản. Kết quả là coroutine trong Kotlin hỗ trợ việc xử lí lỗi và ngừng tác vụ
-bất đồng bộ tốt hơn việc dùng luồng, hay dùng callback trong các thư viện bên
-thứ ba như RxJava.
+bất đồng bộ tốt hơn việc dùng luồng, hay các thư viện tương tranh như RxJava.
 
 Coroutine được dùng để tăng tốc những đoạn mã chạy chậm trong yacv (sẽ được mô
 tả sau). Ngoài cải thiện về hiệu năng, coroutine và tương tranh có cấu trúc còn
@@ -457,9 +457,9 @@ Hình 5: Tương tranh không cấu trúc với `goroutine` - API thuộc kiểu
 
 Trên thực tế, có cách để thực hiện một số chức năng trên với API hiện tại, tuy
 vậy đó đều là cách xử lí riêng, do đó chưa thực sự thuận tiện khi dùng. Ví dụ,
-ES6 có `Promise.catch()` để bắt ngoại lệ trong `Promise` mà không (thể) dùng cấu
-trúc `try-catch` sẵn có. Với tương tranh có cấu trúc, các vấn đề này đều được
-giải quyết.
+ES6 có `catch()` để bắt ngoại lệ trong `Promise` mà không (thể) dùng cấu trúc
+`try-catch` sẵn có. Với tương tranh có cấu trúc, các vấn đề này đều được giải
+quyết.
 
 Ta xét một đoạn mã tương tranh dùng coroutine trong Kotlin, tức dùng tương tranh
 có cấu trúc (không phải coroutine trong mọi ngôn ngữ đều dùng mô hình này):
@@ -478,9 +478,9 @@ Hình 6: Tương tranh có cấu trúc dùng coroutine trong Kotlin
 
 Đoạn mã trong Hình 6 tuân theo nguyên tắc sau: *coroutine cha chờ đến khi mọi
 coroutine con chạy xong*, kể cả khi coroutine cha xong trước. Nguyên tắc này đảm
-bảo rằng khi hàm dùng coroutine kết thúc, không còn các tác vụ chạy tương tranh
-nữa, và luồng điều khiển được trả về điểm gọi. Đột nhiên, hai tính năng có vấn
-đề ở trên lại hoạt động:
+bảo rằng khi hàm dùng coroutine kết thúc, không còn tác vụ tương tranh nữa, và
+luồng điều khiển được trả về điểm gọi. Đột nhiên, hai tính năng có vấn đề ở trên
+lại hoạt động:
 
 - Quản lí tài nguyên tự động: do đảm bảo trả lại luồng điều khiển, tài nguyên
   chắc chắn được đóng; do không còn tác vụ con, tài nguyên không bị đọc sau
@@ -489,15 +489,16 @@ nữa, và luồng điều khiển được trả về điểm gọi. Đột nhi
   vụ tương tranh là ngang hàng, không liên quan đến nhau), coroutine con có thể
   ném ngoại lệ để coroutine cha bắt.
 
-Cần chú ý rằng các API hiện tại không phải là không làm được nguyên tắc trên,
-vấn đề ở đây là thực hiện một cách *tự động*. Ví dụ, trong JS, để tuân theo
-nguyên tắc trên, lập trình viên phải `await` với mọi hàm `async`; nếu không,
-luồng chạy của hàm đó sẽ tách biệt hẳn với luồng chương trình, như Hình 5 mô tả.
+Chú ý rằng các API hiện tại không phải là không làm được nguyên tắc trên, vấn đề
+là thực hiện một cách *tự động* và *đảm bảo*. Ví dụ, trong JS, để tuân theo
+nguyên tắc trên, ta phải `await` với mọi hàm `async`; nếu không, luồng chạy của
+hàm đó sẽ tách biệt với luồng chương trình, như Hình 5 mô tả. Do không có ràng
+buộc chặt chẽ này, các tính năng ngôn ngữ kia cũng khó cài đặt như đã phân tích.
 
-Do trong các ngôn ngữ khác, nguyên tắc trên chỉ là một ca sử dụng nhỏ, việc ép
-buộc viết theo ca sử dụng này đòi hỏi lập trình viên thay đổi suy nghĩ về mã
-tương tranh. Đổi lại, chương trình trở nên sáng rõ, giống với những đoạn mã viết
-theo kiểu tuần tự truyền thống.
+Do trong các ngôn ngữ khác, nguyên tắc trên chỉ là một ca sử dụng, việc ép buộc
+viết theo ca sử dụng này đòi hỏi lập trình viên thay đổi suy nghĩ về mã tương
+tranh. Đổi lại, chương trình trở nên sáng rõ, giống với những đoạn mã viết theo
+kiểu tuần tự truyền thống.
 
 Một khi vấn đề tương tranh được giải quyết hoặc đơn giản hóa, việc song song hóa
 (paralellization) để tăng tốc ứng dụng chỉ còn là một chi tiết cài đặt.
@@ -513,9 +514,142 @@ trong nhiều ngôn ngữ như Java (dự án Loom), Python (Trio), C (libdill),
 này cho thấy ý tưởng có tiềm năng lớn, giúp đơn giản hóa tư duy về tương tranh,
 làm chúng gần với những đoạn mã tuần tự quen thuộc.
 
-### 2.3. Mẫu thiết kế MVVM và Kiến trúc khuyên dùng bởi Google <a name="P2.3-mvvm"></a>
+### 2.3. Mẫu thiết kế MVVM và Kiến trúc Google khuyên dùng <a name="P2.3-mvvm"></a>
 
 #### 2.3.1. Mẫu thiết kế MVVM
+
+Cũng như các tác vụ lập trình khác, lập trình giao diện sử dụng nguyên lý
+Separation of Concern, hiểu đơn giản là chia tách chức năng. Nhiều năm kinh
+nghiệm cho thấy giao diện nên được chia làm hai thành phần chính, tách biệt
+nhau:
+
+- Model: dữ liệu để hiển thị (trả lời câu hỏi "cái gì"); liên quand đến các kiểu
+  dữ liệu: đối tượng, mảng, cơ sở dữ liệu,...
+- View: cách để hiển thị dữ liệu đó (trả lời câu hỏi "như thế nào"); liên quan
+  đến các đối tượng đồ họa như nút, danh sách,...
+
+Yếu tố tách biệt thể hiện ở điểm Model chắc chắc không được biết đến View. Khi
+này, giao diện và nghiệp vụ có thể phát triển khá độc lập với nhau, giúp giảm
+thời gian phát triển. Ngược lại, View có thể biết đến Model hay không là tùy vào
+cách triển khai cụ thể.
+
+Khó khăn ở đây là làm sao để kết nối hai thành phần riêng biệt. Đã có nhiều mô
+hình đặt ra để giải quyết vấn đề này, trong đó tiêu biểu là MVC và hai phiên bản
+phát triển tiếp MVP và MVVM. Ta lần lượt xem xét chúng để thấy rằng MVVM phù hợp
+nhất với Android, và được chọn làm nền tảng cho Kiến trúc Google khuyên dùng.
+
+##### 2.3.1.1. MVC: Model - View - Controller
+
+<!-- Cite 11 -->
+Phương hướng đầu tiên được thử là MVC, vốn rất phổ biến vào thời điểm Android ra
+đời. Do được phát minh từ rất lâu và mỗi framework lại có cách giải thích khác
+nhau, nên không có một mô hình cụ thể về cách ba thành phần trên tương tác. Tuy
+vậy, vẫn có một số điểm chung không đổi:
+
+- Controller nhận tương tác của người dùng
+- Sau khi nhận tương tác, controller cập nhật Model và View
+
+Phần khác nhau giữa các framework là cách View lấy dữ liệu từ Model, sao cho
+điều kiện Model không biết View vẫn thỏa mãn. Tuy nhiên, chưa cần quan tâm đến
+điểm này, ta đã thấy điểm yếu của MVC khi áp dụng vào Android. Trong Android,
+ứng dụng sử dụng `Activity` và/hoặc `Fragment` để quản lý giao diện. Hai đối
+tượng này cũng kiêm luôn việc nhận thao tác người dùng, tức chúng là *cả View và
+Controller*. Mục đích tách ra ba đối tượng do đó không thể làm được.
+
+Một số người cho rằng khung giao diện `.xml` có thể coi là View, còn
+`Fragment`/`Activity` tương ứng là Controller, tuy nhiên trong Android, hai
+thành phần này có quan hệ chặt chẽ chứ không rời nhau. Do đó, lí luận này cũng
+không thuyết phục.
+
+Hiện nay, MVC trên Android được coi là lỗi thời, không còn phù hợp.
+
+<!-- Tóm lại, một điểm yếu quan trọng của MVC trong Android là khó phân tách View -
+Controller. Điểm yếu này càng lộ rõ khi viết ứng dụng cho điện thoại, khi mà màn
+hình là nguồn nhập liệu duy nhất. -->
+
+##### 2.3.1.2. MVP: Model - View - Presenter
+
+Năm 2012, Robert Martin (Uncle Bob) xuất bản một bài viết nổi tiếng về kiến trúc
+phần mềm: Clean Architecture. Bài viết này tạo ra một trào lưu đưa Clean
+Architecture đi khắp nơi, trong đó có Android. MVP, vốn được phát triển từ lâu,
+được đông đảo lập trình viên chọn để hiện thực hóa Clean Architecture trên
+Android. Trước khi MVVM được Google chọn, đây là một hướng đi mới, có kì vọng
+cao sau nhiều thất bại trong việc dùng MVC trên Android.
+
+Nhiệm vụ của ba thành phần được chia như sau:
+
+- Model: vẫn như ban đầu
+- View:
+    - Hiển thị dữ liệu
+    - Nhận tương tác người dùng rồi chuyển nó sang Presenter
+- Presenter: trung gian giữa Model và View: nhận tương tác từ View, gọi/thay đổi
+  Model, cập nhật View
+
+Hình 7: Kiến trúc MVP
+
+Ở đây, ta thấy ít nhất điểm yếu View-Controller nhập nhằng của MVC được khắc
+phụ, khi View kiêm luôn việc nhận tương tác. Đồng thời, Model và View hoàn toàn
+không biết nhau, đúng theo nguyên lý tách lớp của Clean Architecture.
+
+Ta xét một ứng dụng ToDo đơn giản, trong đó các công việc có thể được đánh dấu
+đã hoàn thành. Trong ứng dụng, có một màn hình hiển thị số việc đã hoàn thành và
+chưa hoàn thành. Trong màn hình đó, tương tác của MVP như sau:
+
+1. Presenter lấy tất cả công việc trong Model
+2. Presenter đếm số việc hoàn thành, chưa hoàn thành
+3. Presenter gọi hàm của View, truyền hai số đếm được ở trên vào
+
+Cũng do nguyên lí tách lớp, Presenter giờ phải chịu mọi trách nhiệm liên kết: nó
+phải biết và có tham chiếu đến *cả View và Model*. Do đó, Presenter trở nên cồng
+kềnh, và dù tách biệt nhưng vẫn có liên kết không lỏng lẻo (tight-coupling) với
+View. MVVM khắc phục được điểm yếu cuối cùng này.
+
+##### 2.3.1.3. MVVM: Model - View - ViewModel
+
+Ta quay về chủ đề chính: MVVM. MVVM rất giống MVP ở chỗ ViewModel chịu trách
+nhiệm kết nối View và Model như Presenter. Điểm khác biệt là cách dữ liệu được
+truyền đi:
+
+- Trong MVP, Presenter gọi phương thức của View để truyền dữ liệu cho View.
+- Trong MVVM, ViewModel đưa ra một luồng dữ liệu (stream) để View cập nhật theo,
+  tức dùng mẫu thiết kế Observable. Nếu Model thay đổi, tất cả những gì
+  ViewModel phải làm là gửi thay đổi đó vào luồng dữ liệu, không cần biết đầu
+  nhận dữ liệu là gì.
+
+Do dùng luồng dữ liệu thay vì gọi hàm, ViewModel không cần biết rõ View, khác
+với Presenter phải biết rõ cả View và Model. Điều này giúp View và ViewModel có
+liên kết lỏng lẻo (loose coupling), giúp việc kiểm thử dễ dàng hơn. Phần còn lại
+của hai mô hình là giống nhau: View cần biết ViewModel để chuyển tương tác người
+dùng, và ViewModel thì cần biết Model để lấy dữ liệu.
+
+Do là mô hình phù hợp nhất trong cả ba, MVVM được Google chọn làm nền cho Kiến
+trúc Google khuyên dùng.
+
+<!-- - các thư viện data binding (data binding chỉ chung cách View tự động cập nhật
+  theo dữ liệu từ Model/ViewModel)
+- LiveData: không gửi dữ liệu cho View nếu không có View -->
+
+#### 2.3.2. Kiến trúc Google khuyên dùng
+
+Kiến trúc Google khuyên dùng có gốc là mô hình MVVM, có dạng như sau:
+
+![Google recommended architecture](images/final-architecture.png)
+
+Hình 8: Kiến trúc Google khuyên dùng
+
+- Repository đóng vai trò của Model trong MVVM, giúp ViewModel lấy dữ liệu mà
+  không cần quan tâm dữ liệu lấy từ đâu: cơ sở dữ liệu, gọi API qua mạng,...
+- LiveData là cơ chế luồng dữ liệu giúp liên kết ViewModel với View
+- Activity/Fragment là View
+
+Repository là một điểm được chi tiết hóa so với MVVM cơ bản. Lí do cho việc có
+nhiều nguồn dữ liệu là Google cho rằng một ứng dụng không nên hoàn toàn vô dụng
+nếu không có mạng. Do đó, sẽ có hai nguồn dữ liệu: dữ liệu mạng từ máy chủ, và
+dữ liệu đệm, ngoại tuyến. Khi có nhiều nguồn dữ liệu, mẫu thiết kế Repository là
+lựa chọn hiển nhiên để trừu tượng hóa chúng.
+
+yacv sử dụng kiến trúc này, dù không có tính năng liên quan đến mạng (sẽ được
+trình bày sau).
 
 ### 2.4. SQLite <a name="P2.4-sqlite"></a>
 
@@ -937,3 +1071,5 @@ hình hiển thị danh sách truyện.
   [9]: https://blog.mindorks.com/what-is-android-jetpack-and-why-should-we-use-it
   [10]: https://vorpus.org/blog/notes-on-structured-concurrency-or-go-statement-considered-harmful/#a-surprise-benefit-removing-goto-statements-enables-new-features
   [11]: https://250bpm.com/blog:71/
+  [12]: https://folk.universitetetioslo.no/trygver/1979/mvc-2/1979-12-MVC.pdf
+  [13]: https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html
