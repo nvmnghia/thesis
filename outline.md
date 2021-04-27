@@ -621,6 +621,18 @@ Ta xem xét đến các bảng nối:
 
 Phần này làm rõ kiến trúc hướng đối tượng của ứng dụng.
 
+Trong phần này có dùng nhiều biểu đồ tuần tự (sequence diagram) để minh họa
+tương tác của ba thành phần MVVM (cùng với một số thành phần liên quan) trong
+các ca sử dụng. Có một số điểm chung về các biểu đồ này:
+
+- Trừ khi cần thiết, thành phần View sẽ được lược bỏ cho ngắn gọn.
+- Đường thẳng nét đứt thể hiện tính năng data binding (tự động cập nhật View),
+  và thường trỏ về ViewModel. Đáng ra, mũi tên này phải trỏ về View, nhưng do
+  View bị ẩn đi, nên nó trỏ về ViewModel. Mặc dù không được đề cập đến trong
+  phần giới thiệu về MVVM, đây thực ra là một chi tiết đúng về mặt kĩ thuật:
+  ViewModel hoàn toàn đọc được luồng dữ liệu gửi đến View (hoặc ít nhất là đúng
+  trong cách viết ứng dụng Android thông thường).
+
 #### 4.2.1. Nguồn dữ liệu - Repository - DAO - Scanner <a name="P4.2.1-mvvm-detail">
 
 Như đã đề cập ở Chương 2, yacv sử dụng Kiến trúc Google khuyên dùng, vốn dựa
@@ -639,17 +651,17 @@ Bảng 3: Ba nguồn dữ liệu tương đương với Hình 9
 
 Cụ thể hơn:
 
-- Parser là bộ quét metadata tệp truyện (sẽ được mô tả sau), nhận vào URI, trả
+- *Parser* là bộ quét metadata tệp truyện (sẽ được mô tả sau), nhận vào URI, trả
   về metadata của tệp truyện tương ứng.
-- DAO (Data access object) là giao diện Room tạo ra giúp truy cập SQLite dễ hơn;
-  mỗi bảng tương ứng với một DAO, mỗi câu truy vấn tương ứng với một hàm trong
-  DAO.
+- *DAO* (Data access object) là giao diện Room tạo ra giúp truy cập SQLite dễ
+  hơn; mỗi bảng tương ứng với một DAO, mỗi câu truy vấn tương ứng với một hàm
+  trong DAO.
 
 Khi cần đọc dữ liệu metadata từ tệp truyện, ba thành phần này tương tác như sau:
 
 ![mvvm repo](images/MVVM_repo.svg)
 
-Hình 1: Tương tác của ba nguồn dữ liệu, mũi tên gạch đứt thể hiện tính năng data binding
+Hình 11: Tương tác của ba nguồn dữ liệu, mũi tên gạch đứt thể hiện tính năng data binding
 
 Mấu chốt ở đây là Parser dù có dữ liệu chính xác (trong trường hợp một ứng dụng
 khác sửa metadata tệp truyện) nhưng tốc độ rất chậm, còn cơ sở dữ liệu không
@@ -672,8 +684,31 @@ Như đã phân tích ở [mục 3.3.2](#P3.3.2-show-library), Màn hình Thư v
 thị cả lỗi và gợi ý, bên cạnh việc hiển thị danh sách thư mục và chọn thư mục
 gốc. Do đó, phần này chia ra ba phần con tương ứng.
 
-##### 4.2.2.1. Chọn thư mục gốc
+##### 4.2.2.1. Chọn thư mục gốc và hiển thị danh sách thư mục
 
+Để chọn thư mục gốc, người dùng ấn nút Đổi thư mục gốc để kích hoạt hộp thoại
+Chọn thư mục (picker), rồi chọn một thư mục trong đó. Luồng chạy của yacv như
+sau (trường hợp ngoại lệ sẽ được nêu trong phần kế tiếp):
+
+![scanning](images/Scanning.svg)
+
+Hình 12: Quét tệp truyện khi thay đổi thư mục gốc và hiển thị
+
+*Scanner* là đối tượng để quét dữ liệu. Scanner nhận vào URI của thư mục gốc,
+rồi lặp qua từng tệp con, cháu,... Nếu đó là tệp truyện, nó gọi Parser để lấy
+metadata, rồi lưu vào cơ sở dữ liệu qua DAO.
+
+Quá trình quét tệp này giống như duyệt cây, do đó có hai cách cơ bản:
+
+- Duyệt theo độ sâu (depth-first search, gọi tắt là DFS)
+- Duyệt theo độ rộng (breadth-first search, gọi tắt là BFS)
+
+Trong trường hợp cụ thể này, DFS được chọn. Lý do cho lựa chọn này là DFS có thể
+phát hiện *thư mục* nhanh hơn nhiều so với BFS. Mỗi khi gặp thư mục, DFS xử lí
+(đi xuống các thư mục con) ngay, thay vì thêm vào hàng đợi. Do phát hiện được
+thư mục nhanh hơn BFS, Màn hình Thư viện, vốn hiển thị danh sách các *thư mục*,
+cũng hiển thị sớm hơn. Dù thời gian quét tổng thể không thay đổi, người dùng
+được thấy thư mục sớm hơn giúp tạo cảm giác ứng dụng khá nhanh.
 
 
 ## 5. Chương 5: Lập trình & Kiểm thử <a name="P5-implementation"></a>
