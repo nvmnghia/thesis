@@ -516,12 +516,11 @@ làm chúng gần với những đoạn mã tuần tự quen thuộc.
 
 ### 2.3. Mẫu thiết kế MVVM và Kiến trúc Google khuyên dùng <a name="P2.3-mvvm"></a>
 
-#### 2.3.1. Mẫu thiết kế MVVM
+#### 2.3.1. Mẫu thiết kế MVVM <a name="P2.3.1-mvvm"></a>
 
 Cũng như các tác vụ lập trình khác, lập trình giao diện sử dụng nguyên lý
 Separation of Concern, hiểu đơn giản là chia tách chức năng. Nhiều năm kinh
-nghiệm cho thấy giao diện nên được chia làm hai thành phần chính, tách biệt
-nhau:
+nghiệm cho thấy giao diện nên được chia làm hai phần chính tách biệt nhau:
 
 - Model: dữ liệu để hiển thị (trả lời câu hỏi "cái gì"); liên quand đến các kiểu
   dữ liệu: đối tượng, mảng, cơ sở dữ liệu,...
@@ -531,12 +530,14 @@ nhau:
 Yếu tố tách biệt thể hiện ở điểm Model chắc chắc không được biết đến View. Khi
 này, giao diện và nghiệp vụ có thể phát triển khá độc lập với nhau, giúp giảm
 thời gian phát triển. Ngược lại, View có thể biết đến Model hay không là tùy vào
-cách triển khai cụ thể.
+cách triển khai cụ thể. Có sự bất đối xứng này là do View thường có các mã liên
+quan đến framework vốn phức tạp để kiểm thử, còn Model thường có các mã đơn
+giản.
 
-Khó khăn ở đây là làm sao để kết nối hai thành phần riêng biệt. Đã có nhiều mô
-hình đặt ra để giải quyết vấn đề này, trong đó tiêu biểu là MVC và hai phiên bản
-phát triển tiếp MVP và MVVM. Ta lần lượt xem xét chúng để thấy rằng MVVM phù hợp
-nhất với Android, và được chọn làm nền tảng cho Kiến trúc Google khuyên dùng.
+Khó khăn ở đây là làm sao để kết nối hai thành phần riêng biệt. Có nhiều mô hình
+đặt ra để giải quyết vấn đề này, tiêu biểu là MVC, MVP và MVVM. Ta lần lượt xem
+xét chúng để thấy rằng MVVM phù hợp nhất với Android, do đó được chọn làm nền
+tảng cho Kiến trúc Google khuyên dùng.
 
 ##### 2.3.1.1. MVC: Model - View - Controller
 
@@ -546,8 +547,8 @@ Phương hướng đầu tiên được thử là MVC, vốn rất phổ biến 
 nhau, nên không có một mô hình cụ thể về cách ba thành phần trên tương tác. Tuy
 vậy, vẫn có một số điểm chung không đổi:
 
-- Controller nhận tương tác của người dùng
-- Sau khi nhận tương tác, controller cập nhật Model và View
+1. Controller nhận tương tác của người dùng
+2. Sau đó, controller cập nhật Model và View
 
 Phần khác nhau giữa các framework là cách View lấy dữ liệu từ Model, sao cho
 điều kiện Model không biết View vẫn thỏa mãn. Tuy nhiên, chưa cần quan tâm đến
@@ -557,18 +558,15 @@ tượng này cũng kiêm luôn việc nhận thao tác người dùng, tức ch
 Controller*. Mục đích tách ra ba đối tượng do đó không thể làm được.
 
 Một số người cho rằng khung giao diện `.xml` có thể coi là View, còn
-`Fragment`/`Activity` tương ứng là Controller, tuy nhiên trong Android, hai
-thành phần này có quan hệ chặt chẽ chứ không rời nhau. Do đó, lí luận này cũng
-không thuyết phục.
+Fragment/Activity tương ứng là Controller, tuy nhiên trong Android, các thành
+phần này có quan hệ chặt chẽ chứ không rời nhau. Do đó, lí luận này cũng không
+thuyết phục.
 
 Hiện nay, MVC trên Android được coi là lỗi thời, không còn phù hợp.
 
-<!-- Tóm lại, một điểm yếu quan trọng của MVC trong Android là khó phân tách View -
-Controller. Điểm yếu này càng lộ rõ khi viết ứng dụng cho điện thoại, khi mà màn
-hình là nguồn nhập liệu duy nhất. -->
-
 ##### 2.3.1.2. MVP: Model - View - Presenter
 
+<!-- Cite 13 -->
 Năm 2012, Robert Martin (Uncle Bob) xuất bản một bài viết nổi tiếng về kiến trúc
 phần mềm: Clean Architecture. Bài viết này tạo ra một trào lưu đưa Clean
 Architecture đi khắp nơi, trong đó có Android. MVP, vốn được phát triển từ lâu,
@@ -585,6 +583,9 @@ Nhiệm vụ của ba thành phần được chia như sau:
 - Presenter: trung gian giữa Model và View: nhận tương tác từ View, gọi/thay đổi
   Model, cập nhật View
 
+![mvp](images/Model_View_Presenter_GUI_Design_Pattern.png)
+
+<!-- Cite 14 -->
 Hình 7: Kiến trúc MVP
 
 Ở đây, ta thấy ít nhất điểm yếu View-Controller nhập nhằng của MVC được khắc
@@ -606,21 +607,27 @@ View. MVVM khắc phục được điểm yếu cuối cùng này.
 
 ##### 2.3.1.3. MVVM: Model - View - ViewModel
 
+![mvvm](images/MVVMPattern.png)
+
+<!-- Cite 15 -->
+Hình 8: Kiến trúc MVVM
+
 Ta quay về chủ đề chính: MVVM. MVVM rất giống MVP ở chỗ ViewModel chịu trách
 nhiệm kết nối View và Model như Presenter. Điểm khác biệt là cách dữ liệu được
 truyền đi:
 
-- Trong MVP, Presenter gọi phương thức của View để truyền dữ liệu cho View.
-- Trong MVVM, ViewModel đưa ra một luồng dữ liệu (stream) để View cập nhật theo,
-  tức dùng mẫu thiết kế Observable. Nếu Model thay đổi, tất cả những gì
-  ViewModel phải làm là gửi thay đổi đó vào luồng dữ liệu, không cần biết đầu
-  nhận dữ liệu là gì.
+- Trong MVP, Presenter gọi phương thức của View để truyền dữ liệu cho View
+- Trong MVVM, ViewModel dùng cơ chế data binding để truyền dữ liệu cho View
 
-Do dùng luồng dữ liệu thay vì gọi hàm, ViewModel không cần biết rõ View, khác
-với Presenter phải biết rõ cả View và Model. Điều này giúp View và ViewModel có
-liên kết lỏng lẻo (loose coupling), giúp việc kiểm thử dễ dàng hơn. Phần còn lại
-của hai mô hình là giống nhau: View cần biết ViewModel để chuyển tương tác người
-dùng, và ViewModel thì cần biết Model để lấy dữ liệu.
+Data binding là cơ chế để *tự động* đưa dữ liệu vào thành phần hiển thị. Quay
+lại ví dụ ToDo ở trên, nếu dùng data binding để "gắn" (bind) danh sách công việc
+vào View, thì khi danh sách thay đổi, View cũng tự động thay đổi theo.
+
+Do dùng data binding thay vì gọi hàm, ViewModel không cần biết rõ View, khác với
+Presenter phải biết rõ View. Điều này giúp View và ViewModel có liên kết lỏng
+lẻo (loose coupling), giúp việc kiểm thử dễ dàng hơn. Phần còn lại của hai mô
+hình là giống nhau: View cần biết ViewModel để chuyển tương tác, và ViewModel
+thì cần biết Model để lấy dữ liệu.
 
 Do là mô hình phù hợp nhất trong cả ba, MVVM được Google chọn làm nền cho Kiến
 trúc Google khuyên dùng.
@@ -629,7 +636,7 @@ trúc Google khuyên dùng.
   theo dữ liệu từ Model/ViewModel)
 - LiveData: không gửi dữ liệu cho View nếu không có View -->
 
-#### 2.3.2. Kiến trúc Google khuyên dùng
+#### 2.3.2. Kiến trúc Google khuyên dùng <a name="P2.3.2-rec-architecture"></a>
 
 Kiến trúc Google khuyên dùng có gốc là mô hình MVVM, có dạng như sau:
 
@@ -639,7 +646,7 @@ Hình 8: Kiến trúc Google khuyên dùng
 
 - Repository đóng vai trò của Model trong MVVM, giúp ViewModel lấy dữ liệu mà
   không cần quan tâm dữ liệu lấy từ đâu: cơ sở dữ liệu, gọi API qua mạng,...
-- LiveData là cơ chế luồng dữ liệu giúp liên kết ViewModel với View
+- LiveData là cơ chế data binding dùng luồng dữ liệu (stream)
 - Activity/Fragment là View
 
 Repository là một điểm được chi tiết hóa so với MVVM cơ bản. Lí do cho việc có
@@ -648,8 +655,9 @@ nếu không có mạng. Do đó, sẽ có hai nguồn dữ liệu: dữ liệu 
 dữ liệu đệm, ngoại tuyến. Khi có nhiều nguồn dữ liệu, mẫu thiết kế Repository là
 lựa chọn hiển nhiên để trừu tượng hóa chúng.
 
-yacv sử dụng kiến trúc này, dù không có tính năng liên quan đến mạng (sẽ được
-trình bày sau).
+yacv sử dụng kiến trúc này, dù không có tính năng liên quan đến mạng. Lý do là
+yacv có tính năng quét truyện hoạt động chậm giống như giao tiếp mạng, nên cần
+dữ liệu đệm và dữ liệu quét thực tế.
 
 ### 2.4. SQLite <a name="P2.4-sqlite"></a>
 
@@ -1073,3 +1081,5 @@ hình hiển thị danh sách truyện.
   [11]: https://250bpm.com/blog:71/
   [12]: https://folk.universitetetioslo.no/trygver/1979/mvc-2/1979-12-MVC.pdf
   [13]: https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html
+  [14]: https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93presenter
+  [15]: https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93viewmodel
