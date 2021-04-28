@@ -32,6 +32,7 @@ Khung sườn khóa luận kết thúc 6 năm luyện ngục của nvmnghia.
 - Danh sách bảng
 - Danh sách hình
 - Danh sách kí hiệu, chữ viết tắt
+
     - MVC
     - MVP
     - MVVM
@@ -476,9 +477,11 @@ Hình 6: Tương tranh có cấu trúc dùng coroutine trong Kotlin
 Đoạn mã trong Hình 6 làm những việc sau:
 
 - Hàm `launch()` tạo ra các coroutine
+
     - Hàm `launch()` đầu tiên tạo ra coroutine *cha*
     - Hàm `launch()` thứ hai tạo ra coroutine *con*, chạy hàm `A()`
     - Tương tự, có một coroutine con chạy hàm `B()`
+
 - 3 coroutine chạy "song song", chính xác hơn là tương tranh
 
 Đoạn mã trong Hình 6 tuân theo nguyên tắc: *coroutine cha chờ đến khi mọi
@@ -582,9 +585,7 @@ cao sau nhiều thất bại trong việc dùng MVC trên Android.
 Nhiệm vụ của ba thành phần được chia như sau:
 
 - Model: vẫn như ban đầu
-- View:
-    - Hiển thị dữ liệu
-    - Nhận tương tác người dùng rồi chuyển nó sang Presenter
+- View: hiển thị dữ liệu; hận tương tác người dùng để chuyển sang Presenter
 - Presenter: trung gian giữa Model và View: nhận tương tác từ View, gọi/thay đổi
   Model, cập nhật View
 
@@ -745,9 +746,9 @@ phát triển ứng dụng.
 - Người dùng có yêu cầu đọc truyện với chất lượng hình ảnh cao
 
 Cả hai nhóm có điểm chung là kĩ tính, yêu cầu cao về trải nghiệm đọc truyện, cụ
-thể là về **chất lượng hình ảnh**. Cũng do kĩ tính, nên cả hai nhóm không cần
+thể là về *chất lượng hình ảnh*. Cũng do kĩ tính, nên cả hai nhóm không cần
 nhiều chức năng, tuy nhiên có yêu cầu cao về từng chức năng. Nhóm người dùng sưu
-tầm truyện còn có yêu cầu về **xem thông tin (metadata)** của tệp truyện.
+tầm truyện còn có yêu cầu về *xem thông tin (metadata)* của tệp truyện.
 
 #### 3.1.2. Mục đích <a name="P3.1.2-objectives"></a>
 
@@ -785,12 +786,13 @@ Các giới hạn này nhằm tránh cho phần mềm quá phức tạp với t�
 - Phản hồi nhanh: Các thao tác cần có thời gian phản hồi nhanh. Phản hồi nhanh
   không nhất thiết là thời gian thực thi ngắn, mà là luôn có các thông báo tiến
   độ cho người dùng.
+
     - Luôn hiện thông báo chờ khi làm việc gì đó lâu
     - Nếu có nhiều kết quả tìm kiếm, hiển thị từ từ, đưa những kết quả đã biết
       lên trước
+
 - Tốc độ xem truyện chấp nhận được: Tốc độ xem truyện gồm tốc độ mở truyện, tốc
-  độ duyệt trang tới-lui đều cần phải có tốc độ chấp nhận được để cải thiện trải
-  nghiệm.
+  độ duyệt trang tới-lui đều cần phải chấp nhận được để cải thiện trải nghiệm.
 - Chiếm dụng ít bộ nhớ: Bộ nhớ chiếm dụng của ứng dụng gồm hai phần: bộ nhớ RAM
   và bộ nhớ tạm, cả hai cần sử dụng ít dung lượng nhất có thể. Đây là một yêu
   cầu đáng cân nhắc, lí do vì kích cỡ từng tệp truyện thường rất lớn (từ vài
@@ -803,66 +805,125 @@ Các giới hạn này nhằm tránh cho phần mềm quá phức tạp với t�
 ### 3.3 Phân tích yêu cầu <a name="P3.3-requirement-analysis"></a>
 
 Mỗi yêu cầu đã xác định trong [mục 3.2.1.](#P3.2.1-functional-requirements) được
-coi là một ca sử dụng, được trình bày trong các tiểu mục dưới đây. Người dùng
-duy nhất trong các ca sử dụng là người đọc, do đó hai cụm từ này sẽ được dùng
-hoán đổi cho nhau. Do ứng dụng hoàn toàn ngoại tuyến, người đọc cũng không có
-tương tác với nhau.
+coi là một ca sử dụng, được trình bày trong các tiểu mục dưới đây.
+
+*Người dùng duy nhất* trong các ca sử dụng là người đọc, do đó hai cụm từ này sẽ
+được dùng hoán đổi cho nhau. Do ứng dụng hoàn toàn ngoại tuyến, người đọc cũng
+không có tương tác với nhau.
+
+Do ứng dụng đơn giản, các ca sử dụng tách biệt, nên mỗi ca sử dụng gắn với một
+*màn hình*. Có tổng cộng năm màn hình sẽ được mô tả, gồm:
+
+- Màn hình Thư viện
+- Màn hình Thư mục
+- Màn hình Đọc truyện
+- Màn hình Metadata
+- Màn hình Tìm kiếm
 
 #### 3.3.1. Quét các tệp truyện trên thiết bị <a name="P3.3.1-scan"></a>
 
-- **Mô tả ngắn gọn**:
+- **Mô tả**:
 
-    Người đọc chọn một thư mục trong điện thoại làm thư mục gốc. Ứng dụng sẽ
-    quét thư mục này và tìm các tệp truyện, rồi hiển thị những thư mục chứa tệp
-    truyện cho người đọc duyệt.
+    Người đọc *chọn* một thư mục trong điện thoại làm thư mục gốc. Ứng dụng sẽ
+    *quét* thư mục này và tìm các tệp truyện, rồi hiển thị những thư mục chứa
+    tệp truyện cho người đọc chọn.
 
-- **Mô tả từng bước**:
-    1. Người đọc bật ứng dụng
+- **Luồng chính**:
+
+    1. Người đọc bật ứng dụng (tức ở Màn hình Thư viện)
     2. Người đọc ấn vào nút thay đổi thư mục gốc.
     3. Trình chọn thư mục của Android hiện ra, cho phép người đọc chọn thư mục
        làm thư mục gốc.
-    4. Các thư mục chứa truyện trong thư mục gốc được hiển thị lên màn hình theo
-       tiến độ, ứng dụng quét đến đâu hiển thị đến đấy. Ảnh đại diện cho thư mục
-       là bìa một truyện bất kì tìm được trong thư mục đó. Tới đây người đọc có
-       thể duyệt theo thư mục rồi xem truyện, hoặc thực hiện các ca sử dụng
-       khác.
-    5. Nếu người đọc đã chọn một thư mục gốc, động tác chọn thư mục gốc này sẽ
-       thay thế thư mục gốc cũ bằng thư mục được chọn, và quá trình quét được
-       kích hoạt lại như lần chọn đầu tiên.
-    6. Nếu có lỗi trong bản thân quá trình chọn thư mục (gồm thư mục gốc không
-       có truyện, thư mục không tìm được, thiếu quyền), cần gợi ý người đọc chọn
-       lại. Lỗi trong quá trình quét cần phải giảm thiểu và giấu khỏi người đọc
-       nếu có.
+    4. Màn hình Thư viện trở lại, quét và hiển thị các thư mục chứa truyện trong
+       thư mục gốc.
+
+- **Luồng thay thế**:
+
+    Nếu người đọc đã chọn một thư mục gốc, ca sử dụng này *thay thế* thư mục gốc
+    đã chọn bằng thư mục vừa chọn.
+
+    Nếu người đọc không chọn thư mục, quay lại Màn hình Thư viện.
+
+- **Luồng ngoại lệ**:
+
+    Nếu có lỗi trong bản thân quá trình chọn thư mục, cần gợi ý người đọc chọn
+    lại. Lỗi gồm:
+
+    - Thiếu quyền
+    - Không tìm được thư mục gốc
+    - Thư mục gốc không có truyện
+
+    Nếu có lỗi trong quá trình quét cần phải giảm thiểu và giấu khỏi người đọc.
+
+- **Điều kiện**:
+
+    - Tiền điều kiện: Ứng dụng ở Màn hình Thư viện
+    - Hậu điều kiện: Ứng dụng ở Màn hình Thư viện
+
+        - Hiển thị thư mục truyện quét được
+        - Hiển thị lỗi nếu có (ba loại lỗi ở trên)
+
+- **Yêu cầu phi chức năng**:
+
+    Nếu đang quét, Màn hình Thư viện cần hiển thị danh sách thư mục theo tiến độ, ứng dụng quét
+    đến đâu hiển thị đến đấy.
+
+    Mỗi thư mục cần hiển thị:
+
+    - Tên thư mục
+    - Ảnh đại diện cho thư mục: bìa một truyện bất kì tìm được trong thư mục
 
 Đây là ca sử dụng đầu tiên khi người đọc khởi động ứng dụng lần đầu. Các tệp
 truyện sẽ được quét từ thư mục gốc, rồi được gom lại theo thư mục theo mô tả ở
 [ca sử dụng tiếp theo](#P3.3.2-show-library).
 
-Màn hình đầu tiên khi người đọc bật lên gọi là Màn hình Thư viện (Library
+Màn hình đầu tiên khi người đọc bật lên gọi là *Màn hình Thư viện* (Library
 screen). Các thư mục chứa truyện, hoặc thông báo lỗi liên quan đến bản thân quá
 trình chọn truyện (đã miêu tả trong bước 6 ở trên) sẽ được hiển thị ở màn hình
 này.
 
+Tới đây người đọc có thể thực hiện các ca sử dụng khác, trong đó quan trọng nhất
+là duyệt theo thư mục rồi xem truyện.
+
 #### 3.3.2. Hiển thị danh sách truyện <a name="P3.3.2-show-library"></a>
 
-- **Mô tả ngắn gọn**:
+- **Mô tả**:
 
     Người đọc duyệt truyện theo thư mục, rồi chọn truyện và xem.
 
-- **Mô tả từng bước**:
-    1. Người đọc bật ứng dụng, đã chọn thư mục gốc, đã quét được ít nhất một thư
-       mục chứa truyện (đang ở Màn hình Thư viện).
-    2. Ứng dụng hiển thị *danh sách thư mục* chứa truyện cho người đọc xem và
-       chọn.
-    3. Người đọc chọn một thư mục.
-    4. Ứng dụng hiển thị *danh sách truyện* trong thư mục đó cho người đọc xem
-       và chọn. Danh sách truyện cần thể hiện được tiến độ đọc của từng truyện,
-       và đánh giá yêu thích của người đọc.
+- **Luồng chính**:
+
+    1. Người đọc bật ứng dụng (tức ở Màn hình Thư viện), có danh sách truyện
+       (tức đã chọn thư mục gốc và quét được ít nhất một thư mục chứa truyện).
+    2. Người đọc chọn một thư mục.
+    3. Ứng dụng chuyển sang Màn hình Thư mục, hiển thị *danh sách truyện* trong
+       thư mục đó cho người đọc xem và chọn.
+
+- **Điều kiện**:
+
+    - Tiền điều kiện:
+
+        - Ứng dụng ở Màn hình Thư viện
+        - Đã chọn thư mục gốc và đã quét được ít nhất một thư mục chứa truyện
+
+    - Hậu điều kiện: Ứng dụng ở Màn hình Đọc truyện
+
+- **Yêu cầu phi chức năng**:
+
+    Nếu đang quét, màn hình Thư mục cần hiển thị danh sách truyện theo tiến độ,
+    ứng dụng quét đến đâu hiển thị đến đấy.
+
+    Mỗi truyện cần hiển thị:
+
+    - Tên truyện
+    - Ảnh đại diện cho truyện: bìa của truyện
+    - Tiến độ đọc
+    - Đánh giá yêu thích
 
 Đây là một trong hai ca sử dụng chính của ứng dụng, bên cạnh (và là tiền điều
 kiện cho) [ca sử dụng đọc truyện](#P3.3.3-read-comic) sẽ được miêu tả tiếp theo.
 
-Màn hình khi người đọc chọn một thư mục gọi là Màn hình Thư mục (Directory
+Màn hình khi người đọc chọn một thư mục gọi là *Màn hình Thư mục* (Directory
 screen). Cũng giống như Màn hình Thư viện, ảnh bìa và tên của truyện được hiển
 thị để người đọc chọn.
 
@@ -871,6 +932,7 @@ lựa chọn thiết kế này:
 
 - Giảm độ phức tạp khi lập trình
 - Các phương pháp duyệt khác không trực quan
+
     - Các phương pháp duyệt khác chỉ bao gồm duyệt theo metadata, tức duyệt theo
       các thông tin đi kèm như Tác giả, Nhân vật, Bộ truyện,... thì yêu cầu
       truyện phải có đủ metadata. Trên thực tế, không phải tệp truyện nào cũng
@@ -907,13 +969,16 @@ Bảng 3: Cách yacv làm phẳng thư mục
 Theo như cột phải Bảng 3, các màn hình trong yacv được tổ chức như sau:
 
 - Màn hình Thư viện: có 3 thư mục:
+
     - thư mục gốc
     - House of M
     - Tie-ins
+
 - Khi chọn "House of M": chuyển sang Màn hình Thư mục tương ứng, không có thư
   mục con, và có 2 tệp truyện:
     - House of M #1.cbz
     - House of M #3.cbz
+
 - Tương tự với các thư mục khác.
 
  Có ba lí do cho lựa chọn thiết kế này:
@@ -935,40 +1000,60 @@ Theo như cột phải Bảng 3, các màn hình trong yacv được tổ chức
 
 #### 3.3.3. Đọc truyện <a name="P3.3.3-read-comic"></a>
 
-- **Mô tả ngắn gọn**:
+- **Mô tả**:
 
     Người đọc chọn một truyện để xem.
 
-- **Mô tả từng bước**:
+- **Luồng chính**:
+
     1. Người đọc bật ứng dụng, đã chọn thư mục gốc, đã quét được ít nhất một thư
-       mục chứa truyện, đã chọn một thư mục (đang ở Màn hình Thư mục).
+       mục chứa truyện, đã chọn một thư mục (tức ở Màn hình Thư mục).
     2. Ứng dụng hiển thị danh sách truyện trong thư mục đó cho người đọc xem và
        chọn.
     3. Người đọc chọn một truyện và đọc.
-    4. Người đọc vuốt qua lại theo phương ngang để chuyển trang, có thể đánh
-       dấu trang truyện, có thể lưu lại trang truyện ở dạng ảnh.
-    5. Nếu người đọc đã đọc truyện:
-       - Ứng dụng cần đưa về chính trang truyện đang đọc dở.
-       - Nếu đã đọc đến trang cuối, tức đã đọc xong, ứng dụng cần đưa về trang
-         đầu tiên.
+    4. Màn hình Đọc truyện hiển thị trang truyện cho người đọc.
+    5. Người đọc vuốt qua lại theo phương ngang để chuyển trang.
+    <!-- 6. Người dùng có thể lưu trang truyện dưới dạng ảnh, có thể đánh dấu trang truyện. -->
+
+- **Luồng thay thế**:
+
+    Xem phần Màn hình Tìm kiếm. Màn hình Đọc truyện có thể được kích hoạt bằng
+    cách ấn vào truyện hiển thị trong màn hình này.
+
+- **Luồng ngoại lệ**:
+
+    Nếu tệp truyện không tìm thấy được, báo cho người đọc và giữ nguyên ở Màn
+    hình Thư mục.
+
+- **Điều kiện**:
+
+    - Tiền điều kiện: Ứng dụng ở Màn hình Thư mục.
+    - Hậu điều kiện: Ứng dụng ở Màn hình Đọc truyện.
+
+- **Yêu cầu phi chức năng**:
+
+    - Nếu người đọc đã đọc truyện, ứng dụng cần đưa về chính trang truyện đang
+      đọc dở. Nếu đã đọc đến trang cuối, tức đã đọc xong, ứng dụng cần đưa về
+      trang đầu tiên.
+    - Trải nghiệm cuộn trang mượt mà nhất có thể.
 
 Đây là một trong hai ca sử dụng chính của ứng dụng, bên cạnh (và là mục đích
 của) [ca sử dụng hiển thị danh sách truyện](#P3.3.2-show-library) đã được miêu
 tả ở trên.
 
-Màn hình khi người đọc đọc một truyện gọi là Màn hình Đọc truyện. Màn hình này
-cho phép người đọc duyệt các trang truyện theo phương ngang, có thêm hai tính
-năng đánh dấu và lưu trang truyện như miêu tả ở bước 4. Mục tiêu là thiết kế màn
-hình này sao cho có trải nghiệm gần giống nhất với ứng dụng Thư viện ảnh
+Màn hình khi người đọc đọc một truyện gọi là *Màn hình Đọc truyện*. Màn hình này
+cho phép người đọc duyệt các trang truyện theo phương ngang. Mục tiêu là thiết
+kế màn hình này sao cho có trải nghiệm gần giống nhất với ứng dụng Thư viện ảnh
 (Gallery) tích hợp trong mọi điện thoại Android.
 
 #### 3.3.4. Xem metadata truyện <a name="P3.3.4-view-metadata"></a>
 
-- **Mô tả ngắn gọn**:
+- **Mô tả**:
 
     Trong Màn hình Đọc truyện, người đọc ấn nút để xem metadata.
 
-- **Mô tả từng bước**:
+- **Luồng chính**:
+
     1. Người đọc bật ứng dụng, chọn một truyện để vào đến Màn hình Đọc truyện.
     2. Người đọc ấn nút Xem metadata.
     3. Ứng dụng hiển thị mọi metadata, bao gồm cả những trường bị thiếu. Ảnh bìa
@@ -976,13 +1061,24 @@ hình này sao cho có trải nghiệm gần giống nhất với ứng dụng T
     4. Người dùng có thể đánh giá truyện bằng nút Yêu thích trong màn hình này,
        hoặc ngược lại (bỏ đánh giá Yêu thích).
 
+- **Điều kiện**:
+
+    - Tiền điều kiện: Ứng dụng ở Màn hình Đọc truyện.
+    - Hậu điều kiện: Ứng dụng ở Màn hình Metadata.
+
+- **Yêu cầu phi chức năng**:
+
+    - Màn hình Metadata phải hiển thị ảnh bìa, cùng các metadata của truyện
+    - Những trường metadata trống phải ghi rõ "Trống", "Unknown",...
+
 Đây là một ca sử dụng phụ, có thể được kích hoạt khi người dùng đang ở Màn hình
 Đọc truyện.
 
-Màn hình khi người đọc xem metadata gọi là Màn hình Metadata. Màn hình này có
+Màn hình khi người đọc xem metadata gọi là *Màn hình Metadata*. Màn hình này có
 thể có chức năng sửa metadata, tùy theo tiến độ khóa luận để xem xét có cài đặt
 không.
 
+<!-- TODO: make Love a separate use case -->
 Hệ thống đánh giá của ứng dụng chỉ ở mức cơ bản, gồm duy nhất tính năng Yêu
 thích. Tính năng này cũng chỉ phục vụ hai mục đích là thể hiện sự đánh giá của
 người dùng và lọc nhanh truyện về mặt thị giác (đã nhắc đến trong phần Mô tả
@@ -999,26 +1095,40 @@ Các tính năng nâng cao hơn như gợi ý không xuất hiện, do một s�
 
 #### 3.3.5. Tìm kiếm truyện <a name="P3.3.5-search-comic"></a>
 
-- **Mô tả ngắn gọn**:
+- **Mô tả**:
 
-    Trong Màn hình Thư viện, người đọc ấn nút để tìm kiếm truyện.
+    Trong Màn hình Thư viện, người đọc ấn nút Tìm kiếm để tìm truyện.
 
-- **Mô tả từng bước**:
+- **Luồng chính**:
+
     1. Người đọc bật ứng dụng.
     2. Người đọc ấn nút Tìm kiếm, và gõ từ khóa cần tìm, và ấn nút Enter.
     3. Ứng dụng hiển thị kết quả tìm kiếm theo metadata và tên tệp truyện
-       - Kết quả tìm kiểm cần được gom theo nhóm dựa vào trường metadata tìm
-         thấy được.
-       - Nếu có thể, hiển thị ảnh bìa của truyện.
+
+- **Luồng ngoại lệ**:
+
+    Nếu không tìm thấy truyện, ứng dụng cần thông báo ở Màn hình Tìm kiếm.
+
+- **Điều kiện**:
+
+    - Tiền điều kiện: Ứng dụng ở Màn hình Thư viện.
+    - Hậu điều kiện: Ứng dụng ở Màn hình Tìm kiếm.
+
+- **Yêu cầu phi chức năng**:
+
+    - Kết quả tìm kiểm cần được gom theo nhóm dựa vào trường metadata tìm thấy
+      được. Nếu không có kết quả, phải báo cho người dùng.
+    - Nếu có thể, hiển thị ảnh bìa của truyện.
 
 Đây là một ca sử dụng phụ, có thể được kích hoạt khi người dùng đang ở Màn hình
 Thư viện.
 
-Màn hình khi người đọc xem kết quả tìm kiếm gọi là Màn hình Kết quả. Màn hình
-này chỉ hiện ra khi người dùng ấn nút Enter để chính thức tìm kiếm.
+Màn hình khi người đọc *xem kết quả tìm kiếm* gọi là *Màn hình Tìm kiếm*. Màn
+hình này chỉ hiện ra khi người dùng ấn nút Enter để chính thức tìm kiếm; cho đến
+trước lúc đó, ứng dụng vẫn ở Màn hình Thư viện.
 
 Màn hình kết quả phải nhóm kết quả theo trường metadata mà kết quả tìm thấy
-được. Lấy ví dụ, người dùng tìm kiếm "Watchmen" sẽ nhận được Màn hình Kết quả
+được. Lấy ví dụ, người dùng tìm kiếm "Watchmen" sẽ nhận được Màn hình Tìm kiếm
 gần như sau:
 
 ```text
@@ -1029,15 +1139,15 @@ Bộ truyện
 - Watchmen
 ```
 
-Tương tác của người đọc với Màn hình Kết quả trên diễn ra như sau:
+Tương tác của người đọc với Màn hình Tìm kiếm trên diễn ra như sau:
 
 - Khi ấn vào một mục trong danh sách "Truyện", người đọc được đưa đến thẳng Màn
   hình Đọc truyện của truyện đó (và hiển thị ở trang đọc dở như đã mô tả ở trong
   [ca sử dụng đọc truyện](#P3.3.3-read-comic)).
 - Khi ấn vào một mục trong danh sách "Bộ truyện", người đọc được đưa đến màn
-  hình chứa danh sách những truyện trong bộ truyện đã chọn. Màn hình này cần
-  giống với Màn hình Thư mục. Sau đó, người dùng chọn một truyện để đọc như bình
-  thường.
+  hình chứa danh sách những truyện trong bộ truyện đã chọn. *Màn hình này cần
+  giống với Màn hình Thư mục*. Sau đó, người dùng chọn một truyện để đọc như
+  bình thường.
 
 Đây chỉ là ví dụ về một từ khóa có kết quả khi tìm theo tên tệp truyện và bộ
 truyện. Các trường metadata khác nếu có kết quả phù hợp cũng sẽ thể hiện theo
@@ -1064,14 +1174,15 @@ Với độ phức tạp dự kiến của việc hiển thị ảnh bìa truy�
 
 #### 3.3.6. Xóa truyện <a name="P3.3.6-delete-comic"></a>
 
-- **Mô tả ngắn gọn**:
+- **Mô tả**:
 
     Người dùng chọn một số truyện trong một màn hình chứa danh sách truyện để
     xóa.
 
-- **Mô tả từng bước**:
+- **Luồng chính**:
+
     1. Người dùng truy cập vào một màn hình chứa danh sách truyện (là Màn hình
-       Thư mục hoặc Màn hình Kết quả).
+       Thư mục hoặc Màn hình Tìm kiếm).
     2. Người dùng ấn và giữ vào một truyện.
     3. Màn hình đó sẽ chuyển sang chế độ xóa, báo hiệu bằng biểu tượng Thùng rác
        trên màn hình, và ô đánh dấu để xóa ở cạnh mỗi truyện. Truyện mà người
@@ -1083,8 +1194,15 @@ Với độ phức tạp dự kiến của việc hiển thị ảnh bìa truy�
        không.
     7. Nếu người dùng ấn vào nút Đồng ý xóa, truyện sẽ được xóa khỏi bộ nhớ điện
        thoại và tắt hộp thoại, nếu không thì tắt hộp thoại.
-    8. Sau khi tắt hộp thoại, màn hình trở về chế độ thông thường, biểu tượng
-       thùng rác cũng biến mất.
+    8. Sau khi tắt hộp thoại, màn hình trở về chế độ ban đầu, biểu tượng thùng
+       rác cũng biến mất, truyện được xóa cũng biến mất.
+
+- **Điều kiện**
+
+    Tiền và hậu điều kiện đều là màn hình chứa danh sách truyện, gồm:
+
+    - Màn hình Thư mục
+    - Màn hình Tìm kiếm
 
 Ca sử dụng này không có màn hình riêng biệt, mà sử dụng một chế độ của các màn
 hình hiển thị danh sách truyện.
