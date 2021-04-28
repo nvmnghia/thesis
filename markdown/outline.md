@@ -32,12 +32,17 @@ Khung sườn khóa luận kết thúc 6 năm luyện ngục của nvmnghia.
 - Danh sách bảng
 - Danh sách hình
 - Danh sách kí hiệu, chữ viết tắt
+    - MVC
+    - MVP
     - MVVM
     - AOT
     - JIT
     - API
     - JS
     - ES6
+    - RDBMS
+    - ACID
+    - ORM
 
 ## 1. Chương 1: Giới thiệu <a name="P1-intro"></a>
 
@@ -476,7 +481,7 @@ Hình 6: Tương tranh có cấu trúc dùng coroutine trong Kotlin
     - Tương tự, có một coroutine con chạy hàm `B()`
 - 3 coroutine chạy "song song", chính xác hơn là tương tranh
 
-Đoạn mã trong Hình 6 tuân theo nguyên tắc sau: *coroutine cha chờ đến khi mọi
+Đoạn mã trong Hình 6 tuân theo nguyên tắc: *coroutine cha chờ đến khi mọi
 coroutine con chạy xong*, kể cả khi coroutine cha xong trước. Nguyên tắc này đảm
 bảo rằng khi hàm dùng coroutine kết thúc, không còn tác vụ tương tranh nữa, và
 luồng điều khiển được trả về điểm gọi. Đột nhiên, hai tính năng có vấn đề ở trên
@@ -642,7 +647,7 @@ Kiến trúc Google khuyên dùng có gốc là mô hình MVVM, có dạng như 
 
 ![Google recommended architecture](../images/final-architecture.png)
 
-Hình 8: Kiến trúc Google khuyên dùng
+Hình 9: Kiến trúc Google khuyên dùng
 
 - Repository đóng vai trò của Model trong MVVM, giúp View Model lấy dữ liệu mà
   không cần quan tâm dữ liệu lấy từ đâu: cơ sở dữ liệu, gọi API qua mạng,...
@@ -661,11 +666,61 @@ dữ liệu đệm và dữ liệu quét thực tế.
 
 ### 2.4. SQLite <a name="P2.4-sqlite"></a>
 
+SQLite là một hệ quản trị cơ sở dữ liệu quan hệ (RDBMS). Từ "Lite" trong tên có
+nghĩa là "nhỏ", thể hiện đặc điểm thiết kế chính của nó là một phần mềm cơ sở dữ
+liệu nhỏ gọn. SQLite có thể được nhúng vào phần mềm khác ở dạng thư viện, thay
+vì là một phần mềm riêng rẽ với cấu trúc máy chủ-máy khách như MySQL,
+PostgreSQL,...
 
+Để đạt được mục tiêu nhỏ gọn, SQLite chỉ giữ lại các tính năng SQL cốt lõi
+(tạo/đọc/sửa/xóa) và giao dịch (có hỗ trợ ACID), đồng thời chỉ tối ưu cho việc
+truy cập từ một ứng dụng cùng lúc. Các tính năng thường thấy trong RDBMS cho máy
+chủ, như nhân bản (replication), chia dữ liệu tự động (sharding), khóa dòng, đọc
+ghi nhiều luồng cùng lúc,... do đó được loại bỏ.
 
-#### 2.4.1. Full-text Search <a name="P2.4.1-fts"></a>
+Ngay từ những phiên bản đầu, Android đã tích hợp SQLite, giúp lập trình viên
+không phải tự cài SQLite trong từng ứng dụng. yacv sử dụng SQLite để lưu đệm
+thông tin của sách, tránh việc phải quét nhiều lần.
 
-#### 2.4.2. Room <a name="P2.4.2-room"></a>
+#### 2.4.1. Room <a name="P2.4.1-room"></a>
+
+Room là một thư viện thuộc bột Jetpack giúp lập trình viên sử dụng SQLite tốt
+hơn. Đây có thể xem là một thư viện ORM đơn giản cho SQLite. Room tự động làm
+nhiều công việc liên quan đến SQL, trong đó quan trọng nhất là:
+
+- Tạo bảng: Lập trình viên chỉ cần khai báo các đối tượng dữ liệu như một lớp
+  hướng đối tượng thông thường, rồi thêm một vài Annotation và interface của
+  Room. Sau đó, Room sẽ tự sinh ra các bảng tương ứng.
+- Truy vấn: Lập trình viên chỉ cần viết câu lệnh SQL. Sau đó, Room sẽ tự viết
+  truy vấn, chuyển dữ liệu dạng đối tượng sang dạng để lưu trong bảng và ngược
+  lại.
+
+#### 2.4.2. Tìm kiếm văn bản <a name="P2.4.2-fts"></a>
+
+<!-- Cite 17 -->
+Tìm kiếm văn bản (full-text search, hay FTS) là một trong số ít các tính năng
+nâng cao được giữ lại trong SQLite. Cũng như các thư viện tìm kiếm khác, SQLite
+cài đặt chức năng này bằng chỉ mục đảo (inverted index):
+
+1. Khi dữ liệu văn bản được ghi, nó được tách thành các từ
+2. Các từ được đưa vào từ điển, với khóa là bản thân từ đó, còn giá trị là mã
+   hàng
+
+FTS khác với đánh chỉ mục truyền thống ở bước 1: *từng từ* được tách ra, còn chỉ
+mục văn bản dùng *cả khối* văn bản. Do đó, khi tìm một từ, FTS có thể trả lại
+các hàng chứa từ đó rất nhanh. Tất nhiên, điểm yếu là chỉ mục phức tạp, ghi dữ
+liệu chậm, kích cỡ chỉ mục lớn. Nếu bản thân dữ liệu văn bản trong cột được coi
+là một khối, ví dụ như lưu trường email, chỉ mục truyền thống là đủ tốt, không
+cần dùng đến FTS.
+
+Trong SQLite, một số kĩ thuật xử lí ngôn ngữ tự nhiên cơ bản cũng được áp dụng
+trong bước 1, như rút gọn từ (stemming, dùng thuật toán Porter, ví dụ khi tìm
+"run" sẽ ra được cả "runs", "running", "ran"), giúp kết quả tìm kiếm linh động
+hơn.
+
+yacv có tính năng tìm kiếm liên quan đến tiêu đề, tên nhân vật,... đều là những
+đoạn văn. Do đó, FTS có vai trò không thể thiếu để tăng tốc tìm kiếm trong ứng
+dụng.
 
 ### 2.5. Định dạng tệp nén `.zip` và `.cbz` <a name="P2.5-zip-cbz"></a>
 
@@ -1085,3 +1140,5 @@ hình hiển thị danh sách truyện.
   [13]: https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html
   [14]: https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93presenter
   [15]: https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93viewmodel
+  [16]: https://www.sqlite.org/index.html
+  [17]: https://www.sqlite.org/fts3.html
