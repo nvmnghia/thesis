@@ -589,7 +589,7 @@ Nhiệm vụ của ba thành phần được chia như sau:
 Hình 7: Kiến trúc MVP
 
 Ở đây, ta thấy ít nhất điểm yếu View-Controller nhập nhằng của MVC được khắc
-phụ, khi View kiêm luôn việc nhận tương tác. Đồng thời, Model và View hoàn toàn
+phục, khi View kiêm luôn việc nhận tương tác. Đồng thời, Model và View hoàn toàn
 không biết nhau, đúng theo nguyên lý tách lớp của Clean Architecture.
 
 Ta xét một ứng dụng ToDo đơn giản, trong đó các công việc có thể được đánh dấu
@@ -605,35 +605,35 @@ phải biết và có tham chiếu đến *cả View và Model*. Do đó, Presen
 kềnh, và dù tách biệt nhưng vẫn có liên kết không lỏng lẻo (tight-coupling) với
 View. MVVM khắc phục được điểm yếu cuối cùng này.
 
-##### 2.3.1.3. MVVM: Model - View - ViewModel
+##### 2.3.1.3. MVVM: Model - View - View Model
 
 ![mvvm](images/MVVMPattern.png)
 
 <!-- Cite 15 -->
 Hình 8: Kiến trúc MVVM
 
-Ta quay về chủ đề chính: MVVM. MVVM rất giống MVP ở chỗ ViewModel chịu trách
+Ta quay về chủ đề chính: MVVM. MVVM rất giống MVP ở chỗ View Model chịu trách
 nhiệm kết nối View và Model như Presenter. Điểm khác biệt là cách dữ liệu được
 truyền đi:
 
 - Trong MVP, Presenter gọi phương thức của View để truyền dữ liệu cho View
-- Trong MVVM, ViewModel dùng cơ chế data binding để truyền dữ liệu cho View
+- Trong MVVM, View Model dùng cơ chế data binding để truyền dữ liệu cho View
 
 Data binding là cơ chế để *tự động* đưa dữ liệu vào thành phần hiển thị. Quay
 lại ví dụ ToDo ở trên, nếu dùng data binding để "gắn" (bind) danh sách công việc
 vào View, thì khi danh sách thay đổi, View cũng tự động thay đổi theo.
 
-Do dùng data binding thay vì gọi hàm, ViewModel không cần biết rõ View, khác với
-Presenter phải biết rõ View. Điều này giúp View và ViewModel có liên kết lỏng
-lẻo (loose coupling), giúp việc kiểm thử dễ dàng hơn. Phần còn lại của hai mô
-hình là giống nhau: View cần biết ViewModel để chuyển tương tác, và ViewModel
-thì cần biết Model để lấy dữ liệu.
+Do dùng data binding thay vì gọi hàm, View Model không cần biết rõ View, khác
+với Presenter phải biết rõ View. Điều này giúp View và View Model có liên kết
+lỏng lẻo (loose coupling), giúp việc kiểm thử dễ dàng hơn. Phần còn lại của hai
+mô hình là giống nhau: View cần biết View Model để chuyển tương tác, và View
+Model thì cần biết Model để lấy dữ liệu.
 
 Do là mô hình phù hợp nhất trong cả ba, MVVM được Google chọn làm nền cho Kiến
 trúc Google khuyên dùng.
 
 <!-- - các thư viện data binding (data binding chỉ chung cách View tự động cập nhật
-  theo dữ liệu từ Model/ViewModel)
+  theo dữ liệu từ Model/View Model)
 - LiveData: không gửi dữ liệu cho View nếu không có View -->
 
 #### 2.3.2. Kiến trúc Google khuyên dùng <a name="P2.3.2-rec-architecture"></a>
@@ -644,7 +644,7 @@ Kiến trúc Google khuyên dùng có gốc là mô hình MVVM, có dạng như 
 
 Hình 8: Kiến trúc Google khuyên dùng
 
-- Repository đóng vai trò của Model trong MVVM, giúp ViewModel lấy dữ liệu mà
+- Repository đóng vai trò của Model trong MVVM, giúp View Model lấy dữ liệu mà
   không cần quan tâm dữ liệu lấy từ đâu: cơ sở dữ liệu, gọi API qua mạng,...
 - LiveData là cơ chế data binding dùng luồng dữ liệu (stream)
 - Activity/Fragment là View
@@ -660,6 +660,8 @@ yacv có tính năng quét truyện hoạt động chậm giống như giao ti�
 dữ liệu đệm và dữ liệu quét thực tế.
 
 ### 2.4. SQLite <a name="P2.4-sqlite"></a>
+
+
 
 #### 2.4.1. Full-text Search <a name="P2.4.1-fts"></a>
 
