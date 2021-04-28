@@ -4,6 +4,8 @@ Khung sườn khóa luận kết thúc 6 năm luyện ngục của nvmnghia.
 
 Độ dài yêu cầu: 40-50 trang.
 
+---
+
 ## 0. Bìa & các mục liên quan
 
 - Bìa
@@ -44,6 +46,8 @@ Khung sườn khóa luận kết thúc 6 năm luyện ngục của nvmnghia.
     - RDBMS
     - ACID
     - ORM
+
+---
 
 ## 1. Chương 1: Giới thiệu <a name="P1-intro"></a>
 
@@ -149,6 +153,8 @@ Các phần còn lại của khóa luận có cấu trúc như sau:
 - [Chương 5 - Lập trình & Kiểm thử](#P5-implementation): Một số cài đặt và ca
   kiểm thử trong ứng dụng sẽ được nêu một cách có chọn lọc.
 - [Chương 6 - Kết luận](#P6-comclusion): Kết thúc khóa luận.
+
+---
 
 ## 2. Chương 2: Kiến thức nền tảng <a name="P2-fundamental"></a>
 
@@ -782,6 +788,8 @@ Tệp truyện CBZ chỉ là một tệp nén ZIP thông thường; trong đó c
 - (Tùy chọn) Một tệp metadata: Có nhiều định dạng metadata. Hiện nay, yacv chấp
   nhận định dạng ComicInfo, được trình bày ở [Phụ lục 1](#P8.1-comicinfo.xsd).
 
+---
+
 ## 3. Chương 3: Phân tích yêu cầu & Thiết kế <a name="P3-specification"></a>
 
 <!-- Nếu C3 ngắn quá thì gộp Thiết kế vào, nhưng giờ chắc phải tách cmnr -->
@@ -1260,6 +1268,8 @@ Với độ phức tạp dự kiến của việc hiển thị ảnh bìa truy�
 Ca sử dụng này không có màn hình riêng biệt, mà sử dụng một chế độ của các màn
 hình hiển thị danh sách truyện.
 
+---
+
 ## 4. Chương 4: Thiết kế <a name="P4-design"></a>
 
 ### 4.1. Thiết kế hướng đối tượng <a name="P4.1-class-design"></a>
@@ -1272,6 +1282,8 @@ hình hiển thị danh sách truyện.
 
 ### 4.4. Tối ưu <a name="P4.4-optimization"></a>
 
+---
+
 ## 5. Chương 5: Lập trình & Kiểm thử <a name="P5-implementation"></a>
 
 ### 5.1. Lập trình <a name="P5.1-coding"></a>
@@ -1282,7 +1294,7 @@ hình hiển thị danh sách truyện.
 
 #### 5.2.1 Unit test. E2E test, auto + manual test <a name="P5.2.1-functional-test"></a>
 
-#### 4.2.2 Kiểm thử phi chức năng <a name="P5.2.2-non-functional-test"></a>
+#### 5.2.2 Kiểm thử phi chức năng <a name="P5.2.2-non-functional-test"></a>
 
 <!-- Bench nhanh chậm -->
 
@@ -1290,9 +1302,13 @@ hình hiển thị danh sách truyện.
 
 <!-- Hình ảnh sản phẩm. -->
 
+---
+
 ## 6. Chương 6: Kết luận <a name="P6-comclusion"></a>
 
 <!-- 1-2 trang -->
+
+---
 
 ## 7. Tài liệu tham khảo <a name="P7-references">
 
@@ -1315,6 +1331,8 @@ hình hiển thị danh sách truyện.
   [17]: https://www.sqlite.org/fts3.html
   [18]: https://pkware.cachefly.net/webdocs/casestudies/APPNOTE.TXT
   [19]: https://en.wikipedia.org/wiki/Solid_compression
+
+---
 
 ## 8. Phụ lục <a name="P8-appendix">
 
