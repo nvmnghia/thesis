@@ -184,7 +184,7 @@ trải nghiệm người dùng sẽ được phát triển riêng.
 
 Hệ điều hành Android được phân lớp như sau:
 
-![Android software stack](images/android-stack_2x.png)
+![Android software stack](../images/android-stack_2x.png)
 
 Hình 1. Các phân lớp của hệ điều hành Android
 
@@ -375,11 +375,11 @@ tìm về *lập trình phi cấu trúc* (non-structured programming), với đ�
 lệnh nhảy `GOTO`. Trong buổi đầu của máy tính, lệnh này được dùng nhiều vì hợp
 với cách máy tính chạy.
 
-![non-structured programming](images/sequential-and-go-to-schematic.svg)
+![non-structured programming](../images/sequential-and-go-to-schematic.svg)
 
 Hình 2: Lập trình phi cấu trúc với `GOTO`
 
-![spaghetti of goto](images/flow-matic-4.svg)
+![spaghetti of goto](../images/flow-matic-4.svg)
 
 Hình 3: Sự lộn xộn của lập trình phi cấu trúc
 
@@ -419,7 +419,7 @@ Theo định nghĩa, ba lệnh trên giải quyết được hậu quả đầu 
 hậu quả số hai cũng được giải quyết, do ngôn ngữ đã có cấu trúc (cụ thể là có
 call stack).
 
-![3 basic constructs](images/control-schematics.svg)
+![3 basic constructs](../images/control-schematics.svg)
 
 Hình 4: Ba cấu trúc cơ bản của lập trình có cấu trúc: rẽ nhánh `if`, lặp `for` và gọi hàm
 
@@ -444,7 +444,7 @@ Bảng 2: Hai kiểu API tương tranh thường thấy.
 Qua Hình 5, không khó để thấy rằng mọi vấn đề của lập trình phi cấu trúc đều lặp
 lại với hai API trên:
 
-![non-structured concurrency](images/sequential-and-go-to-schematic.svg)
+![non-structured concurrency](../images/sequential-and-go-to-schematic.svg)
 
 Hình 5: Tương tranh không cấu trúc với `goroutine` - API thuộc kiểu tương tranh.
 
@@ -464,7 +464,7 @@ quyết.
 Ta xét một đoạn mã tương tranh dùng coroutine trong Kotlin, tức dùng tương tranh
 có cấu trúc (không phải coroutine trong mọi ngôn ngữ đều dùng mô hình này):
 
-![kotlin coroutine](images/kotlin-coroutine.svg)
+![kotlin coroutine](../images/kotlin-coroutine.svg)
 
 Hình 6: Tương tranh có cấu trúc dùng coroutine trong Kotlin
 
@@ -583,7 +583,7 @@ Nhiệm vụ của ba thành phần được chia như sau:
 - Presenter: trung gian giữa Model và View: nhận tương tác từ View, gọi/thay đổi
   Model, cập nhật View
 
-![mvp](images/Model_View_Presenter_GUI_Design_Pattern.png)
+![mvp](../images/Model_View_Presenter_GUI_Design_Pattern.png)
 
 <!-- Cite 14 -->
 Hình 7: Kiến trúc MVP
@@ -607,7 +607,7 @@ View. MVVM khắc phục được điểm yếu cuối cùng này.
 
 ##### 2.3.1.3. MVVM: Model - View - View Model
 
-![mvvm](images/MVVMPattern.png)
+![mvvm](../images/MVVMPattern.png)
 
 <!-- Cite 15 -->
 Hình 8: Kiến trúc MVVM
@@ -640,7 +640,7 @@ trúc Google khuyên dùng.
 
 Kiến trúc Google khuyên dùng có gốc là mô hình MVVM, có dạng như sau:
 
-![Google recommended architecture](images/final-architecture.png)
+![Google recommended architecture](../images/final-architecture.png)
 
 Hình 8: Kiến trúc Google khuyên dùng
 
