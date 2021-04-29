@@ -633,6 +633,14 @@ các ca sử dụng. Có một số điểm chung về các biểu đồ này:
   ViewModel hoàn toàn đọc được luồng dữ liệu gửi đến View (hoặc ít nhất là đúng
   trong cách viết ứng dụng Android thông thường).
 
+Các biểu đồ trạng thái cũng có một số chi tiết chung:
+
+- Trừ khi nêu rõ, mọi trạng thái đều có thể là trạng thái bắt đầu (trạng thái
+  khi mở ứng dụng) hoặc kết thúc (khi đóng ứng dụng).
+- Mũi tên chuyển trạng thái tương ứng với *tương tác của người dùng*, do vậy
+  thường được ánh xạ đến một phương thức trong View.
+- Kí hiệu hình tròn đen chỉ dùng để tả trạng thái đầu *khi lần đầu dùng* yacv.
+
 #### 4.2.1. Nguồn dữ liệu - Repository - DAO - Scanner <a name="P4.2.1-mvvm-detail">
 
 Như đã đề cập ở Chương 2, yacv sử dụng Kiến trúc Google khuyên dùng, vốn dựa
@@ -678,13 +686,35 @@ màn hình (cụ thể chỉ Màn hình Metadata cần), do đó trong đa số 
 *DAO đóng vai trò Model*, thay cho Repository. Tương tác trong Hình 11 vẫn được
 duy trì, tuy không có cả Repository lẫn Parser.
 
-##### 4.2.2. Màn hình Thư viện
+##### 4.2.2. Màn hình Quyền đọc
+
+Do sự phức tạp trong việc xin quyền của Android, một màn hình riêng để xin quyền
+đọc dữ liệu được tách ra khỏi Màn hình Thư viện, gọi là *Màn hình Quyền đọc*.
+Màn hình này sẽ là *màn hình đầu tiên* hiển thị khi dùng ứng dụng.
+
+- Nếu có quyền đọc: chuyển ngay sang Màn hình Thư viện
+- Nếu không: nêu lí do cần quyền, gợi ý người dùng cấp quyền
+
+Hình 12 mô tả trạng thái cấp quyền đọc của yacv (cũng như mọi quyền của một ứng
+dụng Android cơ bản nói chung).
+
+![permission state](images/Read_Permission_State.svg)
+
+Hình 12: Trạng thái cấp quyền của yacv
+
+Dựa theo Hình 12, ta có biểu đồ lớp của ViewModel và View như sau:
+
+![permission mvvm](/images/Permission%20MVVM.svg)
+
+Hình 12: Biểu đồ lớp của Màn hình Quyền đọc
+
+##### 4.2.3. Màn hình Thư viện
 
 Như đã phân tích ở [mục 3.3.2](#P3.3.2-show-library), Màn hình Thư viện cần hiển
 thị cả lỗi và gợi ý, bên cạnh việc hiển thị danh sách thư mục và chọn thư mục
-gốc. Do đó, phần này chia ra ba phần con tương ứng.
+gốc. Do đó, phần này chia ra làm hai phần con tương ứng.
 
-##### 4.2.2.1. Chọn thư mục gốc và hiển thị danh sách thư mục
+##### 4.2.3.1. Chọn thư mục gốc và hiển thị danh sách thư mục
 
 Để chọn thư mục gốc, người dùng ấn nút Đổi thư mục gốc để kích hoạt hộp thoại
 Chọn thư mục (picker), rồi chọn một thư mục trong đó. Luồng chạy của yacv như
@@ -692,7 +722,7 @@ sau (trường hợp ngoại lệ sẽ được nêu trong phần kế tiếp):
 
 ![scanning](images/Scanning.svg)
 
-Hình 12: Quét tệp truyện khi thay đổi thư mục gốc và hiển thị
+Hình 13: Quét tệp truyện khi thay đổi thư mục gốc và hiển thị
 
 *Scanner* là đối tượng để quét dữ liệu. Scanner nhận vào URI của thư mục gốc,
 rồi lặp qua từng tệp con, cháu,... Nếu đó là tệp truyện, nó gọi Parser để lấy
@@ -710,6 +740,19 @@ thư mục nhanh hơn BFS, Màn hình Thư viện, vốn hiển thị danh sách
 cũng hiển thị sớm hơn. Dù thời gian quét tổng thể không thay đổi, người dùng
 được thấy thư mục sớm hơn giúp tạo cảm giác ứng dụng khá nhanh.
 
+##### 4.2.3.2. Ngoại lệ trong Màn hình Thư mục
+
+Ngoại lệ ở đây chỉ cả trường hợp không tìm thấy thư mục, lẫn trường hợp không
+quét được thư mục vì các lí do đã nêu trong [mục 3.1](#P3.3.1-scan). Khi này,
+ứng dụng hiển thị một hàng chữ để gợi ý về việc nên làm.
+
+Hình sau là biểu đồ trạng thái, cũng là mô tả về nội dung gợi ý. Riêng trạng
+thái "Có truyện" là trạng thái hiển thị danh sách thư mục trong luồng cơ bản đã
+nêu trên.
+
+![library state](images/Library_State.svg)
+
+Hình 14: Trạng thái của Màn hình Thư viện
 
 ## 5. Chương 5: Lập trình & Kiểm thử <a name="P5-implementation"></a>
 
