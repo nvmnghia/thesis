@@ -46,6 +46,7 @@ Khung sườn khóa luận kết thúc 6 năm luyện ngục của nvmnghia.
     - RDBMS
     - ACID
     - ORM
+    - SC
 
 ---
 
@@ -184,21 +185,20 @@ nó) có doanh thu hàng chục tỉ USD từ 2018,... là một vài con số t
 thành công và độ phủ của Android.
 
 Google mua lại phiên bản Android đầu của công ty khởi nghiệp cùng tên vào năm
-2005, và phát triển hệ điều hành này từ đó. Ngoài Google, Android còn nhận được
-sự đóng góp rất lớn từ cộng đồng, do là một dự án mã nguồn mở (phần lớn mã nguồn
-dùng giấy phép Apache); tên chính thức của dự án là Android Open Source Project.
-Dù vậy, gần như mọi thiết bị Android thương mại đều có những ứng dụng độc quyền,
-ví dụ đáng kể là bộ Google Mobile Service, vốn chứa những ứng dụng không thể
-thiếu như trình duyệt Chrome hay chợ ứng dụng Play Store. Về mặt này, Android
-khá giống với Chrome: những thành phần cốt lõi về mặt kĩ thuật được phát triển
-theo mô hình mã nguồn mở (AOSP và Chromium), còn những thành phần liên quan đến
-trải nghiệm người dùng sẽ được phát triển riêng.
-
-Hệ điều hành Android được phân lớp như sau:
+2005, và phát triển hệ điều hành này từ đó. Ngoài Google, Android còn nhận đóng
+góp lớn từ cộng đồng, do là một dự án mã nguồn mở (phần lớn mã nguồn dùng giấy
+phép Apache); tên chính thức của dự án là Android Open Source Project. Dù vậy,
+mọi thiết bị Android thương mại đều có ứng dụng độc quyền. Ví dụ đáng kể là bộ
+Google Mobile Service, chứa những ứng dụng không thể thiếu như trình duyệt
+Chrome hay chợ Play Store. Về mặt này, Android khá giống Chrome: thành phần cốt
+lõi về mặt kĩ thuật được phát triển theo mô hình mã nguồn mở (AOSP và Chromium),
+còn thành phần liên quan đến trải nghiệm người dùng được phát triển riêng.
 
 ![Android software stack](../images/android-stack_2x.png)
 
 Hình 1. Các phân lớp của hệ điều hành Android
+
+Hệ điều hành Android được phân lớp như sau:
 
 - Nhân Linux (Linux Kernel):
 
@@ -219,17 +219,17 @@ Hình 1. Các phân lớp của hệ điều hành Android
 
 - Android Runtime (ART):
 
-    Các ứng dụng Java cần một ứng dụng để chuyển bytecode thành mã máy. Trên
+    Ứng dụng Java cần thêm một ứng dụng để chuyển bytecode thành mã máy. Trên
     desktop, đó là các máy ảo Java (JVM). Trên Android, Android Runtime nhận
     nhiệm vụ này.
 
     Điểm khác biệt của ART với JVM là ở chỗ ART *biên dịch* bytecode thành mã
     máy (trước khi chạy - AOT), còn JVM *thông dịch* bytecode thành mã máy
-    (trong khi chạy); đồng thời cả hai đều có tùy chọn JIT. Chú ý rằng ART chỉ
-    có từ Android 4.4; trước đó Android dùng máy ảo Dalvik, giống máy ảo Java
-    truyền thống hơn. Ngoài ra, trong mọi bản Android, còn một bước trung gian
-    nữa giữa JVM bytecode và mã máy, đó là Dalvik bytecode (DEX) - được thiết kế
-    dành cho Android (tối ưu cho thiết bị với ít bộ nhớ).
+    (trong khi chạy); đồng thời cả hai đều có tùy chọn JIT. Chú ý là ART chỉ có
+    từ Android 4.4; trước đó Android dùng máy ảo Dalvik, giống JVM truyền thống
+    hơn. Ngoài ra, trong mọi bản Android, còn một bước trung gian nữa giữa JVM
+    bytecode và mã máy, đó là Dalvik bytecode (DEX) - được thiết kế dành cho
+    Android (tối ưu cho thiết bị với ít bộ nhớ).
 
     ART hiện hỗ trợ đa số tính năng của Java 8.
 
@@ -291,19 +291,19 @@ Room là một phần quan trọng của yacv, do đó sẽ được giới thi�
 ### 2.2. Ngôn ngữ lập trình Kotlin <a name="P2.2-kotlin"></a>
 
 Java là ngôn ngữ lập trình đầu tiên được hỗ trợ trên Android, nhưng không phải
-là duy nhất. Từ giữa 2019, Google đã khuyên lập trình viên viết ứng dụng trên
-Kotlin, một ngôn ngữ mới được JetBrains phát triển. Giới thiệu lần đầu vào năm
-2011, Kotlin được định hướng trở thành lựa chọn thay thế cho Java. Điều đó thể
-hiện ở việc Kotlin tương thích hoàn toàn với Java (từ Java gọi được Kotlin và
-ngược lại), do cùng được biên dịch thành JVM bytecode.
+duy nhất. Từ 2019, Google đã khuyên lập trình viên viết ứng dụng trên Kotlin,
+một ngôn ngữ mới do JetBrains phát triển. Giới thiệu lần đầu vào năm 2011,
+Kotlin được định hướng trở thành lựa chọn thay thế cho Java. Điều đó thể hiện ở
+việc Kotlin tương thích hoàn toàn với Java (từ Java gọi được Kotlin và ngược
+lại), do cùng được biên dịch thành JVM bytecode.
 
 Điểm mạnh của Kotlin so với Java là tính ngắn gọn. Do được phát triển mới,
 Kotlin không cần tương thích với phiên bản cũ, cho phép các kĩ sư thiết kế một
 ngôn ngữ có cú pháp hiện đại, gọn ghẽ. Ngoài ra, vì được một công ty tư nhân
-phát triển, Kotlin không cần chờ đến các cuộc họp phức tạp để đạt được đồng
-thuận về tính năng mới, giúp ngôn ngữ liên tục được cải tiến. Đồng thời, công ty
-cũng mở mã nguồn của Kotlin và chương trình dịch, giúp đẩy nhanh quá trình phát
-triển và tạo thiện cảm cộng đồng cho một ngôn ngữ non trẻ.
+phát triển, Kotlin không cần chờ đến các cuộc họp phức tạp để đạt đồng thuận về
+tính năng mới, giúp ngôn ngữ liên tục được cải tiến. Đồng thời, công ty cũng mở
+mã nguồn của Kotlin và chương trình dịch, giúp đẩy nhanh quá trình phát triển và
+tạo thiện cảm cộng đồng cho một ngôn ngữ non trẻ.
 
 Sau đây là tóm tắt một số đặc điểm kĩ thuật của Kotlin:
 
@@ -335,8 +335,8 @@ yacv bằng Kotlin từ đầu.
 ##### 2.2.1.1. Giới thiệu chung
 
 Một thư viện quan trọng của kotlin là *coroutine*. Coroutine giúp viết ứng dụng
-có tính tương tranh (concurrency) và/hoặc bất đồng bộ (asynchronous) một cách
-đơn giản hơn.
+có tính tương tranh (concurrency) và bất đồng bộ (asynchronous) một cách đơn
+giản hơn.
 
 Về cơ bản, coroutine giống với luồng (thread), nhưng nhẹ hơn. Coroutine luôn
 dùng mô hình *đa nhiệm hợp tác* (cooperative multitasking), khác với luồng vốn
@@ -352,10 +352,11 @@ khác.
 
 Với những điều cơ bản trên, coroutine chưa làm được nhiều. Roman Elizarov,
 trưởng dự án Kotlin, hướng coroutine trong Kotlin theo một ý tưởng mới: *tương
-tranh có cấu trúc* (structured concurrency). Ý tưởng này tiếp tục đơn giản hóa
-việc viết những đoạn mã tương tranh bằng cách áp đặt một số giới hạn, cấu trúc
-cơ bản. Kết quả là coroutine trong Kotlin hỗ trợ việc xử lí lỗi và ngừng tác vụ
-bất đồng bộ tốt hơn việc dùng luồng, hay các thư viện tương tranh như RxJava.
+tranh có cấu trúc* (structured concurrency, từ đây gọi tắt là SC). Ý tưởng này
+tiếp tục đơn giản hóa việc viết những đoạn mã tương tranh bằng cách áp đặt một
+số giới hạn, cấu trúc cơ bản. Kết quả là coroutine trong Kotlin hỗ trợ việc xử
+lí lỗi và ngừng tác vụ bất đồng bộ tốt hơn việc dùng luồng, hay các thư viện
+tương tranh như RxJava.
 
 Coroutine được dùng để tăng tốc những đoạn mã chạy chậm trong yacv (sẽ được mô
 tả sau). Ngoài cải thiện về hiệu năng, coroutine và tương tranh có cấu trúc còn
@@ -365,11 +366,10 @@ giới thiệu kĩ hơn ở phần này.
 ##### 2.2.1.2. Bài học từ quá khứ: lập trình có cấu trúc
 
 <!-- Cite [10] -->
-Để hiểu sơ về tương tranh có cấu trúc, ta có thể so sánh nó với *lập trình có
-cấu trúc* (structured programming). Để hiểu sơ về lập trình có cấu trúc, ta phải
-tìm về *lập trình phi cấu trúc* (non-structured programming), với đặc điểm là
-lệnh nhảy `GOTO`. Trong buổi đầu của máy tính, lệnh này được dùng nhiều vì hợp
-với cách máy tính chạy.
+Để hiểu về SC, ta có thể so sánh nó với *lập trình có cấu trúc* (structured
+programming). Để hiểu sơ về lập trình có cấu trúc, ta phải tìm về *lập trình phi
+cấu trúc* (non-structured programming), với đặc điểm là lệnh nhảy `GOTO`. Trong
+buổi đầu của máy tính, lệnh này được dùng nhiều vì hợp với cách máy tính chạy.
 
 ![non-structured programming](../images/sequential-and-go-to-schematic.svg)
 
@@ -383,10 +383,11 @@ Vấn đề của lập trình phi cấu trúc, hay của `GOTO`, có thể tóm
 
 - Khó nắm bắt luồng chương trình
 
-    Khi đã chạy `GOTO`, các lệnh phía sau nó không biết khi nào mới được chạy,
-    vì chương trình chuyển sang những lệnh hoàn toàn khác mà không trở lại.
-    Luồng chạy trở thành một đống "mì trộn" như Hình 3, thay vì tuần tự từ trên
-    xuống.
+    Khi đã chạy `GOTO`, các lệnh phía sau nó không biết khi nào mới chạy, vì
+    chương trình chuyển sang lệnh khác mà không trở lại. Luồng chạy trở thành
+    một đống "mì trộn" như Hình 3, thay vì tuần tự từ trên xuống. Tệ hơn, tính
+    trừu tượng bị phá vỡ: khi gọi hàm, thay vì có thể bỏ qua chi tiết bên trong,
+    ta phải biết chúng để xem có lệnh nhảy bất ngờ nào không.
 
 - Không cài đặt được các chức năng mới (ngoại lệ, quản lí tài nguyên tự động,...)
 
@@ -404,16 +405,12 @@ Vấn đề của lập trình phi cấu trúc, hay của `GOTO`, có thể tóm
     Điều gần tương tự cũng khiến việc xử lí ngoại lệ và nhiều tính năng khác trở
     nên rất khó đạt được, một khi ngôn ngữ cho phép `GOTO`.
 
-Lập trình có cấu trúc đơn giản hóa luồng chạy bằng việc giới hạn các lệnh nhảy
+Lập trình có cấu trúc đơn giản hóa luồng chạy bằng cách giới hạn các lệnh nhảy
 còn `if`, `for` và gọi hàm. Khác biệt mấu chốt của ba lệnh này so với lệnh nhảy
-cấp thấp `GOTO` là chúng *trả luồng điều khiển* về điểm gọi. Từ đó, ta được phép
-nghĩ một lệnh như một hộp đen, tức không cần biết chi tiết bên trong, vì chắc
-chắn lệnh kế tiếp sẽ được thực hiện, thay vì nhảy lung tung. Hình 4 thể hiện rõ
-điều này, đặc biệt khi so với Hình 2.
-
-Theo định nghĩa, ba lệnh trên giải quyết được hậu quả đầu tiên. Đồng thời, các
-hậu quả số hai cũng được giải quyết, do ngôn ngữ đã có cấu trúc (cụ thể là có
-call stack).
+cấp thấp `GOTO` là chúng *trả luồng điều khiển* về điểm gọi; điều này thể hiện
+rõ ở Hình 4. Theo định nghĩa, ba lệnh trên giải quyết được hậu quả đầu tiên.
+Đồng thời, các hậu quả số hai cũng được giải quyết, do ngôn ngữ đã có cấu trúc
+(cụ thể là có call stack).
 
 ![3 basic constructs](../images/control-schematics.svg)
 
@@ -422,9 +419,8 @@ Hình 4: Ba cấu trúc cơ bản của lập trình có cấu trúc: rẽ nhán
 Ngày nay, ba cấu trúc trên đã trở thành phần không thể thiếu trong mọi ngôn ngữ
 lập trình, và `GOTO` chỉ còn dùng trong hợp ngữ. Quá khứ cho thấy nếu áp dụng
 một số cấu trúc, giới hạn, ta có thể giải quyết vấn đề một cách tinh tế và gọn
-gàng. Trong trường hợp này, tương tranh có cấu trúc có thể loại bỏ một số điểm
-yếu của các API tương tranh/bất đồng bộ truyền thống, giống cách lập trình có
-cấu trúc đã làm.
+gàng. Trong trường hợp này, SC có thể loại bỏ một số điểm yếu của các API tương
+tranh/bất đồng bộ truyền thống, giống cách lập trình có cấu trúc đã làm.
 
 ##### 2.2.1.3. Áp dụng vào hiện tại: tương tranh có cấu trúc
 
@@ -454,11 +450,10 @@ Hình 5: Tương tranh không cấu trúc với `goroutine` - API thuộc kiểu
 Trên thực tế, có cách để thực hiện một số chức năng trên với API hiện tại, tuy
 vậy đó đều là cách xử lí riêng, do đó chưa thực sự thuận tiện khi dùng. Ví dụ,
 ES6 có `catch()` để bắt ngoại lệ trong `Promise` mà không (thể) dùng cấu trúc
-`try-catch` sẵn có. Với tương tranh có cấu trúc, các vấn đề này đều được giải
-quyết.
+`try-catch` sẵn có. Với SC, các vấn đề này đều được giải quyết.
 
-Ta xét một đoạn mã tương tranh dùng coroutine trong Kotlin, tức dùng tương tranh
-có cấu trúc (không phải coroutine trong mọi ngôn ngữ đều dùng mô hình này):
+Ta xét một đoạn mã tương tranh dùng coroutine trong Kotlin, tức dùng SC (không
+phải coroutine trong mọi ngôn ngữ đều dùng mô hình này):
 
 ![kotlin coroutine](../images/kotlin-coroutine.svg)
 
@@ -474,24 +469,23 @@ Hình 6: Tương tranh có cấu trúc dùng coroutine trong Kotlin
 
 - 3 coroutine chạy "song song", chính xác hơn là tương tranh
 
-Nguyên tắc của tương tranh có cấu trúc là: *coroutine cha chờ mọi coroutine con
-chạy xong*, kể cả khi coroutine cha xong trước. Nguyên tắc này đảm bảo rằng khi
-hàm dùng coroutine kết thúc, không còn tác vụ tương tranh nữa, và luồng điều
-khiển duy nhất được trả về điểm gọi. Đột nhiên, hai tính năng có vấn đề ở trên
-lại hoạt động:
+Nguyên tắc của SC là: *coroutine cha chờ mọi coroutine con chạy xong*, kể cả khi
+coroutine cha xong trước. Nguyên tắc này đảm bảo rằng khi một hàm kết thúc,
+không còn tác vụ tương tranh nữa, và luồng điều khiển duy nhất được trả về điểm
+gọi. Đột nhiên, hai tính năng có vấn đề ở trên lại hoạt động:
 
 - Quản lí tài nguyên tự động: do đảm bảo trả lại luồng điều khiển, tài nguyên
   chắc chắn được đóng; do không còn tác vụ con, tài nguyên không bị đọc sau
   đóng.
 - Bắt ngoại lệ: do cấu trúc cha-con (khác với các API hiện tại cho rằng hai tác
-  vụ tương tranh là ngang hàng, không liên quan đến nhau), coroutine con có thể
-  ném ngoại lệ để coroutine cha bắt.
+  vụ tương tranh là ngang hàng), coroutine con có thể ném ngoại lệ để coroutine
+  cha bắt.
 
-Chú ý rằng các API hiện tại không phải là không làm được nguyên tắc trên, vấn đề
-là thực hiện một cách *tự động* và *đảm bảo*. Ví dụ, trong JS, để tuân theo
-nguyên tắc này, ta phải `await` với mọi hàm `async`; nếu không, luồng chạy của
-hàm đó sẽ tách biệt với luồng chương trình, như Hình 5 mô tả. Do không có ràng
-buộc chặt chẽ kia, các tính năng ngôn ngữ mới cũng khó cài đặt như đã phân tích.
+Chú ý là các API hiện tại không phải không làm được nguyên tắc trên, vấn đề là
+thực hiện một cách *tự động* và *đảm bảo*. Ví dụ, trong JS, để tuân theo nguyên
+tắc này, ta cần `await` với mọi hàm `async`; nếu không, luồng chạy của hàm đó sẽ
+tách biệt với luồng chương trình, như Hình 5 mô tả. Do không có ràng buộc chặt
+chẽ kia, các tính năng ngôn ngữ mới cũng khó cài đặt như đã phân tích.
 
 Do trong các ngôn ngữ khác, nguyên tắc trên chỉ là một ca sử dụng, việc ép buộc
 viết theo ca sử dụng này đòi hỏi lập trình viên thay đổi suy nghĩ về mã tương
@@ -503,13 +497,12 @@ Một khi vấn đề tương tranh được giải quyết hoặc đơn giản 
 
 ##### 2.2.1.4. Tóm tắt
 
-Coroutine và tương tranh có cấu trúc là một trong những tính năng quan trọng
-nhất của Kotlin, và được dùng để tăng tốc những đoạn mã chạy chậm trong yacv.
-Mấu chốt của tương tranh có cấu trúc được tóm gọn trong Hình 6. Dù khá mới
-(Martin Sústrik, tác giả của ZeroMQ, đưa ra ý tưởng này năm 2016) và còn có
-tranh cãi, mô hình này được liên tục cải thiện, ứng dụng vào nhiều thư viện
-trong nhiều ngôn ngữ như Java (Loom), Python (Trio), C (libdill),... Điều này
-cho thấy ý tưởng có tiềm năng lớn, giúp đơn giản hóa tư duy về tương tranh, làm
+Coroutine và SC là một trong những tính năng quan trọng nhất của Kotlin, và được
+dùng để tăng tốc những đoạn mã chạy chậm trong yacv. Mấu chốt của SC được tóm
+gọn trong Hình 6. Dù khá mới (Martin Sústrik, tác giả của ZeroMQ, đưa ra ý tưởng
+này năm 2016) và còn tranh cãi, mô hình này được cải thiện liên tục, có thư viện
+ở nhiều ngôn ngữ như Java (Loom), Python (Trio), C (libdill),... Điều này cho
+thấy ý tưởng có tiềm năng lớn, giúp đơn giản hóa tư duy về tương tranh, làm
 chúng gần với những đoạn mã tuần tự quen thuộc.
 
 ### 2.3. Mẫu thiết kế MVVM và Kiến trúc Google khuyên dùng <a name="P2.3-mvvm"></a>
@@ -523,14 +516,13 @@ nghiệm cho thấy giao diện nên được chia làm hai phần chính tách 
 - Model: dữ liệu để hiển thị (trả lời câu hỏi "cái gì"); liên quan đến đối
   tượng, mảng, cơ sở dữ liệu,...
 - View: cách để hiển thị dữ liệu đó (trả lời câu hỏi "như thế nào"); liên quan
-  đến các đối tượng đồ họa như nút, danh sách,...
+  đến các thành phần giao diện như nút, danh sách,...
 
-Yếu tố tách biệt thể hiện ở điểm Model chắc chắc không được biết đến View. Khi
-này, giao diện và nghiệp vụ có thể phát triển khá độc lập với nhau, giúp giảm
-thời gian phát triển. Ngược lại, View có thể biết đến Model hay không là tùy vào
-cách triển khai cụ thể. Có sự bất đối xứng này là do View thường có các mã liên
-quan chặt chẽ đến framework vốn phức tạp để kiểm thử, còn Model thường có các mã
-đơn giản.
+Sự tách biệt thể hiện ở chỗ Model không được biết View. Khi này, giao diện và
+nghiệp vụ có thể phát triển khá độc lập với nhau, giúp giảm thời gian phát
+triển. Ngược lại, View có thể biết đến Model hay không là tùy vào cách triển
+khai cụ thể. Có sự bất đối xứng này là do View thường có các mã liên quan chặt
+chẽ đến framework vốn phức tạp để kiểm thử, còn Model thường có các mã đơn giản.
 
 Khó khăn ở đây là làm sao để kết nối hai thành phần riêng biệt. Nhiều mô hình cố
 giải quyết vấn đề này, tiêu biểu là MVC, MVP và MVVM. Ta lần lượt xem xét chúng
@@ -540,10 +532,10 @@ Kiến trúc Google khuyên dùng.
 ##### 2.3.1.1. MVC: Model - View - Controller
 
 <!-- Cite [11] -->
-Phương hướng đầu tiên được thử là MVC, vốn rất phổ biến vào thời điểm Android ra
-đời. Do được phát minh từ rất lâu và mỗi framework lại có cách giải thích khác
-nhau, nên không có một mô hình cụ thể về cách ba thành phần trên tương tác. Tuy
-vậy, vẫn có một số điểm chung không đổi:
+Phương hướng đầu tiên được thử là MVC, vốn phổ biến vào thời điểm Android ra
+đời. Do được phát minh từ lâu và mỗi framework lại có cách giải thích khác nhau,
+nên không có một mô hình cụ thể về cách ba thành phần trên tương tác. Tuy vậy,
+vẫn có vài điểm chung không đổi:
 
 1. Controller nhận tương tác của người dùng
 2. Sau đó, controller cập nhật Model và View
@@ -560,22 +552,21 @@ Fragment/Activity tương ứng là Controller, tuy nhiên trong Android, các t
 phần này có quan hệ chặt chẽ chứ không rời nhau. Do đó, lí luận này cũng không
 thuyết phục. -->
 
-Hiện nay, MVC trên Android được coi là lỗi thời, không còn phù hợp.
+Hiện nay, MVC trên Android được coi là lỗi thời, không phù hợp.
 
 ##### 2.3.1.2. MVP: Model - View - Presenter
 
 <!-- Cite [13] -->
 Năm 2012, Robert Martin (Uncle Bob) xuất bản một bài viết nổi tiếng về kiến trúc
-phần mềm: Clean Architecture. Bài viết này tạo ra một trào lưu đưa Clean
-Architecture đi khắp nơi, trong đó có Android. MVP, vốn được phát triển từ lâu,
-được đông đảo lập trình viên chọn để hiện thực hóa Clean Architecture trên
-Android. Trước khi MVVM được Google chọn, đây là một hướng đi mới, có kì vọng
-cao sau nhiều thất bại trong việc dùng MVC trên Android.
+phần mềm: Clean Architecture, tạo ra một trào lưu đưa Clean Architecture đi khắp
+nơi. MVP, vốn được phát triển từ lâu, được đông đảo lập trình viên chọn để triển
+khai Clean Architecture trên Android. Trước khi Google chọn MVVM, đây là hướng
+đi mới, có kì vọng cao sau thất bại trong việc đưa MVC vào Android.
 
 Nhiệm vụ của ba thành phần được chia như sau:
 
-- Model: vẫn như ban đầu
-- View: hiển thị dữ liệu; hận tương tác người dùng để chuyển sang Presenter
+- Model: vẫn như trong MVC
+- View: hiển thị dữ liệu; nhận tương tác người dùng để chuyển sang Presenter
 - Presenter: trung gian giữa Model và View: nhận tương tác từ View, gọi/thay đổi
   Model, cập nhật View
 
@@ -589,17 +580,17 @@ phục, khi View kiêm luôn việc nhận tương tác. Đồng thời, Model v
 không biết nhau, đúng theo nguyên lý tách lớp của Clean Architecture.
 
 Ta xét một ứng dụng ToDo đơn giản, trong đó các công việc có thể được đánh dấu
-đã hoàn thành. Trong ứng dụng, có một màn hình hiển thị số việc đã hoàn thành và
-chưa hoàn thành. Trong màn hình đó, tương tác của MVP như sau:
+đã hoàn thành. Trong ứng dụng, màn hình hiển thị số việc đã hoàn thành và chưa
+hoàn thành. Trong màn hình đó, tương tác của MVP như sau:
 
 1. Presenter lấy tất cả công việc trong Model
 2. Presenter đếm số việc hoàn thành, chưa hoàn thành
 3. Presenter gọi hàm của View, truyền hai số đếm được ở trên vào
 
-Cũng do nguyên lí tách lớp, Presenter giờ phải chịu mọi trách nhiệm liên kết: nó
-phải biết và có tham chiếu đến *cả View và Model*. Do đó, Presenter trở nên cồng
-kềnh, và dù tách biệt nhưng vẫn có liên kết không lỏng lẻo (tight-coupling) với
-View. MVVM khắc phục được điểm yếu cuối cùng này.
+Cũng do nguyên này, mọi trách nhiệm liên kết giờ đổ về Presenter: nó phải biết
+và có tham chiếu đến *cả View và Model*. Do đó, Presenter trở nên cồng kềnh, và
+dù tách biệt nhưng vẫn có liên kết chặt (tight-coupling) với View. MVVM khắc
+phục được điểm yếu cuối cùng này.
 
 ##### 2.3.1.3. MVVM: Model - View - View Model
 
@@ -608,24 +599,24 @@ View. MVVM khắc phục được điểm yếu cuối cùng này.
 <!-- Cite [15] -->
 Hình 8: Kiến trúc MVVM
 
-Ta quay về chủ đề chính: MVVM. MVVM rất giống MVP ở chỗ View Model chịu trách
-nhiệm kết nối View và Model như Presenter. Điểm khác biệt là cách dữ liệu được
-truyền đi:
+Ta quay về chủ đề chính: MVVM. MVVM rất giống MVP ở chỗ View Model (từ đây gọi
+tắt là VM) kết nối View và Model như Presenter. Điểm khác biệt là cách dữ liệu
+được truyền đi:
 
 - Trong MVP, Presenter gọi phương thức của View để truyền dữ liệu cho View
-- Trong MVVM, View Model dùng cơ chế data binding để truyền dữ liệu cho View
+- Trong MVVM, VM dùng *data binding* để truyền dữ liệu cho View
 
 Data binding là cơ chế để *tự động* đưa dữ liệu vào thành phần hiển thị. Quay
 lại ví dụ ToDo ở trên, nếu dùng data binding để "gắn" (bind) danh sách công việc
 vào View, thì khi danh sách thay đổi, View cũng tự động thay đổi theo.
 
-Do dùng data binding thay vì gọi hàm, View Model không cần biết rõ View, khác
-với Presenter phải biết rõ View. Điều này giúp View và View Model có liên kết
-lỏng lẻo (loose coupling), giúp việc kiểm thử dễ dàng hơn. Phần còn lại của hai
-mô hình giống nhau: View cần biết View Model để chuyển tương tác; View Model cần
-biết Model để lấy dữ liệu.
+Do dùng data binding thay vì gọi hàm, VM không cần biết rõ View, khác với
+Presenter phải biết rõ View. Điều này giúp View và VM có liên kết lỏng lẻo
+(loose coupling), giúp việc kiểm thử dễ dàng hơn. Phần còn lại của hai mô hình
+không đổi: View cần biết VM để chuyển tương tác; VM cần biết Model để lấy dữ
+liệu.
 
-Do là mô hình phù hợp nhất trong cả ba, MVVM được Google chọn làm nền cho Kiến
+Do là mô hình phù hợp nhất trong cả ba, MVVM được chọn làm nền tảng cho Kiến
 trúc Google khuyên dùng.
 
 #### 2.3.2. Kiến trúc Google khuyên dùng <a name="P2.3.2-rec-architecture"></a>
@@ -636,8 +627,8 @@ Kiến trúc Google khuyên dùng có gốc là mô hình MVVM, có dạng như 
 
 Hình 9: Kiến trúc Google khuyên dùng
 
-- Repository đóng vai trò của Model trong MVVM, giúp View Model lấy dữ liệu mà
-  không cần quan tâm dữ liệu lấy từ đâu: cơ sở dữ liệu, gọi API qua mạng,...
+- Repository là Model trong MVVM, giúp View Model lấy dữ liệu mà không cần quan
+  tâm dữ liệu lấy từ đâu: cơ sở dữ liệu, gọi API qua mạng,...
 - LiveData là cơ chế data binding dùng luồng dữ liệu (stream)
 - Activity/Fragment là View
 
@@ -656,37 +647,35 @@ dữ liệu đệm và dữ liệu quét thực tế.
 SQLite là một hệ quản trị cơ sở dữ liệu quan hệ (RDBMS). Từ "Lite" trong tên có
 nghĩa là "nhỏ", thể hiện đặc điểm thiết kế chính của nó là một phần mềm cơ sở dữ
 liệu nhỏ gọn. SQLite có thể được nhúng vào phần mềm khác ở dạng thư viện, thay
-vì là một phần mềm riêng rẽ với cấu trúc máy chủ-máy khách như MySQL,
-PostgreSQL,...
+vì là một phần mềm riêng rẽ với cấu trúc máy chủ-máy khách như MySQL,...
 
-Để đạt được mục tiêu nhỏ gọn, SQLite chỉ giữ lại các tính năng SQL cốt lõi
-(tạo/đọc/sửa/xóa) và giao dịch (có hỗ trợ ACID), đồng thời chỉ tối ưu cho việc
-truy cập từ một ứng dụng cùng lúc. Các tính năng thường thấy trong RDBMS cho máy
-chủ, như nhân bản (replication), chia dữ liệu tự động (sharding), khóa dòng, đọc
-ghi nhiều luồng cùng lúc,... do đó được loại bỏ.
+Để đạt mục tiêu, SQLite chỉ giữ các tính năng SQL cốt lõi (tạo/đọc/sửa/xóa),
+giao dịch (có ACID), và chỉ tối ưu cho việc truy cập từ một ứng dụng cùng lúc.
+Các tính năng thường có trong RDBMS cho máy chủ, như nhân bản (replication),
+chia dữ liệu tự động (sharding), khóa dòng, đọc ghi nhiều luồng cùng lúc,...
+được loại bỏ. Do đó, với nhu cầu lưu trữ đơn giản, SQLite vừa nhanh vừa gọn.
 
 Ngay từ những phiên bản đầu, Android đã tích hợp SQLite, giúp lập trình viên
-không phải tự cài SQLite trong từng ứng dụng. yacv sử dụng SQLite để lưu đệm
-thông tin của sách, tránh việc phải quét nhiều lần.
+không phải nhúng SQLite vào từng ứng dụng. yacv dùng SQLite để lưu đệm thông tin
+truyện, tránh việc phải quét nhiều lần.
 
 #### 2.4.1. Room <a name="P2.4.1-room"></a>
 
-Room là một thư viện thuộc bộ Jetpack, giúp lập trình viên sử dụng SQLite tốt
-hơn. Đây có thể xem là một thư viện ORM đơn giản cho SQLite. Room tự động làm
-nhiều công việc liên quan đến SQL:
+Room là một thư viện thuộc Jetpack, giúp lập trình viên dùng SQLite tốt hơn. Đây
+có thể xem là một thư viện ORM đơn giản cho SQLite. Room tự động làm nhiều công
+việc liên quan đến SQL:
 
 - Tạo bảng: Lập trình viên chỉ cần khai báo các đối tượng dữ liệu như một lớp
-  hướng đối tượng thông thường, rồi thêm một vài Annotation và interface của
-  Room. Sau đó, Room sẽ tự sinh ra các bảng tương ứng.
+  hướng đối tượng thông thường, rồi đánh dấu với Annotation và interface của
+  Room. Sau đó, Room sẽ tự sinh các bảng tương ứng.
 - Truy vấn: Lập trình viên chỉ cần viết câu lệnh SQL. Sau đó, Room sẽ tự viết
-  truy vấn, chuyển dữ liệu dạng đối tượng sang dạng để lưu trong bảng và ngược
-  lại.
-- Kiểm tra truy vấn khi biên dịch: Nếu có lỗi truy vấn, lỗi này sẽ được dò ra
-  ngay khi biên dịch chứ không phải chờ đến khi chạy.
+  hàm truy vấn, chuyển dữ liệu dạng đối tượng sang dạng để lưu trong bảng và
+  ngược lại.
+- Kiểm tra truy vấn khi biên dịch: Nếu có lỗi truy vấn, lỗi này được dò ra ngay
+  khi biên dịch chứ không cần chờ đến khi chạy.
 - Kiểm soát lược đồ (schema): Khi thêm/sửa/xóa bảng/cột, Room tự động phát hiện
-  và ép người dùng viết cơ chế cập nhật. Do đó, ứng dụng sử dụng phiên bản lược
-  đồ cũ khi được cập nhật sẽ biết cách sửa cơ sở dữ liệu đến phiên bản lược đồ
-  mới.
+  và ép lập trình viên viết cơ chế cập nhật. Do đó, ứng dụng dùng lược đồ cũ khi
+  được cập nhật sẽ biết cách sửa cơ sở dữ liệu đến phiên bản lược đồ mới.
 - Tương thích với LiveData: Room cho phép View cập nhật dữ liệu theo cơ sở dữ
   liệu chỉ bằng vài dòng mã dùng LiveData.
 
@@ -701,12 +690,11 @@ cài đặt chức năng này bằng chỉ mục đảo (inverted index):
 2. Các từ được đưa vào từ điển, với khóa là bản thân từ đó, còn giá trị là ID
    của hàng `rowid`.
 
-FTS khác với đánh chỉ mục truyền thống ở bước 1: *từng từ* được tách ra, còn chỉ
-mục dùng *cả khối* văn bản. Do đó, khi tìm một từ lẻ, FTS có thể tìm các hàng
-chứa từ đó rất nhanh. Điểm yếu là chỉ mục phức tạp, ghi dữ liệu chậm, kích cỡ
-lớn hơn chỉ mục thông thường. Nếu bản thân dữ liệu văn bản trong cột được coi là
-một khối, ví dụ như lưu trường email, chỉ mục truyền thống là đủ tốt, không cần
-dùng đến FTS.
+FTS khác với đánh chỉ mục thường (cũng là chỉ mục đảo nhưng cho kiểu dữ liệu
+thông thường) ở bước 1: *từng từ* được tách ra, còn chỉ mục thường dùng *cả* văn
+bản. Do đó, khi tìm từ lẻ, FTS có thể tìm các hàng chứa từ đó rất nhanh. Điểm
+yếu là ghi chậm, kích cỡ lớn hơn chỉ mục thường. Nếu bản thân dữ liệu văn bản
+trong cột là một khối, ví dụ như email, chỉ mục thường đã đủ tốt, không cần FTS.
 
 Trong SQLite, một số kĩ thuật xử lí ngôn ngữ tự nhiên cơ bản cũng được áp dụng
 trong bước 1, như rút gọn từ (stemming, dùng thuật toán Porter, ví dụ khi tìm
@@ -730,20 +718,19 @@ bởi Phil Katz, ZIP đã trở thành định dạng nén tiêu chuẩn, đư�
 như mọi nền tảng, bao gồm Android.
 
 ZIP thực chất là một định dạng tệp chứa, chuyên chứa dữ liệu nén, chứ không phải
-là một thuật toán nén (thuật toán nén thông dụng nhất trong ZIP là DEFLATE). Một
-trong những mục tiêu của định dạng ZIP là giúp việc sửa tệp nén (thêm, sửa, xóa
-tệp con trong tệp ZIP) trở nên nhẹ nhất có thể. Mục tiêu đó thể hiện ở thiết kế
-sau:
+là một thuật toán nén (thuật toán nén hay dùng nhất trong ZIP là DEFLATE). Một
+trong những mục tiêu của ZIP là giúp việc sửa tệp nén (thêm, sửa, xóa tệp con
+trong tệp ZIP) trở nên nhanh nhất có thể. Mục tiêu đó thể hiện ở thiết kế sau:
 
 - Khi nén, thuật toán được dùng nén từng tệp dữ liệu gốc thành một tệp nhị phân,
   ở đây gọi là *tệp nén lẻ* (data trong Hình 10). Sau đó, các tệp nén lẻ này
   được nối thành tệp ZIP cuối cùng.
-- Đi kèm mỗi tệp nén lẻ là một header gọi là *File Entry* để lưu các thông tin
-  liên quan. Header này được đặt trước tệp nén lẻ trong tệp ZIP cuối cùng.
-- Ở *cuối* tệp nén ZIP, sau khi đã nối các tệp nén lẻ cùng header lại, các
-  header được gom lại, lưu một lần nữa vào một cấu trúc gọi là *Central
-  Directory*. Có thể so sánh File Entry như các *đề mục*, còn Central Directory
-  là *mục lục* cho cả tệp nén.
+- Trước mỗi tệp nén lẻ là một header gọi là *File Entry* để lưu thông tin liên
+  quan.
+- Ở *cuối* tệp nén ZIP, sau khi đã nối các tệp nén lẻ và header lại, các header
+  được gom lại, lưu một lần nữa vào một cấu trúc gọi là *Central Directory*. Có
+  thể so sánh File Entry như các *đề mục*, còn Central Directory là *mục lục*
+  cho cả tệp nén.
 - Hai thông tin quan trọng trong mỗi File Entry là tên của tệp nén lẻ và *vị trí
   bắt đầu* (offset), tức số byte tính từ đầu tệp ZIP đến tệp nén lẻ tương ứng.
 
@@ -755,23 +742,24 @@ Ta phân tích kĩ hơn:
 
 - Do từng tệp được nén riêng, có thể áp dụng thuật toán khác nhau cho hiệu quả
   tốt với từng tệp.
-- Cũng do nén riêng, việc thêm/sửa/xóa (gọi chung là sửa) và trích xuất có thể
+- Cũng do nén riêng, việc thêm/sửa/xóa (gọi chung là sửa) và giải nén có thể
   được thực hiện với từng tệp nén lẻ, thay vì phải giải nén, sửa, rồi nén lại
   toàn bộ.
 - Nhờ mục lục (chứa vị trí tệp nén lẻ), việc sửa còn diễn ra nhanh do ứng dụng
-  biết vị trí để đọc dữ liệu.
-- Sửa tệp nén luôn đi kèm sửa mục lục:
+  biết vị trí để đọc ghi dữ liệu.
+- Mục lục đặt ở cuối là tối ưu:
 
     - Giả sử mục lục đặt ở đầu tệp tin. Khi sửa, toàn bộ các tệp nén lẻ phải bị
-      di chuyển để tạo chỗ cho mục lục mới (tưởng tượng giống như thêm một phần
-      tử vào mảng ở vị trí đầu: toàn bộ các phần tử sau phải bị đẩy lên để tạo
-      chỗ trống).
+      di chuyển để tạo chỗ cho mục lục mới (giống như thêm một phần tử vào mảng
+      ở vị trí đầu: toàn bộ các phần tử sau bị đẩy lên để tạo chỗ trống).
     - Do mục lục nằm ở cuối tệp tin, khi sửa tệp nén, chỉ cần đẩy các tệp nén lẻ
       (và tất nhiên cả Central Directory) từ chỗ sửa. Đây có thể coi là một tối
       ưu nhỏ, nhưng trước đây là một điểm sáng. Do đĩa mềm - phương tiện chia sẻ
       chủ yếu thời đó - có dung lượng nhỏ, tệp ZIP có thể phải cắt ra cho vừa.
       Cách sửa tệp linh động này cho phép chỉ ghi lại dữ liệu ở một số đĩa mềm,
       thay vì ghi lại toàn bộ.
+    - Hơn nữa, nếu mục lục ở đầu thì ngay trong khi nén, các tệp nén lẻ bị di
+      chuyển như trên do mục lục liên tục được cập nhật, làm giảm thông lượng.
 
 <!-- Cite [19] -->
 Tóm lại, cấu trúc tệp nén ZIP cho phép sửa và giải nén từng tệp gốc rất dễ dàng.
@@ -852,13 +840,18 @@ Các giới hạn này nhằm tránh cho phần mềm quá phức tạp với t�
     - Nếu có nhiều kết quả tìm kiếm, hiển thị từ từ, đưa những kết quả đã biết
       lên trước
 
-- Tốc độ xem truyện chấp nhận được: Tốc độ xem truyện gồm tốc độ mở truyện, tốc
-  độ duyệt trang tới-lui đều cần phải chấp nhận được để cải thiện trải nghiệm.
-- Chiếm dụng ít bộ nhớ: Bộ nhớ chiếm dụng của ứng dụng gồm hai phần: bộ nhớ RAM
-  và bộ nhớ tạm, cả hai cần sử dụng ít dung lượng nhất có thể. Đây là một yêu
-  cầu đáng cân nhắc, lí do vì kích cỡ từng tệp truyện thường rất lớn (từ vài
-  chục đến hơn một trăm megabyte), tuy nhiên cần chú ý cân bằng yêu cầu này với
-  yêu cầu về tốc độ (đánh đổi không gian-thời gian).
+- Tốc độ xem truyện chấp nhận được: Đây là một phần của phản hồi nhanh, nhưng
+  được tách riêng vì độ quan trọng của nó. Tốc độ xem truyện gồm hai tiêu chí:
+
+    - Tốc độ mở truyện, tức tốc độ xem trang đầu (có thể so với first contentful
+      paint trong lập trình web)
+    - Tốc độ cuộn trang tới-lui
+
+- Chiếm ít bộ nhớ: Bộ nhớ chiếm dụng của ứng dụng gồm hai phần: bộ nhớ RAM và bộ
+  nhớ tạm, cả hai cần sử dụng ít dung lượng nhất có thể. Đây là một yêu cầu đáng
+  cân nhắc, lí do vì kích cỡ từng tệp truyện thường rất lớn (từ vài chục đến hơn
+  một trăm megabyte), tuy nhiên cần chú ý cân bằng yêu cầu này với yêu cầu về
+  tốc độ (đánh đổi không gian-thời gian).
 - Giao diện đơn giản, trực quan: Người dùng hướng đến có thể xếp vào nhóm người
   dùng "say mê" (enthusiast), do đó giao diện chỉ cần đơn giản rõ ràng, không
   màu mè, tập trung vào tính năng.
@@ -868,9 +861,9 @@ Các giới hạn này nhằm tránh cho phần mềm quá phức tạp với t�
 Mỗi yêu cầu đã xác định trong [mục 3.2.1.](#P3.2.1-functional-requirements) được
 coi là một ca sử dụng, được trình bày trong các tiểu mục dưới đây.
 
-*Người dùng duy nhất* trong các ca sử dụng là người đọc, do đó hai cụm từ này sẽ
-được dùng hoán đổi cho nhau. Do ứng dụng hoàn toàn ngoại tuyến, người đọc cũng
-không có tương tác với nhau.
+*Người dùng duy nhất* trong các ca sử dụng là *người đọc*, do đó hai cụm từ này
+sẽ được dùng hoán đổi cho nhau. Do ứng dụng hoàn toàn ngoại tuyến, người đọc
+cũng không có tương tác với nhau.
 
 Do ứng dụng đơn giản, các ca sử dụng tách biệt, nên mỗi ca sử dụng gắn với một
 *màn hình*. Có tổng cộng năm màn hình sẽ được mô tả, gồm:
@@ -907,8 +900,8 @@ Do ứng dụng đơn giản, các ca sử dụng tách biệt, nên mỗi ca s�
 
 - **Luồng ngoại lệ**:
 
-    Nếu có lỗi trong bản thân quá trình chọn thư mục, cần gợi ý người đọc chọn
-    lại. Lỗi gồm:
+    Nếu có lỗi trong quá trình chọn thư mục, cần gợi ý người đọc chọn lại. Lỗi
+    gồm:
 
     - Thiếu quyền
     - Không tìm được thư mục gốc
@@ -1037,6 +1030,7 @@ Theo như cột phải Bảng 3, các màn hình trong yacv được tổ chức
 
 - Khi chọn "House of M": chuyển sang Màn hình Thư mục tương ứng, không có thư
   mục con, và có 2 tệp truyện:
+
     - House of M #1.cbz
     - House of M #3.cbz
 
