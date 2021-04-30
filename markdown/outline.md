@@ -175,14 +175,10 @@ Chương này giới thiệu sơ qua về các nền tảng trong quá trình x�
 
 ### 2.1. Hệ điều hành Android <a name="P2.1-android"></a>
 
-<!-- Cite [6] -->
-Android là một hệ điều hành do Google phát triển cho thiết bị di động, ví dụ như
-điện thoại và máy tính bảng. Android sử dụng nhân Linux và được thiết kế để dùng
-chủ yếu với màn hình cảm ứng. Cùng với iOS của Apple, Android trở thành một phần
-không thể thiếu của cuộc cách mạng di động bắt đầu vào cuối những năm 2000. Giữ
-vị trí số một về thị phần từ 2011 đến nay, Play Store (chợ ứng dụng chính của
-nó) có doanh thu hàng chục tỉ USD từ 2018,... là một vài con số thể hiện sự
-thành công và độ phủ của Android.
+Android là một hệ điều hành do Google phát triển cho thiết bị di động. Android
+dùng nhân Linux và được thiết kế cho màn hình cảm ứng. Cùng với iOS của Apple,
+Android trở thành một phần không thể thiếu của cuộc cách mạng di động bắt đầu
+vào cuối những năm 2000.
 
 Google mua lại phiên bản Android đầu của công ty khởi nghiệp cùng tên vào năm
 2005, và phát triển hệ điều hành này từ đó. Ngoài Google, Android còn nhận đóng
@@ -191,8 +187,8 @@ phép Apache); tên chính thức của dự án là Android Open Source Project
 mọi thiết bị Android thương mại đều có ứng dụng độc quyền. Ví dụ đáng kể là bộ
 Google Mobile Service, chứa những ứng dụng không thể thiếu như trình duyệt
 Chrome hay chợ Play Store. Về mặt này, Android khá giống Chrome: thành phần cốt
-lõi về mặt kĩ thuật được phát triển theo mô hình mã nguồn mở (AOSP và Chromium),
-còn thành phần liên quan đến trải nghiệm người dùng được phát triển riêng.
+lõi kĩ thuật được phát triển theo mô hình mã nguồn mở (AOSP và Chromium), còn
+thành phần liên quan đến trải nghiệm người dùng được phát triển riêng.
 
 ![Android software stack](../images/android-stack_2x.png)
 
@@ -202,10 +198,9 @@ Hệ điều hành Android được phân lớp như sau:
 
 - Nhân Linux (Linux Kernel):
 
-    Đây là tầng thấp nhất. Android hay dùng nhánh hỗ trợ dài hạn (LTS) của
-    Linux. Không như kiểu phát triển "distro" trên máy tính (chủ yếu thay đổi ở
-    ngoài nhân), Google sửa và thêm bớt nhiều thành phần vào nhân trước khi tích
-    hợp.
+    Đây là tầng thấp nhất. Android dùng nhánh hỗ trợ dài hạn (LTS) của Linux.
+    Không như kiểu phát triển "distro" trên máy tính (chủ yếu thay đổi ở ngoài
+    nhân), Google sửa và thêm bớt nhiều thành phần vào nhân trước khi tích hợp.
 
 - Lớp phần cứng trừu tượng (Hardware Abstraction Layer):
 
@@ -223,39 +218,35 @@ Hệ điều hành Android được phân lớp như sau:
     desktop, đó là các máy ảo Java (JVM). Trên Android, Android Runtime nhận
     nhiệm vụ này.
 
-    Điểm khác biệt của ART với JVM là ở chỗ ART *biên dịch* bytecode thành mã
-    máy (trước khi chạy - AOT), còn JVM *thông dịch* bytecode thành mã máy
-    (trong khi chạy); đồng thời cả hai đều có tùy chọn JIT. Chú ý là ART chỉ có
-    từ Android 4.4; trước đó Android dùng máy ảo Dalvik, giống JVM truyền thống
-    hơn. Ngoài ra, trong mọi bản Android, còn một bước trung gian nữa giữa JVM
-    bytecode và mã máy, đó là Dalvik bytecode (DEX) - được thiết kế dành cho
-    Android (tối ưu cho thiết bị với ít bộ nhớ).
+    Hai máy ảo này khác nhau ở chỗ ART *biên dịch* bytecode thành mã máy (trước
+    khi chạy - AOT), còn JVM *thông dịch* bytecode thành mã máy (trong khi
+    chạy); đồng thời cả hai đều có tùy chọn JIT. Chú ý là ART chỉ có từ Android
+    4.4; trước đó Android dùng máy ảo Dalvik, giống JVM truyền thống hơn.
 
     ART hiện hỗ trợ đa số tính năng của Java 8.
 
 - Thư viện C/C++:
 
     Tầng thư viện native nằm ngang hàng với ART, phục vụ các tiến trình hệ thống
-    và một số ứng dụng dùng NDK (tức JNI trên Android).
+    và một số ứng dụng dùng NDK (tức gọi API C cấp thấp) như trò chơi điện tử.
 
 - Khung phát triển ứng dụng (Java API Framework):
 
-    Gần như mọi ứng dụng Android sẽ dùng các tính năng liên quan đến giao diện
-    và hệ điều hành thông qua tầng này. Đây là tầng gần với lập trình viên nhất,
-    được dùng nhiều nhất, và có API Java.
+    Mọi ứng dụng Java được viết nhờ sử dụng các thành phần của tầng này thông
+    qua API Java. Tầng này cung cấp toàn bộ tính năng của Android cho lập trình
+    viên, bao gồm các yếu tố cơ bản như giao diện (View System), truy xuất,...
 
     Theo Google, lập trình viên có quyền truy cập vào lớp này tương đương với
-    các ứng dụng hệ thống (như ứng dụng SMS, trình duyệt,...). Đây có thể coi là
-    một cam kết tránh độc quyền về công nghệ, tức đa số ứng dụng hệ thống không
-    có khả năng đặc biệt, hay hiệu năng cao hơn ứng dụng bên thứ ba (hiểu đơn
-    giản là ứng dụng "thông thường") tương tự.
+    các ứng dụng hệ thống. Đây có thể coi là một cam kết tránh độc quyền công
+    nghệ, tức đa số ứng dụng hệ thống không có khả năng đặc biệt, hay hiệu năng
+    cao hơn ứng dụng bên thứ ba tương tự.
 
 - Ứng dụng hệ thống (System Apps)
 
     Android đi kèm với một số ứng dụng hệ thống như ứng dụng SMS, trình duyệt,
     lịch,... Chủ trương của Google là cho phép thay thế đa số các ứng dụng này
-    với ứng dụng bên thứ ba, tuy nhiên chắc chắn có một số trường hợp đặc biệt
-    như ứng dụng Cài đặt (Settings).
+    với ứng dụng bên thứ ba, tuy nhiên chắc chắn có một số ngoại lệ như ứng dụng
+    Cài đặt (Settings).
 
 Gần như mọi ứng dụng Android cơ bản đều sử dụng thành phần View System trong
 tầng Khung phát triển để viết giao diện, và yacv không là ngoại lệ. yacv còn sử
@@ -269,11 +260,10 @@ tảng kĩ thuật cho toàn bộ Jetpack, là AndroidX.
 
 Mô hình phát triển của Android (cho phép nhà sản xuất tùy biến thoải mái) khiến
 cho thế giới Android trở nên phân mảnh. Hậu quả là việc cập nhật hệ điều hành
-trở nên khó khăn hơn. Do đó, Google tạo ra các Thư viện Hỗ trợ (Support Library)
-để đưa các API mới lên các máy cũ. Chú ý rằng các thư viện này chỉ giúp ích cho
-lập trình viên (được sử dụng API mới, tiện hơn), chứ không hề cập nhật tính năng
-hệ điều hành. AndroidX chính là Support Library đổi tên và được cập nhật đến
-nay.
+rất khó khăn. Do đó, Google tạo ra các Thư viện Hỗ trợ (Support Library) để đưa
+các API mới lên các máy cũ. Chú ý rằng các thư viện này chỉ có ích cho lập trình
+viên (được sử dụng API mới, tiện hơn), chứ không hề cập nhật tính năng hệ điều
+hành. AndroidX chính là Support Library đổi tên và được cập nhật đến nay.
 
 Jetpack gồm các thư viện giải quyết một số vấn đề thường gặp trong khi viết ứng
 dụng Android, giúp lập trình viên viết mã nhanh, gọn, ít lỗi hơn so với việc tự
@@ -291,19 +281,19 @@ Room là một phần quan trọng của yacv, do đó sẽ được giới thi�
 ### 2.2. Ngôn ngữ lập trình Kotlin <a name="P2.2-kotlin"></a>
 
 Java là ngôn ngữ lập trình đầu tiên được hỗ trợ trên Android, nhưng không phải
-duy nhất. Từ 2019, Google đã khuyên lập trình viên viết ứng dụng trên Kotlin,
-một ngôn ngữ mới do JetBrains phát triển. Giới thiệu lần đầu vào năm 2011,
-Kotlin được định hướng trở thành lựa chọn thay thế cho Java. Điều đó thể hiện ở
-việc Kotlin tương thích hoàn toàn với Java (từ Java gọi được Kotlin và ngược
-lại), do cùng được biên dịch thành JVM bytecode.
+duy nhất. Từ 2019, Google khuyên lập trình viên viết ứng dụng trên Kotlin, một
+ngôn ngữ mới do JetBrains phát triển. Giới thiệu lần đầu vào năm 2011, Kotlin
+được định hướng trở thành lựa chọn thay thế cho Java. Điều đó thể hiện ở việc
+Kotlin tương thích hoàn toàn với Java (từ Java gọi được Kotlin và ngược lại), do
+cùng được biên dịch thành JVM bytecode.
 
 Điểm mạnh của Kotlin so với Java là tính ngắn gọn. Do được phát triển mới,
-Kotlin không cần tương thích với phiên bản cũ, cho phép các kĩ sư thiết kế một
-ngôn ngữ có cú pháp hiện đại, gọn ghẽ. Ngoài ra, vì được một công ty tư nhân
-phát triển, Kotlin không cần chờ đến các cuộc họp phức tạp để đạt đồng thuận về
-tính năng mới, giúp ngôn ngữ liên tục được cải tiến. Đồng thời, công ty cũng mở
-mã nguồn của Kotlin và chương trình dịch, giúp đẩy nhanh quá trình phát triển và
-tạo thiện cảm cộng đồng cho một ngôn ngữ non trẻ.
+Kotlin không cần tương thích với phiên bản cũ, cho phép dùng các cú pháp hiện
+đại, gọn ghẽ. Ngoài ra, vì được một công ty tư nhân phát triển, Kotlin không cần
+chờ đến các cuộc họp phức tạp để đạt đồng thuận về tính năng mới, giúp ngôn ngữ
+liên tục được cải tiến. Đồng thời, công ty cũng mở mã nguồn của Kotlin và chương
+trình dịch, giúp đẩy nhanh quá trình phát triển và tạo thiện cảm cộng đồng cho
+một ngôn ngữ non trẻ.
 
 Sau đây là tóm tắt một số đặc điểm kĩ thuật của Kotlin:
 
@@ -312,23 +302,19 @@ Sau đây là tóm tắt một số đặc điểm kĩ thuật của Kotlin:
   first-class.
 - Về hệ thống kiểu, Kotlin giống hệt Java:
     - Là kiểu tĩnh (statically typed), tức kiểu được kiểm tra khi biên dịch
-      (thay vì khi chạy, như Python, JavaScript,...)
+      (thay vì khi chạy, như Python, JavaScript,...), đồng thời
     - Là kiểu mạnh (strongly typed), tức không cho phép chuyển kiểu ngầm
-- Về cú pháp, Kotlin có cú pháp mới, gọn, hiện đại, vay mượn ý tưởng từ những
-  ngôn ngữ được dễ viết như Python, ví dụ gồm:
-    - bỏ dấu `;`
-    - khai báo bằng trích xuất thuộc tính (destructuring declaration)
-- Về tính năng chống lỗi, Kotlin luôn được quảng cáo về khả năng chống lỗi
+- Về cú pháp, Kotlin có cú pháp gọn, hiện đại, ví dụ như bỏ dấu `;` cuối dòng,
+  template literal,...
+- Về tính năng chống lỗi, Kotlin luôn được quảng cáo về khả năng chống
   `NullPointerException`. Kotlin "né" lỗi này do buộc người viết đánh dấu cụ thể
-  rằng một đối tượng có thể nhận giá trị `null` hay không bằng hậu tố `?` ở khai
-  báo kiểu. Từ đó, Kotlin biết chính xác đối tượng có thể nhận giá trị `null`
-  hay không, và buộc xử lí nếu có.
-- Về nền tảng hỗ trợ, ngoài JVM, Kotlin còn được biên dịch sang JavaScript,
-  Wasm, và mã máy. Trừ JVM, các nền tảng còn lại đều ở giai đoạn thử nghiệm.
+  rằng một đối tượng có thể bị `null` hay không bằng hậu tố `?` ở khai báo kiểu.
+  Từ đó, Kotlin biết chính xác đối tượng có thể là `null` hay không, và buộc xử
+  lí nếu có.
 
-Với việc Google khuyên dùng Kotlin khi viết ứng dụng Android, tôi cho rằng khóa
-luận này là một cơ hội phù hợp để thử sử dụng Kotlin, và đã quyết định chọn viết
-yacv bằng Kotlin từ đầu.
+Do Google khuyên dùng Kotlin khi viết ứng dụng Android, tôi cho rằng khóa luận
+này là một cơ hội phù hợp để thử Kotlin thay vì dùng Java quen thuộc, và quyết
+định chọn viết yacv bằng Kotlin.
 
 #### 2.2.1. Coroutine <a name="P2.2.1-coroutine"></a>
 
@@ -339,24 +325,23 @@ có tính tương tranh (concurrency) và bất đồng bộ (asynchronous) mộ
 giản hơn.
 
 Về cơ bản, coroutine giống với luồng (thread), nhưng nhẹ hơn. Coroutine luôn
-dùng mô hình *đa nhiệm hợp tác* (cooperative multitasking), khác với luồng vốn
-hay dùng đa nhiệm ưu tiên (preemptive multitasking). Mấu chốt khác biệt của
-chúng là đa nhiệm hợp tác có các "điểm dừng" do người viết tạo; khi chạy đến đó,
+dùng mô hình *đa nhiệm hợp tác* (cooperative multitasking), khác với luồng hay
+dùng đa nhiệm ưu tiên (preemptive multitasking). Mấu chốt khác biệt của chúng là
+đa nhiệm hợp tác có các "điểm dừng" do người viết tạo; khi chạy đến đó,
 coroutine có thể dừng lại, chủ động nhả CPU cho việc khác, rồi tiếp tục việc
 đang dở vào lúc thích hợp. Ngược lại, đa nhiệm ưu tiên có thể buộc một luồng
-đang chạy ngừng lại bất kì lúc nào để ưu tiên chạy một luồng khác. Đây cũng
-chính là điểm khiến coroutine nhẹ hơn: chi phí chuyển ngữ cảnh (context
-switching) được kiểm soát và cắt giảm trong nhiều trường hợp, do chuyển sang
-thực thi một coroutine khác chưa chắc đã chuyển sang một luồng hệ điều hành
-khác.
+đang chạy ngừng lại bất kì lúc nào để ưu tiên chạy một luồng khác. Đây cũng là
+điểm khiến coroutine nhẹ hơn: chi phí chuyển ngữ cảnh (context switching) được
+kiểm soát và cắt giảm, do chuyển sang thực thi một coroutine khác chưa chắc đã
+chuyển sang một luồng hệ điều hành khác.
 
-Với những điều cơ bản trên, coroutine chưa làm được nhiều. Roman Elizarov,
-trưởng dự án Kotlin, hướng coroutine trong Kotlin theo một ý tưởng mới: *tương
-tranh có cấu trúc* (structured concurrency, từ đây gọi tắt là SC). Ý tưởng này
-tiếp tục đơn giản hóa việc viết những đoạn mã tương tranh bằng cách áp đặt một
-số giới hạn, cấu trúc cơ bản. Kết quả là coroutine trong Kotlin hỗ trợ việc xử
-lí lỗi và ngừng tác vụ bất đồng bộ tốt hơn việc dùng luồng, hay các thư viện
-tương tranh như RxJava.
+Với những điều trên, coroutine chưa làm được nhiều. Roman Elizarov, trưởng dự án
+Kotlin, hướng coroutine trong Kotlin theo một ý tưởng mới: *tương tranh có cấu
+trúc* (structured concurrency, từ đây gọi tắt là SC). Ý tưởng này tiếp tục đơn
+giản hóa việc viết những đoạn mã tương tranh bằng cách áp đặt một số giới hạn,
+cấu trúc cơ bản. Kết quả là coroutine trong Kotlin hỗ trợ việc xử lí lỗi và
+ngừng tác vụ bất đồng bộ tốt hơn việc dùng luồng, hay các thư viện tương tranh
+như RxJava.
 
 Coroutine được dùng để tăng tốc những đoạn mã chạy chậm trong yacv (sẽ được mô
 tả sau). Ngoài cải thiện về hiệu năng, coroutine và tương tranh có cấu trúc còn
@@ -387,7 +372,7 @@ Vấn đề của lập trình phi cấu trúc, hay của `GOTO`, có thể tóm
     chương trình chuyển sang lệnh khác mà không trở lại. Luồng chạy trở thành
     một đống "mì trộn" như Hình 3, thay vì tuần tự từ trên xuống. Tệ hơn, tính
     trừu tượng bị phá vỡ: khi gọi hàm, thay vì có thể bỏ qua chi tiết bên trong,
-    ta phải biết chúng để xem có lệnh nhảy bất ngờ nào không.
+    ta phải biết rõ để xem có lệnh nhảy bất ngờ nào không.
 
 - Không cài đặt được các chức năng mới (ngoại lệ, quản lí tài nguyên tự động,...)
 
@@ -428,8 +413,8 @@ Trước hết, ta xem xét hai kiểu API tương tranh hay dùng hiện nay:
 
 | Tên | Giải thích | Ví dụ |
 |:----|:-----------|:------|
-| Tương tranh | Chạy một hàm theo cách tương tranh với luồng chạy hiện tại | `threading.Thread(target=fn).start() # Python` |
-| Bất đồng bộ | Chạy một hàm khi có sự kiện xảy ra (callback) | `document.getElementById('id').onclick = cb; // JS` |
+| Tương tranh | Chạy một hàm theo cách tương tranh với luồng chạy hiện tại | `Thread(target=fn).start() # Python` |
+| Bất đồng bộ | Chạy một hàm khi có sự kiện xảy ra (callback) | `element.onclick = cb; // JS` |
 
 Bảng 2: Hai kiểu API tương tranh thường thấy.
 
@@ -438,7 +423,7 @@ lại với hai API trên:
 
 ![non-structured concurrency](../images/sequential-and-go-to-schematic.svg)
 
-Hình 5: Tương tranh không cấu trúc với `goroutine` - API thuộc kiểu tương tranh.
+Hình 5: Tương tranh phi cấu trúc với `goroutine` - API thuộc kiểu tương tranh.
 
 - Ta xem lại ví dụ về quản lí tài nguyên tự động. Nếu có một luồng thực thi khác
   tương tranh với luồng chính, thì khi luồng chính đóng `Scanner`, có thể luồng
@@ -461,18 +446,18 @@ Hình 6: Tương tranh có cấu trúc dùng coroutine trong Kotlin
 
 Đoạn mã trong Hình 6 làm những việc sau:
 
-- Hàm `launch()` tạo ra các coroutine
+- Hàm `launch()` tạo ra các coroutine:
 
-    - Hàm `launch()` đầu tiên tạo ra coroutine *cha*
-    - Hàm `launch()` thứ hai tạo ra coroutine *con*, chạy hàm `A()`
+    - `launch()` đầu tiên tạo ra coroutine *cha*
+    - `launch()` thứ hai tạo ra coroutine *con*, chạy hàm `A()`
     - Tương tự, có một coroutine con chạy hàm `B()`
 
 - 3 coroutine chạy "song song", chính xác hơn là tương tranh
 
 Nguyên tắc của SC là: *coroutine cha chờ mọi coroutine con chạy xong*, kể cả khi
-coroutine cha xong trước. Nguyên tắc này đảm bảo rằng khi một hàm kết thúc,
-không còn tác vụ tương tranh nữa, và luồng điều khiển duy nhất được trả về điểm
-gọi. Đột nhiên, hai tính năng có vấn đề ở trên lại hoạt động:
+nó xong trước. Nguyên tắc này đảm bảo rằng khi một hàm kết thúc, không còn tác
+vụ tương tranh nữa, và luồng điều khiển hợp nhất được trả về điểm gọi. Đột
+nhiên, hai tính năng có vấn đề ở trên lại hoạt động:
 
 - Quản lí tài nguyên tự động: do đảm bảo trả lại luồng điều khiển, tài nguyên
   chắc chắn được đóng; do không còn tác vụ con, tài nguyên không bị đọc sau
@@ -497,13 +482,12 @@ Một khi vấn đề tương tranh được giải quyết hoặc đơn giản 
 
 ##### 2.2.1.4. Tóm tắt
 
-Coroutine và SC là một trong những tính năng quan trọng nhất của Kotlin, và được
-dùng để tăng tốc những đoạn mã chạy chậm trong yacv. Mấu chốt của SC được tóm
-gọn trong Hình 6. Dù khá mới (Martin Sústrik, tác giả của ZeroMQ, đưa ra ý tưởng
-này năm 2016) và còn tranh cãi, mô hình này được cải thiện liên tục, có thư viện
-ở nhiều ngôn ngữ như Java (Loom), Python (Trio), C (libdill),... Điều này cho
-thấy ý tưởng có tiềm năng lớn, giúp đơn giản hóa tư duy về tương tranh, làm
-chúng gần với những đoạn mã tuần tự quen thuộc.
+Coroutine với SC là một trong những tính năng quan trọng nhất của Kotlin, và
+được dùng để tăng tốc những đoạn mã chạy chậm trong yacv. Mấu chốt của SC được
+tóm gọn trong Hình 6. Dù khá mới (Martin Sústrik, tác giả của ZeroMQ, đưa ra ý
+tưởng này năm 2016) và còn tranh cãi, mô hình này vẫn được cải thiện liên tục,
+có thư viện ở nhiều ngôn ngữ như Java (Loom), Python (Trio),... Điều này cho
+thấy ý tưởng có tiềm năng lớn, giúp đơn giản hóa tư duy về tương tranh.
 
 ### 2.3. Mẫu thiết kế MVVM và Kiến trúc Google khuyên dùng <a name="P2.3-mvvm"></a>
 
@@ -514,9 +498,9 @@ Separation of Concern, hiểu đơn giản là chia tách chức năng. Nhiều 
 nghiệm cho thấy giao diện nên được chia làm hai phần chính tách biệt nhau:
 
 - Model: dữ liệu để hiển thị (trả lời câu hỏi "cái gì"); liên quan đến đối
-  tượng, mảng, cơ sở dữ liệu,...
+  tượng, mảng,...
 - View: cách để hiển thị dữ liệu đó (trả lời câu hỏi "như thế nào"); liên quan
-  đến các thành phần giao diện như nút, danh sách,...
+  đến các yếu tố giao diện như nút, danh sách,...
 
 Sự tách biệt thể hiện ở chỗ Model không được biết View. Khi này, giao diện và
 nghiệp vụ có thể phát triển khá độc lập với nhau, giúp giảm thời gian phát
@@ -524,10 +508,10 @@ triển. Ngược lại, View có thể biết đến Model hay không là tùy 
 khai cụ thể. Có sự bất đối xứng này là do View thường có các mã liên quan chặt
 chẽ đến framework vốn phức tạp để kiểm thử, còn Model thường có các mã đơn giản.
 
-Khó khăn ở đây là làm sao để kết nối hai thành phần riêng biệt. Nhiều mô hình cố
-giải quyết vấn đề này, tiêu biểu là MVC, MVP và MVVM. Ta lần lượt xem xét chúng
-để thấy rằng MVVM phù hợp nhất với Android, do đó được chọn làm nền tảng cho
-Kiến trúc Google khuyên dùng.
+Khó khăn ở đây là làm sao để kết nối hai thành phần riêng biệt kia. Nhiều mô
+hình cố giải quyết vấn đề này, tiêu biểu là MVC, MVP và MVVM. Ta lần lượt xem
+xét chúng để thấy rằng MVVM phù hợp nhất với Android, do đó được chọn làm nền
+tảng cho Kiến trúc Google khuyên dùng.
 
 ##### 2.3.1.1. MVC: Model - View - Controller
 
@@ -540,17 +524,10 @@ vẫn có vài điểm chung không đổi:
 1. Controller nhận tương tác của người dùng
 2. Sau đó, controller cập nhật Model và View
 
-Phần khác nhau giữa các framework là cách View lấy dữ liệu từ Model, sao cho
-điều kiện Model không biết View vẫn thỏa mãn. Tuy nhiên, chưa cần quan tâm đến
-điểm này, ta đã thấy điểm yếu của MVC khi áp dụng vào Android. Trong Android,
-ứng dụng sử dụng `Activity` và/hoặc `Fragment` để quản lý giao diện. Hai đối
-tượng này cũng kiêm luôn việc nhận thao tác người dùng, tức chúng là *cả View và
+Ngay ở đây, ta đã thấy điểm yếu của MVC khi áp dụng vào Android. Trong Android,
+ứng dụng sử dụng Activity và Fragment để quản lý giao diện. Hai đối tượng này
+cũng kiêm luôn việc nhận thao tác người dùng, tức chúng là *cả View và
 Controller*. Mục đích tách ra ba đối tượng do đó không thể làm được.
-
-<!-- Một số người cho rằng khung giao diện `.xml` có thể coi là View, còn
-Fragment/Activity tương ứng là Controller, tuy nhiên trong Android, các thành
-phần này có quan hệ chặt chẽ chứ không rời nhau. Do đó, lí luận này cũng không
-thuyết phục. -->
 
 Hiện nay, MVC trên Android được coi là lỗi thời, không phù hợp.
 
@@ -561,7 +538,7 @@ Năm 2012, Robert Martin (Uncle Bob) xuất bản một bài viết nổi tiến
 phần mềm: Clean Architecture, tạo ra một trào lưu đưa Clean Architecture đi khắp
 nơi. MVP, vốn được phát triển từ lâu, được đông đảo lập trình viên chọn để triển
 khai Clean Architecture trên Android. Trước khi Google chọn MVVM, đây là hướng
-đi mới, có kì vọng cao sau thất bại trong việc đưa MVC vào Android.
+đi mới, có kì vọng cao sau nhiều thất bại trong việc đưa MVC vào Android.
 
 Nhiệm vụ của ba thành phần được chia như sau:
 
@@ -575,9 +552,9 @@ Nhiệm vụ của ba thành phần được chia như sau:
 <!-- Cite [14] -->
 Hình 7: Kiến trúc MVP
 
-Ở đây, ta thấy ít nhất điểm yếu View-Controller nhập nhằng của MVC được khắc
-phục, khi View kiêm luôn việc nhận tương tác. Đồng thời, Model và View hoàn toàn
-không biết nhau, đúng theo nguyên lý tách lớp của Clean Architecture.
+Ở đây, ta thấy điểm yếu View-Controller nhập nhằng của MVC được khắc phục, khi
+View kiêm luôn việc nhận tương tác. Đồng thời, Model và View hoàn toàn không
+biết nhau, đúng theo nguyên lý tách lớp của Clean Architecture.
 
 Ta xét một ứng dụng ToDo đơn giản, trong đó các công việc có thể được đánh dấu
 đã hoàn thành. Trong ứng dụng, màn hình hiển thị số việc đã hoàn thành và chưa
@@ -603,7 +580,7 @@ Ta quay về chủ đề chính: MVVM. MVVM rất giống MVP ở chỗ View Mod
 tắt là VM) kết nối View và Model như Presenter. Điểm khác biệt là cách dữ liệu
 được truyền đi:
 
-- Trong MVP, Presenter gọi phương thức của View để truyền dữ liệu cho View
+- Trong MVP, Presenter gọi hàm của View để truyền dữ liệu cho View
 - Trong MVVM, VM dùng *data binding* để truyền dữ liệu cho View
 
 Data binding là cơ chế để *tự động* đưa dữ liệu vào thành phần hiển thị. Quay
@@ -611,13 +588,12 @@ lại ví dụ ToDo ở trên, nếu dùng data binding để "gắn" (bind) dan
 vào View, thì khi danh sách thay đổi, View cũng tự động thay đổi theo.
 
 Do dùng data binding thay vì gọi hàm, VM không cần biết rõ View, khác với
-Presenter phải biết rõ View. Điều này giúp View và VM có liên kết lỏng lẻo
-(loose coupling), giúp việc kiểm thử dễ dàng hơn. Phần còn lại của hai mô hình
-không đổi: View cần biết VM để chuyển tương tác; VM cần biết Model để lấy dữ
-liệu.
+Presenter phải biết rõ View. Điều này giúp View và VM có *liên kết lỏng lẻo*
+(loose coupling), giúp kiểm thử dễ dàng hơn. Phần còn lại của hai mô hình giống
+nhau: View cần biết VM để chuyển tương tác; VM cần biết Model để lấy dữ liệu.
 
-Do là mô hình phù hợp nhất trong cả ba, MVVM được chọn làm nền tảng cho Kiến
-trúc Google khuyên dùng.
+Do là mô hình phù hợp nhất trong cả ba với riêng Android, MVVM được chọn làm nền
+tảng cho Kiến trúc Google khuyên dùng.
 
 #### 2.3.2. Kiến trúc Google khuyên dùng <a name="P2.3.2-rec-architecture"></a>
 
@@ -627,16 +603,15 @@ Kiến trúc Google khuyên dùng có gốc là mô hình MVVM, có dạng như 
 
 Hình 9: Kiến trúc Google khuyên dùng
 
-- Repository là Model trong MVVM, giúp View Model lấy dữ liệu mà không cần quan
-  tâm dữ liệu lấy từ đâu: cơ sở dữ liệu, gọi API qua mạng,...
+- Repository là Model trong MVVM, giúp VM lấy dữ liệu mà không cần quan tâm dữ
+  liệu lấy từ đâu: cơ sở dữ liệu, gọi API qua mạng,...
 - LiveData là cơ chế data binding dùng luồng dữ liệu (stream)
 - Activity/Fragment là View
 
-Repository là một điểm được chi tiết hóa so với MVVM cơ bản. Lí do cho việc có
-nhiều nguồn dữ liệu là Google cho rằng một ứng dụng không nên hoàn toàn vô dụng
-nếu không có mạng. Do đó, sẽ có hai nguồn dữ liệu: dữ liệu mạng từ máy chủ, và
-dữ liệu đệm, ngoại tuyến. Khi có nhiều nguồn dữ liệu, mẫu thiết kế Repository là
-lựa chọn hiển nhiên để trừu tượng hóa chúng.
+Repository là một điểm được chi tiết hóa so với MVVM. Google cho rằng một ứng
+dụng không nên hoàn toàn vô dụng nếu không có mạng. Do đó, cần có hai nguồn dữ
+liệu: dữ liệu từ máy chủ, và dữ liệu đệm, ngoại tuyến. Khi có nhiều nguồn dữ
+liệu, mẫu thiết kế Repository là lựa chọn hiển nhiên để trừu tượng hóa chúng.
 
 yacv sử dụng kiến trúc này, dù không có tính năng liên quan đến mạng. Lý do là
 yacv có tính năng quét truyện hoạt động chậm giống như giao tiếp mạng, nên cần
@@ -645,9 +620,10 @@ dữ liệu đệm và dữ liệu quét thực tế.
 ### 2.4. SQLite <a name="P2.4-sqlite"></a>
 
 SQLite là một hệ quản trị cơ sở dữ liệu quan hệ (RDBMS). Từ "Lite" trong tên có
-nghĩa là "nhỏ", thể hiện đặc điểm thiết kế chính của nó là một phần mềm cơ sở dữ
-liệu nhỏ gọn. SQLite có thể được nhúng vào phần mềm khác ở dạng thư viện, thay
-vì là một phần mềm riêng rẽ với cấu trúc máy chủ-máy khách như MySQL,...
+nghĩa là "nhỏ", thể hiện mục tiêu thiết kế chính của nó là nhỏ gọn. SQLite có
+thể được nhúng vào phần mềm khác ở dạng thư viện, thay vì là một phần mềm riêng
+với cấu trúc chủ-khách như MySQL,... Ngay từ những phiên bản đầu, Android đã
+tích hợp SQLite, giúp lập trình viên không phải nhúng SQLite vào từng ứng dụng.
 
 Để đạt mục tiêu, SQLite chỉ giữ các tính năng SQL cốt lõi (tạo/đọc/sửa/xóa),
 giao dịch (có ACID), và chỉ tối ưu cho việc truy cập từ một ứng dụng cùng lúc.
@@ -655,9 +631,7 @@ Các tính năng thường có trong RDBMS cho máy chủ, như nhân bản (rep
 chia dữ liệu tự động (sharding), khóa dòng, đọc ghi nhiều luồng cùng lúc,...
 được loại bỏ. Do đó, với nhu cầu lưu trữ đơn giản, SQLite vừa nhanh vừa gọn.
 
-Ngay từ những phiên bản đầu, Android đã tích hợp SQLite, giúp lập trình viên
-không phải nhúng SQLite vào từng ứng dụng. yacv dùng SQLite để lưu đệm thông tin
-truyện, tránh việc phải quét nhiều lần.
+yacv dùng SQLite để lưu đệm thông tin truyện, tránh việc phải quét nhiều lần.
 
 #### 2.4.1. Room <a name="P2.4.1-room"></a>
 
@@ -667,14 +641,14 @@ việc liên quan đến SQL:
 
 - Tạo bảng: Lập trình viên chỉ cần khai báo các đối tượng dữ liệu như một lớp
   hướng đối tượng thông thường, rồi đánh dấu với Annotation và interface của
-  Room. Sau đó, Room sẽ tự sinh các bảng tương ứng.
-- Truy vấn: Lập trình viên chỉ cần viết câu lệnh SQL. Sau đó, Room sẽ tự viết
-  hàm truy vấn, chuyển dữ liệu dạng đối tượng sang dạng để lưu trong bảng và
+  Room. Sau đó, Room sinh các bảng tương ứng.
+- Truy vấn: Lập trình viên chỉ cần viết câu lệnh SQL. Sau đó, Room sinh hàm truy
+  vấn tương ứng, chuyển dữ liệu dạng đối tượng sang dạng để lưu trong bảng và
   ngược lại.
-- Kiểm tra truy vấn khi biên dịch: Nếu có lỗi truy vấn, lỗi này được dò ra ngay
-  khi biên dịch chứ không cần chờ đến khi chạy.
-- Kiểm soát lược đồ (schema): Khi thêm/sửa/xóa bảng/cột, Room tự động phát hiện
-  và ép lập trình viên viết cơ chế cập nhật. Do đó, ứng dụng dùng lược đồ cũ khi
+- Kiểm tra truy vấn khi biên dịch: lỗi lệnh SQL có thể được dò ra ngay khi biên
+  dịch chứ không cần chờ đến khi chạy.
+- Kiểm soát lược đồ (schema): Khi thêm/sửa/xóa bảng/cột, Room luôn phát hiện và
+  ép lập trình viên viết cơ chế cập nhật. Do đó, ứng dụng dùng lược đồ cũ khi
   được cập nhật sẽ biết cách sửa cơ sở dữ liệu đến phiên bản lược đồ mới.
 - Tương thích với LiveData: Room cho phép View cập nhật dữ liệu theo cơ sở dữ
   liệu chỉ bằng vài dòng mã dùng LiveData.
@@ -682,13 +656,13 @@ việc liên quan đến SQL:
 #### 2.4.2. Tìm kiếm văn bản <a name="P2.4.2-fts"></a>
 
 <!-- Cite [17] -->
-Tìm kiếm văn bản (full-text search, hay FTS) là một trong số ít các tính năng
-nâng cao được giữ lại trong SQLite. Cũng như các thư viện tìm kiếm khác, SQLite
-cài đặt chức năng này bằng chỉ mục đảo (inverted index):
+Tìm kiếm văn bản (full-text search, hay gọi tắt là FTS) là một trong số ít các
+tính năng nâng cao được giữ lại trong SQLite. Cũng như các thư viện tìm kiếm
+khác, SQLite cài đặt chức năng này bằng chỉ mục đảo (inverted index):
 
 1. Khi dữ liệu văn bản được ghi, nó được tách thành các từ.
-2. Các từ được đưa vào từ điển, với khóa là bản thân từ đó, còn giá trị là ID
-   của hàng `rowid`.
+2. Các từ được đưa vào từ điển, với khóa là chính từ đó, còn giá trị là ID của
+   hàng `rowid`.
 
 FTS khác với đánh chỉ mục thường (cũng là chỉ mục đảo nhưng cho kiểu dữ liệu
 thông thường) ở bước 1: *từng từ* được tách ra, còn chỉ mục thường dùng *cả* văn
@@ -717,20 +691,20 @@ ZIP là định dạng tệp nén không mất mát (lossless). Được phát m
 bởi Phil Katz, ZIP đã trở thành định dạng nén tiêu chuẩn, được hỗ trợ trên gần
 như mọi nền tảng, bao gồm Android.
 
-ZIP thực chất là một định dạng tệp chứa, chuyên chứa dữ liệu nén, chứ không phải
-là một thuật toán nén (thuật toán nén hay dùng nhất trong ZIP là DEFLATE). Một
-trong những mục tiêu của ZIP là giúp việc sửa tệp nén (thêm, sửa, xóa tệp con
-trong tệp ZIP) trở nên nhanh nhất có thể. Mục tiêu đó thể hiện ở thiết kế sau:
+ZIP thực chất là một định dạng chứa (container), chuyên chứa dữ liệu nén, chứ
+không phải thuật toán nén; thuật toán nén hay dùng nhất trong ZIP là DEFLATE.
+Một trong các mục tiêu của ZIP là giúp việc sửa tệp nén (thêm, sửa, xóa tệp con
+trong tệp ZIP) nhanh nhất có thể. Mục tiêu đó thể hiện ở thiết kế sau:
 
-- Khi nén, thuật toán được dùng nén từng tệp dữ liệu gốc thành một tệp nhị phân,
-  ở đây gọi là *tệp nén lẻ* (data trong Hình 10). Sau đó, các tệp nén lẻ này
-  được nối thành tệp ZIP cuối cùng.
+- Thuật toán nén mỗi tệp dữ liệu gốc thành một tệp nhị phân, ở đây gọi là *tệp
+  nén lẻ* (data trong Hình 10). Sau đó, các tệp nén lẻ này được nối thành tệp
+  ZIP cuối cùng.
 - Trước mỗi tệp nén lẻ là một header gọi là *File Entry* để lưu thông tin liên
   quan.
-- Ở *cuối* tệp nén ZIP, sau khi đã nối các tệp nén lẻ và header lại, các header
-  được gom lại, lưu một lần nữa vào một cấu trúc gọi là *Central Directory*. Có
-  thể so sánh File Entry như các *đề mục*, còn Central Directory là *mục lục*
-  cho cả tệp nén.
+- Ở *cuối* tệp ZIP, sau khi đã nối các tệp nén lẻ và header lại, các header được
+  gom lại, lưu một lần nữa vào một cấu trúc gọi là *Central Directory*. Có thể
+  so sánh File Entry như các *đề mục*, còn Central Directory là *mục lục* cho cả
+  tệp nén.
 - Hai thông tin quan trọng trong mỗi File Entry là tên của tệp nén lẻ và *vị trí
   bắt đầu* (offset), tức số byte tính từ đầu tệp ZIP đến tệp nén lẻ tương ứng.
 
@@ -749,15 +723,14 @@ Ta phân tích kĩ hơn:
   biết vị trí để đọc ghi dữ liệu.
 - Mục lục đặt ở cuối là tối ưu:
 
-    - Giả sử mục lục đặt ở đầu tệp tin. Khi sửa, toàn bộ các tệp nén lẻ phải bị
-      di chuyển để tạo chỗ cho mục lục mới (giống như thêm một phần tử vào mảng
-      ở vị trí đầu: toàn bộ các phần tử sau bị đẩy lên để tạo chỗ trống).
+    - Giả sử mục lục đặt ở đầu. Khi sửa, toàn bộ các tệp nén lẻ phải di chuyển
+      để tạo chỗ cho mục lục mới (giống như thêm một phần tử vào mảng ở vị trí
+      đầu: toàn bộ các phần tử sau bị đẩy lên để tạo chỗ trống).
     - Do mục lục nằm ở cuối tệp tin, khi sửa tệp nén, chỉ cần đẩy các tệp nén lẻ
-      (và tất nhiên cả Central Directory) từ chỗ sửa. Đây có thể coi là một tối
-      ưu nhỏ, nhưng trước đây là một điểm sáng. Do đĩa mềm - phương tiện chia sẻ
-      chủ yếu thời đó - có dung lượng nhỏ, tệp ZIP có thể phải cắt ra cho vừa.
-      Cách sửa tệp linh động này cho phép chỉ ghi lại dữ liệu ở một số đĩa mềm,
-      thay vì ghi lại toàn bộ.
+      từ chỗ sửa. Đây có thể coi là một tối ưu nhỏ, nhưng trước đây là một điểm
+      sáng. Do đĩa mềm - phương tiện chia sẻ chủ yếu thời đó - có dung lượng
+      nhỏ, tệp ZIP có thể phải cắt ra cho vừa. Cách sửa tệp linh động này cho
+      phép chỉ ghi lại dữ liệu ở một số đĩa mềm, thay vì ghi lại toàn bộ.
     - Hơn nữa, nếu mục lục ở đầu thì ngay trong khi nén, các tệp nén lẻ bị di
       chuyển như trên do mục lục liên tục được cập nhật, làm giảm thông lượng.
 
@@ -765,11 +738,11 @@ Ta phân tích kĩ hơn:
 Tóm lại, cấu trúc tệp nén ZIP cho phép sửa và giải nén từng tệp gốc rất dễ dàng.
 Nhiều định dạng tệp nén khác (TAR, 7z,...) không có tính năng này, do gộp toàn
 bộ các tệp vào rồi nén một thể. Trong trường hợp đó, tệp nén được gọi là *rắn*
-(solid), và rất khó để sửa.
+(solid), và rất khó để đọc/sửa tệp lẻ.
 
 #### 2.5.2. Định dạng tệp truyện `.cbz`
 
-Tệp truyện CBZ chỉ là một tệp nén ZIP thông thường; trong đó có:
+Tệp truyện CBZ chỉ là một tệp nén ZIP thông thường, trong đó có:
 
 - Các tệp ảnh trang truyện: Các tệp này có tên được đánh số tăng dần để biểu thị
   thứ tự trang.
@@ -837,8 +810,8 @@ Các giới hạn này nhằm tránh cho phần mềm quá phức tạp với t�
   độ cho người dùng.
 
     - Luôn hiện thông báo chờ khi làm việc gì đó lâu
-    - Nếu có nhiều kết quả tìm kiếm, hiển thị từ từ, đưa những kết quả đã biết
-      lên trước
+    - Nếu có nhiều kết quả tìm kiếm, hiển thị từ từ, đưa kết quả đã biết lên
+      trước
 
 - Tốc độ xem truyện chấp nhận được: Đây là một phần của phản hồi nhanh, nhưng
   được tách riêng vì độ quan trọng của nó. Tốc độ xem truyện gồm hai tiêu chí:
@@ -981,8 +954,8 @@ Màn hình khi người đọc chọn một thư mục gọi là *Màn hình Th�
 screen). Cũng giống như Màn hình Thư viện, ảnh bìa và tên của truyện được hiển
 thị để người đọc chọn.
 
-Tong ứng dụng, truyện sẽ được quản lí và duyệt theo thư mục. Có hai lí do cho
-lựa chọn thiết kế này:
+Trong yacv, truyện được quản lí và duyệt theo thư mục. Có hai lí do cho lựa chọn
+thiết kế này:
 
 - Giảm độ phức tạp khi lập trình
 - Các phương pháp duyệt khác không trực quan
@@ -1145,7 +1118,7 @@ Các tính năng nâng cao hơn như gợi ý không xuất hiện, do một s�
 - Người dùng không có nhu cầu: nhóm người dùng hướng đến có đặc điểm hiểu biết
   về truyện tranh, do đó việc gợi ý có thể coi là thừa thãi.
 - Thiểu thông tin gợi ý: việc gợi ý chỉ có hiệu quả khi có một cơ sở dữ liệu về
-  các bộ truyện liên quan, hoặc lựa chọn các truyện liên quan của cộng đồng
+  c��c bộ truyện liên quan, hoặc lựa chọn các truyện liên quan của cộng đồng
   người đọc, trong khi yacv là một ứng dụng hoàn toàn ngoại tuyến.
 
 #### 3.3.5. Tìm kiếm truyện <a name="P3.3.5-search-comic"></a>
@@ -1209,7 +1182,11 @@ truyện. Các trường metadata khác nếu có kết quả phù hợp cũng s
 hình thức trên.
 
 Chú ý rằng bìa truyện luôn được thể hiện khi có thể. Trong ví dụ trên, chắc chắn
-phải có bìa truyện cho mọi mục con trong danh sách "Truyện".
+phải có bìa truyện cho mọi mục con trong danh sách "Truyện". Còn mục con của "Bộ
+truyện" thì không, lí do là không có đủ dữ liệu (không có dữ liệu cho logo,
+banner,.. của bộ truyện). Tương ứng, không có dữ liệu hiển thị cho danh sách
+"Nhân vật", "Tác giả",... Đây là một hạn chế quan trọng về giao diện mà hiện
+chưa có cách thiết kế hợp lý.
 
 Nếu không có kết quả, cần thể hiện rõ cho người dùng biết.
 
