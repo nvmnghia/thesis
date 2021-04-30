@@ -66,16 +66,15 @@ trụ điện ảnh Marvel và DC, truyện tranh phương Tây (comic) cũng đ
 phần nào sau một thập kỷ thiếu sáng tạo và suy giảm doanh số sách in. Các bộ
 truyện siêu anh hùng, vốn trước đây chỉ phổ biến ở Hoa Kỳ, nay đang trên đường
 trở thành một phần của văn hóa đại chúng như vị thế của manga. Có thể nói, văn
-hóa truyện tranh nói chung đang ở thời kì phát triển nhất, xét theo tiêu chí về
+hóa truyện tranh nói chung đang ở thời kì phát triển mạnh, xét theo tiêu chí về
 độ phổ biến và thái độ đón nhận của xã hội.
 
 Hiện nay, hầu hết mọi người đọc truyện qua các trang web tổng hợp truyện tranh.
 Những trang web này có hai ưu điểm chính:
 
-- Số lượng: chỉ cần truy cập một trang là có thể đọc ít nhất hàng nghìn đầu
-  truyện.
-- Tốc độ: tốc độ ra truyện rất nhanh. Với các bộ truyện nổi tiếng, thường chỉ
-  trong vòng một vài giờ sau khi chương mới ra mắt, bản dịch đã xuất hiện.
+- Số lượng: Mỗi trang cung cấp ít nhất hàng nghìn đầu truyện.
+- Tốc độ: Tốc độ ra truyện rất nhanh. Với các bộ truyện nổi tiếng, thường chỉ
+  trong vòng một vài giờ sau khi ra mắt, chương mới đã xuất hiện.
 
 Tuy vậy, nhược điểm chính của những trang web này là chất lượng ảnh của truyện.
 Để giảm thời gian tải và tránh tốn băng thông, hình ảnh của truyện thường được
@@ -107,27 +106,25 @@ tập trung riêng để cung cấp truyện.
 
 Hiện có nhiều ứng dụng đọc truyện tranh ngoại tuyến như yacv trên chợ ứng dụng
 Google Play. Hai ứng dụng phổ biến nhất trong số này là [ComicScreen][1] và
-[Astonishing Comic Reader][2]. ComicScreen là ứng dụng nổi tiếng hơn. Các tính
-năng của ComicScreen giống với các tính năng của yacv, tuy nhiên ComicScreen có
-thêm nhiều chức năng phụ, đáng kể nhất là khả năng đọc từ mạng FTP/SMB và khả
-năng sửa ảnh trong file. Astonishing Comic Reader cũng có chức năng tương tự
-yacv, không hơn, tuy nhiên giao diện khá trau chuốt. Cả hai đều miễn phí và có
-quảng cáo, được cập nhật có thể nói là thường xuyên.
+[Astonishing Comic Reader][2]. ComicScreen là ứng dụng có nhiều người dùng hơn.
+Các tính năng của ComicScreen giống với các tính năng của yacv, tuy nhiên
+ComicScreen có thêm nhiều chức năng phụ, đáng kể nhất là khả năng đọc từ mạng
+FTP/SMB và khả năng sửa ảnh trong file. Astonishing Comic Reader cũng có chức
+năng tương tự yacv, không hơn, tuy nhiên giao diện khá trau chuốt. Cả hai đều
+miễn phí và có quảng cáo, được cập nhật có thể nói là thường xuyên.
 
 Một ngoại lệ đáng kể ở đây là ứng dụng mã nguồn mở [Tachiyomi][3]. Ứng dụng này
 có hệ thống phần mở rộng, cho phép đọc truyện ở các trang web truyện tranh. Khi
 web truyện tranh thay đổi, hoặc hỗ trợ thêm trang mới, chỉ cần tải về phần mở
-rộng tương ứng ở dạng ứng dụng `.APK`. Tính năng này cùng với mô hình mã nguồn
-mở khiến Tachiyomi mạnh hơn, và chau chuốt hơn, cập nhật nhanh hơn toàn bộ các
-ứng dụng đã có và sẽ có. Tuy nhiên, Tachiyomi lại không thể được đưa lên Play
-Store, vì chính tính năng phần mở rộng đã [vi phạm chính sách][4] của Play
-Store.
+rộng tương ứng ở dạng ứng dụng `.APK`. Tính năng này cùng mô hình mã nguồn mở
+khiến Tachiyomi mạnh hơn, cập nhật nhanh hơn toàn bộ các ứng dụng đã có và sẽ
+có. Tuy nhiên, Tachiyomi lại không thể được đưa lên Play Store, vì chính tính
+năng phần mở rộng đã [vi phạm chính sách][4] của Play Store.
 
 Một điểm khác biệt quan trọng của yacv với các ứng dụng có sẵn là việc hỗ trợ
-tìm kiếm metadata của tệp truyện tranh, do các ứng dụng có sẵn trên Play Store
-đa số bỏ qua thông tin này trong tệp truyện. Một trong số rất ít những ứng dụng
-hỗ trợ tính năng này là [Kuro Reader][5], tuy nhiên đây là một tính năng trả
-phí.
+metadata của tệp truyện tranh, do các ứng dụng có sẵn trên Play Store đa số bỏ
+qua thông tin này trong tệp truyện. Một trong số rất ít những ứng dụng hỗ trợ
+tính năng này là [Kuro Reader][5], tuy nhiên đây là một tính năng trả phí.
 
 ### 1.3. Kết quả đạt được <a name="P1.3-resulted-app"></a>
 
@@ -199,29 +196,22 @@ Hệ điều hành Android được phân lớp như sau:
 - Nhân Linux (Linux Kernel):
 
     Đây là tầng thấp nhất. Android dùng nhánh hỗ trợ dài hạn (LTS) của Linux.
-    Không như kiểu phát triển "distro" trên máy tính (chủ yếu thay đổi ở ngoài
+    Không như kiểu phát triển distro trên máy tính (chủ yếu thay đổi ở ngoài
     nhân), Google sửa và thêm bớt nhiều thành phần vào nhân trước khi tích hợp.
 
 - Lớp phần cứng trừu tượng (Hardware Abstraction Layer):
 
-    Tầng này "trừu tượng hóa" các chi tiết phần cứng bằng cách đưa ra các giao
-    diện chung cho một kiểu phần cứng nào đó.
-
-    Ví dụ, ứng dụng chụp ảnh có một số ít lệnh như chụp ảnh, quay phim, tuy
-    nhiên mỗi thiết bị lại có cách giao tiếp với phần cứng máy ảnh khác nhau.
-    HAL cung cấp cho các tầng trên một vài hàm đơn giản để chụp, giúp tầng trên
-    không cần quan tâm đến cách giao tiếp với phần cứng cấp thấp.
+    Tầng này trừu tượng hóa các chi tiết phần cứng bằng cách đưa ra các giao
+    diện chung cho một kiểu phần cứng nào đó, giúp các tầng trên không cần quan
+    tâm đến chi tiết riêng của phần cứng.
 
 - Android Runtime (ART):
 
     Ứng dụng Java cần thêm một ứng dụng để chuyển bytecode thành mã máy. Trên
     desktop, đó là các máy ảo Java (JVM). Trên Android, Android Runtime nhận
-    nhiệm vụ này.
-
-    Hai máy ảo này khác nhau ở chỗ ART *biên dịch* bytecode thành mã máy (trước
-    khi chạy - AOT), còn JVM *thông dịch* bytecode thành mã máy (trong khi
-    chạy); đồng thời cả hai đều có tùy chọn JIT. Chú ý là ART chỉ có từ Android
-    4.4; trước đó Android dùng máy ảo Dalvik, giống JVM truyền thống hơn.
+    nhiệm vụ này. Hai máy ảo này khác nhau ở chỗ ART *biên dịch* bytecode thành
+    mã máy (trước khi chạy - AOT), còn JVM *thông dịch* bytecode thành mã máy
+    (trong khi chạy).
 
     ART hiện hỗ trợ đa số tính năng của Java 8.
 
@@ -236,17 +226,16 @@ Hệ điều hành Android được phân lớp như sau:
     qua API Java. Tầng này cung cấp toàn bộ tính năng của Android cho lập trình
     viên, bao gồm các yếu tố cơ bản như giao diện (View System), truy xuất,...
 
-    Theo Google, lập trình viên có quyền truy cập vào lớp này tương đương với
-    các ứng dụng hệ thống. Đây có thể coi là một cam kết tránh độc quyền công
-    nghệ, tức đa số ứng dụng hệ thống không có khả năng đặc biệt, hay hiệu năng
-    cao hơn ứng dụng bên thứ ba tương tự.
+    Lập trình viên có quyền truy cập vào lớp này tương đương với ứng dụng hệ
+    thống. Đây có thể coi là một cam kết tránh độc quyền công nghệ, tức đa số
+    ứng dụng hệ thống không có khả năng đặc biệt, hay hiệu năng cao hơn ứng dụng
+    bên thứ ba tương tự.
 
 - Ứng dụng hệ thống (System Apps)
 
     Android đi kèm với một số ứng dụng hệ thống như ứng dụng SMS, trình duyệt,
-    lịch,... Chủ trương của Google là cho phép thay thế đa số các ứng dụng này
-    với ứng dụng bên thứ ba, tuy nhiên chắc chắn có một số ngoại lệ như ứng dụng
-    Cài đặt (Settings).
+    lịch,... Google cho phép thay thế đa số các ứng dụng này với ứng dụng bên
+    thứ ba, tuy nhiên có những ngoại lệ như ứng dụng Cài đặt (Settings).
 
 Gần như mọi ứng dụng Android cơ bản đều sử dụng thành phần View System trong
 tầng Khung phát triển để viết giao diện, và yacv không là ngoại lệ. yacv còn sử
@@ -255,19 +244,19 @@ dụng thành phần Content Provider, cụ thể là bộ Storage Access Framew
 
 #### 2.1.1. Android Jetpack <a name="P2.1.1-jetpack"></a>
 
-Trước khi tìm hiểu qua Jetpack, ta tìm hiểu một phần của nó, đồng thời là nền
-tảng kĩ thuật cho toàn bộ Jetpack, là AndroidX.
+Jetpack là bộ thư viện giúp viết ứng dụng Android nhanh gọn, ít lỗi hơn so với
+việc tự viết những đoạn mã tương tự. Jetpack gồm hai thành phần:
 
-Mô hình phát triển của Android (cho phép nhà sản xuất tùy biến thoải mái) khiến
-cho thế giới Android trở nên phân mảnh. Hậu quả là việc cập nhật hệ điều hành
-rất khó khăn. Do đó, Google tạo ra các Thư viện Hỗ trợ (Support Library) để đưa
-các API mới lên các máy cũ. Chú ý rằng các thư viện này chỉ có ích cho lập trình
-viên (được sử dụng API mới, tiện hơn), chứ không hề cập nhật tính năng hệ điều
-hành. AndroidX chính là Support Library đổi tên và được cập nhật đến nay.
+- AndroidX: đưa API của phiên bản hệ điều hành mới lên máy cũ
+- Architecture Component: đưa ra API hoàn toàn mới để giải quyết một vấn đề
 
-Jetpack gồm các thư viện giải quyết một số vấn đề thường gặp trong khi viết ứng
-dụng Android, giúp lập trình viên viết mã nhanh, gọn, ít lỗi hơn so với việc tự
-viết những đoạn mã có tính năng tương tự.
+Mô hình phát triển của Android (cho phép nhà sản xuất tùy biến) khiến thế giới
+Android bị phân mảnh, hệ quả là việc cập nhật hệ điều hành khó khăn. Do đó,
+Google viết Thư viện Hỗ trợ (Support Library) để đưa API hệ điều hành mới lên
+máy cũ. AndroidX chính là Support Library đổi tên và được cập nhật đến nay.
+
+Chú ý rằng Jetpack chỉ có ích cho lập trình viên (được dùng API mới tiện hơn,
+thực ra là wrapper của API sẵn có), chứ không cập nhật tính năng hệ điều hành.
 
 yacv sử dụng nhiều thành phần của Jetpack, trong đó đáng kể đến ba thư viện sau:
 
@@ -297,20 +286,18 @@ một ngôn ngữ non trẻ.
 
 Sau đây là tóm tắt một số đặc điểm kĩ thuật của Kotlin:
 
-- Về mô hình, Kotlin hỗ trợ hướng đối tượng như Java, nhưng còn hỗ trợ mô hình
-  hàm, thể hiện ở tính năng hàm ẩn danh (lambda), và hàm được coi là
-  first-class.
+- Về mô hình, Kotlin hỗ trợ hướng đối tượng như Java, nhưng còn có hướng hàm,
+  thể hiện ở tính năng hàm ẩn danh (lambda), và hàm được coi là first-class.
 - Về hệ thống kiểu, Kotlin giống hệt Java:
     - Là kiểu tĩnh (statically typed), tức kiểu được kiểm tra khi biên dịch
-      (thay vì khi chạy, như Python, JavaScript,...), đồng thời
+      (thay vì khi chạy, như Python, JavaScript,...)
     - Là kiểu mạnh (strongly typed), tức không cho phép chuyển kiểu ngầm
 - Về cú pháp, Kotlin có cú pháp gọn, hiện đại, ví dụ như bỏ dấu `;` cuối dòng,
   template literal,...
-- Về tính năng chống lỗi, Kotlin luôn được quảng cáo về khả năng chống
-  `NullPointerException`. Kotlin "né" lỗi này do buộc người viết đánh dấu cụ thể
-  rằng một đối tượng có thể bị `null` hay không bằng hậu tố `?` ở khai báo kiểu.
-  Từ đó, Kotlin biết chính xác đối tượng có thể là `null` hay không, và buộc xử
-  lí nếu có.
+- Về lỗi, Kotlin luôn được quảng cáo về khả năng chống `NullPointerException`.
+  Kotlin "né" lỗi này do buộc người viết đánh dấu cụ thể rằng một đối tượng có
+  thể bị `null` hay không bằng hậu tố `?` ở khai báo kiểu. Từ đó, Kotlin biết
+  chính xác đối tượng có thể là `null` hay không, và buộc xử lí nếu có.
 
 Do Google khuyên dùng Kotlin khi viết ứng dụng Android, tôi cho rằng khóa luận
 này là một cơ hội phù hợp để thử Kotlin thay vì dùng Java quen thuộc, và quyết
@@ -391,11 +378,10 @@ Vấn đề của lập trình phi cấu trúc, hay của `GOTO`, có thể tóm
     nên rất khó đạt được, một khi ngôn ngữ cho phép `GOTO`.
 
 Lập trình có cấu trúc đơn giản hóa luồng chạy bằng cách giới hạn các lệnh nhảy
-còn `if`, `for` và gọi hàm. Khác biệt mấu chốt của ba lệnh này so với lệnh nhảy
-cấp thấp `GOTO` là chúng *trả luồng điều khiển* về điểm gọi; điều này thể hiện
-rõ ở Hình 4. Theo định nghĩa, ba lệnh trên giải quyết được hậu quả đầu tiên.
-Đồng thời, các hậu quả số hai cũng được giải quyết, do ngôn ngữ đã có cấu trúc
-(cụ thể là có call stack).
+còn `if`, `for` và gọi hàm. Khác biệt mấu chốt của ba lệnh này so với `GOTO` là
+chúng *trả luồng điều khiển* về điểm gọi, thể hiện rõ ở Hình 4. Theo định nghĩa,
+ba lệnh trên giải quyết được hậu quả đầu tiên. Đồng thời, các hậu quả số hai
+cũng được giải quyết, do ngôn ngữ đã có cấu trúc (cụ thể là có call stack).
 
 ![3 basic constructs](../images/control-schematics.svg)
 
@@ -460,8 +446,7 @@ vụ tương tranh nữa, và luồng điều khiển hợp nhất được tr�
 nhiên, hai tính năng có vấn đề ở trên lại hoạt động:
 
 - Quản lí tài nguyên tự động: do đảm bảo trả lại luồng điều khiển, tài nguyên
-  chắc chắn được đóng; do không còn tác vụ con, tài nguyên không bị đọc sau
-  đóng.
+  đảm bảo được đóng; do không còn tác vụ con, tài nguyên không bị đọc sau đóng.
 - Bắt ngoại lệ: do cấu trúc cha-con (khác với các API hiện tại cho rằng hai tác
   vụ tương tranh là ngang hàng), coroutine con có thể ném ngoại lệ để coroutine
   cha bắt.
@@ -521,20 +506,20 @@ Phương hướng đầu tiên được thử là MVC, vốn phổ biến vào t
 nên không có một mô hình cụ thể về cách ba thành phần trên tương tác. Tuy vậy,
 vẫn có vài điểm chung không đổi:
 
-1. Controller nhận tương tác của người dùng
+1. Controller nhận thao tác người dùng
 2. Sau đó, controller cập nhật Model và View
 
 Ngay ở đây, ta đã thấy điểm yếu của MVC khi áp dụng vào Android. Trong Android,
-ứng dụng sử dụng Activity và Fragment để quản lý giao diện. Hai đối tượng này
-cũng kiêm luôn việc nhận thao tác người dùng, tức chúng là *cả View và
-Controller*. Mục đích tách ra ba đối tượng do đó không thể làm được.
+ứng dụng sử dụng Activity và Fragment để viết giao diện. Hai đối tượng này cũng
+kiêm luôn việc nhận thao tác người dùng, tức chúng là *cả View và Controller*.
+Mục đích tách ra ba đối tượng do đó không thể làm được.
 
 Hiện nay, MVC trên Android được coi là lỗi thời, không phù hợp.
 
 ##### 2.3.1.2. MVP: Model - View - Presenter
 
 <!-- Cite [13] -->
-Năm 2012, Robert Martin (Uncle Bob) xuất bản một bài viết nổi tiếng về kiến trúc
+Năm 2012, Robert Martin "Uncle Bob" xuất bản một bài viết nổi tiếng về kiến trúc
 phần mềm: Clean Architecture, tạo ra một trào lưu đưa Clean Architecture đi khắp
 nơi. MVP, vốn được phát triển từ lâu, được đông đảo lập trình viên chọn để triển
 khai Clean Architecture trên Android. Trước khi Google chọn MVVM, đây là hướng
@@ -557,17 +542,14 @@ View kiêm luôn việc nhận tương tác. Đồng thời, Model và View hoà
 biết nhau, đúng theo nguyên lý tách lớp của Clean Architecture.
 
 Ta xét một ứng dụng ToDo đơn giản, trong đó các công việc có thể được đánh dấu
-đã hoàn thành. Trong ứng dụng, màn hình hiển thị số việc đã hoàn thành và chưa
-hoàn thành. Trong màn hình đó, tương tác của MVP như sau:
+đã hoàn thành. Trong ứng dụng, màn hình hiển thị số việc đã và chưa hoàn thành.
+Trong màn hình đó, tương tác của MVP như sau:
 
 1. Presenter lấy tất cả công việc trong Model
 2. Presenter đếm số việc hoàn thành, chưa hoàn thành
 3. Presenter gọi hàm của View, truyền hai số đếm được ở trên vào
 
-Cũng do nguyên này, mọi trách nhiệm liên kết giờ đổ về Presenter: nó phải biết
-và có tham chiếu đến *cả View và Model*. Do đó, Presenter trở nên cồng kềnh, và
-dù tách biệt nhưng vẫn có liên kết chặt (tight-coupling) với View. MVVM khắc
-phục được điểm yếu cuối cùng này.
+Đến đây, thiết kế đã khá hoàn chỉnh. MVVM chỉ còn cải tiến thêm một điểm nữa.
 
 ##### 2.3.1.3. MVVM: Model - View - View Model
 
@@ -576,9 +558,9 @@ phục được điểm yếu cuối cùng này.
 <!-- Cite [15] -->
 Hình 8: Kiến trúc MVVM
 
-Ta quay về chủ đề chính: MVVM. MVVM rất giống MVP ở chỗ View Model (từ đây gọi
-tắt là VM) kết nối View và Model như Presenter. Điểm khác biệt là cách dữ liệu
-được truyền đi:
+Ta quay về chủ đề chính: MVVM. MVVM giống MVP ở chỗ View Model (từ đây gọi tắt
+là VM) kết nối View và Model như Presenter. Điểm khác biệt là cách truyền dữ
+liệu:
 
 - Trong MVP, Presenter gọi hàm của View để truyền dữ liệu cho View
 - Trong MVVM, VM dùng *data binding* để truyền dữ liệu cho View
@@ -587,8 +569,8 @@ Data binding là cơ chế để *tự động* đưa dữ liệu vào thành ph
 lại ví dụ ToDo ở trên, nếu dùng data binding để "gắn" (bind) danh sách công việc
 vào View, thì khi danh sách thay đổi, View cũng tự động thay đổi theo.
 
-Do dùng data binding thay vì gọi hàm, VM không cần biết rõ View, khác với
-Presenter phải biết rõ View. Điều này giúp View và VM có *liên kết lỏng lẻo*
+Do dùng data binding thay vì gọi hàm thủ công, VM không cần có tham chiếu tới
+View, khác với Presenter. Điều này giúp liên kết View - VM thêm *lỏng lẻo*
 (loose coupling), giúp kiểm thử dễ dàng hơn. Phần còn lại của hai mô hình giống
 nhau: View cần biết VM để chuyển tương tác; VM cần biết Model để lấy dữ liệu.
 
@@ -696,17 +678,16 @@ không phải thuật toán nén; thuật toán nén hay dùng nhất trong ZIP 
 Một trong các mục tiêu của ZIP là giúp việc sửa tệp nén (thêm, sửa, xóa tệp con
 trong tệp ZIP) nhanh nhất có thể. Mục tiêu đó thể hiện ở thiết kế sau:
 
-- Thuật toán nén mỗi tệp dữ liệu gốc thành một tệp nhị phân, ở đây gọi là *tệp
-  nén lẻ* (data trong Hình 10). Sau đó, các tệp nén lẻ này được nối thành tệp
-  ZIP cuối cùng.
+- Thuật toán nén mỗi tệp gốc thành một tệp nhị phân, ở đây gọi là *tệp nén lẻ*
+  (data trong Hình 10). Sau đó, các tệp nén lẻ này được nối thành tệp ZIP cuối
+  cùng.
 - Trước mỗi tệp nén lẻ là một header gọi là *File Entry* để lưu thông tin liên
   quan.
 - Ở *cuối* tệp ZIP, sau khi đã nối các tệp nén lẻ và header lại, các header được
   gom lại, lưu một lần nữa vào một cấu trúc gọi là *Central Directory*. Có thể
-  so sánh File Entry như các *đề mục*, còn Central Directory là *mục lục* cho cả
-  tệp nén.
-- Hai thông tin quan trọng trong mỗi File Entry là tên của tệp nén lẻ và *vị trí
-  bắt đầu* (offset), tức số byte tính từ đầu tệp ZIP đến tệp nén lẻ tương ứng.
+  so sánh File Entry như các *đề mục*, còn Central Directory là *mục lục*.
+- Hai thông tin quan trọng trong File Entry là tên tệp gốc và *vị trí bắt đầu*
+  (offset), tức số byte tính từ đầu tệp ZIP đến tệp nén lẻ tương ứng.
 
 ![zip file layout](../images/ZIP-64_Internal_Layout.svg)
 
@@ -714,8 +695,8 @@ Hình 10: Cấu trúc tệp nén ZIP
 
 Ta phân tích kĩ hơn:
 
-- Do từng tệp được nén riêng, có thể áp dụng thuật toán khác nhau cho hiệu quả
-  tốt với từng tệp.
+- Do từng tệp được nén riêng, có thể dùng thuật toán khác nhau cho hiệu quả tốt
+  với từng tệp.
 - Cũng do nén riêng, việc thêm/sửa/xóa (gọi chung là sửa) và giải nén có thể
   được thực hiện với từng tệp nén lẻ, thay vì phải giải nén, sửa, rồi nén lại
   toàn bộ.
@@ -732,12 +713,12 @@ Ta phân tích kĩ hơn:
       nhỏ, tệp ZIP có thể phải cắt ra cho vừa. Cách sửa tệp linh động này cho
       phép chỉ ghi lại dữ liệu ở một số đĩa mềm, thay vì ghi lại toàn bộ.
     - Hơn nữa, nếu mục lục ở đầu thì ngay trong khi nén, các tệp nén lẻ bị di
-      chuyển như trên do mục lục liên tục được cập nhật, làm giảm thông lượng.
+      chuyển như trên do mục lục liên tục được cập nhật.
 
 <!-- Cite [19] -->
 Tóm lại, cấu trúc tệp nén ZIP cho phép sửa và giải nén từng tệp gốc rất dễ dàng.
 Nhiều định dạng tệp nén khác (TAR, 7z,...) không có tính năng này, do gộp toàn
-bộ các tệp vào rồi nén một thể. Trong trường hợp đó, tệp nén được gọi là *rắn*
+bộ các tệp vào rồi nén một thể. Trong trường hợp đó, tệp nén được gọi là *đặc*
 (solid), và rất khó để đọc/sửa tệp lẻ.
 
 #### 2.5.2. Định dạng tệp truyện `.cbz`
@@ -1359,9 +1340,15 @@ thời gian, không cùng tác giả để có thể gom lại. Nhưng chúng c�
 bộ truyện (là tên nhân vật chính), đều có những tập truyện số 1, 2, 3, 4. Số
 Volume là cách duy nhất để phân biệt ba bộ truyện này.
 
+Ngoài ra, một số metadata còn có số Count. Count là số tập truyện trong một bộ
+truyện. Bộ Wolverine đầu tiên được gọi là "ngắn" (miniseries) vì nhà xuất bản
+xác định và thông báo trước rằng chỉ có bốn tập truyện. Hai bộ còn lại được coi
+là dài (on-going), do không xác định số tập truyện từ đầu.
+
 ### 8.2. Phụ lục 2: Lược đồ XSD ComicInfo <a name="P8.2-comicinfo.xsd">
 
 Phụ lục này trình bày phiên bản rút gọn của lược đồ XSD của định dạng metadata
-ComicInfo.
+ComicInfo. Các trường nêu trong [Phụ lục 1](#P9.1-metadata) đều được chứa trong
+định dạng này, ngoài ra còn có các trường về tác giả và nhân vật.
 
 [ComicInfo.xsd](../assets/ComicInfo.xsd).
