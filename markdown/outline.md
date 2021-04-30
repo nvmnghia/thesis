@@ -747,7 +747,7 @@ Tệp truyện CBZ chỉ là một tệp nén ZIP thông thường, trong đó c
 - Các tệp ảnh trang truyện: Các tệp này có tên được đánh số tăng dần để biểu thị
   thứ tự trang.
 - (Tùy chọn) Một tệp metadata: Có nhiều định dạng metadata. Hiện nay, yacv chấp
-  nhận định dạng ComicInfo, được trình bày ở [Phụ lục 1](#P8.1-comicinfo.xsd).
+  nhận định dạng ComicInfo, được trình bày ở [Phụ lục 2](#P8.2-comicinfo.xsd).
 
 ---
 
@@ -908,6 +908,24 @@ Màn hình đầu tiên khi người đọc bật lên gọi là *Màn hình Th�
 screen). Các thư mục chứa truyện, hoặc thông báo lỗi liên quan đến bản thân quá
 trình chọn truyện (đã miêu tả trong bước 6 ở trên) sẽ được hiển thị ở màn hình
 này.
+
+Khi quét, ứng dụng phải đọc luôn cả metadata của tệp truyện nếu có. Các trường
+trong metadata được giải thích chi tiết trong [Phụ lục 1](#P8.1-metadata). Hiện
+nay, yacv chấp nhận định dạng metadata ComicInfo, là một tệp XML trong tệp
+truyện. [Phụ lục 2](#P8.2-comicinfo.xsd) trình bày lược đồ XSD của định dạng
+metadata này.
+
+Một số metadata có thể được trích xuất ngay từ tên tệp truyện. Do không có quy
+chuẩn trong việc đặt tên tệp, cách trích xuất này không ổn định, tuy nhiên cũng
+không phải ý tưởng tồi.
+
+```text
+Wolverine 1982(1) #1
+│         │       └─ Number/no (String): issue number, ~ chapter. Note that it is a String.
+│         └─ Volume (Int): Several series can have the same name, so they are distinguished by either year or version.
+└─Series (String): Name of the series.
+Count (Int): number of issues (Not in the example).
+```
 
 Tới đây người đọc có thể thực hiện các ca sử dụng khác, trong đó quan trọng nhất
 là duyệt theo thư mục rồi xem truyện.
@@ -1307,6 +1325,43 @@ hình hiển thị danh sách truyện.
 
 ## 8. Phụ lục <a name="P8-appendix">
 
-### 8.1. Phụ lục 1: Lược đồ XSD ComicInfo <a name="P8.1-comicinfo.xsd">
+### 8.1. Phụ lục 1: Giải thích các trường metadata <a name="P8.1-metadata">
 
-[ComicInfo.xsd](../assets/ComicInfo.xsd)
+Mô hình xuất bản của truyện tranh siêu anh hùng phương Tây là phức tạp nhất. Lí
+do là các nhân vật không đổi trong hàng chục năm xuất bản nhưng cốt truyện không
+ngừng được thêm mới, hoặc thậm chí viết lại; khác với các truyện tranh khác luôn
+đi đến hồi kết. Do đó, các thông tin của kiểu truyện tranh này được chọn để
+thiết kế các định dạng metadata.
+
+Ta xét một tập truyện `Wolverine 1982(1) #1`:
+
+```text
+Wolverine 1982(1) #1
+│         │       └─ Tập truyện số (Number)
+│         └─ Volume
+└─ Bộ truyện (Series)
+```
+
+- Bộ truyện: Tên bộ truyện. Một bộ truyện gồm nhiều tập truyện.
+- Tập truyện số: Thể hiện số thứ tự xuất bản của tệp truyện, tương tự như chương
+  trong manga. Từng tập truyện lẻ còn có thể có tên riêng.
+- Volume: Các bộ truyện có thể trùng tên, do đó cần con số này để phân biệt. Số
+  này có thể là năm xuất bản hoặc lần xuất bản.
+
+Số Volume cần thiết vì có rất nhiều bộ truyện cùng tên như sau:
+
+- Có một bộ Wolverine ngắn gồm 4 tập, xuất bản năm 1982
+- Có một bộ Wolverine gồm nhiều tập, xuất bản từ 1989 đến 2003
+- Có một bộ Wolverine gồm nhiều tập, xuất bản từ 2003 đến 2010
+
+Các bộ Wolverine trên đều có nội dung khác nhau, thậm chí cũng không cùng dòng
+thời gian, không cùng tác giả để có thể gom lại. Nhưng chúng cùng dùng một tên
+bộ truyện (là tên nhân vật chính), đều có những tập truyện số 1, 2, 3, 4. Số
+Volume là cách duy nhất để phân biệt ba bộ truyện này.
+
+### 8.2. Phụ lục 2: Lược đồ XSD ComicInfo <a name="P8.2-comicinfo.xsd">
+
+Phụ lục này trình bày phiên bản rút gọn của lược đồ XSD của định dạng metadata
+ComicInfo.
+
+[ComicInfo.xsd](../assets/ComicInfo.xsd).
