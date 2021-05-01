@@ -1,3 +1,5 @@
+\providecommand{\main}{../..}
+
 \documentclass[../../thesis]{subfiles}
 
 
@@ -70,12 +72,13 @@ tập trung riêng để cung cấp truyện.
 \newcommand{\AstonishComic}{https://play.google.com/store/apps/details?id=com.aerilys.acr.android\&hl=en\&gl=US}
 \newcommand{\Tachiyomi}{https://github.com/tachiyomiorg/tachiyomi}
 \newcommand{\TachiyomiIssue}{https://github.com/tachiyomiorg/tachiyomi/issues/1745}
+\newcommand{\KuroReader}{https://play.google.com/store/apps/details?id=br.com.kurotoshiro.leitor_manga\&hl=en\&gl=US}
 
 
 Hiện có nhiều ứng dụng đọc truyện tranh ngoại tuyến như yacv trên chợ ứng dụng
 Google Play. Hai ứng dụng phổ biến nhất trong số này là
 \href{\ComicScreen}{ComicScreen} và \href{\AstonishComic}{Astonishing Comic
-Reader}. ComicScreen là ứng dụng có nhiều người dùng hơn. Các tính năng của
+    Reader}. ComicScreen là ứng dụng có nhiều người dùng hơn. Các tính năng của
 ComicScreen giống với các tính năng của yacv, tuy nhiên ComicScreen có thêm
 nhiều chức năng phụ, đáng kể nhất là khả năng đọc từ mạng FTP/SMB và khả năng
 sửa ảnh trong file. Astonishing Comic Reader cũng có chức năng tương tự yacv,
@@ -90,5 +93,63 @@ mô hình mã nguồn mở khiến Tachiyomi mạnh hơn, cập nhật nhanh hơ
 dụng đã có và sẽ có. Tuy nhiên, Tachiyomi lại không thể được đưa lên Play Store,
 vì chính tính năng phần mở rộng đã \href{\TachiyomiIssue}{vi phạm chính sách}
 của Play Store \cite{GH_TACHI}.
+
+Một điểm khác biệt quan trọng của yacv với các ứng dụng có sẵn là việc hỗ trợ
+metadata của tệp truyện tranh, do các ứng dụng có sẵn trên Play Store đa số bỏ
+qua thông tin này trong tệp truyện. Một trong số rất ít những ứng dụng hỗ trợ
+tính năng này là \href{\KuroReader}{Kuro Reader}, tuy nhiên đây là một tính năng
+trả phí.
+
+
+%----------------------------------------------------------------------------------------
+%	1.3: Kết quả đạt được
+%----------------------------------------------------------------------------------------
+
+\section{Kết quả đạt được}
+
+Ứng dụng có các tính năng đủ dùng theo mục đích đã đề ra:
+
+\begin{itemize}
+    \item
+        Đọc file truyện \texttt{.cbz}
+    \item
+        Tìm kiếm truyện theo metadata
+\end{itemize}
+
+Tính năng đọc tệp truyện \texttt{.cbr} hiện mới chỉ được cài đặt một
+phần, do khó khăn trong việc tích hợp thư viện đọc định dạng này.
+
+
+%----------------------------------------------------------------------------------------
+%	1.4: Cấu trúc khóa luận
+%----------------------------------------------------------------------------------------
+
+\section{Cấu trúc khóa luận}
+
+Các phần còn lại của khóa luận có cấu trúc như sau:
+
+\begin{itemize}
+    \item
+        \protect\hyperlink{P2-fundamental}{Chương 2 - Kiến thức nền tảng}: Giới
+        thiệu sơ lược về ba nền tảng của ứng dụng, gồm hệ điều hành Android,
+        ngôn ngữ lập trình Kotlin, và mẫu thiết kế MVVM; định dạng tệp nén
+        \texttt{.zip} cũng được giới thiệu vì liên quan trực tiếp đến ứng dụng.
+    \item
+        \protect\hyperlink{P3-specification}{Chương 3 - Phân tích yêu cầu}: Phân
+        tích nhu cầu và ca sử dụng để có đặc tả yêu cầu.
+    \item
+        \protect\hyperlink{P4-design}{Chương 4 - Thiết kế}: Thiết kế ứng dụng,
+        gồm thiết kế cơ sở dữ liệu, giao diện, logic nghiệp vụ.
+    \item
+        \protect\hyperlink{P5-implementation}{Chương 5 - Lập trình \& Kiểm thử}:
+        Một số cài đặt và ca kiểm thử trong ứng dụng sẽ được nêu một cách có
+        chọn lọc.
+    \item
+        \protect\hyperlink{P6-comclusion}{Chương 6 - Kết luận}: Kết thúc khóa
+        luận.
+\end{itemize}
+
+Sau phần Tài liệu Tham khảo, khóa luận có hai phụ lục về metadata của truyện
+tranh.
 
 \end{document}
