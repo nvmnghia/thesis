@@ -1,0 +1,94 @@
+\documentclass[../../thesis]{subfiles}
+
+
+\begin{document}
+
+\chapter{Giới thiệu}
+
+%----------------------------------------------------------------------------------------
+%	1.1: Đặt vấn đề
+%----------------------------------------------------------------------------------------
+
+\section{Đặt vấn đề}
+
+Tại Đông Á và Đông Nam Á, văn hóa truyện tranh gốc Á, nhất là truyện tranh Nhật
+(manga), được đón nhận khá tích cực, đặc biệt trong giới trẻ. Thế hệ những người
+dưới 40 tuổi hiện nay được tiếp xúc với truyện tranh từ sớm, thông qua những
+cuốn truyện truyền tay và phim hoạt hình dựa trên truyện tranh, và tiếp tục đọc
+dù đã qua tuổi thiếu niên. Một số tác phẩm manga còn có lượng người đọc lớn trên
+toàn cầu như Doraemon, One Piece. Ở bên kia bán cầu, với sự thành công của vũ
+trụ điện ảnh Marvel và DC, truyện tranh phương Tây (comic) cũng được hồi sinh
+phần nào sau một thập kỷ thiếu sáng tạo và suy giảm doanh số sách in. Các bộ
+truyện siêu anh hùng, vốn trước đây chỉ phổ biến ở Hoa Kỳ, nay đang trên đường
+trở thành một phần của văn hóa đại chúng như vị thế của manga. Có thể nói, văn
+hóa truyện tranh nói chung đang ở thời kì phát triển mạnh, xét theo tiêu chí về
+độ phổ biến và thái độ đón nhận của xã hội.
+
+Hiện nay, hầu hết mọi người đọc truyện qua các trang web tổng hợp truyện tranh.
+Những trang web này có hai ưu điểm chính:
+
+\begin{itemize}
+    \item
+        Số lượng: Mỗi trang cung cấp ít nhất hàng nghìn đầu truyện.
+    \item
+        Tốc độ: Tốc độ ra truyện rất nhanh. Với các bộ truyện nổi tiếng, thường
+        chỉ trong vòng một vài giờ sau khi ra mắt, chương mới đã xuất hiện.
+\end{itemize}
+
+Tuy vậy, nhược điểm chính của những trang web này là chất lượng ảnh của truyện.
+Để giảm thời gian tải và tránh tốn băng thông, hình ảnh của truyện thường được
+nén khá nhiều, gây vỡ hình, mờ nhòe. Một bộ phận người đọc, hoặc kĩ tính, hoặc
+muốn sưu tầm truyện, thường chọn đọc những tệp truyện chất lượng cao, thường có
+đuôi \texttt{.cbz} hoặc \texttt{.cbr}. Bản chất tệp truyện này là các tệp nén
+zip bình thường, bên trong có các tệp ảnh thông dụng như \texttt{.jpg},
+\texttt{.png}. Tuy nhiên, do được tải hẳn về máy rồi mới đọc, những tệp truyện
+này không bị giới hạn về băng thông hay thời gian, do đó hình ảnh trong tệp có
+thể có chất lượng rất cao.
+
+Trong khóa luận này, tôi viết một ứng dụng Android nhằm phục vụ số ít người dùng
+có nhu cầu đọc truyện tranh chất lượng cao đã giới thiệu ở trên. Tên của ứng
+dụng là \emph{yacv}, viết tắt của cụm từ tiếng Anh ``Yet Another Comic Viewer'',
+tạm dịch là ``Lại một ứng dụng xem truyện tranh nữa''. Hai tính năng chính duy
+nhất của ứng dụng là đọc và quản lí cơ bản (tìm kiếm, xóa) tệp truyện tranh có
+sẵn trên điện thoại.
+
+Cần chú ý rằng ứng dụng yacv chỉ bao gồm các tính năng liên quan đến đọc truyện
+ngoại tuyến, đọc các tệp truyện có sẵn trên điện thoại người dùng. Ứng dụng
+không phải là ứng dụng khách cho các trang đọc truyện hiện có, hay có máy chủ
+tập trung riêng để cung cấp truyện.
+
+
+%----------------------------------------------------------------------------------------
+%	1.2: Ứng dụng tương tự
+%----------------------------------------------------------------------------------------
+
+\section{Ứng dụng tương tự}
+
+
+% Links
+\newcommand{\ComicScreen}{https://play.google.com/store/apps/details?id=com.viewer.comicscreen\&hl=en\&gl=US}
+\newcommand{\AstonishComic}{https://play.google.com/store/apps/details?id=com.aerilys.acr.android\&hl=en\&gl=US}
+\newcommand{\Tachiyomi}{https://github.com/tachiyomiorg/tachiyomi}
+\newcommand{\TachiyomiIssue}{https://github.com/tachiyomiorg/tachiyomi/issues/1745}
+
+
+Hiện có nhiều ứng dụng đọc truyện tranh ngoại tuyến như yacv trên chợ ứng dụng
+Google Play. Hai ứng dụng phổ biến nhất trong số này là
+\href{\ComicScreen}{ComicScreen} và \href{\AstonishComic}{Astonishing Comic
+Reader}. ComicScreen là ứng dụng có nhiều người dùng hơn. Các tính năng của
+ComicScreen giống với các tính năng của yacv, tuy nhiên ComicScreen có thêm
+nhiều chức năng phụ, đáng kể nhất là khả năng đọc từ mạng FTP/SMB và khả năng
+sửa ảnh trong file. Astonishing Comic Reader cũng có chức năng tương tự yacv,
+không hơn, tuy nhiên giao diện khá trau chuốt. Cả hai đều miễn phí và có quảng
+cáo, được cập nhật có thể nói là thường xuyên.
+
+Một ngoại lệ đáng kể ở đây là ứng dụng mã nguồn mở \href{\Tachiyomi}{Tachiyomi}.
+Ứng dụng này có hệ thống phần mở rộng, cho phép đọc truyện ở các trang web
+truyện tranh. Khi web truyện tranh thay đổi, hoặc hỗ trợ thêm trang mới, chỉ cần
+tải về phần mở rộng tương ứng ở dạng ứng dụng \texttt{.APK}. Tính năng này cùng
+mô hình mã nguồn mở khiến Tachiyomi mạnh hơn, cập nhật nhanh hơn toàn bộ các ứng
+dụng đã có và sẽ có. Tuy nhiên, Tachiyomi lại không thể được đưa lên Play Store,
+vì chính tính năng phần mở rộng đã \href{\TachiyomiIssue}{vi phạm chính sách}
+của Play Store \cite{GH_TACHI}.
+
+\end{document}
