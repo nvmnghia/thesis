@@ -1,0 +1,32 @@
+\ProvidesPackage{preamble}
+
+
+\usepackage{polyglossia}
+\setdefaultlanguage{vietnamese}
+
+\usepackage[final]{microtype}
+\usepackage{lmodern}
+
+\usepackage{hyperref}    % Clickable link
+
+\usepackage{amsthm}
+
+\usepackage[figure, table]{totalcount}
+
+\usepackage[useregional]{datetime2}
+\DTMsetdatestyle{ddmmyyyy}
+
+% https://uet.vnu.edu.vn/wp-content/uploads/2017/07/Quy-%C4%91i%CC%A3nh-v%C3%AA%CC%80-tri%CC%80nh-ba%CC%80y-kho%CC%81a-lu%C3%A2%CC%A3n-t%C3%B4%CC%81t-nghi%C3%AA%CC%A3pCLC.pdf
+\usepackage[top=2.5cm, bottom=3.0cm, left=3.0cm, right=2.0cm]{geometry}
+
+
+% Blank page https://tex.stackexchange.com/a/374542/206774
+\def\blankpage{%
+  \clearpage%
+  \thispagestyle{empty}%
+  \addtocounter{page}{-1}%
+  \null%
+  \clearpage}
+
+
+\usepackage{subfiles} % Best loaded last in the preamble
