@@ -24,13 +24,19 @@
 \renewcommand{\baselinestretch}{1.3}
 
 
-% Blank page https://tex.stackexchange.com/a/374542/206774
+% Blank page
+% https://tex.stackexchange.com/a/374542/206774
 \def\blankpage{%
   \clearpage%
   \thispagestyle{empty}%
   \addtocounter{page}{-1}%
   \null%
   \clearpage}
+
+% Temporarily change margins
+% https://tex.stackexchange.com/a/600/206774
+\def\changemargin#1#2{\list{}{\rightmargin#2\leftmargin#1}\item[]}
+\let\endchangemargin=\endlist
 
 
 \usepackage{subfiles} % Best loaded last in the preamble
