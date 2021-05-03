@@ -7,13 +7,20 @@
 \usepackage[final]{microtype}
 \usepackage{lmodern}
 
-\usepackage{hyperref}    % Clickable link
+% Clickable link
+\usepackage[vietnamese]{hyperref}    % This sucker ignore polyglossia
 
 \usepackage{amsthm}
 
 % Graphics
 \usepackage{graphicx}
 \usepackage{svg}
+\usepackage{wrapfig}
+\usepackage{minted}
+\usepackage{float}
+
+% Table shit
+\usepackage{booktabs}
 
 % References
 \providecommand{\main}{.}    % https://tex.stackexchange.com/a/216321/206774
@@ -22,8 +29,8 @@
 
 \usepackage[figure, table]{totalcount}
 
-\usepackage[useregional]{datetime2}
-\DTMsetdatestyle{ddmmyyyy}
+\usepackage{enumitem}
+
 
 % https://uet.vnu.edu.vn/wp-content/uploads/2017/07/Quy-%C4%91i%CC%A3nh-v%C3%AA%CC%80-tri%CC%80nh-ba%CC%80y-kho%CC%81a-lu%C3%A2%CC%A3n-t%C3%B4%CC%81t-nghi%C3%AA%CC%A3pCLC.pdf
 \usepackage[top=2.5cm, bottom=3.0cm, left=3.0cm, right=2.0cm]{geometry}

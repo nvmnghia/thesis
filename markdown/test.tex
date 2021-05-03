@@ -348,11 +348,10 @@ so với việc tự viết những đoạn mã tương tự. Jetpack gồm hai 
         đề
 \end{itemize}
 
-Mô hình phát triển của Android (cho phép nhà sản xuất tùy biến) khiến
-thế giới Android bị phân mảnh, hệ quả là việc cập nhật hệ điều hành khó
-khăn. Do đó, Google viết Thư viện Hỗ trợ (Support Library) để đưa API hệ
-điều hành mới lên máy cũ. AndroidX chính là Support Library đổi tên và
-được cập nhật đến nay.
+Việc Google cho phép nhà sản xuất tùy biến khiến thế giới Android bị phân mảnh,
+hệ quả là việc cập nhật hệ điều hành khó khăn. Do đó, Google viết Thư viện Hỗ
+trợ (Support Library) để đưa API hệ điều hành mới lên máy cũ. AndroidX chính là
+Support Library đổi tên và được cập nhật đến nay.
 
 Chú ý rằng Jetpack chỉ có ích cho lập trình viên (được dùng API mới tiện
 hơn, thực ra là wrapper của API sẵn có), chứ không cập nhật tính năng hệ
@@ -603,8 +602,8 @@ tương tranh.
   \item
         Ta xem lại ví dụ về quản lí tài nguyên tự động. Nếu có một luồng thực
         thi khác tương tranh với luồng chính, thì khi luồng chính đóng
-        \texttt{Scanner}, có thể luồng kia vẫn đang đọc nó. Vấn đề giờ là đọc
-        sau khi đóng. Do đó, tính năng này không thể hoạt động.
+        \texttt{Scanner}, có thể luồng kia vẫn đang đọc nó. Do đó, tính năng này
+        không thể hoạt động.
   \item
         Với tính năng bắt ngoại lệ, nếu có ngoại lệ ở luồng tương tranh, ta
         cũng không có cách nào để biết, và buộc phải kệ nó.

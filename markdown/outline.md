@@ -245,16 +245,14 @@ dụng thành phần Content Provider, cụ thể là bộ Storage Access Framew
 Jetpack là bộ thư viện giúp viết ứng dụng Android nhanh gọn, ít lỗi hơn so với
 việc tự viết những đoạn mã tương tự. Jetpack gồm hai thành phần:
 
-- AndroidX: đưa API của phiên bản hệ điều hành mới lên máy cũ
-- Architecture Component: đưa ra API hoàn toàn mới để giải quyết một vấn đề
+- AndroidX: đưa *API* của phiên bản hệ điều hành mới lên máy cũ
+- Architecture Component: đưa ra *thư viện* hoàn toàn mới
 
-Mô hình phát triển của Android (cho phép nhà sản xuất tùy biến) khiến thế giới
-Android bị phân mảnh, hệ quả là việc cập nhật hệ điều hành khó khăn. Do đó,
-Google viết Thư viện Hỗ trợ (Support Library) để đưa API hệ điều hành mới lên
-máy cũ. AndroidX chính là Support Library đổi tên và được cập nhật đến nay.
-
-Chú ý rằng Jetpack chỉ có ích cho lập trình viên (được dùng API mới tiện hơn,
-thực ra là wrapper của API sẵn có), chứ không cập nhật tính năng hệ điều hành.
+Việc cập nhật Android rất khó khăn do phải chờ nhà sản xuất tối ưu. Do đó,
+Google viết AndroidX, trước gọi là Thư viện Hỗ trợ (Support Library), để đưa API
+Android mới lên máy cũ. Chú ý rằng Jetpack chỉ có ích cho lập trình viên (API
+mới tiện hơn thực ra là wrapper của API sẵn có), chứ không cập nhật tính năng hệ
+điều hành.
 
 yacv sử dụng nhiều thành phần của Jetpack, trong đó đáng kể đến ba thư viện sau:
 
@@ -262,8 +260,8 @@ yacv sử dụng nhiều thành phần của Jetpack, trong đó đáng kể đ�
 - ViewModel: giúp tách dữ liệu và giao diện
 - Room: giúp việc lưu dữ liệu trong SQLite thuận tiện hơn
 
-Room là một phần quan trọng của yacv, do đó sẽ được giới thiệu chi tiết hơn ở
-[mục sau](#P2.4.2-room).
+Room là một phần quan trọng của yacv, do đó sẽ được giới thiệu chi tiết ở [mục
+sau](#P2.4.2-room).
 
 ### 2.2. Ngôn ngữ lập trình Kotlin <a name="P2.2-kotlin"></a>
 
@@ -290,8 +288,7 @@ Sau đây là tóm tắt một số đặc điểm kĩ thuật của Kotlin:
     - Là kiểu tĩnh (statically typed), tức kiểu được kiểm tra khi biên dịch
       (thay vì khi chạy, như Python, JavaScript,...)
     - Là kiểu mạnh (strongly typed), tức không cho phép chuyển kiểu ngầm
-- Về cú pháp, Kotlin có cú pháp gọn, hiện đại, ví dụ như bỏ dấu `;` cuối dòng,
-  template literal,...
+- Về cú pháp, Kotlin gọn và hiện đại: bỏ dấu `;` cuối dòng, template literal,...
 - Về lỗi, Kotlin luôn được quảng cáo về khả năng chống `NullPointerException`.
   Kotlin "né" lỗi này do buộc người viết đánh dấu cụ thể rằng một đối tượng có
   thể bị `null` hay không bằng hậu tố `?` ở khai báo kiểu. Từ đó, Kotlin biết
@@ -364,8 +361,8 @@ Vấn đề của lập trình phi cấu trúc, hay của `GOTO`, có thể tóm
     Xét ví dụ Java sau về quản lí tài nguyên tự động:
 
     ```java
-    try (Scanner scanner = new Scanner(new File("test.txt"))) {
-        jumpSomewhere();    // Giả sử Java có GOTO, và hàm này dùng nó
+    try (Scanner scanner = new Scanner(new File("f.txt"))) {
+        goto(SOMEWHERE);    // Giả sử Java có GOTO
     }
     ```
 
