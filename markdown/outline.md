@@ -397,7 +397,7 @@ Trước hết, ta xem xét hai kiểu API tương tranh hay dùng hiện nay:
 | Tương tranh | Chạy một hàm theo cách tương tranh với luồng chạy hiện tại | `Thread(target=fn).start() # Python` |
 | Bất đồng bộ | Chạy một hàm khi có sự kiện xảy ra (callback) | `element.onclick = cb; // JS` |
 
-Bảng 2: Hai kiểu API tương tranh thường thấy.
+Bảng 1: Hai kiểu API tương tranh thường thấy.
 
 Qua Hình 5, không khó để thấy rằng mọi vấn đề của lập trình phi cấu trúc đều lặp
 lại với hai API trên:
@@ -727,14 +727,14 @@ Tệp truyện CBZ chỉ là một tệp nén ZIP thông thường, trong đó c
 
 ---
 
-## 3. Chương 3: Phân tích yêu cầu & Thiết kế <a name="P3-specification"></a>
+## 3. Chương 3: Phân tích yêu cầu <a name="P3-specification"></a>
 
 <!-- Nếu C3 ngắn quá thì gộp Thiết kế vào, nhưng giờ chắc phải tách cmnr -->
 
 Chương này phân tích yêu cầu để lập ra đặc tả yêu cầu, là bộ khung cho quá trình
 phát triển ứng dụng.
 
-### 3.1. Mô tả chung <a name="P3.1-overall"></a>
+### 3.1. Mô tả chung <a name="P3.1-overview"></a>
 
 #### 3.1.1. Người dùng <a name="P3.1.1-users"></a>
 
@@ -753,8 +753,8 @@ tầm truyện còn có yêu cầu về *xem thông tin (metadata)* của tệp 
 Trước khi đi vào chi tiết yêu cầu ở mục tiếp theo, tôi muốn làm rõ mục đích của
 sản phẩm đã nhắc ở [mục 1.1](#P1.1-background).
 
-- Ứng dụng yacv chỉ bao gồm các tính năng liên quan đến đọc **truyện tranh**
-  ngoại tuyến (tức đọc các tệp truyện có sẵn trên điện thoại người dùng).
+- Ứng dụng yacv chỉ gồm các tính năng liên quan đến đọc **truyện tranh** và là
+  ứng dụng **ngoại tuyến** (tức đọc các tệp truyện có sẵn trên điện thoại).
 - Ứng dụng *không phải* là ứng dụng khách cho các trang đọc truyện hiện có, hay
   có máy chủ tập trung riêng để cung cấp truyện.
 - Ứng dụng *không có* khả năng đọc truyện đuôi `.pdf`, cùng với các định dạng
@@ -777,7 +777,7 @@ Các giới hạn này nhằm tránh cho phần mềm quá phức tạp với t�
 - Tìm kiếm truyện
 - Xóa truyện
 
-#### 3.2.2. Yêu cầu phi chức năng <a name="P3.2.2-non-functional-requirement"></a>
+#### 3.2.2. Yêu cầu phi chức năng <a name="P3.2.2-non-functional-requirements"></a>
 
 Ứng dụng cần đạt một số tiêu chí sau:
 
@@ -893,15 +893,8 @@ metadata này.
 
 Một số metadata có thể được trích xuất ngay từ tên tệp truyện. Do không có quy
 chuẩn trong việc đặt tên tệp, cách trích xuất này không ổn định, tuy nhiên cũng
-không phải ý tưởng tồi.
-
-```text
-Wolverine 1982(1) #1
-│         │       └─ Number/no (String): issue number, ~ chapter. Note that it is a String.
-│         └─ Volume (Int): Several series can have the same name, so they are distinguished by either year or version.
-└─Series (String): Name of the series.
-Count (Int): number of issues (Not in the example).
-```
+không phải ý tưởng tồi. Nếu có thể, dựa vào [Phụ lục 1](#P8.1-metadata) để thử
+trích xuất từ tên tệp truyện.
 
 Tới đây người đọc có thể thực hiện các ca sử dụng khác, trong đó quan trọng nhất
 là duyệt theo thư mục rồi xem truyện.
@@ -985,9 +978,9 @@ phẳng cây thư mục:
 |         └── Black Panther #7.cbz  | └── Black Panther #7.cbz  |
 ```
 
-Bảng 3: Cách yacv làm phẳng thư mục
+Bảng 2: Cách yacv làm phẳng thư mục
 
-Theo như cột phải Bảng 3, các màn hình trong yacv được tổ chức như sau:
+Theo như cột phải Bảng 2, các màn hình trong yacv được tổ chức như sau:
 
 - Màn hình Thư viện: có 3 thư mục:
 
@@ -1010,7 +1003,7 @@ Theo như cột phải Bảng 3, các màn hình trong yacv được tổ chức
 - Không có ca sử dụng có ý nghĩa cho thư mục lồng nhau:
 
     Trường hợp hợp lí nhất cho việc có thư mục lồng nhau là khi lưu các tệp
-    truyện liên quan đến một bộ truyện (tie-ins), như cột trái Bảng 3:
+    truyện liên quan đến một bộ truyện (tie-ins), như cột trái Bảng 2:
 
     - Thư mục cha (House of M) chứa tệp truyện trong bộ truyện cùng tên và thư
       mục tie-ins.
@@ -1111,8 +1104,8 @@ Các tính năng nâng cao hơn như gợi ý không xuất hiện, do một s�
 - Giảm độ phức tạp khi lập trình.
 - Người dùng không có nhu cầu: nhóm người dùng hướng đến có đặc điểm hiểu biết
   về truyện tranh, do đó việc gợi ý có thể coi là thừa thãi.
-- Thiểu thông tin gợi ý: việc gợi ý chỉ có hiệu quả khi có một cơ sở dữ liệu về
-  c��c bộ truyện liên quan, hoặc lựa chọn các truyện liên quan của cộng đồng
+- Thiếu thông tin gợi ý: việc gợi ý chỉ có hiệu quả khi có một cơ sở dữ liệu về
+  các bộ truyện liên quan, hoặc lựa chọn các truyện liên quan của cộng đồng
   người đọc, trong khi yacv là một ứng dụng hoàn toàn ngoại tuyến.
 
 #### 3.3.5. Tìm kiếm truyện <a name="P3.3.5-search-comic"></a>

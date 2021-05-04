@@ -1,0 +1,734 @@
+\providecommand{\main}{../..}
+
+\documentclass[../../thesis]{subfiles}
+
+
+\begin{document}
+
+\chapter{Phân tích yêu cầu \& Thiết kế}
+
+Chương này phân tích yêu cầu để lập ra đặc tả yêu cầu, là bộ khung cho quá trình
+phát triển ứng dụng.
+
+
+%----------------------------------------------------------------------------------------
+%	3.1: Mô tả chung
+%----------------------------------------------------------------------------------------
+
+\section{Mô tả chung}\label{sec:overview}
+
+\subsection{Người dùng}\label{sec:users}
+
+Ứng dụng yacv tập trung vào một số ít người dùng, là một trong hai nhóm sau:
+
+\begin{itemize}
+    \item
+        Người dùng sưu tầm truyện
+    \item
+        Người dùng có yêu cầu đọc truyện với chất lượng hình ảnh cao
+\end{itemize}
+
+Cả hai nhóm có điểm chung là kĩ tính, yêu cầu cao về trải nghiệm đọc truyện, cụ
+thể là về \emph{chất lượng hình ảnh}. Cũng do kĩ tính, nên cả hai nhóm không cần
+nhiều chức năng, tuy nhiên có yêu cầu cao về từng chức năng. Nhóm người dùng sưu
+tầm truyện còn có yêu cầu về \emph{xem thông tin (metadata)} của tệp truyện.
+
+\subsection{Mục đích}\label{sec:objectives}
+
+Trước khi đi vào chi tiết yêu cầu ở mục tiếp theo, tôi muốn làm rõ mục đích của
+sản phẩm đã nhắc ở \protect\hyperlink{P1.1-background}{mục 1.1}.
+
+\begin{itemize}
+    \item
+        Ứng dụng yacv chỉ bao gồm các tính năng liên quan đến đọc \textbf{truyện
+        tranh} và là ứng dụng \textbf{ngoại tuyến} (tức đọc các tệp truyện có
+        sẵn trên điện thoại).
+    \item
+        Ứng dụng \emph{không phải} là ứng dụng khách cho các trang đọc truyện
+        hiện có, hay có máy chủ tập trung riêng để cung cấp truyện.
+    \item
+        Ứng dụng \emph{không có} khả năng đọc truyện đuôi \texttt{.pdf}, cùng
+        với các định dạng truyện thiên về chữ khác như \texttt{.txt},
+        \texttt{.epub}.
+\end{itemize}
+
+Các giới hạn này nhằm tránh cho phần mềm quá phức tạp với tôi, đồng thời phù hợp
+(không thừa thiếu chức năng) so với nhu cầu của nhóm người dùng mục tiêu đã nêu
+ở \autoref{sec:users}.
+
+
+%----------------------------------------------------------------------------------------
+%	3.2: Yêu cầu đặt ra
+%----------------------------------------------------------------------------------------
+
+\section{Yêu cầu đặt ra}\label{sec:requirements}
+
+\subsection{Yêu cầu chức năng}\label{sec:functional-requirements}
+
+Ứng dụng có các chức năng chính sau:
+
+\begin{itemize}
+    \item
+        Quét các tệp truyện trên thiết bị
+    \item
+        Hiển thị danh sách truyện
+    \item
+        Đọc truyện
+    \item
+        Xem metadata truyện
+    \item
+        Tìm kiếm truyện
+    \item
+        Xóa truyện
+\end{itemize}
+
+\subsection{Yêu cầu phi chức năng}\label{sec:non-functional-requirements}
+
+Ứng dụng cần đạt một số tiêu chí sau:
+
+\begin{itemize}
+    \item
+        Phản hồi nhanh: Các thao tác cần có thời gian phản hồi nhanh. Phản hồi
+        nhanh không nhất thiết là thời gian thực thi ngắn, mà là luôn có các
+        thông báo tiến độ cho người dùng.
+
+        \begin{itemize}
+            \item
+                Luôn hiện thông báo chờ khi làm việc gì đó lâu
+            \item
+                Nếu có nhiều kết quả tìm kiếm, hiển thị từ từ, đưa kết quả đã
+                biết lên trước
+        \end{itemize}
+    \item
+        Tốc độ xem truyện chấp nhận được: Đây là một phần của phản hồi nhanh,
+        nhưng được tách riêng vì độ quan trọng của nó. Tốc độ xem truyện gồm hai
+        tiêu chí:
+
+        \begin{itemize}
+            \item
+                Tốc độ mở truyện, tức tốc độ xem trang đầu (có thể so với first
+                contentful paint trong lập trình web)
+            \item
+                Tốc độ cuộn trang tới-lui
+        \end{itemize}
+    \item
+        Chiếm ít bộ nhớ: Bộ nhớ chiếm dụng của ứng dụng gồm hai phần: bộ nhớ RAM
+        và bộ nhớ tạm, cả hai cần sử dụng ít dung lượng nhất có thể. Đây là một
+        yêu cầu đáng cân nhắc, lí do vì kích cỡ từng tệp truyện thường rất lớn
+        (từ vài chục đến hơn một trăm megabyte), tuy nhiên cần chú ý cân bằng
+        yêu cầu này với yêu cầu về tốc độ (đánh đổi không gian-thời gian).
+    \item
+        Giao diện đơn giản, trực quan: Người dùng hướng đến có thể xếp vào nhóm
+        người dùng ``say mê'' (enthusiast), do đó giao diện chỉ cần đơn giản rõ
+        ràng, không màu mè, tập trung vào tính năng.
+\end{itemize}
+
+
+%----------------------------------------------------------------------------------------
+%	3.2: Phân tích yêu cầu
+%----------------------------------------------------------------------------------------
+
+\section{Phân tích yêu cầu}\label{sec:analysis}
+
+Mỗi yêu cầu đã xác định trong \autoref{sec:functional-requirements} được coi là
+một ca sử dụng, được trình bày trong các tiểu mục dưới đây.
+
+\emph{Người dùng duy nhất} trong các ca sử dụng là \emph{người đọc}, do đó hai
+cụm từ này sẽ được dùng hoán đổi cho nhau. Do ứng dụng hoàn toàn ngoại tuyến,
+người đọc cũng không có tương tác với nhau.
+
+Do ứng dụng đơn giản, các ca sử dụng tách biệt, nên mỗi ca sử dụng gắn với một
+\emph{màn hình}. Có tổng cộng năm màn hình sẽ được mô tả, gồm:
+
+\begin{itemize}
+    \item
+        Màn hình Thư viện
+    \item
+        Màn hình Thư mục
+    \item
+        Màn hình Đọc truyện
+    \item
+        Màn hình Metadata
+    \item
+        Màn hình Tìm kiếm
+\end{itemize}
+
+\subsection{Quét các tệp truyện trên thiết bị}\label{sec:scan}
+
+\begin{itemize}
+    \item
+        \textbf{Mô tả}:
+
+        Người đọc \emph{chọn} một thư mục trong điện thoại làm thư mục gốc. Ứng
+        dụng sẽ \emph{quét} thư mục này và tìm các tệp truyện, rồi hiển thị
+        những thư mục chứa tệp truyện cho người đọc chọn.
+    \item
+        \textbf{Luồng chính}:
+
+        \begin{enumerate}
+            \item
+                Người đọc bật ứng dụng (tức ở Màn hình Thư viện)
+            \item
+                Người đọc ấn vào nút thay đổi thư mục gốc.
+            \item
+                Trình chọn thư mục của Android hiện ra, cho phép người đọc chọn
+                thư mục làm thư mục gốc.
+            \item
+                Màn hình Thư viện trở lại, quét và hiển thị các thư mục chứa
+                truyện trong thư mục gốc.
+        \end{enumerate}
+    \item
+        \textbf{Luồng thay thế}:
+
+        Nếu người đọc đã chọn một thư mục gốc, ca sử dụng này \emph{thay thế}
+        thư mục gốc đã chọn bằng thư mục vừa chọn.
+
+        Nếu người đọc không chọn thư mục, quay lại Màn hình Thư viện.
+    \item
+        \textbf{Luồng ngoại lệ}:
+
+        Nếu có lỗi trong quá trình chọn thư mục, cần gợi ý người đọc chọn lại.
+        Lỗi gồm:
+
+        \begin{itemize}
+            \item
+                Thiếu quyền
+            \item
+                Không tìm được thư mục gốc
+            \item
+                Thư mục gốc không có truyện
+        \end{itemize}
+
+        Nếu có lỗi trong quá trình quét cần phải giảm thiểu và giấu khỏi người
+        đọc.
+    \item
+        \textbf{Điều kiện}:
+
+        \begin{itemize}
+            \item
+                Tiền điều kiện: Ứng dụng ở Màn hình Thư viện
+            \item
+                Hậu điều kiện: Ứng dụng ở Màn hình Thư viện
+
+                \begin{itemize}
+                    \item
+                        Hiển thị thư mục truyện quét được
+                    \item
+                        Hiển thị lỗi nếu có (ba loại lỗi ở trên)
+                \end{itemize}
+          \end{itemize}
+    \item
+        \textbf{Yêu cầu phi chức năng}:
+
+        Nếu đang quét, Màn hình Thư viện cần hiển thị danh sách thư mục theo
+        tiến độ, ứng dụng quét đến đâu hiển thị đến đấy.
+
+        Mỗi thư mục cần hiển thị:
+
+        \begin{itemize}
+            \item
+                Tên thư mục
+            \item
+                Ảnh đại diện cho thư mục: bìa một truyện bất kì tìm được trong
+                thư mục
+        \end{itemize}
+\end{itemize}
+
+Đây là ca sử dụng đầu tiên khi người đọc khởi động ứng dụng lần đầu. Các tệp
+truyện sẽ được quét từ thư mục gốc, rồi được gom lại theo thư mục theo mô tả ở
+\protect\hyperlink{P3.3.2-show-library}{ca sử dụng tiếp theo}.
+
+Màn hình đầu tiên khi người đọc bật lên gọi là \emph{Màn hình Thư viện} (Library
+screen). Các thư mục chứa truyện, hoặc thông báo lỗi liên quan đến bản thân quá
+trình chọn truyện (đã miêu tả trong bước 6 ở trên) sẽ được hiển thị ở màn hình
+này.
+
+Khi quét, ứng dụng phải đọc luôn cả metadata của tệp truyện nếu có. Các trường
+trong metadata được giải thích chi tiết trong
+\protect\hyperlink{P8.1-metadata}{Phụ lục 1}. Hiện nay, yacv chấp nhận định dạng
+metadata ComicInfo, là một tệp XML trong tệp truyện.
+\protect\hyperlink{P8.2-comicinfo.xsd}{Phụ lục 2} trình bày lược đồ XSD của định
+dạng metadata này.
+
+Một số metadata có thể được trích xuất ngay từ tên tệp truyện. Do không có quy
+chuẩn trong việc đặt tên tệp, cách trích xuất này không ổn định, tuy nhiên cũng
+không phải ý tưởng tồi. Nếu có thể, dựa vào
+\protect\hyperlink{P8.1-metadata}{Phụ lục 1} để thử trích xuất từ tên tệp
+truyện.
+
+Tới đây người đọc có thể thực hiện các ca sử dụng khác, trong đó quan trọng nhất
+là duyệt theo thư mục rồi xem truyện.
+
+\subsection{Hiển thị danh sách truyện}\label{sec:show-library}
+
+\begin{itemize}
+    \item
+        \textbf{Mô tả}:
+
+        Người đọc duyệt truyện theo thư mục, rồi chọn truyện và xem.
+    \item
+        \textbf{Luồng chính}:
+
+        \begin{enumerate}
+            \item
+                Người đọc bật ứng dụng (tức ở Màn hình Thư viện), có danh sách
+                truyện (tức đã chọn thư mục gốc và quét được ít nhất một thư mục
+                chứa truyện).
+            \item
+                Người đọc chọn một thư mục.
+            \item
+                Ứng dụng chuyển sang Màn hình Thư mục, hiển thị \emph{danh sách
+                truyện} trong thư mục đó cho người đọc xem và chọn.
+        \end{enumerate}
+    \item
+        \textbf{Điều kiện}:
+
+        \begin{itemize}
+            \item
+                Tiền điều kiện:
+
+                \begin{itemize}
+                    \item
+                        Ứng dụng ở Màn hình Thư viện
+                    \item
+                        Đã chọn thư mục gốc và đã quét được ít nhất một thư mục
+                        chứa truyện
+                \end{itemize}
+            \item
+                Hậu điều kiện: Ứng dụng ở Màn hình Thư mục.
+        \end{itemize}
+    \item
+        \textbf{Yêu cầu phi chức năng}:
+
+        Nếu đang quét, màn hình Thư mục cần hiển thị danh sách truyện theo tiến
+        độ, ứng dụng quét đến đâu hiển thị đến đấy.
+
+        Mỗi truyện cần hiển thị:
+
+        \begin{itemize}
+            \item
+                Tên truyện
+            \item
+                Bìa truyện
+            \item
+                Tiến độ đọc
+            \item
+                Đánh giá yêu thích
+        \end{itemize}
+  \end{itemize}
+
+Đây là một trong hai ca sử dụng chính của ứng dụng, bên cạnh (và là tiền điều
+kiện cho) \protect\hyperlink{P3.3.3-read-comic}{ca sử dụng đọc truyện} sẽ được
+miêu tả tiếp theo.
+
+Màn hình khi người đọc chọn một thư mục gọi là \emph{Màn hình Thư mục}
+(Directory screen). Cũng giống như Màn hình Thư viện, ảnh bìa và tên của truyện
+được hiển thị để người đọc chọn.
+
+Trong yacv, truyện được quản lí và duyệt theo thư mục. Có hai lí do cho lựa chọn
+thiết kế này:
+
+\begin{itemize}
+    \item
+        Giảm độ phức tạp khi lập trình
+    \item
+        Các phương pháp duyệt khác không trực quan
+
+        \begin{itemize}
+            \item
+                Các phương pháp duyệt khác chỉ bao gồm duyệt theo metadata, tức
+                duyệt theo các thông tin đi kèm như Tác giả, Nhân vật, Bộ
+                truyện,\ldots{} thì yêu cầu truyện phải có đủ metadata. Trên
+                thực tế, không phải tệp truyện nào cũng có đủ thông tin này, do
+                vậy sẽ có trường hợp rất nhiều truyện bị gom vào mục ``Không đủ
+                thông tin''. Hơn nữa, giả sử truyện có đi kèm metadata, ta xem
+                xét tiếp trường hợp dưới.
+            \item
+                Giả sử ta quản lí theo Nhân vật: Vậy để trực quan, yacv phải
+                hiển thị ảnh nhân vật. Hiện nay, việc nhận diện và cắt đúng ảnh
+                phần mặt nhân vật ra để tạo ảnh đại diện có thể nói là bất khả
+                thi. Do vậy, khi duyệt theo Nhân vật, người đọc chỉ có thể thấy
+                tên, không thấy một hình ảnh gợi ý nào khác, dẫn đến khó khăn
+                khi sử dụng. Lập luận tương tự có thể dùng với các cách xếp
+                khác.
+            \item
+                Một cách xếp có thể nói là tốt là xếp theo Bộ truyện, tuy nhiên
+                ta lại quay về vấn đề thiếu metada.
+        \end{itemize}
+\end{itemize}
+
+Hơn nữa, các thư mục cần được ``làm phẳng''. ``Làm phẳng'' có nghĩa là hiển thị
+thư mục con (cháu,\ldots) ngang hàng với thư mục gốc. Ví dụ sau cho thấy cách
+yacv làm phẳng cây thư mục:
+
+\begin{verbatim}
+| Cây thư mục gốc                   | yacv đã làm phẳng         |
+|-----------------------------------|---------------------------|
+| thư mục gốc                       | thư mục gốc               |
+| ├── Original Sin #1.cbz           | └── Original Sin #1.cbz   |
+| └── House of M                    | House of M                |
+|     ├── House of M #1.cbz         | ├── House of M #1.cbz     |
+|     ├── House of M #3.cbz         | └── House of M #3.cbz     |
+|     └── Tie-ins                   | Tie-ins                   |
+|         └── Black Panther #7.cbz  | └── Black Panther #7.cbz  |
+\end{verbatim}
+
+Bảng 2: Cách yacv làm phẳng thư mục
+
+Theo như cột phải Bảng 3, các màn hình trong yacv được tổ chức như sau:
+
+\begin{itemize}
+    \item
+        Màn hình Thư viện: có 3 thư mục:
+
+        \begin{itemize}
+            \item
+                thư mục gốc
+            \item
+                House of M
+            \item
+                Tie-ins
+        \end{itemize}
+    \item
+        Khi chọn ``House of M'': chuyển sang Màn hình Thư mục tương ứng, không
+        có thư mục con, và có 2 tệp truyện:
+
+        \begin{itemize}
+            \item
+                House of M \#1.cbz
+            \item
+                House of M \#3.cbz
+        \end{itemize}
+    \item
+        Tương tự với các thư mục khác.
+\end{itemize}
+
+Có ba lí do cho lựa chọn thiết kế này:
+
+\begin{itemize}
+    \item
+        Giảm độ phức tạp khi lập trình.
+    \item
+        Người đọc không phải đi qua nhiều tầng thư mục để đến được tệp truyện
+        cần đọc.
+    \item
+        Không có ca sử dụng có ý nghĩa cho thư mục lồng nhau:
+
+        Trường hợp hợp lí nhất cho việc có thư mục lồng nhau là khi lưu các tệp
+        truyện liên quan đến một bộ truyện (tie-ins), như cột trái Bảng 3:
+
+        \begin{itemize}
+            \item
+                Thư mục cha (House of M) chứa tệp truyện trong bộ truyện cùng
+                tên và thư mục tie-ins.
+            \item
+                Thư mục Tie-ins chứa các tệp truyện tie-in.
+        \end{itemize}
+
+        Tuy nhiên, bản thân các tệp tie-in lại là tệp truyện thông thường trong
+        một bộ truyện khác, do đó nếu tổ chức thư mục như thế này sẽ dẫn đến
+        tình trạng lặp tệp truyện, là điều không mong muốn ngay cả với máy tính.
+\end{itemize}
+
+\subsection{Đọc truyện}\label{sec:read-comic}
+
+\begin{itemize}
+    \item
+        \textbf{Mô tả}:
+
+        Người đọc chọn một truyện để xem.
+    \item
+        \textbf{Luồng chính}:
+
+        \begin{enumerate}
+            \item
+                Người đọc bật ứng dụng, đã chọn thư mục gốc, đã quét được ít
+                nhất một thư mục chứa truyện, đã chọn một thư mục (tức ở Màn
+                hình Thư mục).
+            \item
+                Ứng dụng hiển thị danh sách truyện trong thư mục đó cho người
+                đọc xem và chọn.
+            \item
+                Người đọc chọn một truyện và đọc.
+            \item
+                Màn hình Đọc truyện hiển thị trang truyện cho người đọc.
+            \item
+                Người đọc vuốt qua lại theo phương ngang để chuyển trang.
+        \end{enumerate}
+    \item
+        \textbf{Luồng thay thế}:
+
+        Xem phần Màn hình Tìm kiếm. Màn hình Đọc truyện có thể được kích hoạt
+        bằng cách ấn vào truyện hiển thị trong màn hình này.
+    \item
+        \textbf{Luồng ngoại lệ}:
+
+        Nếu tệp truyện không tìm thấy được, báo cho người đọc và giữ nguyên ở
+        Màn hình Thư mục.
+    \item
+        \textbf{Điều kiện}:
+
+        \begin{itemize}
+            \item
+                Tiền điều kiện: Ứng dụng ở Màn hình Thư mục.
+            \item
+                Hậu điều kiện: Ứng dụng ở Màn hình Đọc truyện.
+        \end{itemize}
+    \item
+        \textbf{Yêu cầu phi chức năng}:
+
+        \begin{itemize}
+            \item
+                Nếu người đọc đã đọc truyện, ứng dụng cần đưa về chính trang
+                truyện đang đọc dở. Nếu đã đọc đến trang cuối, tức đã đọc xong,
+                ứng dụng cần đưa về trang đầu tiên.
+            \item
+                Trải nghiệm cuộn trang mượt mà nhất có thể.
+        \end{itemize}
+  \end{itemize}
+
+Đây là một trong hai ca sử dụng chính của ứng dụng, bên cạnh (và là mục đích
+của) \protect\hyperlink{P3.3.2-show-library}{ca sử dụng hiển thị danh sách
+truyện} đã được miêu tả ở trên.
+
+Màn hình khi người đọc đọc một truyện gọi là \emph{Màn hình Đọc truyện}. Màn
+hình này cho phép người đọc duyệt các trang truyện theo phương ngang. Mục tiêu
+là thiết kế màn hình này sao cho có trải nghiệm gần giống nhất với ứng dụng Thư
+viện ảnh (Gallery) tích hợp trong mọi điện thoại Android.
+
+\subsection{Xem metadata truyện}\label{sec:view-metadata}
+
+\begin{itemize}
+    \item
+        \textbf{Mô tả}:
+
+        Trong Màn hình Đọc truyện, người đọc ấn nút để xem metadata.
+    \item
+        \textbf{Luồng chính}:
+
+        \begin{enumerate}
+            \item
+                Người đọc bật ứng dụng, chọn một truyện để vào đến Màn hình Đọc
+                truyện.
+            \item
+                Người đọc ấn nút Xem metadata.
+            \item
+                Ứng dụng hiển thị mọi metadata, bao gồm cả những trường bị
+                thiếu. Ảnh bìa của truyện cũng được hiển thị kèm.
+            \item
+                Người dùng có thể đánh giá truyện bằng nút Yêu thích trong màn
+                hình này, hoặc ngược lại (bỏ đánh giá Yêu thích).
+        \end{enumerate}
+    \item
+        \textbf{Điều kiện}:
+
+        \begin{itemize}
+            \item
+                Tiền điều kiện: Ứng dụng ở Màn hình Đọc truyện.
+            \item
+                Hậu điều kiện: Ứng dụng ở Màn hình Metadata.
+        \end{itemize}
+    \item
+        \textbf{Yêu cầu phi chức năng}:
+
+        \begin{itemize}
+            \item
+                Màn hình Metadata phải hiển thị ảnh bìa, cùng các metadata của
+                truyện
+            \item
+                Những trường metadata trống phải ghi rõ ``Trống'',
+                ``Unknown'',\ldots{}
+        \end{itemize}
+  \end{itemize}
+
+Đây là một ca sử dụng phụ, có thể được kích hoạt khi người dùng đang ở Màn hình
+Đọc truyện.
+
+Màn hình khi người đọc xem metadata gọi là \emph{Màn hình Metadata}. Màn hình
+này có thể có chức năng sửa metadata, tùy theo tiến độ khóa luận để xem xét có
+cài đặt không.
+
+Hệ thống đánh giá của ứng dụng chỉ ở mức cơ bản, gồm duy nhất tính năng Yêu
+thích. Tính năng này cũng chỉ phục vụ hai mục đích là thể hiện sự đánh giá của
+người dùng và lọc nhanh truyện về mặt thị giác (đã nhắc đến trong phần Mô tả
+từng bước của \hyperref[sec:show-library]{ca sử dụng hiển thị danh sách
+truyện}).
+
+Các tính năng nâng cao hơn như gợi ý không xuất hiện, do một số lí do sau:
+
+\begin{itemize}
+    \item
+        Giảm độ phức tạp khi lập trình.
+    \item
+        Người dùng không có nhu cầu: nhóm người dùng hướng đến có đặc điểm hiểu
+        biết về truyện tranh, do đó việc gợi ý có thể coi là thừa thãi.
+    \item
+        Thiểu thông tin gợi ý: việc gợi ý chỉ có hiệu quả khi có một cơ sở dữ
+        liệu về các bộ truyện liên quan, hoặc lựa chọn các truyện liên quan của
+        cộng đồng người đọc, trong khi yacv là một ứng dụng hoàn toàn ngoại
+        tuyến.
+\end{itemize}
+
+\subsection{Tìm kiếm truyện}\label{sec:search-comic}
+
+\begin{itemize}
+    \item
+        \textbf{Mô tả}:
+
+        Trong Màn hình Thư viện, người đọc ấn nút Tìm kiếm để tìm truyện.
+    \item
+        \textbf{Luồng chính}:
+
+        \begin{enumerate}
+            \item
+                Người đọc bật ứng dụng.
+            \item
+                Người đọc ấn nút Tìm kiếm, và gõ từ khóa cần tìm, và ấn nút
+                Enter.
+            \item
+                Ứng dụng hiển thị kết quả tìm kiếm theo metadata và tên tệp
+                truyện.
+        \end{enumerate}
+    \item
+        \textbf{Luồng ngoại lệ}:
+
+        Nếu không tìm thấy truyện, ứng dụng cần thông báo ở Màn hình Tìm kiếm.
+    \item
+        \textbf{Điều kiện}:
+
+        \begin{itemize}
+            \item
+                Tiền điều kiện: Ứng dụng ở Màn hình Thư viện.
+            \item
+                Hậu điều kiện: Ứng dụng ở Màn hình Tìm kiếm.
+        \end{itemize}
+    \item
+        \textbf{Yêu cầu phi chức năng}:
+
+        \begin{itemize}
+            \item
+                Kết quả tìm kiểm cần được gom theo nhóm dựa vào trường metadata
+                tìm thấy được. Nếu không có kết quả, phải báo cho người dùng.
+            \item
+                Nếu có thể, hiển thị ảnh bìa của truyện.
+        \end{itemize}
+  \end{itemize}
+
+Đây là một ca sử dụng phụ, có thể được kích hoạt khi người dùng đang ở Màn hình
+Thư viện.
+
+Màn hình khi người đọc \emph{xem kết quả tìm kiếm} gọi là \emph{Màn hình Tìm
+kiếm}. Màn hình này chỉ hiện ra khi người dùng ấn nút Enter để chính thức tìm
+kiếm; cho đến trước lúc đó, ứng dụng vẫn ở Màn hình Thư viện.
+
+Màn hình kết quả phải nhóm kết quả theo trường metadata mà kết quả tìm thấy
+được. Lấy ví dụ, người dùng tìm kiếm ``Watchmen'' sẽ nhận được Màn hình Tìm kiếm
+gần như sau:
+
+\begin{verbatim}
+Truyện
+- Watchmen #1.cbz
+- Watchmen #2.cbz
+Bộ truyện
+- Watchmen
+\end{verbatim}
+
+Tương tác của người đọc với Màn hình Tìm kiếm trên diễn ra như sau:
+
+\begin{itemize}
+    \item
+        Khi ấn vào một mục trong danh sách ``Truyện'', người đọc được đưa đến
+        thẳng Màn hình Đọc truyện của truyện đó (và hiển thị ở trang đọc dở như
+        đã mô tả ở trong \protect\hyperlink{P3.3.3-read-comic}{ca sử dụng đọc
+        truyện}).
+    \item
+        Khi ấn vào một mục trong danh sách ``Bộ truyện'', người đọc được đưa đến
+        màn hình chứa danh sách những truyện trong bộ truyện đã chọn. \emph{Màn
+        hình này cần giống với Màn hình Thư mục}. Sau đó, người dùng chọn một
+        truyện để đọc như bình thường.
+\end{itemize}
+
+Đây chỉ là ví dụ về một từ khóa có kết quả khi tìm theo tên tệp truyện và bộ
+truyện. Các trường metadata khác nếu có kết quả phù hợp cũng sẽ thể hiện theo
+hình thức trên.
+
+Chú ý rằng bìa truyện luôn được thể hiện khi có thể. Trong ví dụ trên, chắc chắn
+phải có bìa truyện cho mọi mục con trong danh sách ``Truyện''. Còn mục con của
+``Bộ truyện'' thì không, lí do là không có đủ dữ liệu (không có dữ liệu cho
+logo, banner,.. của bộ truyện). Tương ứng, không có dữ liệu hiển thị cho danh
+sách ``Nhân vật'', ``Tác giả'',\ldots{} Đây là một hạn chế quan trọng về giao
+diện mà hiện chưa có cách thiết kế hợp lý.
+
+Nếu không có kết quả, cần thể hiện rõ cho người dùng biết.
+
+Khi người dùng gõ từ khóa để tìm kiếm, một số thông tin gợi ý tìm kiếm (từ khóa
+cũ, từ khóa liên quan) có thể hiện ra; tính năng này tùy theo tiến độ khóa luận
+để xem xét có cài đặt không. Chỉ khi người dùng ấn Enter, quá trình tìm kiếm mới
+bắt đầu, và hiển thị kết quả, chứ không hiển thị kết quả theo quá trình người
+dùng gõ phím. Lí do cho lựa chọn này như sau:
+
+\begin{itemize}
+    \item
+        Giảm độ phức tạp khi lập trình.
+    \item
+        Không quá cần thiết: ví dụ, bộ máy tìm kiếm của Google cũng chỉ hiện gợi
+        ý khi người dùng nhập từ khóa tìm kiếm, phải đến khi ấn Enter thì quá
+        trình tìm kiếm mới diễn ra và kết quả chi tiết được hiển thị.
+\end{itemize}
+
+Với độ phức tạp dự kiến của việc hiển thị ảnh bìa truyện, đây có thể được xem là
+đánh đổi hợp lí để tăng hiệu năng ứng dụng.
+
+\subsection{Xóa truyện}\label{sec:delete-comic}
+
+\begin{itemize}
+    \item
+        \textbf{Mô tả}:
+
+        Người dùng chọn một số truyện trong một màn hình chứa danh sách truyện
+        để xóa.
+    \item
+        \textbf{Luồng chính}:
+
+        \begin{enumerate}
+            \item
+                Người dùng truy cập vào một màn hình chứa danh sách truyện (là
+                Màn hình Thư mục hoặc Màn hình Tìm kiếm).
+            \item
+                Người dùng ấn và giữ vào một truyện.
+            \item
+                Màn hình đó sẽ chuyển sang chế độ xóa, báo hiệu bằng biểu tượng
+                Thùng rác trên màn hình, và ô đánh dấu để xóa ở cạnh mỗi truyện.
+                Truyện mà người dùng ấn giữ phải được đánh dấu xóa ngay.
+            \item
+                Người dùng có thể chọn thêm truyện để xóa nếu muốn.
+            \item
+                Người dùng ấn nút xóa để xóa truyện.
+            \item
+                Ứng dụng hiện ra hộp thoại xóa, ghi rõ rằng truyện sẽ được xóa
+                khỏi bộ nhớ điện thoại, số truyện sẽ xóa, và hỏi người dùng có
+                thực sự muốn xóa không.
+            \item
+                Nếu người dùng ấn vào nút Đồng ý xóa, truyện sẽ được xóa khỏi bộ
+                nhớ điện thoại và tắt hộp thoại, nếu không thì tắt hộp thoại.
+            \item
+                Sau khi tắt hộp thoại, màn hình trở về chế độ ban đầu, biểu
+                tượng thùng rác cũng biến mất, truyện được xóa cũng biến mất.
+        \end{enumerate}
+    \item
+        \textbf{Điều kiện}
+
+        Tiền và hậu điều kiện đều là màn hình chứa danh sách truyện, gồm:
+
+        \begin{itemize}
+            \item
+                Màn hình Thư mục
+            \item
+                Màn hình Tìm kiếm
+        \end{itemize}
+\end{itemize}
+
+Ca sử dụng này không có màn hình riêng biệt, mà sử dụng một chế độ của các màn
+hình hiển thị danh sách truyện.
+
+\end{document}
