@@ -52,6 +52,7 @@ thành phần liên quan đến trải nghiệm người dùng được phát tr
 \begin{wrapfigure}{r}{8.6cm}
     \centering
     \includegraphics[width=\linewidth]{../images/android-stack_2x.png}
+    \vspace*{-10mm}
     \caption{Các phân lớp của Android}
     \label{fig:android-stack}
 \end{wrapfigure}
@@ -243,7 +244,9 @@ giới thiệu kĩ hơn ở phần này.
 
 \begin{wrapfigure}{r}{5cm}
     \centering
+    \vspace*{-6mm}
     \includesvg[width=\linewidth]{../images/sequential-and-go-to-schematic.svg}
+    \vspace*{-10mm}    % Manually make figure & caption closer together
     \caption{Lập trình phi cấu trúc với \texttt{GOTO}}
     \label{fig:non-structured-programming}
 \end{wrapfigure}
@@ -267,6 +270,17 @@ sau:
         xuống. Tệ hơn, tính trừu tượng bị phá vỡ: khi gọi hàm, thay vì có thể bỏ
         qua chi tiết bên trong, ta phải biết rõ để xem có lệnh nhảy bất ngờ nào
         không.
+\end{itemize}
+
+% \begin{wrapfigure}{l}{5cm}
+%     \centering
+%     \includesvg[width=\linewidth,inkscapelatex=false]
+%         {../images/flow-matic-4.svg}
+%     \caption{Sự lộn xộn của lập trình phi cấu trúc}
+%     \label{fig:goto-spaghetti}
+% \end{wrapfigure}
+
+\begin{itemize}[resume, before = \vspace*{-\dimexpr\topsep+\partopsep\relax}]
     \item
         Không cài đặt được các chức năng mới (ngoại lệ, quản lí tài nguyên tự
         động,\ldots)
@@ -288,18 +302,13 @@ sau:
 
 \begin{wrapfigure}{r}{5cm}
     \centering
+    \vspace*{-6mm}
     \includesvg[width=\linewidth]{../images/control-schematics.svg}
+    \vspace*{-10mm}
     \caption{Ba cấu trúc cơ bản của lập trình có cấu trúc: rẽ nhánh \texttt{if},
-    lặp \texttt{for} và gọi hàm}
+        lặp \texttt{for} và gọi hàm}
     \label{fig:3-basic-construct}
 \end{wrapfigure}
-
-% \begin{wrapfigure}{r}{10cm}
-%     \centering
-%     \includegraphics[width=\linewidth]{../images/flow-matic-4.pdf}
-%     \caption{Sự lộn xộn của lập trình phi cấu trúc}
-%     \label{fig:goto-spaghetti}
-% \end{wrapfigure}
 
 Lập trình có cấu trúc đơn giản hóa luồng chạy bằng cách giới hạn các lệnh nhảy
 còn \texttt{if}, \texttt{for} và gọi hàm. Khác biệt mấu chốt của ba lệnh này so
@@ -318,20 +327,22 @@ tương tranh/bất đồng bộ truyền thống, giống cách lập trình c�
 
 Trước hết, ta xem xét hai kiểu API tương tranh hay dùng hiện nay:
 
-\begin{table}
+\begin{table}[H]
     \begin{tabular}{r r r}
         \toprule
-        Tên & Giải thích & Ví dụ \\
+        Tên         & Giải thích                                                 & Ví dụ \\
         \midrule
         Tương tranh & Chạy một hàm theo cách tương tranh với luồng chạy hiện tại & Thread(target=fn).start() \# Python \\
-        Bất đồng bộ & Chạy một hàm khi có sự kiện xảy ra (callback) & element.onclick = cb; // JS \\
+        Bất đồng bộ & Chạy một hàm khi có sự kiện xảy ra (callback)              & element.onclick = cb; // JS \\
         \bottomrule
     \end{tabular}
 \end{table}
 
 \begin{wrapfigure}{r}{5cm}
     \centering
+    \vspace*{-6mm}
     \includesvg[width=\linewidth]{../images/sequential-and-go-to-schematic.svg}
+    \vspace*{-10mm}
     \caption{Tương tranh phi cấu trúc với \texttt{goroutine} - API thuộc kiểu
     tương tranh}
     \label{fig:goroutine}
@@ -346,6 +357,9 @@ cấu trúc đều lặp lại với hai API trên:
         khác tương tranh với luồng chính, thì khi luồng chính đóng
         \texttt{Scanner}, có thể luồng kia đang đọc dở. Do đó, tính năng này
         không thể hoạt động.
+\end{itemize}
+
+\begin{itemize}[resume, before = \vspace*{-\dimexpr\topsep+\partopsep\relax}]
     \item
         Với tính năng bắt ngoại lệ, nếu có ngoại lệ ở luồng tương tranh, ta cũng
         không có cách nào để biết, và buộc phải kệ nó.
@@ -363,7 +377,9 @@ dùng mô hình này).
 
 \begin{wrapfigure}{l}{8cm}
     \centering
-    \includegraphics[width=\linewidth]{../images/kotlin-coroutine.png}
+    \includesvg[width=\linewidth,inkscapelatex=false]    % To leave text as is
+        {../images/kotlin-coroutine.svg}                 % https://tex.stackexchange.com/a/595916/206774
+    \vspace*{-10mm}
     \caption{Tương tranh có cấu trúc dùng coroutine trong Kotlin}
     \label{fig:kotlin-coroutine}
 \end{wrapfigure}
