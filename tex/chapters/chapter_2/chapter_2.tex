@@ -327,25 +327,34 @@ tương tranh/bất đồng bộ truyền thống, giống cách lập trình c�
 
 Trước hết, ta xem xét hai kiểu API tương tranh hay dùng hiện nay:
 
+% Verbatim can't be put inside macro
+% https://tex.stackexchange.com/questions/25190/defining-a-command-for-a-minted-environment#comment49208_25190
+% \newcommand{\PythonExample}{
+%     \begin{minted}{Python}
+%         Thread(target=fn).start() \# Python
+%     \end{minted}
+% }
+
 \begin{table}[H]
+    \centering
     \caption{Hai kiểu API tương tranh hay dùng \cite{NJS_SC}}
-    \begin{tabular}{r r r}
+    \label{table:2-async-apis}
+    \begin{tabular}{r p{4.7cm} l}
         \toprule
         Tên         & Giải thích                                                 & Ví dụ \\
         \midrule
-        Tương tranh & Chạy một hàm theo cách tương tranh với luồng chạy hiện tại & Thread(target=fn).start() \# Python \\
-        Bất đồng bộ & Chạy một hàm khi có sự kiện xảy ra (callback)              & element.onclick = cb; // JS \\
+        Tương tranh & Chạy một hàm theo cách tương tranh với luồng chạy hiện tại & \mintinline{python}{Thread(target=fn).start() \# Python} \\
+        Bất đồng bộ & Chạy một hàm khi có sự kiện xảy ra (callback)              & \mintinline{js}{element.onclick = cb; // JS} \\
         \bottomrule
     \end{tabular}
 \end{table}
 
 \begin{wrapfigure}{r}{5cm}
     \centering
-    \vspace*{-6mm}
     \includesvg[width=\linewidth]{../images/sequential-and-go-to-schematic.svg}
     \vspace*{-10mm}
-    \caption{Tương tranh phi cấu trúc với \texttt{goroutine} - API thuộc kiểu
-        tương tranh \cite{NJS_SC}}
+    \caption{Tương tranh phi cấu trúc với \texttt{goroutine} - API kiểu tương
+        tranh \cite{NJS_SC}}
     \label{fig:goroutine}
 \end{wrapfigure}
 

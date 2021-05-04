@@ -404,7 +404,7 @@ lại với hai API trên:
 
 ![non-structured concurrency](../images/sequential-and-go-to-schematic.svg)
 
-Hình 5: Tương tranh phi cấu trúc với `goroutine` - API thuộc kiểu tương tranh.
+Hình 5: Tương tranh phi cấu trúc với `goroutine` - API kiểu tương tranh.
 
 - Ta xem lại ví dụ về quản lí tài nguyên tự động. Nếu có một luồng thực thi khác
   tương tranh với luồng chính, thì khi luồng chính đóng `Scanner`, có thể luồng
