@@ -873,9 +873,9 @@ Do ứng dụng đơn giản, các ca sử dụng tách biệt, nên mỗi ca s�
     - Tên thư mục
     - Ảnh đại diện cho thư mục: bìa một truyện bất kì tìm được trong thư mục
 
-Đây là ca sử dụng đầu tiên khi người đọc khởi động ứng dụng lần đầu. Các tệp
-truyện sẽ được quét từ thư mục gốc, rồi được gom lại theo thư mục theo mô tả ở
-[ca sử dụng tiếp theo](#P3.3.2-show-library).
+Đây là ca sử dụng đầu tiên khi người đọc chạy ứng dụng lần đầu. Các tệp truyện
+sẽ được quét từ thư mục gốc, rồi được gom lại theo thư mục như mô tả ở [ca sử
+dụng kế tiếp](#P3.3.2-show-library).
 
 Màn hình đầu tiên khi người đọc bật lên gọi là *Màn hình Thư viện* (Library
 screen). Các thư mục chứa truyện, hoặc thông báo lỗi liên quan đến bản thân quá

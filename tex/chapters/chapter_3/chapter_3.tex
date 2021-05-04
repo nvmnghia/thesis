@@ -234,9 +234,9 @@ Do ứng dụng đơn giản, các ca sử dụng tách biệt, nên mỗi ca s�
         \end{itemize}
 \end{itemize}
 
-Đây là ca sử dụng đầu tiên khi người đọc khởi động ứng dụng lần đầu. Các tệp
-truyện sẽ được quét từ thư mục gốc, rồi được gom lại theo thư mục theo mô tả ở
-\protect\hyperlink{P3.3.2-show-library}{ca sử dụng tiếp theo}.
+Đây là ca sử dụng đầu tiên khi người đọc chạy ứng dụng lần đầu. Các tệp truyện
+sẽ được quét từ thư mục gốc, rồi được gom lại theo thư mục như mô tả ở
+\protect\hyperlink{P3.3.2-show-library}{ca sử dụng kế tiếp}.
 
 Màn hình đầu tiên khi người đọc bật lên gọi là \emph{Màn hình Thư viện} (Library
 screen). Các thư mục chứa truyện, hoặc thông báo lỗi liên quan đến bản thân quá
@@ -361,21 +361,60 @@ Hơn nữa, các thư mục cần được ``làm phẳng''. ``Làm phẳng'' c�
 thư mục con (cháu,\ldots) ngang hàng với thư mục gốc. Ví dụ sau cho thấy cách
 yacv làm phẳng cây thư mục:
 
+% | Cây thư mục gốc                   | yacv đã làm phẳng         |
+% |-----------------------------------|---------------------------|
+% | thư mục gốc                       | thư mục gốc               |
+% | ├── Original Sin #1.cbz           | └── Original Sin #1.cbz   |
+% | └── House of M                    | House of M                |
+% |     ├── House of M #1.cbz         | ├── House of M #1.cbz     |
+% |     ├── House of M #3.cbz         | └── House of M #3.cbz     |
+% |     └── Tie-ins                   | Tie-ins                   |
+% |         └── Black Panther #7.cbz  | └── Black Panther #7.cbz  |
+% Bảng 2: Cách yacv làm phẳng thư mục
+
 \begin{verbatim}
 | Cây thư mục gốc                   | yacv đã làm phẳng         |
 |-----------------------------------|---------------------------|
 | thư mục gốc                       | thư mục gốc               |
-| ├── Original Sin #1.cbz           | └── Original Sin #1.cbz   |
-| └── House of M                    | House of M                |
-|     ├── House of M #1.cbz         | ├── House of M #1.cbz     |
-|     ├── House of M #3.cbz         | └── House of M #3.cbz     |
-|     └── Tie-ins                   | Tie-ins                   |
-|         └── Black Panther #7.cbz  | └── Black Panther #7.cbz  |
+|     Original Sin #1.cbz           |     Original Sin #1.cbz   |
+|     House of M                    | House of M                |
+|         House of M #1.cbz         |     House of M #1.cbz     |
+|         House of M #3.cbz         |     House of M #3.cbz     |
+|         Tie-ins                   | Tie-ins                   |
+|             Black Panther #7.cbz  |     Black Panther #7.cbz  |
 \end{verbatim}
 
-Bảng 2: Cách yacv làm phẳng thư mục
+% \begin{table}
+%     \centering
+%     \begin{tabular}{ll}
+%         \toprule
+%         Cây thư mục gốc & yacv đã làm phẳng \\
+%         \midrule
+%         \begin{lstlisting}
+%             thư mục gốc
+%             ├── Original Sin #1.cbz
+%             └── House of M
+%                 ├── House of M #1.cbz
+%                 ├── House of M #3.cbz
+%                 └── Tie-ins
+%                     └── Black Panther #7.cbz
+%         \end{lstlisting}
+%         &
+%         \begin{lstlisting}
+%             thư mục gốc
+%             ├── Original Sin #1.cbz
+%             └── House of M
+%                 ├── House of M #1.cbz
+%                 ├── House of M #3.cbz
+%                 └── Tie-ins
+%                     └── Black Panther #7.cbz
+%         \end{lstlisting}
+%         \\
+%         \bottomrule
+%     \end{tabular}
+% \end{table}
 
-Theo như cột phải Bảng 3, các màn hình trong yacv được tổ chức như sau:
+Theo như ví dụ, các màn hình trong yacv được tổ chức như sau:
 
 \begin{itemize}
     \item
