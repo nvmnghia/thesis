@@ -406,7 +406,7 @@ lại với hai API trên:
 
 Hình 5: Tương tranh phi cấu trúc với `goroutine` - API kiểu tương tranh.
 
-- Ta xem lại ví dụ về quản lí tài nguyên tự động. Nếu có một luồng thực thi khác
+- Ta xem lại ví dụ quản lí tài nguyên tự động. Nếu có một luồng thực thi khác
   tương tranh với luồng chính, thì khi luồng chính đóng `Scanner`, có thể luồng
   kia vẫn đang đọc nó. Vấn đề giờ là đọc sau khi đóng. Do đó, tính năng này
   không thể hoạt động.

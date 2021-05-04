@@ -49,7 +49,7 @@ Chrome hay chợ Play Store. Về mặt này, Android khá giống Chrome: thàn
 lõi kĩ thuật được phát triển theo mô hình mã nguồn mở (AOSP và Chromium), còn
 thành phần liên quan đến trải nghiệm người dùng được phát triển riêng.
 
-\begin{wrapfigure}{r}{8.6cm}
+\begin{wrapfigure}[20]{r}{8.6cm}
     \centering
     \includegraphics[width=\linewidth]{../images/android-stack_2x.png}
     \vspace*{-10mm}
@@ -349,7 +349,7 @@ Trước hết, ta xem xét hai kiểu API tương tranh hay dùng hiện nay:
     \end{tabular}
 \end{table}
 
-\begin{wrapfigure}{r}{5cm}
+\begin{wrapfigure}[5]{r}{5cm}
     \centering
     \includesvg[width=\linewidth]{../images/sequential-and-go-to-schematic.svg}
     \vspace*{-10mm}
@@ -363,10 +363,9 @@ cấu trúc đều lặp lại với hai API trên:
 
 \begin{itemize}
     \item
-        Ta xem lại ví dụ về quản lí tài nguyên tự động. Nếu có luồng thực thi
-        khác tương tranh với luồng chính, thì khi luồng chính đóng
-        \texttt{Scanner}, có thể luồng kia đang đọc dở. Do đó, tính năng này
-        không thể hoạt động.
+        Ta xem lại ví dụ quản lí tài nguyên tự động. Nếu có luồng thực thi khác
+        tương tranh với luồng chính, thì khi luồng chính đóng \texttt{Scanner},
+        có thể luồng kia đang đọc dở. Do đó, tính năng này không thể hoạt động.
 \end{itemize}
 
 \begin{itemize}[resume, before = \vspace*{-\dimexpr\topsep+\partopsep\relax}]
@@ -387,6 +386,7 @@ dùng mô hình này).
 
 \begin{wrapfigure}{l}{8cm}
     \centering
+    \vspace*{-4mm}
     \includesvg[width=\linewidth,inkscapelatex=false]    % To leave text as is
         {../images/kotlin-coroutine.svg}                 % https://tex.stackexchange.com/a/595916/206774
     \vspace*{-10mm}
@@ -500,8 +500,9 @@ lập trình viên chọn để triển khai Clean Architecture trên Android. T
 khi Google chọn MVVM, đây là hướng đi mới, có kì vọng cao sau nhiều thất
 bại trong việc đưa MVC vào Android.
 
-\begin{wrapfigure}{r}{7cm}
+\begin{wrapfigure}[8]{r}{7cm}
     \centering
+    \vspace*{-5mm}
     \includegraphics[width=\linewidth]{../images/Model_View_Presenter_GUI_Design_Pattern.png}
     \vspace*{-10mm}
     \caption{Kiến trúc MVP \cite{WIKI_MVP}}
@@ -579,15 +580,6 @@ tảng cho Kiến trúc Google khuyên dùng.
 
 \subsection{Kiến trúc Google khuyên dùng}
 
-\begin{wrapfigure}{r}{8cm}
-    \centering
-    \vspace*{-6mm}
-    \includegraphics[width=\linewidth]{../images/final-architecture.png}
-    \vspace*{-10mm}
-    \caption{Kiến trúc Google khuyên dùng \cite{GOOGL_APP_ARCH}}
-    \label{fig:google-recom-arch}
-\end{wrapfigure}
-
 Kiến trúc Google khuyên dùng có gốc là mô hình MVVM, có dạng như sau:
 
 \begin{itemize}
@@ -599,6 +591,15 @@ Kiến trúc Google khuyên dùng có gốc là mô hình MVVM, có dạng như 
     \item
         Activity/Fragment là View
 \end{itemize}
+
+\begin{wrapfigure}{r}{8cm}
+    \centering
+    \vspace*{-6mm}
+    \includegraphics[width=\linewidth]{../images/final-architecture.png}
+    \vspace*{-10mm}
+    \caption{Kiến trúc Google khuyên dùng \cite{GOOGL_APP_ARCH}}
+    \label{fig:google-recom-arch}
+\end{wrapfigure}
 
 Repository là một điểm được chi tiết hóa so với MVVM. Google cho rằng một ứng
 dụng không nên hoàn toàn vô dụng nếu không có mạng. Do đó, cần có hai nguồn dữ
@@ -734,9 +735,10 @@ trong tệp ZIP) nhanh nhất có thể. Mục tiêu đó thể hiện ở thi�
 
 \begin{figure}[H]
     \centering
-    \includesvg[width=10cm,inkscapelatex=false]
-        {../images/control-schematics.svg}
-        % {../images/ZIP-64_Internal_Layout.svg}
+    % \includesvg[width=10cm,inkscapelatex=false]
+    %     {../images/ZIP-64_Internal_Layout.svg}
+    \includegraphics[width=10cm]
+        {../images/ZIP-64_Internal_Layout.png}
     \caption{Cấu trúc tệp nén ZIP \cite{WIKI_ZIP}}
     \label{fig:zip_layout}
 \end{figure}
