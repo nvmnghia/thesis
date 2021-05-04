@@ -162,9 +162,7 @@ Chương này giới thiệu sơ qua về các nền tảng trong quá trình x�
   dụng được trình bày.
 - Sau đó, cơ sở dữ liệu một số phần mở rộng của nó dùng trong ứng dụng sẽ được
   nhắc qua.
-- Cuối cùng là thông tin về CBZ - định dạng tệp tin mà ứng dụng đọc, gồm hai
-  phần: sơ lược về định dạng ZIP mà CBZ dựa trên, và các trường metadata
-  trong tệp tin CBZ - nguồn thông tin quan trọng để quản lí truyện.
+- Cuối cùng là thông tin về CBZ - định dạng tệp tin mà ứng dụng đọc.
 
 <!-- Phần này sẽ được viết thẳng vào LaTeX, vì đa số là copypasta. -->
 
@@ -638,8 +636,8 @@ tính năng nâng cao được giữ lại trong SQLite. Cũng như các thư vi
 khác, SQLite cài đặt chức năng này bằng chỉ mục đảo (inverted index):
 
 1. Khi dữ liệu văn bản được ghi, nó được tách thành các từ.
-2. Các từ được đưa vào từ điển, với khóa là chính từ đó, còn giá trị là ID của
-   hàng `rowid`.
+2. Các từ được đưa vào chỉ mục đảo, với khóa là chính từ đó, còn giá trị là khóa
+   đại diện `rowid`.
 
 FTS khác với đánh chỉ mục thường (cũng là chỉ mục đảo nhưng cho kiểu dữ liệu
 thông thường) ở bước 1: *từng từ* được tách ra, còn chỉ mục thường dùng *cả* văn
@@ -652,9 +650,8 @@ trong bước 1, như rút gọn từ (stemming, dùng thuật toán Porter, ví
 "run" sẽ ra được cả "runs", "running", "ran"; tất nhiên chỉ đúng với tiếng Anh),
 giúp kết quả tìm kiếm linh động hơn.
 
-yacv có tính năng tìm kiếm liên quan đến tiêu đề, tên nhân vật,... đều là những
-câu văn, đoạn văn. Do đó, FTS có vai trò không thể thiếu để tăng tốc tìm kiếm
-trong ứng dụng.
+yacv có tính năng tìm kiếm tiêu đề, tên nhân vật,... đều là những câu văn, đoạn
+văn. Do đó, FTS có vai trò không thể thiếu để tăng tốc tìm kiếm trong ứng dụng.
 
 ### 2.5. Định dạng tệp nén ZIP và CBZ <a name="P2.5-zip-cbz"></a>
 
@@ -676,11 +673,11 @@ trong tệp ZIP) nhanh nhất có thể. Mục tiêu đó thể hiện ở thi�
 - Thuật toán nén mỗi tệp gốc thành một tệp nhị phân, ở đây gọi là *tệp nén lẻ*
   (data trong Hình 10). Sau đó, các tệp nén lẻ này được nối thành tệp ZIP cuối
   cùng.
-- Trước mỗi tệp nén lẻ là một header gọi là *File Entry* để lưu thông tin liên
+- Ở đầu mỗi tệp nén lẻ là một header gọi là *File Entry* để lưu thông tin liên
   quan.
-- Ở *cuối* tệp ZIP, sau khi đã nối các tệp nén lẻ và header lại, các header được
-  gom lại, lưu một lần nữa vào một cấu trúc gọi là *Central Directory*. Có thể
-  so sánh File Entry như các *đề mục*, còn Central Directory là *mục lục*.
+- Ở *cuối* tệp ZIP, sau khi đã nối các tệp nén lẻ cùng header lại, các header
+  được gom lại, lưu một lần nữa vào một cấu trúc gọi là *Central Directory*. Có
+  thể so sánh File Entry như các *đề mục*, còn Central Directory là *mục lục*.
 - Hai thông tin quan trọng trong File Entry là tên tệp gốc và *vị trí bắt đầu*
   (offset), tức số byte tính từ đầu tệp ZIP đến tệp nén lẻ tương ứng.
 
@@ -720,8 +717,8 @@ bộ các tệp vào rồi nén một thể. Trong trường hợp đó, tệp n
 
 Tệp truyện CBZ chỉ là một tệp nén ZIP thông thường, trong đó có:
 
-- Các tệp ảnh trang truyện: Các tệp này có tên được đánh số tăng dần để biểu thị
-  thứ tự trang.
+- Các tệp ảnh trang truyện: Các tệp này là tệp ảnh JPEG, PNG,... thông thường,
+  có tên được đánh số tăng dần để biểu thị thứ tự trang.
 - (Tùy chọn) Một tệp metadata: Có nhiều định dạng metadata. Hiện nay, yacv chấp
   nhận định dạng ComicInfo, được trình bày ở [Phụ lục 2](#P8.2-comicinfo.xsd).
 
