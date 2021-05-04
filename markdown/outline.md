@@ -440,8 +440,8 @@ nó xong trước. Nguyên tắc này đảm bảo rằng khi một hàm kết t
 vụ tương tranh nữa, và luồng điều khiển hợp nhất được trả về điểm gọi. Đột
 nhiên, hai tính năng có vấn đề ở trên lại hoạt động:
 
-- Quản lí tài nguyên tự động: do đảm bảo trả lại luồng điều khiển, tài nguyên
-  đảm bảo được đóng; do không còn tác vụ con, tài nguyên không bị đọc sau đóng.
+- Quản lí tài nguyên tự động: do đảm bảo trả luồng điều khiển, tài nguyên đảm
+  bảo được đóng; do không còn tác vụ con, tài nguyên không bị đọc sau đóng.
 - Bắt ngoại lệ: do cấu trúc cha-con (khác với các API hiện tại cho rằng hai tác
   vụ tương tranh là ngang hàng), coroutine con có thể ném ngoại lệ để coroutine
   cha bắt.

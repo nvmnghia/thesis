@@ -384,7 +384,7 @@ Trong \autoref{fig:kotlin-coroutine}, ta xét một đoạn mã tương tranh d�
 coroutine trong Kotlin, tức dùng SC (không phải coroutine trong mọi ngôn ngữ đều
 dùng mô hình này).
 
-\begin{wrapfigure}{l}{8cm}
+\begin{wrapfigure}[9]{l}{8cm}
     \centering
     \vspace*{-4mm}
     \includesvg[width=\linewidth,inkscapelatex=false]    % To leave text as is
@@ -401,9 +401,9 @@ còn tác vụ tương tranh nữa, và luồng điều khiển hợp nhất đ�
 
 \begin{itemize}
     \item
-        Quản lí tài nguyên tự động: do đảm bảo trả lại luồng điều khiển, tài
-        nguyên đảm bảo được đóng; do không còn tác vụ con, tài nguyên không bị
-        đọc sau đóng.
+        Quản lí tài nguyên tự động: do đảm bảo trả luồng điều khiển, tài nguyên
+        đảm bảo được đóng; do không còn tác vụ con, tài nguyên không bị đọc sau
+        đóng.
 \end{itemize}
 
 \begin{itemize}[resume, before = \vspace*{-\dimexpr\topsep+\partopsep\relax}]
