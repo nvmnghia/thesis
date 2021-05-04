@@ -20,6 +20,12 @@
 % Code
 \usepackage{minted}      % This one is used for syntax highlighting
 \usepackage{listings}    % This one is used to replace verbatim, not for syntax highlighting
+\lstset{
+  basicstyle=\ttfamily,
+  columns=fullflexible,
+%  keepspaces=true,
+  escapeinside={\%*}{*)},    % Cheeky way to escape UTF-8 to LaTeX, https://tex.stackexchange.com/a/24544/206774
+}
 
 \usepackage{float}
 
@@ -28,6 +34,10 @@
 
 % Table shit
 \usepackage{booktabs}
+
+% Caption
+\usepackage{caption}
+\captionsetup[table]{skip=5pt}    % Tweak to avoid table being too close to caption
 
 % References
 \providecommand{\main}{.}    % https://tex.stackexchange.com/a/216321/206774

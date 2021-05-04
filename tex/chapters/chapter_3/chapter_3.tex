@@ -361,6 +361,8 @@ Hơn nữa, các thư mục cần được ``làm phẳng''. ``Làm phẳng'' c�
 thư mục con (cháu,\ldots) ngang hàng với thư mục gốc. Ví dụ sau cho thấy cách
 yacv làm phẳng cây thư mục:
 
+% 1st problem: verbatim inside table
+% 2nd problem: font for those lines
 % | Cây thư mục gốc                   | yacv đã làm phẳng         |
 % |-----------------------------------|---------------------------|
 % | thư mục gốc                       | thư mục gốc               |
@@ -372,47 +374,38 @@ yacv làm phẳng cây thư mục:
 % |         └── Black Panther #7.cbz  | └── Black Panther #7.cbz  |
 % Bảng 2: Cách yacv làm phẳng thư mục
 
-\begin{verbatim}
-| Cây thư mục gốc                   | yacv đã làm phẳng         |
-|-----------------------------------|---------------------------|
-| thư mục gốc                       | thư mục gốc               |
-|     Original Sin #1.cbz           |     Original Sin #1.cbz   |
-|     House of M                    | House of M                |
-|         House of M #1.cbz         |     House of M #1.cbz     |
-|         House of M #3.cbz         |     House of M #3.cbz     |
-|         Tie-ins                   | Tie-ins                   |
-|             Black Panther #7.cbz  |     Black Panther #7.cbz  |
-\end{verbatim}
-
-% \begin{table}
-%     \centering
-%     \begin{tabular}{ll}
-%         \toprule
-%         Cây thư mục gốc & yacv đã làm phẳng \\
-%         \midrule
-%         \begin{lstlisting}
-%             thư mục gốc
-%             ├── Original Sin #1.cbz
-%             └── House of M
-%                 ├── House of M #1.cbz
-%                 ├── House of M #3.cbz
-%                 └── Tie-ins
-%                     └── Black Panther #7.cbz
-%         \end{lstlisting}
-%         &
-%         \begin{lstlisting}
-%             thư mục gốc
-%             ├── Original Sin #1.cbz
-%             └── House of M
-%                 ├── House of M #1.cbz
-%                 ├── House of M #3.cbz
-%                 └── Tie-ins
-%                     └── Black Panther #7.cbz
-%         \end{lstlisting}
-%         \\
-%         \bottomrule
-%     \end{tabular}
-% \end{table}
+\begin{table}
+    \centering
+    \caption{Cách yacv làm phẳng thư mục}
+    \label{tab:yacv-flattening}
+    \begin{tabular}{ll}
+        \toprule
+        Cây thư mục gốc & yacv đã làm phẳng \\
+        \midrule
+        % See preamble of listings for the %* *)
+        \begin{lstlisting}
+%*thư mục gốc*)
+    Original Sin #1.cbz
+    House of M
+        House of M #1.cbz
+        House of M #3.cbz
+        Tie-ins
+            Black Panther #7.cbz
+        \end{lstlisting}
+        &
+        \begin{lstlisting}
+%*thư mục gốc*)
+    Original Sin #1.cbz
+House of M
+    House of M #1.cbz
+    House of M #3.cbz
+Tie-ins
+    Black Panther #7.cbz
+        \end{lstlisting}
+        \\
+        \bottomrule
+    \end{tabular}
+\end{table}
 
 Theo như ví dụ, các màn hình trong yacv được tổ chức như sau:
 
