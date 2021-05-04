@@ -21,10 +21,10 @@ Chương này giới thiệu sơ qua về các nền tảng trong quá trình x�
         Sau đó, cơ sở dữ liệu một số phần mở rộng của nó dùng trong ứng dụng sẽ
         được nhắc qua.
     \item
-        Cuối cùng là thông tin về \texttt{.cbz} - định dạng tệp tin mà ứng dụng
-        đọc, gồm hai phần: sơ lược về định dạng \texttt{.zip} mà \texttt{.cbz}
-        dựa trên, và các trường metadata trong tệp tin \texttt{.cbz} - nguồn
-        thông tin quan trọng để quản lí truyện.
+        Cuối cùng là thông tin về CBZ - định dạng tệp tin mà ứng dụng đọc, gồm
+        hai phần: sơ lược về định dạng ZIP mà CBZ dựa trên, và các trường
+        metadata trong tệp tin CBZ - nguồn thông tin quan trọng để quản lí
+        truyện.
 \end{itemize}
 
 
@@ -53,7 +53,7 @@ thành phần liên quan đến trải nghiệm người dùng được phát tr
     \centering
     \includegraphics[width=\linewidth]{../images/android-stack_2x.png}
     \vspace*{-10mm}
-    \caption{Các phân lớp của Android}
+    \caption{Các phân lớp của Android \cite{GOOGL_ANDR_ARCH}}
     \label{fig:android-stack}
 \end{wrapfigure}
 
@@ -101,7 +101,7 @@ Hệ điều hành Android được phân lớp như sau:
         Mọi ứng dụng Java được viết nhờ sử dụng các thành phần của tầng này
         thông qua API Java. Tầng này cung cấp toàn bộ tính năng của Android cho
         lập trình viên, bao gồm các yếu tố cơ bản như giao diện (View System),
-        truy xuất,\ldots{}
+        truy xuất,\ldots
 
         Lập trình viên có quyền truy cập vào lớp này tương đương với ứng dụng hệ
         thống. Đây có thể coi là một cam kết tránh độc quyền công nghệ, tức đa
@@ -111,8 +111,8 @@ Hệ điều hành Android được phân lớp như sau:
         Ứng dụng hệ thống (System Apps)
 
         Android đi kèm với một số ứng dụng hệ thống như ứng dụng SMS, trình
-        duyệt, lịch,\ldots{} Google cho phép thay thế đa số các ứng dụng này với
-        ứng dụng bên thứ ba, tuy nhiên có những ngoại lệ như ứng dụng Cài đặt
+        duyệt,\ldots{} Google cho phép thay thế đa số các ứng dụng này với ứng
+        dụng bên thứ ba, tuy nhiên có những ngoại lệ như ứng dụng Cài đặt
         (Settings).
 \end{itemize}
 
@@ -195,7 +195,7 @@ Sau đây là tóm tắt một số đặc điểm kĩ thuật của Kotlin:
         \end{itemize}
     \item
         Về cú pháp, Kotlin gọn và hiện đại: bỏ dấu \texttt{;} cuối dòng,
-        template literal,\ldots{}
+        template literal,\ldots
     \item
         Về lỗi, Kotlin luôn được quảng cáo về khả năng chống
         \texttt{NullPointerException}. Kotlin ``né'' lỗi này do buộc người viết
@@ -247,7 +247,7 @@ giới thiệu kĩ hơn ở phần này.
     \vspace*{-6mm}
     \includesvg[width=\linewidth]{../images/sequential-and-go-to-schematic.svg}
     \vspace*{-10mm}    % Manually make figure & caption closer together
-    \caption{Lập trình phi cấu trúc với \texttt{GOTO}}
+    \caption{Lập trình phi cấu trúc với \texttt{GOTO} \cite{NJS_SC}}
     \label{fig:non-structured-programming}
 \end{wrapfigure}
 
@@ -255,7 +255,7 @@ giới thiệu kĩ hơn ở phần này.
 programming). Để hiểu sơ về lập trình có cấu trúc, ta phải tìm về \emph{lập
 trình phi cấu trúc} (non-structured programming), với đặc điểm là lệnh nhảy
 \texttt{GOTO}. Trong buổi đầu của máy tính, lệnh này được dùng nhiều vì hợp với
-cách máy tính chạy.
+cách máy tính chạy \cite{NJS_SC}.
 
 Vấn đề của lập trình phi cấu trúc, hay của \texttt{GOTO}, có thể tóm gọn như
 sau:
@@ -306,7 +306,7 @@ sau:
     \includesvg[width=\linewidth]{../images/control-schematics.svg}
     \vspace*{-10mm}
     \caption{Ba cấu trúc cơ bản của lập trình có cấu trúc: rẽ nhánh \texttt{if},
-        lặp \texttt{for} và gọi hàm}
+        lặp \texttt{for} và gọi hàm \cite{NJS_SC}}
     \label{fig:3-basic-construct}
 \end{wrapfigure}
 
@@ -344,7 +344,7 @@ Trước hết, ta xem xét hai kiểu API tương tranh hay dùng hiện nay:
     \includesvg[width=\linewidth]{../images/sequential-and-go-to-schematic.svg}
     \vspace*{-10mm}
     \caption{Tương tranh phi cấu trúc với \texttt{goroutine} - API thuộc kiểu
-    tương tranh}
+        tương tranh \cite{NJS_SC}}
     \label{fig:goroutine}
 \end{wrapfigure}
 
@@ -380,7 +380,7 @@ dùng mô hình này).
     \includesvg[width=\linewidth,inkscapelatex=false]    % To leave text as is
         {../images/kotlin-coroutine.svg}                 % https://tex.stackexchange.com/a/595916/206774
     \vspace*{-10mm}
-    \caption{Tương tranh có cấu trúc dùng coroutine trong Kotlin}
+    \caption{Tương tranh có cấu trúc dùng coroutine trong Kotlin \cite{NJS_SC}}
     \label{fig:kotlin-coroutine}
 \end{wrapfigure}
 
@@ -417,5 +417,372 @@ kiểu tuần tự truyền thống.
 
 Một khi vấn đề tương tranh được giải quyết hoặc đơn giản hóa, việc song song hóa
 (paralellization) để tăng tốc ứng dụng chỉ còn là một chi tiết cài đặt.
+
+\subsubsection{Tóm tắt}
+
+Coroutine với SC là một trong những tính năng quan trọng nhất của Kotlin, và
+được dùng để tăng tốc những đoạn mã chạy chậm trong yacv. Mấu chốt của SC được
+tóm gọn trong Hình 6. Dù khá mới (Martin Sústrik, tác giả của ZeroMQ, đưa ra ý
+tưởng này năm 2016) và còn tranh cãi, mô hình này vẫn được cải thiện liên tục,
+có thư viện ở nhiều ngôn ngữ như Java (Loom), Python (Trio),\ldots{} Điều này
+cho thấy ý tưởng có tiềm năng lớn, giúp đơn giản hóa tư duy về tương tranh.
+
+
+%----------------------------------------------------------------------------------------
+%	2.3: Mẫu thiết kế MVVM và Kiến trúc Google khuyên dùng
+%----------------------------------------------------------------------------------------
+
+\section{Mẫu thiết kế MVVM và Kiến trúc Google khuyên dùng}
+
+\subsection{Mẫu thiết kế MVVM}
+
+Cũng như các tác vụ lập trình khác, lập trình giao diện sử dụng nguyên lý
+Separation of Concern, hiểu đơn giản là chia tách chức năng. Nhiều năm kinh
+nghiệm cho thấy giao diện nên được chia làm hai phần chính tách biệt nhau:
+
+\begin{itemize}
+    \item
+        Model: dữ liệu để hiển thị (trả lời câu hỏi ``cái gì''); liên quan đến
+        đối tượng, mảng,\ldots
+    \item
+        View: cách để hiển thị dữ liệu đó (trả lời câu hỏi ``như thế nào'');
+        liên quan đến các yếu tố giao diện như nút, danh sách,\ldots
+\end{itemize}
+
+Sự tách biệt thể hiện ở chỗ Model không được biết View. Khi này, giao diện và
+nghiệp vụ có thể phát triển khá độc lập với nhau, giúp giảm thời gian phát
+triển. Ngược lại, View có thể biết đến Model hay không là tùy vào cách triển
+khai cụ thể. Có sự bất đối xứng này là do View thường có các mã liên quan chặt
+chẽ đến framework vốn phức tạp để kiểm thử, còn Model thường có các mã đơn giản.
+
+Khó khăn ở đây là làm sao để kết nối hai thành phần riêng biệt kia. Nhiều mô
+hình cố giải quyết vấn đề này, tiêu biểu là MVC, MVP và MVVM. Ta lần lượt xem
+xét chúng để thấy rằng MVVM phù hợp nhất với Android, do đó được chọn làm nền
+tảng cho Kiến trúc Google khuyên dùng.
+
+\subsubsection{MVC: Model - View - Controller}
+
+Phương hướng đầu tiên được thử là MVC, vốn phổ biến vào thời điểm Android ra
+đời. Do được phát minh từ lâu và mỗi framework lại có cách giải thích khác nhau,
+nên không có một mô hình cụ thể về cách ba thành phần trên tương tác. Tuy vậy,
+vẫn có vài điểm chung không đổi:
+
+\begin{enumerate}
+    \item
+        Controller nhận thao tác người dùng
+    \item
+        Sau đó, controller cập nhật Model và View
+\end{enumerate}
+
+Ngay ở đây, ta đã thấy điểm yếu của MVC khi áp dụng vào Android. Trong Android,
+ứng dụng sử dụng Activity và Fragment để viết giao diện. Hai đối tượng này cũng
+kiêm luôn việc nhận thao tác người dùng, tức chúng là \emph{cả View và
+Controller}. Mục đích tách ra ba đối tượng do đó không thể làm được.
+
+Hiện nay, MVC trên Android được coi là lỗi thời, không phù hợp.
+
+\subsubsection{MVP: Model - View - Presenter}
+
+Năm 2012, Robert Martin ``Uncle Bob'' xuất bản một bài viết nổi tiếng về
+kiến trúc phần mềm: Clean Architecture, tạo ra một trào lưu đưa Clean
+Architecture đi khắp nơi. MVP, vốn được phát triển từ lâu, được đông đảo
+lập trình viên chọn để triển khai Clean Architecture trên Android. Trước
+khi Google chọn MVVM, đây là hướng đi mới, có kì vọng cao sau nhiều thất
+bại trong việc đưa MVC vào Android.
+
+\begin{wrapfigure}{r}{7cm}
+    \centering
+    \includegraphics[width=\linewidth]{../images/Model_View_Presenter_GUI_Design_Pattern.png}
+    \vspace*{-10mm}
+    \caption{Kiến trúc MVP \cite{WIKI_MVP}}
+    \label{fig:mvp}
+\end{wrapfigure}
+
+Nhiệm vụ của ba thành phần như sau:
+
+\begin{itemize}
+    \item
+        Model: vẫn như trong MVC
+    \item
+        View: hiển thị dữ liệu; nhận tương tác người dùng để chuyển sang
+        Presenter
+    \item
+        Presenter: trung gian giữa Model và View: nhận tương tác từ View,
+        gọi/thay đổi Model, cập nhật View
+\end{itemize}
+
+Ở đây, ta thấy điểm yếu View-Controller nhập nhằng của MVC được khắc phục, khi
+View kiêm luôn việc nhận tương tác. Đồng thời, Model và View hoàn toàn không
+biết nhau, đúng theo nguyên lý tách lớp của Clean Architecture.
+
+Ta xét một ứng dụng ToDo đơn giản, trong đó các công việc có thể được đánh dấu
+đã hoàn thành. Trong ứng dụng, màn hình hiển thị số việc đã và chưa hoàn thành.
+Trong màn hình đó, tương tác của MVP như sau:
+
+\begin{enumerate}
+    \item
+        Presenter lấy tất cả công việc trong Model
+    \item
+        Presenter đếm số việc hoàn thành, chưa hoàn thành
+    \item
+        Presenter gọi hàm của View, truyền hai số đếm được ở trên vào
+\end{enumerate}
+
+Đến đây, thiết kế đã khá hoàn chỉnh và phù hợp với Android.
+
+\subsubsection{MVVM: Model - View - View Model}
+
+\begin{wrapfigure}{r}{11.5cm}
+    \centering
+    \vspace*{-6mm}
+    \includegraphics[width=\linewidth]{../images/MVVMPattern.png}
+    \vspace*{-10mm}
+    \caption{Kiến trúc MVVM \cite{MUN_MVVM}}
+    \label{fig:mvvm}
+\end{wrapfigure}
+
+Ta quay về chủ đề chính: MVVM. MVVM giống MVP ở chỗ View Model (từ đây gọi tắt
+là VM) kết nối View và Model như Presenter. Điểm khác biệt là cách truyền dữ
+liệu \cite{MUN_MVVM}:
+
+\begin{itemize}
+    \item
+          Trong MVP, Presenter gọi hàm của View để truyền dữ liệu cho View
+\end{itemize}
+
+\begin{itemize}[resume, before = \vspace*{-\dimexpr\topsep+\partopsep\relax}]
+    \item
+          Trong MVVM, VM dùng \emph{data binding} để truyền dữ liệu cho View
+\end{itemize}
+
+Data binding là cơ chế để \emph{tự động} đưa dữ liệu vào thành phần hiển thị.
+Quay lại ví dụ ToDo ở trên, nếu dùng data binding để ``gắn'' (bind) danh sách
+công việc vào View, thì khi danh sách thay đổi, View cũng tự động thay đổi theo.
+
+Do dùng data binding thay vì gọi hàm thủ công, VM không cần có tham chiếu tới
+View, khác với Presenter. Điều này giúp liên kết View - VM thêm \emph{lỏng lẻo}
+(loose coupling), giúp kiểm thử dễ dàng hơn. Phần còn lại của hai mô hình giống
+nhau: View cần biết VM để chuyển tương tác; VM cần biết Model để lấy dữ liệu.
+
+Do là mô hình phù hợp nhất trong cả ba với riêng Android, MVVM được chọn làm nền
+tảng cho Kiến trúc Google khuyên dùng.
+
+\subsection{Kiến trúc Google khuyên dùng}
+
+\begin{wrapfigure}{r}{8cm}
+    \centering
+    \vspace*{-6mm}
+    \includegraphics[width=\linewidth]{../images/final-architecture.png}
+    \vspace*{-10mm}
+    \caption{Kiến trúc Google khuyên dùng \cite{GOOGL_APP_ARCH}}
+    \label{fig:google-recom-arch}
+\end{wrapfigure}
+
+Kiến trúc Google khuyên dùng có gốc là mô hình MVVM, có dạng như sau:
+
+\begin{itemize}
+    \item
+        Repository là Model trong MVVM, giúp VM lấy dữ liệu mà không cần quan
+        tâm dữ liệu lấy từ đâu: cơ sở dữ liệu, gọi API qua mạng,\ldots
+    \item
+        LiveData là cơ chế data binding dùng luồng dữ liệu (stream)
+    \item
+        Activity/Fragment là View
+\end{itemize}
+
+Repository là một điểm được chi tiết hóa so với MVVM. Google cho rằng một ứng
+dụng không nên hoàn toàn vô dụng nếu không có mạng. Do đó, cần có hai nguồn dữ
+liệu: dữ liệu từ máy chủ, và dữ liệu đệm, ngoại tuyến. Khi có nhiều nguồn dữ
+liệu, mẫu thiết kế Repository là lựa chọn hiển nhiên để trừu tượng hóa chúng.
+
+yacv sử dụng kiến trúc này, dù không có tính năng liên quan đến mạng. Lý do là
+yacv có tính năng quét truyện hoạt động chậm giống như giao tiếp mạng, nên cần
+dữ liệu đệm và dữ liệu quét thực tế.
+
+
+%----------------------------------------------------------------------------------------
+%	2.4: Cơ sở dữ liệu SQLite
+%----------------------------------------------------------------------------------------
+
+\section{Cơ sở dữ liệu SQLite}
+
+SQLite là một hệ quản trị cơ sở dữ liệu quan hệ (RDBMS). Từ ``Lite'' trong tên
+có nghĩa là ``nhỏ'', thể hiện mục tiêu thiết kế chính của nó là nhỏ gọn. SQLite
+có thể được nhúng vào phần mềm khác ở dạng thư viện, thay vì là một phần mềm
+riêng với cấu trúc chủ-khách như MySQL,\ldots{} Ngay từ những phiên bản đầu,
+Android đã tích hợp SQLite, giúp lập trình viên không phải nhúng SQLite vào từng
+ứng dụng.
+
+Để đạt mục tiêu, SQLite chỉ giữ các tính năng SQL cốt lõi (tạo/đọc/sửa/xóa),
+giao dịch (có ACID), và chỉ tối ưu cho việc truy cập từ một ứng dụng cùng lúc.
+Các tính năng thường có trong RDBMS cho máy chủ, như nhân bản (replication),
+chia dữ liệu tự động (sharding), khóa dòng, đọc ghi nhiều luồng cùng
+lúc,\ldots{} được loại bỏ. Do đó, với nhu cầu lưu trữ đơn giản, SQLite vừa nhanh
+vừa gọn.
+
+yacv dùng SQLite để lưu đệm thông tin truyện, tránh quét nhiều lần.
+
+\subsection{Thư viện ORM Room}
+
+Room là một thư viện thuộc Jetpack, giúp lập trình viên dùng SQLite tốt hơn. Đây
+có thể xem là một thư viện ORM đơn giản cho SQLite. Room tự động làm nhiều công
+việc liên quan đến SQL:
+
+\begin{itemize}
+    \item
+        Tạo bảng: Lập trình viên chỉ cần khai báo các đối tượng dữ liệu như một
+        lớp hướng đối tượng thông thường, rồi đánh dấu với Annotation và
+        interface của Room. Sau đó, Room sinh các bảng tương ứng.
+    \item
+        Truy vấn: Lập trình viên chỉ cần viết lệnh SQL. Sau đó, Room sinh hàm
+        truy vấn tương ứng, chuyển dữ liệu dạng đối tượng sang dạng để lưu trong
+        bảng và ngược lại.
+    \item
+        Kiểm tra truy vấn khi biên dịch: lỗi lệnh SQL có thể được dò ra ngay khi
+        biên dịch chứ không cần chờ đến khi chạy.
+    \item
+        Kiểm soát lược đồ (schema): Khi thêm/sửa/xóa bảng/cột, Room luôn phát
+        hiện và ép lập trình viên viết cơ chế cập nhật. Do đó, ứng dụng dùng
+        lược đồ cũ khi được cập nhật sẽ biết cách sửa cơ sở dữ liệu đến phiên
+        bản lược đồ mới.
+    \item
+        Tương thích với LiveData: Room cho phép View cập nhật dữ liệu theo cơ sở
+        dữ liệu chỉ bằng vài dòng mã dùng LiveData.
+\end{itemize}
+
+\subsection{Tìm kiếm văn bản}
+
+Tìm kiếm văn bản (full-text search, hay gọi tắt là FTS) là một trong số ít các
+tính năng nâng cao được giữ lại trong SQLite. Cũng như các thư viện tìm kiếm
+khác, SQLite cài đặt chức năng này bằng chỉ mục đảo (inverted index):
+
+\begin{enumerate}
+    \item
+        Khi dữ liệu văn bản được ghi, nó được tách thành các từ.
+    \item
+        Các từ được đưa vào từ điển, với khóa là chính từ đó, còn giá trị là ID
+        của hàng \texttt{rowid}.
+\end{enumerate}
+
+FTS khác với đánh chỉ mục thường (cũng là chỉ mục đảo nhưng cho kiểu dữ liệu
+thông thường) ở bước 1: \emph{từng từ} được tách ra, còn chỉ mục thường dùng
+\emph{cả} văn bản. Do đó, khi tìm từ lẻ, FTS có thể tìm các hàng chứa từ đó rất
+nhanh. Điểm yếu là ghi chậm, kích cỡ lớn hơn chỉ mục thường. Nếu bản thân dữ
+liệu văn bản trong cột là một khối, ví dụ như email, chỉ mục thường đã đủ tốt,
+không cần FTS.
+
+Trong SQLite, một số kĩ thuật xử lí ngôn ngữ tự nhiên cơ bản cũng được áp dụng
+trong bước 1, như rút gọn từ (stemming, dùng thuật toán Porter, ví dụ khi tìm
+``run'' sẽ ra được cả ``runs'', ``running'', ``ran''; tất nhiên chỉ đúng với
+tiếng Anh), giúp kết quả tìm kiếm linh động hơn.
+
+yacv có tính năng tìm kiếm liên quan đến tiêu đề, tên nhân vật,\ldots{} đều là
+những câu văn, đoạn văn. Do đó, FTS có vai trò không thể thiếu để tăng tốc tìm
+kiếm trong ứng dụng.
+
+
+%----------------------------------------------------------------------------------------
+%	2.4: Định dạng tệp nén ZIP và CBZ
+%----------------------------------------------------------------------------------------
+
+\section{Định dạng tệp nén ZIP và CBZ}
+
+Các tệp truyện mà yacv đọc có định dạng CBZ, về bản chất chính là tệp nén ZIP
+thông thường. Do yêu cầu của các phần sau, định dạng tệp ZIP cũng cần được trình
+bày ở mức cơ bản.
+
+\subsection{Định dạng tệp nén ZIP}
+
+ZIP là một định dạng tệp nén không mất mát (lossless). Được phát minh vào năm
+1989 bởi Phil Katz, ZIP đã trở thành định dạng nén tiêu chuẩn, được hỗ trợ trên
+gần như mọi nền tảng, bao gồm Android.
+
+ZIP thực chất là một định dạng chứa (container), chuyên chứa dữ liệu nén, chứ
+không phải thuật toán nén; thuật toán nén hay dùng nhất trong ZIP là DEFLATE.
+Một trong các mục tiêu của ZIP là giúp việc sửa tệp nén (thêm, sửa, xóa tệp con
+trong tệp ZIP) nhanh nhất có thể. Mục tiêu đó thể hiện ở thiết kế sau
+\cite{PKWARE_APPNOTE}:
+
+\begin{itemize}
+    \item
+        Thuật toán nén mỗi tệp gốc thành một tệp nhị phân, ở đây gọi là
+        \emph{tệp nén lẻ} (data trong Hình 10). Sau đó, các tệp nén lẻ này được
+        nối thành tệp ZIP cuối cùng.
+    \item
+        Trước mỗi tệp nén lẻ là một header gọi là \emph{File Entry} để lưu thông
+        tin liên quan.
+    \item
+        Ở \emph{cuối} tệp ZIP, sau khi đã nối các tệp nén lẻ và header lại, các
+        header được gom lại, lưu một lần nữa vào một cấu trúc gọi là
+        \emph{Central Directory}. Có thể so sánh File Entry như các \emph{đề
+        mục}, còn Central Directory là \emph{mục lục}.
+    \item
+        Hai thông tin quan trọng trong File Entry là tên tệp gốc và \emph{vị trí
+        bắt đầu} (offset), tức số byte tính từ đầu tệp ZIP đến tệp nén lẻ tương
+        ứng.
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includesvg[width=10cm,inkscapelatex=false]
+        {../images/control-schematics.svg}
+        % {../images/ZIP-64_Internal_Layout.svg}
+    \caption{Cấu trúc tệp nén ZIP \cite{WIKI_ZIP}}
+    \label{fig:zip_layout}
+\end{figure}
+
+Ta phân tích kĩ hơn:
+
+\begin{itemize}
+    \item
+        Do từng tệp được nén riêng, có thể dùng thuật toán khác nhau cho hiệu
+        quả tốt với từng tệp.
+    \item
+        Cũng do nén riêng, việc thêm/sửa/xóa (gọi chung là sửa) và giải nén có
+        thể được thực hiện với từng tệp nén lẻ, thay vì phải giải nén, sửa, rồi
+        nén lại toàn bộ.
+    \item
+        Nhờ mục lục (chứa vị trí tệp nén lẻ), việc sửa còn diễn ra nhanh do ứng
+        dụng biết vị trí để đọc ghi dữ liệu.
+    \item
+        Mục lục đặt ở cuối là tối ưu:
+
+        \begin{itemize}
+            \item
+                Giả sử mục lục đặt ở đầu. Khi sửa, toàn bộ các tệp nén lẻ phải
+                di chuyển để tạo chỗ cho mục lục mới (giống như thêm một phần tử
+                vào mảng ở vị trí đầu: toàn bộ các phần tử sau bị đẩy lên để tạo
+                chỗ trống).
+            \item
+                Do mục lục nằm ở cuối tệp tin, khi sửa tệp nén, chỉ cần đẩy các
+                tệp nén lẻ từ chỗ sửa. Đây có thể coi là một tối ưu nhỏ, nhưng
+                trước đây là một điểm sáng. Do đĩa mềm - phương tiện chia sẻ chủ
+                yếu thời đó - có dung lượng nhỏ, tệp ZIP có thể phải cắt ra cho
+                vừa. Cách sửa tệp linh động này cho phép chỉ ghi lại dữ liệu ở
+                một số đĩa mềm, thay vì ghi lại toàn bộ.
+            \item
+                Hơn nữa, nếu mục lục ở đầu thì ngay trong khi nén, các tệp nén
+                lẻ bị di chuyển như trên do mục lục liên tục được cập nhật.
+        \end{itemize}
+\end{itemize}
+
+Tóm lại, cấu trúc tệp nén ZIP cho phép sửa và giải nén từng tệp gốc rất dễ dàng.
+Nhiều định dạng tệp nén khác (TAR, 7z,\ldots) không có tính năng này, do gộp
+toàn bộ các tệp vào rồi nén một thể. Trong trường hợp đó, tệp nén được gọi là
+\emph{đặc} (solid), và rất khó để đọc/sửa tệp lẻ.
+
+\subsection{Định dạng tệp truyện CBZ}
+
+Tệp truyện CBZ chỉ là một tệp nén ZIP thông thường, trong đó có:
+
+\begin{itemize}
+    \item
+        Các tệp ảnh trang truyện: Các tệp này có tên được đánh số tăng dần để
+        biểu thị thứ tự trang.
+    \item
+        (Tùy chọn) Một tệp metadata: Có nhiều định dạng metadata. Hiện nay, yacv
+        chấp nhận định dạng ComicInfo, được trình bày ở
+        \protect\hyperlink{P8.2-comicinfo.xsd}{Phụ lục 2}.
+\end{itemize}
 
 \end{document}

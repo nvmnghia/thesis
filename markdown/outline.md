@@ -78,7 +78,7 @@ Tuy vậy, nhược điểm chính của những trang web này là chất lư�
 Để giảm thời gian tải và tránh tốn băng thông, hình ảnh của truyện thường được
 nén khá nhiều, gây vỡ hình, mờ nhòe. Một bộ phận người đọc, hoặc kĩ tính, hoặc
 muốn sưu tầm truyện, thường chọn đọc những tệp truyện chất lượng cao, thường có
-đuôi `.cbz` hoặc `.cbr`. Bản chất tệp truyện này là các tệp nén zip bình thường,
+đuôi CBZ hoặc `.cbr`. Bản chất tệp truyện này là các tệp nén zip bình thường,
 bên trong có các tệp ảnh thông dụng như `.jpg`, `.png`. Tuy nhiên, do được tải
 hẳn về máy rồi mới đọc, những tệp truyện này không bị giới hạn về băng thông hay
 thời gian, do đó hình ảnh trong tệp có thể có chất lượng rất cao.
@@ -128,7 +128,7 @@ tính năng này là [Kuro Reader][5], tuy nhiên đây là một tính năng tr
 
 Ứng dụng có các tính năng đủ dùng theo mục đích đã đề ra:
 
-- Đọc file truyện `.cbz`
+- Đọc file truyện CBZ
 - Tìm kiếm truyện theo metadata
 
 Tính năng đọc tệp truyện `.cbr` hiện mới chỉ được cài đặt một phần, do khó khăn
@@ -140,7 +140,7 @@ Các phần còn lại của khóa luận có cấu trúc như sau:
 
 - [Chương 2  - Kiến thức nền tảng](#P2-fundamental): Giới thiệu sơ lược về ba
   nền tảng của ứng dụng, gồm hệ điều hành Android, ngôn ngữ lập trình Kotlin, và
-  mẫu thiết kế MVVM; định dạng tệp nén `.zip` cũng được giới thiệu vì liên quan
+  mẫu thiết kế MVVM; định dạng tệp nén ZIP cũng được giới thiệu vì liên quan
   trực tiếp đến ứng dụng.
 - [Chương 3 - Phân tích yêu cầu](#P3-specification): Phân tích nhu cầu và ca sử
   dụng để có đặc tả yêu cầu.
@@ -162,9 +162,9 @@ Chương này giới thiệu sơ qua về các nền tảng trong quá trình x�
   dụng được trình bày.
 - Sau đó, cơ sở dữ liệu một số phần mở rộng của nó dùng trong ứng dụng sẽ được
   nhắc qua.
-- Cuối cùng là thông tin về `.cbz` - định dạng tệp tin mà ứng dụng đọc, gồm hai
-  phần: sơ lược về định dạng `.zip` mà `.cbz` dựa trên, và các trường metadata
-  trong tệp tin `.cbz` - nguồn thông tin quan trọng để quản lí truyện.
+- Cuối cùng là thông tin về CBZ - định dạng tệp tin mà ứng dụng đọc, gồm hai
+  phần: sơ lược về định dạng ZIP mà CBZ dựa trên, và các trường metadata
+  trong tệp tin CBZ - nguồn thông tin quan trọng để quản lí truyện.
 
 <!-- Phần này sẽ được viết thẳng vào LaTeX, vì đa số là copypasta. -->
 
@@ -520,7 +520,7 @@ nơi. MVP, vốn được phát triển từ lâu, được đông đảo lập 
 khai Clean Architecture trên Android. Trước khi Google chọn MVVM, đây là hướng
 đi mới, có kì vọng cao sau nhiều thất bại trong việc đưa MVC vào Android.
 
-Nhiệm vụ của ba thành phần được chia như sau:
+Nhiệm vụ của ba thành phần như sau:
 
 - Model: vẫn như trong MVC
 - View: hiển thị dữ liệu; nhận tương tác người dùng để chuyển sang Presenter
@@ -544,7 +544,7 @@ Trong màn hình đó, tương tác của MVP như sau:
 2. Presenter đếm số việc hoàn thành, chưa hoàn thành
 3. Presenter gọi hàm của View, truyền hai số đếm được ở trên vào
 
-Đến đây, thiết kế đã khá hoàn chỉnh. MVVM chỉ còn cải tiến thêm một điểm nữa.
+Đến đây, thiết kế đã khá hoàn chỉnh và phù hợp với Android.
 
 ##### 2.3.1.3. MVVM: Model - View - View Model
 
@@ -594,7 +594,7 @@ yacv sử dụng kiến trúc này, dù không có tính năng liên quan đến
 yacv có tính năng quét truyện hoạt động chậm giống như giao tiếp mạng, nên cần
 dữ liệu đệm và dữ liệu quét thực tế.
 
-### 2.4. SQLite <a name="P2.4-sqlite"></a>
+### 2.4. Cơ sở dữ liệu SQLite <a name="P2.4-sqlite"></a>
 
 SQLite là một hệ quản trị cơ sở dữ liệu quan hệ (RDBMS). Từ "Lite" trong tên có
 nghĩa là "nhỏ", thể hiện mục tiêu thiết kế chính của nó là nhỏ gọn. SQLite có
@@ -608,9 +608,9 @@ Các tính năng thường có trong RDBMS cho máy chủ, như nhân bản (rep
 chia dữ liệu tự động (sharding), khóa dòng, đọc ghi nhiều luồng cùng lúc,...
 được loại bỏ. Do đó, với nhu cầu lưu trữ đơn giản, SQLite vừa nhanh vừa gọn.
 
-yacv dùng SQLite để lưu đệm thông tin truyện, tránh việc phải quét nhiều lần.
+yacv dùng SQLite để lưu đệm thông tin truyện, tránh quét nhiều lần.
 
-#### 2.4.1. Room <a name="P2.4.1-room"></a>
+#### 2.4.1. Thư viện ORM Room <a name="P2.4.1-room"></a>
 
 Room là một thư viện thuộc Jetpack, giúp lập trình viên dùng SQLite tốt hơn. Đây
 có thể xem là một thư viện ORM đơn giản cho SQLite. Room tự động làm nhiều công
@@ -622,7 +622,7 @@ việc liên quan đến SQL:
 - Truy vấn: Lập trình viên chỉ cần viết câu lệnh SQL. Sau đó, Room sinh hàm truy
   vấn tương ứng, chuyển dữ liệu dạng đối tượng sang dạng để lưu trong bảng và
   ngược lại.
-- Kiểm tra truy vấn khi biên dịch: lỗi lệnh SQL có thể được dò ra ngay khi biên
+- Kiểm tra truy vấn khi biên dịch: Lỗi lệnh SQL có thể được dò ra ngay khi biên
   dịch chứ không cần chờ đến khi chạy.
 - Kiểm soát lược đồ (schema): Khi thêm/sửa/xóa bảng/cột, Room luôn phát hiện và
   ép lập trình viên viết cơ chế cập nhật. Do đó, ứng dụng dùng lược đồ cũ khi
@@ -656,17 +656,17 @@ yacv có tính năng tìm kiếm liên quan đến tiêu đề, tên nhân vật
 câu văn, đoạn văn. Do đó, FTS có vai trò không thể thiếu để tăng tốc tìm kiếm
 trong ứng dụng.
 
-### 2.5. Định dạng tệp nén `.zip` và `.cbz` <a name="P2.5-zip-cbz"></a>
+### 2.5. Định dạng tệp nén ZIP và CBZ <a name="P2.5-zip-cbz"></a>
 
-Các tệp truyện mà yacv đọc có định dạng `.cbz`, về bản chất chính là tệp nén
-`.zip` thông thường. Do yêu cầu của các phần sau, định dạng tệp `.zip` cũng cần
-được trình bày ở mức cơ bản.
+Các tệp truyện mà yacv đọc có định dạng CBZ, về bản chất chính là tệp nén ZIP
+thông thường. Do yêu cầu của các phần sau, định dạng tệp ZIP cũng cần được trình
+bày ở mức cơ bản.
 
-#### 2.5.1. Định dạng tệp nén `.zip`
+#### 2.5.1. Định dạng tệp nén ZIP
 
-ZIP là định dạng tệp nén không mất mát (lossless). Được phát minh vào năm 1989
-bởi Phil Katz, ZIP đã trở thành định dạng nén tiêu chuẩn, được hỗ trợ trên gần
-như mọi nền tảng, bao gồm Android.
+ZIP là một định dạng tệp nén không mất mát (lossless). Được phát minh vào năm
+1989 bởi Phil Katz, ZIP đã trở thành định dạng nén tiêu chuẩn, được hỗ trợ trên
+gần như mọi nền tảng, bao gồm Android.
 
 ZIP thực chất là một định dạng chứa (container), chuyên chứa dữ liệu nén, chứ
 không phải thuật toán nén; thuật toán nén hay dùng nhất trong ZIP là DEFLATE.
@@ -716,7 +716,7 @@ Nhiều định dạng tệp nén khác (TAR, 7z,...) không có tính năng nà
 bộ các tệp vào rồi nén một thể. Trong trường hợp đó, tệp nén được gọi là *đặc*
 (solid), và rất khó để đọc/sửa tệp lẻ.
 
-#### 2.5.2. Định dạng tệp truyện `.cbz`
+#### 2.5.2. Định dạng tệp truyện CBZ
 
 Tệp truyện CBZ chỉ là một tệp nén ZIP thông thường, trong đó có:
 
