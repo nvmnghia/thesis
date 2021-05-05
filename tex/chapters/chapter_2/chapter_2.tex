@@ -5,7 +5,7 @@
 
 \begin{document}
 
-\chapter{Kiến thức nền tảng}
+\chapter{Kiến thức nền tảng}\label{chap:fundamental}
 
 Chương này giới thiệu sơ qua về các nền tảng trong quá trình xây dựng ứng dụng.
 
@@ -29,7 +29,7 @@ Chương này giới thiệu sơ qua về các nền tảng trong quá trình x�
 %	2.1: Hệ điều hành Android
 %----------------------------------------------------------------------------------------
 
-\section{Hệ điều hành Android}
+\section{Hệ điều hành Android}\label{sec:android}
 
 Android là một hệ điều hành do Google phát triển cho thiết bị di động. Android
 dùng nhân Linux và được thiết kế cho màn hình cảm ứng. Cùng với iOS của Apple,
@@ -120,7 +120,7 @@ tầng Khung phát triển để viết giao diện, và yacv không là ngoại
 dụng thành phần Content Provider, cụ thể là bộ Storage Access Framework, và sẽ
 được đề cập ở các phần sau.
 
-\subsection{Android Jetpack}
+\subsection{Android Jetpack}\label{sec:jetpack}
 
 Jetpack là bộ thư viện giúp viết ứng dụng Android nhanh gọn, ít lỗi hơn so với
 việc tự viết những đoạn mã tương tự. Jetpack gồm hai thành phần:
@@ -150,14 +150,14 @@ yacv sử dụng nhiều thành phần của Jetpack, trong đó đáng kể đ�
 \end{itemize}
 
 Room là một phần quan trọng của yacv, do đó sẽ được giới thiệu chi tiết ở
-\protect\hyperlink{P2.4.2-room}{mục sau}.
+\hyperref[sec:room]{mục sau}.
 
 
 %----------------------------------------------------------------------------------------
 %	2.2: Ngôn ngữ lập trình Kotlin
 %----------------------------------------------------------------------------------------
 
-\section{Ngôn ngữ lập trình Kotlin}
+\section{Ngôn ngữ lập trình Kotlin}\label{sec:kotlin}
 
 Java là ngôn ngữ lập trình đầu tiên được hỗ trợ trên Android, nhưng không phải
 duy nhất. Từ 2019, Google khuyên lập trình viên viết ứng dụng trên Kotlin, một
@@ -207,7 +207,7 @@ Do Google khuyên dùng Kotlin khi viết ứng dụng Android, tôi cho rằng 
 này là một cơ hội phù hợp để thử Kotlin thay vì dùng Java quen thuộc, và quyết
 định chọn viết yacv bằng Kotlin.
 
-\subsection{Coroutine}
+\subsection{Coroutine}\label{sec:coroutine}
 
 \subsubsection{Giới thiệu}
 
@@ -441,9 +441,9 @@ cho thấy ý tưởng có tiềm năng lớn, giúp đơn giản hóa tư duy v
 %	2.3: Mẫu thiết kế MVVM và Kiến trúc Google khuyên dùng
 %----------------------------------------------------------------------------------------
 
-\section{Mẫu thiết kế MVVM và Kiến trúc Google khuyên dùng}
+\section{Mẫu thiết kế MVVM và Kiến trúc Google khuyên dùng}\label{sec:mvvm-app-arch}
 
-\subsection{Mẫu thiết kế MVVM}
+\subsection{Mẫu thiết kế MVVM}\label{sec:mvvm}
 
 Cũng như các tác vụ lập trình khác, lập trình giao diện sử dụng nguyên lý
 Separation of Concern, hiểu đơn giản là chia tách chức năng. Nhiều năm kinh
@@ -577,7 +577,7 @@ nhau: View cần biết VM để chuyển tương tác; VM cần biết Model đ
 Do là mô hình phù hợp nhất trong cả ba với riêng Android, MVVM được chọn làm nền
 tảng cho Kiến trúc Google khuyên dùng.
 
-\subsection{Kiến trúc Google khuyên dùng}
+\subsection{Kiến trúc Google khuyên dùng}\label{sec:app-arch}
 
 Kiến trúc Google khuyên dùng có gốc là mô hình MVVM, có dạng như sau:
 
@@ -614,7 +614,7 @@ dữ liệu đệm và dữ liệu quét thực tế.
 %	2.4: Cơ sở dữ liệu SQLite
 %----------------------------------------------------------------------------------------
 
-\section{Cơ sở dữ liệu SQLite}
+\section{Cơ sở dữ liệu SQLite}\label{sec:sqlite}
 
 SQLite là một hệ quản trị cơ sở dữ liệu quan hệ (RDBMS). Từ ``Lite'' trong tên
 có nghĩa là ``nhỏ'', thể hiện mục tiêu thiết kế chính của nó là nhỏ gọn. SQLite
@@ -632,7 +632,7 @@ vừa gọn.
 
 yacv dùng SQLite để lưu đệm thông tin truyện, tránh quét nhiều lần.
 
-\subsection{Thư viện ORM Room}
+\subsection{Thư viện ORM Room}\label{sec:room}
 
 Room là một thư viện thuộc Jetpack, giúp lập trình viên dùng SQLite tốt hơn. Đây
 có thể xem là một thư viện ORM đơn giản cho SQLite. Room tự động làm nhiều công
@@ -660,7 +660,7 @@ việc liên quan đến SQL:
         dữ liệu chỉ bằng vài dòng mã dùng LiveData.
 \end{itemize}
 
-\subsection{Tìm kiếm văn bản}
+\subsection{Tìm kiếm văn bản}\label{sec:fts}
 
 Tìm kiếm văn bản (full-text search, hay gọi tắt là FTS) là một trong số ít các
 tính năng nâng cao được giữ lại trong SQLite. Cũng như các thư viện tìm kiếm
@@ -695,13 +695,13 @@ dụng.
 %	2.4: Định dạng tệp nén ZIP và CBZ
 %----------------------------------------------------------------------------------------
 
-\section{Định dạng tệp nén ZIP và CBZ}
+\section{Định dạng tệp nén ZIP và CBZ}\label{sec:zip-cbz}
 
 Các tệp truyện mà yacv đọc có định dạng CBZ, về bản chất chính là tệp nén ZIP
 thông thường. Do yêu cầu của các phần sau, định dạng tệp ZIP cũng cần được trình
 bày ở mức cơ bản.
 
-\subsection{Định dạng tệp nén ZIP}
+\subsection{Định dạng tệp nén ZIP}\label{sec:zip}
 
 ZIP là một định dạng tệp nén không mất mát (lossless). Được phát minh vào năm
 1989 bởi Phil Katz, ZIP đã trở thành định dạng nén tiêu chuẩn, được hỗ trợ trên
@@ -782,7 +782,7 @@ Nhiều định dạng tệp nén khác (TAR, 7z,\ldots) không có tính năng 
 toàn bộ các tệp vào rồi nén một thể. Trong trường hợp đó, tệp nén được gọi là
 \emph{đặc} (solid), và rất khó để đọc/sửa tệp lẻ.
 
-\subsection{Định dạng tệp truyện CBZ}
+\subsection{Định dạng tệp truyện CBZ}\label{sec:cbz}
 
 Tệp truyện CBZ chỉ là một tệp nén ZIP thông thường, trong đó có:
 
@@ -793,7 +793,7 @@ Tệp truyện CBZ chỉ là một tệp nén ZIP thông thường, trong đó c
     \item
         (Tùy chọn) Một tệp metadata: Có nhiều định dạng metadata. Hiện nay, yacv
         chấp nhận định dạng ComicInfo, được trình bày ở
-        \protect\hyperlink{P8.2-comicinfo.xsd}{Phụ lục 2}.
+        \autoref{app:comic-info-xsd}.
 \end{itemize}
 
 \end{document}

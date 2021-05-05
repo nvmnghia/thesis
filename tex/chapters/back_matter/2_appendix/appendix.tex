@@ -11,7 +11,7 @@
 %	Phụ lục A: Giải thích các trường metadata
 %----------------------------------------------------------------------------------------
 
-\chapter{Giải thích các trường metadata}
+\chapter{Giải thích các trường metadata}\label{app:metadata}
 
 Mô hình xuất bản của truyện tranh siêu anh hùng phương Tây là phức tạp nhất. Lí
 do là các nhân vật không đổi trong hàng chục năm xuất bản nhưng cốt truyện không
@@ -73,44 +73,44 @@ truyện.
 %	Phụ lục B: Lược đồ XSD ComicInfo
 %----------------------------------------------------------------------------------------
 
-\chapter{Lược đồ XSD ComicInfo}
+\chapter{Lược đồ XSD ComicInfo}\label{app:comic-info-xsd}
 
 Phụ lục này trình bày phiên bản rút gọn của lược đồ XSD của định dạng metadata
-ComicInfo. Các trường nêu trong \protect\hyperlink{P9.1-metadata}{Phụ lục 1} đều
-được chứa trong định dạng này, ngoài ra còn có các trường về tác giả và nhân
-vật.
+ComicInfo. Các trường nêu trong \autoref{app:metadata} đều được chứa trong định
+dạng này, ngoài ra còn có các trường về tác giả và nhân vật.
 
 % Somehow doesn't work
 % \inputminted{xml}{../assets/ComicInfo.xsd}
 
 \begin{minted}{xml}
 <?xml version="1.0" encoding="utf-8"?>
-<xs:schema elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<xs:schema elementFormDefault="qualified"
+  xmlns:xs="http://www.w3.org/2001/XMLSchema">
 <xs:element name="ComicInfo" nillable="true" type="ComicInfo" />
 <xs:complexType name="ComicInfo">
   <xs:sequence>
     <xs:element name="Title"  type="xs:string"
-        minOccurs="0" maxOccurs="1" default="" />
+      minOccurs="0" maxOccurs="1" default="" />
     <xs:element name="Series" type="xs:string"
-        minOccurs="0" maxOccurs="1" default="" />
+      minOccurs="0" maxOccurs="1" default="" />
     <xs:element name="Number" type="xs:string"
-        minOccurs="0" maxOccurs="1" default="" />
+      minOccurs="0" maxOccurs="1" default="" />
     <xs:element name="Count"  type="xs:int"
-        minOccurs="0" maxOccurs="1" default="-1" />
+      minOccurs="0" maxOccurs="1" default="-1" />
     <xs:element name="Volume" type="xs:int"
-        minOccurs="0" maxOccurs="1" default="-1" />
+      minOccurs="0" maxOccurs="1" default="-1" />
     <xs:element name="Summary" type="xs:string"
-        minOccurs="0" maxOccurs="1" default="" />
+      minOccurs="0" maxOccurs="1" default="" />
     <xs:element name="Year"   type="xs:int"
-        minOccurs="0" maxOccurs="1" default="-1" />
+      minOccurs="0" maxOccurs="1" default="-1" />
     <xs:element name="Month"  type="xs:int"
-        minOccurs="0" maxOccurs="1" default="-1" />
+      minOccurs="0" maxOccurs="1" default="-1" />
     <xs:element name="Writer" type="xs:string"
-        minOccurs="0" maxOccurs="1" default="" />
+      minOccurs="0" maxOccurs="1" default="" />
     <xs:element name="Publisher" type="xs:string"
-        minOccurs="0" maxOccurs="1" default="" />
+      minOccurs="0" maxOccurs="1" default="" />
     <xs:element name="Genre"  type="xs:string"
-        minOccurs="0" maxOccurs="1" default="" />
+      minOccurs="0" maxOccurs="1" default="" />
   </xs:sequence>
 </xs:complexType>
 </xs:schema>

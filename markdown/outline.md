@@ -100,7 +100,7 @@ ngoại tuyến, đọc các tệp truyện có sẵn trên điện thoại ngư
 không phải là ứng dụng khách cho các trang đọc truyện hiện có, hay có máy chủ
 tập trung riêng để cung cấp truyện.
 
-### 1.2. Ứng dụng tương tự <a name="P1.2-similar-app"></a>
+### 1.2. Ứng dụng tương tự <a name="P1.2-similar-apps"></a>
 
 Hiện có nhiều ứng dụng đọc truyện tranh ngoại tuyến như yacv trên chợ ứng dụng
 Google Play. Hai ứng dụng phổ biến nhất trong số này là [ComicScreen][1] và
@@ -138,11 +138,11 @@ trong việc tích hợp thư viện đọc định dạng này.
 
 Các phần còn lại của khóa luận có cấu trúc như sau:
 
-- [Chương 2  - Kiến thức nền tảng](#P2-fundamental): Giới thiệu sơ lược về ba
+- [Chương 2 - Kiến thức nền tảng](#P2-fundamental): Giới thiệu sơ lược về ba
   nền tảng của ứng dụng, gồm hệ điều hành Android, ngôn ngữ lập trình Kotlin, và
   mẫu thiết kế MVVM; định dạng tệp nén ZIP cũng được giới thiệu vì liên quan
   trực tiếp đến ứng dụng.
-- [Chương 3 - Phân tích yêu cầu](#P3-specification): Phân tích nhu cầu và ca sử
+- [Chương 3 - Phân tích yêu cầu](#P3-requirements): Phân tích nhu cầu và ca sử
   dụng để có đặc tả yêu cầu.
 - [Chương 4 - Thiết kế](#P4-design): Thiết kế ứng dụng, gồm thiết kế cơ sở dữ
   liệu, giao diện, logic nghiệp vụ.
@@ -354,7 +354,8 @@ Vấn đề của lập trình phi cấu trúc, hay của `GOTO`, có thể tóm
     trừu tượng bị phá vỡ: khi gọi hàm, thay vì có thể bỏ qua chi tiết bên trong,
     ta phải biết rõ để xem có lệnh nhảy bất ngờ nào không.
 
-- Không cài đặt được các chức năng mới (ngoại lệ, quản lí tài nguyên tự động,...)
+- Không cài đặt được các chức năng mới (ngoại lệ, quản lí tài nguyên tự
+  động,...)
 
     Xét ví dụ Java sau về quản lí tài nguyên tự động:
 
@@ -378,7 +379,8 @@ cũng được giải quyết, do ngôn ngữ đã có cấu trúc (cụ thể l
 
 ![3 basic constructs](../images/control-schematics.svg)
 
-Hình 4: Ba cấu trúc cơ bản của lập trình có cấu trúc: rẽ nhánh `if`, lặp `for` và gọi hàm
+Hình 4: Ba cấu trúc cơ bản của lập trình có cấu trúc: rẽ nhánh `if`, lặp `for`
+và gọi hàm
 
 Ngày nay, ba cấu trúc trên đã trở thành phần không thể thiếu trong mọi ngôn ngữ
 lập trình, và `GOTO` chỉ còn dùng trong hợp ngữ. Quá khứ cho thấy nếu áp dụng
@@ -467,7 +469,7 @@ tưởng này năm 2016) và còn tranh cãi, mô hình này vẫn được cả
 có thư viện ở nhiều ngôn ngữ như Java (Loom), Python (Trio),... Điều này cho
 thấy ý tưởng có tiềm năng lớn, giúp đơn giản hóa tư duy về tương tranh.
 
-### 2.3. Mẫu thiết kế MVVM và Kiến trúc Google khuyên dùng <a name="P2.3-mvvm"></a>
+### 2.3. Mẫu thiết kế MVVM và Kiến trúc Google khuyên dùng <a name="P2.3-mvvm-app-arch"></a>
 
 #### 2.3.1. Mẫu thiết kế MVVM <a name="P2.3.1-mvvm"></a>
 
@@ -570,7 +572,7 @@ nhau: View cần biết VM để chuyển tương tác; VM cần biết Model đ
 Do là mô hình phù hợp nhất trong cả ba với riêng Android, MVVM được chọn làm nền
 tảng cho Kiến trúc Google khuyên dùng.
 
-#### 2.3.2. Kiến trúc Google khuyên dùng <a name="P2.3.2-rec-architecture"></a>
+#### 2.3.2. Kiến trúc Google khuyên dùng <a name="P2.3.2-app-arch"></a>
 
 Kiến trúc Google khuyên dùng có gốc là mô hình MVVM, có dạng như sau:
 
@@ -659,7 +661,7 @@ Các tệp truyện mà yacv đọc có định dạng CBZ, về bản chất ch
 thông thường. Do yêu cầu của các phần sau, định dạng tệp ZIP cũng cần được trình
 bày ở mức cơ bản.
 
-#### 2.5.1. Định dạng tệp nén ZIP
+#### 2.5.1. Định dạng tệp nén ZIP <a name="P2.5.1-zip"></a>
 
 ZIP là một định dạng tệp nén không mất mát (lossless). Được phát minh vào năm
 1989 bởi Phil Katz, ZIP đã trở thành định dạng nén tiêu chuẩn, được hỗ trợ trên
@@ -713,7 +715,7 @@ Nhiều định dạng tệp nén khác (TAR, 7z,...) không có tính năng nà
 bộ các tệp vào rồi nén một thể. Trong trường hợp đó, tệp nén được gọi là *đặc*
 (solid), và rất khó để đọc/sửa tệp lẻ.
 
-#### 2.5.2. Định dạng tệp truyện CBZ
+#### 2.5.2. Định dạng tệp truyện CBZ <a name="P2.5.2-cbz"></a>
 
 Tệp truyện CBZ chỉ là một tệp nén ZIP thông thường, trong đó có:
 
@@ -724,7 +726,7 @@ Tệp truyện CBZ chỉ là một tệp nén ZIP thông thường, trong đó c
 
 ---
 
-## 3. Chương 3: Phân tích yêu cầu <a name="P3-specification"></a>
+## 3. Chương 3: Phân tích yêu cầu <a name="P3-requirements"></a>
 
 <!-- Nếu C3 ngắn quá thì gộp Thiết kế vào, nhưng giờ chắc phải tách cmnr -->
 
@@ -802,7 +804,7 @@ Các giới hạn này nhằm tránh cho phần mềm quá phức tạp với t�
   dùng "say mê" (enthusiast), do đó giao diện chỉ cần đơn giản rõ ràng, không
   màu mè, tập trung vào tính năng.
 
-### 3.3 Phân tích yêu cầu <a name="P3.3-requirement-analysis"></a>
+### 3.3 Phân tích yêu cầu <a name="P3.3-analysis"></a>
 
 Mỗi yêu cầu đã xác định trong [mục 3.2.1.](#P3.2.1-functional-requirements) được
 coi là một ca sử dụng, được trình bày trong các tiểu mục dưới đây.

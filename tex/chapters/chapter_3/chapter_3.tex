@@ -5,7 +5,7 @@
 
 \begin{document}
 
-\chapter{Phân tích yêu cầu \& Thiết kế}
+\chapter{Phân tích yêu cầu}\label{chap:requirements}
 
 Chương này phân tích yêu cầu để lập ra đặc tả yêu cầu, là bộ khung cho quá trình
 phát triển ứng dụng.
@@ -36,7 +36,7 @@ tầm truyện còn có yêu cầu về \emph{xem thông tin (metadata)} của t
 \subsection{Mục đích}\label{sec:objectives}
 
 Trước khi đi vào chi tiết yêu cầu ở mục tiếp theo, tôi muốn làm rõ mục đích của
-sản phẩm đã nhắc ở \protect\hyperlink{P1.1-background}{mục 1.1}.
+sản phẩm đã nhắc ở \autoref{sec:background}.
 
 \begin{itemize}
     \item
@@ -236,7 +236,7 @@ Do ứng dụng đơn giản, các ca sử dụng tách biệt, nên mỗi ca s�
 
 Đây là ca sử dụng đầu tiên khi người đọc chạy ứng dụng lần đầu. Các tệp truyện
 sẽ được quét từ thư mục gốc, rồi được gom lại theo thư mục như mô tả ở
-\protect\hyperlink{P3.3.2-show-library}{ca sử dụng kế tiếp}.
+\hyperref[sec:show-library]{ca sử dụng kế tiếp}.
 
 Màn hình đầu tiên khi người đọc bật lên gọi là \emph{Màn hình Thư viện} (Library
 screen). Các thư mục chứa truyện, hoặc thông báo lỗi liên quan đến bản thân quá
@@ -244,17 +244,14 @@ trình chọn truyện (đã miêu tả trong bước 6 ở trên) sẽ được
 này.
 
 Khi quét, ứng dụng phải đọc luôn cả metadata của tệp truyện nếu có. Các trường
-trong metadata được giải thích chi tiết trong
-\protect\hyperlink{P8.1-metadata}{Phụ lục 1}. Hiện nay, yacv chấp nhận định dạng
-metadata ComicInfo, là một tệp XML trong tệp truyện.
-\protect\hyperlink{P8.2-comicinfo.xsd}{Phụ lục 2} trình bày lược đồ XSD của định
-dạng metadata này.
+trong metadata được giải thích chi tiết trong \autoref{app:metadata}. Hiện nay,
+yacv chấp nhận định dạng metadata ComicInfo, là một tệp XML trong tệp truyện.
+\autoref{app:comic-info-xsd} trình bày lược đồ XSD của định dạng metadata này.
 
 Một số metadata có thể được trích xuất ngay từ tên tệp truyện. Do không có quy
 chuẩn trong việc đặt tên tệp, cách trích xuất này không ổn định, tuy nhiên cũng
-không phải ý tưởng tồi. Nếu có thể, dựa vào
-\protect\hyperlink{P8.1-metadata}{Phụ lục 1} để thử trích xuất từ tên tệp
-truyện.
+không phải ý tưởng tồi. Nếu có thể, dựa vào \autoref{app:metadata} để thử trích
+xuất từ tên tệp truyện.
 
 Tới đây người đọc có thể thực hiện các ca sử dụng khác, trong đó quan trọng nhất
 là duyệt theo thư mục rồi xem truyện.
@@ -318,8 +315,8 @@ là duyệt theo thư mục rồi xem truyện.
   \end{itemize}
 
 Đây là một trong hai ca sử dụng chính của ứng dụng, bên cạnh (và là tiền điều
-kiện cho) \protect\hyperlink{P3.3.3-read-comic}{ca sử dụng đọc truyện} sẽ được
-miêu tả tiếp theo.
+kiện cho) \hyperref[sec:read-comic]{ca sử dụng đọc truyện} sẽ được miêu tả tiếp
+theo.
 
 Màn hình khi người đọc chọn một thư mục gọi là \emph{Màn hình Thư mục}
 (Directory screen). Cũng giống như Màn hình Thư viện, ảnh bìa và tên của truyện
@@ -520,8 +517,8 @@ Có ba lí do cho lựa chọn thiết kế này:
   \end{itemize}
 
 Đây là một trong hai ca sử dụng chính của ứng dụng, bên cạnh (và là mục đích
-của) \protect\hyperlink{P3.3.2-show-library}{ca sử dụng hiển thị danh sách
-truyện} đã được miêu tả ở trên.
+của) \hyperref[sec:show-library]{ca sử dụng hiển thị danh sách truyện} đã được
+miêu tả ở trên.
 
 Màn hình khi người đọc đọc một truyện gọi là \emph{Màn hình Đọc truyện}. Màn
 hình này cho phép người đọc duyệt các trang truyện theo phương ngang. Mục tiêu
@@ -671,8 +668,7 @@ Tương tác của người đọc với Màn hình Tìm kiếm trên diễn ra 
     \item
         Khi ấn vào một mục trong danh sách ``Truyện'', người đọc được đưa đến
         thẳng Màn hình Đọc truyện của truyện đó (và hiển thị ở trang đọc dở như
-        đã mô tả ở trong \protect\hyperlink{P3.3.3-read-comic}{ca sử dụng đọc
-        truyện}).
+        đã mô tả ở trong \hyperref[sec:read-comic]{ca sử dụng đọc truyện}).
     \item
         Khi ấn vào một mục trong danh sách ``Bộ truyện'', người đọc được đưa đến
         màn hình chứa danh sách những truyện trong bộ truyện đã chọn. \emph{Màn
