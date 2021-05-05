@@ -41,14 +41,15 @@
 
 % References
 \providecommand{\main}{.}    % https://tex.stackexchange.com/a/216321/206774
-\usepackage{biblatex}
+\usepackage[date=short]{biblatex}
 \addbibresource{\main/references.bib}
+\emergencystretch=1em
 
+% Appendix
 \usepackage[toc]{appendix}
+\renewcommand{\appendixtocname}{Phụ lục}
 
 \usepackage[figure, table]{totalcount}
-
-%\usepackage[T5]{fontenc}
 
 \usepackage{enumitem}
 
