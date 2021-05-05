@@ -41,11 +41,10 @@ Tuy vậy, nhược điểm chính của những trang web này là chất lư�
 Để giảm thời gian tải và tránh tốn băng thông, hình ảnh của truyện thường được
 nén khá nhiều, gây vỡ hình, mờ nhòe. Một bộ phận người đọc, hoặc kĩ tính, hoặc
 muốn sưu tầm truyện, thường chọn đọc những tệp truyện chất lượng cao, thường có
-đuôi \texttt{.cbz} hoặc \texttt{.cbr}. Bản chất tệp truyện này là các tệp nén
-zip bình thường, bên trong có các tệp ảnh thông dụng như \texttt{.jpg},
-\texttt{.png}. Tuy nhiên, do được tải hẳn về máy rồi mới đọc, những tệp truyện
-này không bị giới hạn về băng thông hay thời gian, do đó hình ảnh trong tệp có
-thể có chất lượng rất cao.
+đuôi CBZ hoặc CBR. Bản chất tệp truyện này là các tệp nén zip bình thường, bên
+trong có các tệp ảnh thông dụng như JPG, PNG. Tuy nhiên, do được tải hẳn về máy
+rồi mới đọc, những tệp truyện này không bị giới hạn về băng thông hay thời gian,
+do đó hình ảnh trong tệp có thể có chất lượng rất cao.
 
 Trong khóa luận này, tôi viết một ứng dụng Android nhằm phục vụ số ít người dùng
 có nhu cầu đọc truyện tranh chất lượng cao đã giới thiệu ở trên. Tên của ứng
@@ -78,7 +77,7 @@ tập trung riêng để cung cấp truyện.
 Hiện có nhiều ứng dụng đọc truyện tranh ngoại tuyến như yacv trên chợ ứng dụng
 Google Play. Hai ứng dụng phổ biến nhất trong số này là
 \href{\ComicScreen}{ComicScreen} và \href{\AstonishComic}{Astonishing Comic
-    Reader}. ComicScreen là ứng dụng có nhiều người dùng hơn. Các tính năng của
+Reader}. ComicScreen là ứng dụng có nhiều người dùng hơn. Các tính năng của
 ComicScreen giống với các tính năng của yacv, tuy nhiên ComicScreen có thêm
 nhiều chức năng phụ, đáng kể nhất là khả năng đọc từ mạng FTP/SMB và khả năng
 sửa ảnh trong file. Astonishing Comic Reader cũng có chức năng tương tự yacv,
@@ -88,11 +87,11 @@ cáo, được cập nhật có thể nói là thường xuyên.
 Một ngoại lệ đáng kể ở đây là ứng dụng mã nguồn mở \href{\Tachiyomi}{Tachiyomi}.
 Ứng dụng này có hệ thống phần mở rộng, cho phép đọc truyện ở các trang web
 truyện tranh. Khi web truyện tranh thay đổi, hoặc hỗ trợ thêm trang mới, chỉ cần
-tải về phần mở rộng tương ứng ở dạng ứng dụng \texttt{.APK}. Tính năng này cùng
-mô hình mã nguồn mở khiến Tachiyomi mạnh hơn, cập nhật nhanh hơn toàn bộ các ứng
-dụng đã có và sẽ có. Tuy nhiên, Tachiyomi lại không thể được đưa lên Play Store,
-vì chính tính năng phần mở rộng đã \href{\TachiyomiIssue}{vi phạm chính sách}
-của Play Store \cite{GH_TACHI}.
+tải về phần mở rộng tương ứng ở dạng ứng dụng APK. Tính năng này cùng mô hình mã
+nguồn mở khiến Tachiyomi mạnh hơn, cập nhật nhanh hơn toàn bộ các ứng dụng đã có
+và sẽ có. Tuy nhiên, Tachiyomi lại không thể được đưa lên Play Store, vì chính
+tính năng phần mở rộng đã \href{\TachiyomiIssue}{vi phạm chính sách} của Play
+Store \cite{GH_TACHI}.
 
 Một điểm khác biệt quan trọng của yacv với các ứng dụng có sẵn là việc hỗ trợ
 metadata của tệp truyện tranh, do các ứng dụng có sẵn trên Play Store đa số bỏ
@@ -111,13 +110,13 @@ trả phí.
 
 \begin{itemize}
     \item
-        Đọc file truyện \texttt{.cbz}
+        Đọc file truyện CBZ
     \item
         Tìm kiếm truyện theo metadata
 \end{itemize}
 
-Tính năng đọc tệp truyện \texttt{.cbr} hiện mới chỉ được cài đặt một
-phần, do khó khăn trong việc tích hợp thư viện đọc định dạng này.
+Tính năng đọc tệp truyện CBR hiện mới chỉ được cài đặt một phần, do khó khăn
+trong việc tích hợp thư viện đọc định dạng này.
 
 
 %----------------------------------------------------------------------------------------
@@ -133,8 +132,8 @@ Các phần còn lại của khóa luận có cấu trúc như sau:
         % Somehow autoref breaks
         \hyperref[chap:fundamental]{Chương 2 - Kiến thức nền tảng}: Giới thiệu
         sơ lược về ba nền tảng của ứng dụng, gồm hệ điều hành Android, ngôn ngữ
-        lập trình Kotlin, và mẫu thiết kế MVVM; định dạng tệp nén \texttt{.zip}
-        cũng được giới thiệu vì liên quan trực tiếp đến ứng dụng.
+        lập trình Kotlin, và mẫu thiết kế MVVM; định dạng tệp nén ZIP cũng được
+        giới thiệu vì liên quan trực tiếp đến ứng dụng.
     \item
         \hyperref[chap:requirements]{Chương 3 - Phân tích yêu cầu}: Phân tích
         nhu cầu và ca sử dụng để có đặc tả yêu cầu.

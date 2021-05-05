@@ -31,7 +31,7 @@ phát triển ứng dụng.
 Cả hai nhóm có điểm chung là kĩ tính, yêu cầu cao về trải nghiệm đọc truyện, cụ
 thể là về \emph{chất lượng hình ảnh}. Cũng do kĩ tính, nên cả hai nhóm không cần
 nhiều chức năng, tuy nhiên có yêu cầu cao về từng chức năng. Nhóm người dùng sưu
-tầm truyện còn có yêu cầu về \emph{xem thông tin (metadata)} của tệp truyện.
+tầm truyện còn có yêu cầu \emph{xem thông tin (metadata)} của tệp truyện.
 
 \subsection{Mục đích}\label{sec:objectives}
 
@@ -47,9 +47,8 @@ sản phẩm đã nhắc ở \autoref{sec:background}.
         Ứng dụng \emph{không phải} là ứng dụng khách cho các trang đọc truyện
         hiện có, hay có máy chủ tập trung riêng để cung cấp truyện.
     \item
-        Ứng dụng \emph{không có} khả năng đọc truyện đuôi \texttt{.pdf}, cùng
-        với các định dạng truyện thiên về chữ khác như \texttt{.txt},
-        \texttt{.epub}.
+        Ứng dụng \emph{không có} khả năng đọc truyện đuôi PDF, cùng với các định
+        dạng truyện thiên về chữ khác như TXT, EPUB.
 \end{itemize}
 
 Các giới hạn này nhằm tránh cho phần mềm quá phức tạp với tôi, đồng thời phù hợp
@@ -183,7 +182,8 @@ Do ứng dụng đơn giản, các ca sử dụng tách biệt, nên mỗi ca s�
         Nếu người đọc đã chọn một thư mục gốc, ca sử dụng này \emph{thay thế}
         thư mục gốc đã chọn bằng thư mục vừa chọn.
 
-        Nếu người đọc không chọn thư mục, quay lại Màn hình Thư viện.
+        Nếu người đọc không chọn thư mục nào, quay lại Màn hình Thư viện và
+        không thay đổi gì.
     \item
         \textbf{Luồng ngoại lệ}:
 
@@ -192,7 +192,7 @@ Do ứng dụng đơn giản, các ca sử dụng tách biệt, nên mỗi ca s�
 
         \begin{itemize}
             \item
-                Thiếu quyền
+                Thiếu quyền đọc
             \item
                 Không tìm được thư mục gốc
             \item
@@ -214,7 +214,7 @@ Do ứng dụng đơn giản, các ca sử dụng tách biệt, nên mỗi ca s�
                     \item
                         Hiển thị thư mục truyện quét được
                     \item
-                        Hiển thị lỗi nếu có (ba loại lỗi ở trên)
+                        Hiển thị lỗi nếu có (ba loại lỗi ở trên), và gợi ý xử lí
                 \end{itemize}
           \end{itemize}
     \item
@@ -354,9 +354,9 @@ thiết kế này:
         \end{itemize}
 \end{itemize}
 
-Hơn nữa, các thư mục cần được ``làm phẳng''. ``Làm phẳng'' có nghĩa là hiển thị
-thư mục con (cháu,\ldots) ngang hàng với thư mục gốc. Ví dụ sau cho thấy cách
-yacv làm phẳng cây thư mục:
+Hơn nữa, các thư mục cần được ``làm phẳng'', tức là hiển thị thư mục con
+(cháu,\ldots) ngang hàng với thư mục gốc. Bảng sau cho thấy cách yacv làm phẳng
+cây thư mục:
 
 % 1st problem: verbatim inside table
 % 2nd problem: font for those lines
@@ -371,7 +371,7 @@ yacv làm phẳng cây thư mục:
 % |         └── Black Panther #7.cbz  | └── Black Panther #7.cbz  |
 % Bảng 2: Cách yacv làm phẳng thư mục
 
-\begin{table}
+\begin{table}[H]
     \centering
     \caption{Cách yacv làm phẳng thư mục}
     \label{tab:yacv-flattening}
@@ -404,7 +404,7 @@ Tie-ins
     \end{tabular}
 \end{table}
 
-Theo như ví dụ, các màn hình trong yacv được tổ chức như sau:
+Theo như bảng trên, các màn hình trong yacv được tổ chức như sau:
 
 \begin{itemize}
     \item
@@ -650,7 +650,7 @@ Màn hình khi người đọc \emph{xem kết quả tìm kiếm} gọi là \emp
 kiếm}. Màn hình này chỉ hiện ra khi người dùng ấn nút Enter để chính thức tìm
 kiếm; cho đến trước lúc đó, ứng dụng vẫn ở Màn hình Thư viện.
 
-\begin{wrapfigure}[11]{r}{4.5cm}
+\begin{wrapfigure}[8]{r}{4.5cm}
 \vspace*{-10mm}
 \begin{verbatim}
 Truyện
@@ -673,7 +673,7 @@ Tương tác của người đọc với Màn hình Tìm kiếm trên diễn ra 
     \item
         Khi ấn vào một mục trong danh sách ``Truyện'', người đọc được đưa đến
         thẳng Màn hình Đọc truyện của truyện đó (và hiển thị ở trang đọc dở như
-        đã mô tả ở trong \hyperref[sec:read-comic]{ca sử dụng đọc truyện}).
+        đã mô tả trong \hyperref[sec:read-comic]{ca sử dụng đọc truyện}).
 \end{itemize}
 
 % Split itemize to avoid confusing wrapfigure
@@ -681,9 +681,9 @@ Tương tác của người đọc với Màn hình Tìm kiếm trên diễn ra 
 \begin{itemize}[resume, before = \vspace*{-\dimexpr\topsep+\partopsep\relax}]
     \item
         Khi ấn vào một mục trong danh sách ``Bộ truyện'', người đọc được đưa đến
-        màn hình chứa danh sách những truyện trong bộ truyện đã chọn. \emph{Màn
-        hình này cần giống với Màn hình Thư mục}. Sau đó, người dùng chọn một
-        truyện để đọc như bình thường.
+        màn hình chứa danh sách truyện trong bộ truyện đã chọn. \emph{Màn hình
+        này cần giống với Màn hình Thư mục}. Sau đó, người dùng chọn một truyện
+        để đọc như bình thường.
 \end{itemize}
 
 Đây chỉ là ví dụ về một từ khóa có kết quả khi tìm theo tên tệp truyện và bộ

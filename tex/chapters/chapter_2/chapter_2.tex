@@ -31,22 +31,22 @@ Chương này giới thiệu sơ qua về các nền tảng trong quá trình x�
 
 \section{Hệ điều hành Android}\label{sec:android}
 
-Android là một hệ điều hành do Google phát triển cho thiết bị di động. Android
-dùng nhân Linux và được thiết kế cho màn hình cảm ứng. Cùng với iOS của Apple,
-Android trở thành một phần không thể thiếu của cuộc cách mạng di động bắt đầu
-vào cuối những năm 2000.
+Android là một hệ điều hành di động do Google phát triển. Android dùng nhân
+Linux và được thiết kế cho màn hình cảm ứng. Cùng với iOS của Apple, Android trở
+thành một phần không thể thiếu của cuộc cách mạng di động bắt đầu vào cuối những
+năm 2000.
 
 Google mua lại phiên bản Android đầu của công ty khởi nghiệp cùng tên vào năm
-2005, và phát triển hệ điều hành này từ đó. Ngoài Google, Android còn nhận đóng
-góp lớn từ cộng đồng, do là một dự án mã nguồn mở (phần lớn mã nguồn dùng giấy
-phép Apache); tên chính thức của dự án là Android Open Source Project. Dù vậy,
-mọi thiết bị Android thương mại đều có ứng dụng độc quyền. Ví dụ đáng kể là bộ
-Google Mobile Service, chứa những ứng dụng không thể thiếu như trình duyệt
-Chrome hay chợ Play Store. Về mặt này, Android khá giống Chrome: thành phần cốt
-lõi kĩ thuật được phát triển theo mô hình mã nguồn mở (AOSP và Chromium), còn
-thành phần liên quan đến trải nghiệm người dùng được phát triển riêng.
+2005, và phát triển nó từ đó. Ngoài Google, Android còn nhận đóng góp lớn từ
+cộng đồng, do có mã nguồn mở (phần lớn dùng giấy phép Apache); tên chính thức
+của dự án là Android Open Source Project. Dù vậy, mọi thiết bị Android thương
+mại đều có ứng dụng độc quyền. Ví dụ đáng kể là bộ Google Mobile Services, chứa
+những ứng dụng thiết yếu như trình duyệt Chrome hay chợ Play Store. Về mặt này,
+Android khá giống Chrome: thành phần cốt lõi kĩ thuật được phát triển theo mô
+hình mã nguồn mở (AOSP và Chromium), còn thành phần liên quan đến trải nghiệm
+người dùng được phát triển riêng.
 
-\begin{wrapfigure}[20]{r}{8.6cm}
+\begin{wrapfigure}[20]{r}{9cm}
     \centering
     \includegraphics[width=\linewidth]{../images/android-stack_2x.png}
     \vspace*{-10mm}
@@ -60,29 +60,23 @@ Hệ điều hành Android được phân lớp như sau:
     \item
         Nhân Linux (Linux Kernel):
 
-        Đây là tầng thấp nhất. Android dùng nhánh hỗ trợ dài hạn (LTS) của
-        Linux. Không như kiểu phát triển distro trên máy tính (chủ yếu thay đổi
-        ở ngoài nhân), Google sửa và thêm bớt nhiều thành phần vào nhân trước
-        khi tích hợp.
+        Android dùng nhánh hỗ trợ dài hạn (LTS) của Linux. Không như kiểu phát
+        triển distro trên máy tính (chủ yếu thay đổi ở ngoài nhân), Google sửa
+        và thêm bớt nhiều thành phần vào nhân trước khi tích hợp.
     \item
         Lớp phần cứng trừu tượng (Hardware Abstraction Layer):
 
-        Tầng này trừu tượng hóa các chi tiết phần cứng bằng cách đưa ra các giao
-        diện chung cho một kiểu phần cứng nào đó, giúp các tầng trên không cần
-        quan tâm đến chi tiết riêng của phần cứng.
+        Tầng này đưa ra giao diện chung cho mỗi kiểu phần cứng (máy ảnh,
+        loa,\ldots), giúp các tầng trên có thể dùng phần cứng mà không cần quan
+        tâm đến chi tiết riêng.
     \item
         Android Runtime (ART):
 
         Ứng dụng Java cần thêm một ứng dụng để chuyển bytecode thành mã máy.
-        Trên desktop, đó là các máy ảo Java (JVM). Trên Android, Android Runtime
+        Trên máy bàn, đó là các máy ảo Java (JVM). Trên Android, Android Runtime
         nhận nhiệm vụ này. Hai máy ảo này khác nhau ở chỗ ART \emph{biên dịch}
         bytecode thành mã máy (trước khi chạy - AOT), còn JVM \emph{thông dịch}
         bytecode thành mã máy (trong khi chạy).
-
-        ART hiện hỗ trợ đa số tính năng của Java 8.
-        % The above line is narrower due to the shitty wrapfig, and only it is.
-        % However, if the whole item is moved to the below part, the whole list
-        % is narrowed.
 \end{itemize}
 
 % Split itemize to avoid confusing wrapfigure
@@ -91,9 +85,8 @@ Hệ điều hành Android được phân lớp như sau:
     \item
         Thư viện C/C++:
 
-        Tầng thư viện native nằm ngang hàng với ART, phục vụ các tiến trình hệ
-        thống và một số ứng dụng dùng NDK (tức gọi API C cấp thấp) như trò chơi
-        điện tử.
+        Tầng thư viện native nằm ngang hàng với ART, phục vụ một số ứng dụng
+        dùng NDK (tức gọi API C cấp thấp) như trò chơi điện tử.
     \item
         Khung phát triển ứng dụng (Java API Framework):
 
@@ -102,10 +95,10 @@ Hệ điều hành Android được phân lớp như sau:
         lập trình viên, bao gồm các yếu tố cơ bản như giao diện (View System),
         truy xuất,\ldots
 
-        Lập trình viên có quyền truy cập vào lớp này tương đương với ứng dụng hệ
-        thống. Đây có thể coi là một cam kết tránh độc quyền công nghệ, tức đa
-        số ứng dụng hệ thống không có khả năng đặc biệt, hay hiệu năng cao hơn
-        ứng dụng bên thứ ba tương tự.
+        Lập trình viên có thể truy cập vào lớp này tương đương với ứng dụng hệ
+        thống. Đây được coi là một cam kết tránh độc quyền công nghệ, tức đa số
+        ứng dụng hệ thống không có khả năng đặc biệt hơn ứng dụng bên thứ ba
+        tương tự.
     \item
         Ứng dụng hệ thống (System Apps)
 
@@ -222,9 +215,9 @@ chúng là đa nhiệm hợp tác có các ``điểm dừng'' do người viết
 đó, coroutine có thể dừng lại, chủ động nhả CPU cho việc khác, rồi tiếp tục việc
 đang dở vào lúc thích hợp. Ngược lại, đa nhiệm ưu tiên có thể buộc một luồng
 đang chạy ngừng lại bất kì lúc nào để ưu tiên chạy một luồng khác. Đây cũng là
-điểm khiến coroutine nhẹ hơn: chi phí chuyển ngữ cảnh (context switching) được
-kiểm soát và cắt giảm, do chuyển sang thực thi một coroutine khác chưa chắc đã
-chuyển sang một luồng hệ điều hành khác.
+điểm khiến coroutine nhẹ hơn: việc chuyển ngữ cảnh (context switching) được kiểm
+soát và cắt giảm, do chuyển sang thực thi một coroutine khác chưa chắc đã chuyển
+sang một luồng hệ điều hành khác.
 
 Với những điều trên, coroutine chưa làm được nhiều. Roman Elizarov, trưởng dự án
 Kotlin, hướng coroutine trong Kotlin theo một ý tưởng mới: \emph{tương tranh có
@@ -235,9 +228,8 @@ ngừng tác vụ bất đồng bộ tốt hơn việc dùng luồng, hay các t
 như RxJava.
 
 Coroutine được dùng để tăng tốc những đoạn mã chạy chậm trong yacv (sẽ được mô
-tả sau). Ngoài cải thiện về hiệu năng, coroutine và tương tranh có cấu trúc còn
-cho phép viết mã ngắn gọn, rõ ràng hơn. Do có tác động lớn, coroutine sẽ được
-giới thiệu kĩ hơn ở phần này.
+tả sau). Ngoài cải thiện hiệu năng, coroutine và SC còn cho phép viết mã ngắn,
+rõ ràng hơn. Do có tác động lớn, cả hai sẽ được giới thiệu kĩ hơn ở phần này.
 
 \subsubsection{Bài học từ quá khứ: lập trình có cấu trúc}
 
@@ -395,8 +387,9 @@ dùng mô hình này).
 
 Nguyên tắc của SC là: \emph{coroutine cha chờ mọi coroutine con chạy xong}, kể
 cả khi nó xong trước. Nguyên tắc này đảm bảo rằng khi một hàm kết thúc, không
-còn tác vụ tương tranh nữa, và luồng điều khiển hợp nhất được trả về điểm gọi.
-Đột nhiên, hai tính năng có vấn đề ở trên lại hoạt động:
+còn tác vụ tương tranh nữa, và điểm gọi nhận lại luồng điều khiển hợp nhất (các
+mũi tên chụm lại ở góc trái dưới \autoref{fig:kotlin-coroutine}). Đột nhiên, hai
+tính năng có vấn đề ở trên lại hoạt động:
 
 \begin{itemize}
     \item
@@ -420,9 +413,9 @@ tả. Do không có ràng buộc chặt chẽ kia, các tính năng ngôn ngữ 
 đặt như đã phân tích.
 
 Do trong các ngôn ngữ khác, nguyên tắc trên chỉ là một ca sử dụng, việc ép buộc
-viết theo ca sử dụng này đòi hỏi lập trình viên thay đổi suy nghĩ về mã tương
-tranh. Đổi lại, chương trình trở nên sáng rõ, giống với những đoạn mã viết theo
-kiểu tuần tự truyền thống.
+viết theo ca sử dụng này đòi hỏi lập trình viên thay đổi suy nghĩ về tương
+tranh. Đổi lại, chương trình trở nên sáng rõ, giống những đoạn mã viết theo kiểu
+tuần tự truyền thống.
 
 Một khi vấn đề tương tranh được giải quyết hoặc đơn giản hóa, việc song song hóa
 (paralellization) để tăng tốc ứng dụng chỉ còn là một chi tiết cài đặt.
@@ -431,10 +424,11 @@ Một khi vấn đề tương tranh được giải quyết hoặc đơn giản 
 
 Coroutine với SC là một trong những tính năng quan trọng nhất của Kotlin, và
 được dùng để tăng tốc những đoạn mã chạy chậm trong yacv. Mấu chốt của SC được
-tóm gọn trong Hình 6. Dù khá mới (Martin Sústrik, tác giả của ZeroMQ, đưa ra ý
-tưởng này năm 2016) và còn tranh cãi, mô hình này vẫn được cải thiện liên tục,
-có thư viện ở nhiều ngôn ngữ như Java (Loom), Python (Trio),\ldots{} Điều này
-cho thấy ý tưởng có tiềm năng lớn, giúp đơn giản hóa tư duy về tương tranh.
+tóm gọn trong \autoref{fig:kotlin-coroutine}. Dù khá mới (Martin Sústrik, tác
+giả của ZeroMQ, đưa ra ý tưởng này năm 2016) và còn tranh cãi, mô hình này vẫn
+được cải thiện liên tục, có thư viện ở nhiều ngôn ngữ như Java (Loom), Python
+(Trio),\ldots{} Điều này cho thấy ý tưởng có tiềm năng lớn, giúp đơn giản hóa tư
+duy về tương tranh.
 
 
 %----------------------------------------------------------------------------------------
@@ -492,12 +486,11 @@ Hiện nay, MVC trên Android được coi là lỗi thời, không phù hợp.
 
 \subsubsection{MVP: Model - View - Presenter}
 
-Năm 2012, Robert Martin ``Uncle Bob'' xuất bản một bài viết nổi tiếng về
-kiến trúc phần mềm: Clean Architecture, tạo ra một trào lưu đưa Clean
-Architecture đi khắp nơi. MVP, vốn được phát triển từ lâu, được đông đảo
-lập trình viên chọn để triển khai Clean Architecture trên Android. Trước
-khi Google chọn MVVM, đây là hướng đi mới, có kì vọng cao sau nhiều thất
-bại trong việc đưa MVC vào Android.
+Năm 2012, Robert Martin ``Uncle Bob'' xuất bản một bài viết nổi tiếng về kiến
+trúc phần mềm: Clean Architecture. MVP, vốn được phát triển từ lâu, được đông
+đảo lập trình viên chọn để triển khai Clean Architecture trên Android. Trước khi
+Google chọn MVVM, đây là hướng đi mới, có kì vọng cao sau nhiều thất bại trong
+việc đưa MVC vào Android.
 
 \begin{wrapfigure}[8]{r}{7cm}
     \centering
@@ -521,9 +514,9 @@ Nhiệm vụ của ba thành phần như sau:
         gọi/thay đổi Model, cập nhật View
 \end{itemize}
 
-Ở đây, ta thấy điểm yếu View-Controller nhập nhằng của MVC được khắc phục, khi
-View kiêm luôn việc nhận tương tác. Đồng thời, Model và View hoàn toàn không
-biết nhau, đúng theo nguyên lý tách lớp của Clean Architecture.
+Ta thấy điểm yếu View-Controller nhập nhằng được khắc phục, khi View kiêm luôn
+việc nhận tương tác. Đồng thời, Model và View hoàn toàn không biết nhau, đúng
+theo nguyên lý tách lớp của Clean Architecture.
 
 Ta xét một ứng dụng ToDo đơn giản, trong đó các công việc có thể được đánh dấu
 đã hoàn thành. Trong ứng dụng, màn hình hiển thị số việc đã và chưa hoàn thành.
@@ -542,15 +535,6 @@ Trong màn hình đó, tương tác của MVP như sau:
 
 \subsubsection{MVVM: Model - View - View Model}
 
-\begin{wrapfigure}{r}{11.5cm}
-    \centering
-    \vspace*{-6mm}
-    \includegraphics[width=\linewidth]{../images/MVVMPattern.png}
-    \vspace*{-10mm}
-    \caption{Kiến trúc MVVM \cite{MUN_MVVM}}
-    \label{fig:mvvm}
-\end{wrapfigure}
-
 Ta quay về chủ đề chính: MVVM. MVVM giống MVP ở chỗ View Model (từ đây gọi tắt
 là VM) kết nối View và Model như Presenter. Điểm khác biệt là cách truyền dữ
 liệu \cite{MUN_MVVM}:
@@ -564,6 +548,15 @@ liệu \cite{MUN_MVVM}:
     \item
           Trong MVVM, VM dùng \emph{data binding} để truyền dữ liệu cho View
 \end{itemize}
+
+\begin{wrapfigure}{r}{11.5cm}
+    \centering
+    % \vspace*{-10mm}
+    \includegraphics[width=\linewidth]{../images/MVVMPattern.png}
+    \vspace*{-10mm}
+    \caption{Kiến trúc MVVM \cite{MUN_MVVM}}
+    \label{fig:mvvm}
+\end{wrapfigure}
 
 Data binding là cơ chế để \emph{tự động} đưa dữ liệu vào thành phần hiển thị.
 Quay lại ví dụ ToDo ở trên, nếu dùng data binding để ``gắn'' (bind) danh sách
@@ -579,6 +572,15 @@ tảng cho Kiến trúc Google khuyên dùng.
 
 \subsection{Kiến trúc Google khuyên dùng}\label{sec:app-arch}
 
+\begin{wrapfigure}[11]{r}{8cm}
+    \centering
+    \vspace*{-6mm}
+    \includegraphics[width=\linewidth]{../images/final-architecture.png}
+    \vspace*{-10mm}
+    \caption{Kiến trúc Google khuyên dùng \cite{GOOGL_APP_ARCH}}
+    \label{fig:google-recom-arch}
+\end{wrapfigure}
+
 Kiến trúc Google khuyên dùng có gốc là mô hình MVVM, có dạng như sau:
 
 \begin{itemize}
@@ -590,15 +592,6 @@ Kiến trúc Google khuyên dùng có gốc là mô hình MVVM, có dạng như 
     \item
         Activity/Fragment là View
 \end{itemize}
-
-\begin{wrapfigure}{r}{8cm}
-    \centering
-    \vspace*{-6mm}
-    \includegraphics[width=\linewidth]{../images/final-architecture.png}
-    \vspace*{-10mm}
-    \caption{Kiến trúc Google khuyên dùng \cite{GOOGL_APP_ARCH}}
-    \label{fig:google-recom-arch}
-\end{wrapfigure}
 
 Repository là một điểm được chi tiết hóa so với MVVM. Google cho rằng một ứng
 dụng không nên hoàn toàn vô dụng nếu không có mạng. Do đó, cần có hai nguồn dữ
@@ -697,9 +690,9 @@ dụng.
 
 \section{Định dạng tệp nén ZIP và CBZ}\label{sec:zip-cbz}
 
-Các tệp truyện mà yacv đọc có định dạng CBZ, về bản chất chính là tệp nén ZIP
-thông thường. Do yêu cầu của các phần sau, định dạng tệp ZIP cũng cần được trình
-bày ở mức cơ bản.
+Các tệp truyện mà yacv đọc có định dạng CBZ, bản chất chính là tệp nén ZIP. Do
+yêu cầu của các phần sau, định dạng tệp ZIP cũng cần được trình bày ở mức cơ
+bản.
 
 \subsection{Định dạng tệp nén ZIP}\label{sec:zip}
 
@@ -711,13 +704,13 @@ ZIP thực chất là một định dạng chứa (container), chuyên chứa d�
 không phải thuật toán nén; thuật toán nén hay dùng nhất trong ZIP là DEFLATE.
 Một trong các mục tiêu của ZIP là giúp việc sửa tệp nén (thêm, sửa, xóa tệp con
 trong tệp ZIP) nhanh nhất có thể. Mục tiêu đó thể hiện ở thiết kế sau
-\cite{PKWARE_APPNOTE}:
+\cite{PKWARE_APPNOTE}, được biểu diễn trong \autoref{fig:zip-layout}:
 
 \begin{itemize}
     \item
         Thuật toán nén mỗi tệp gốc thành một tệp nhị phân, ở đây gọi là
-        \emph{tệp nén lẻ} (data trong Hình 10). Sau đó, các tệp nén lẻ này được
-        nối thành tệp ZIP cuối cùng.
+        \emph{tệp nén lẻ} (data trong \autoref{fig:zip-layout}). Sau đó, các tệp
+        nén lẻ này được nối thành tệp ZIP cuối cùng.
     \item
         Ở đầu mỗi tệp nén lẻ là một header gọi là \emph{File Entry} để lưu thông
         tin liên quan.
@@ -732,15 +725,13 @@ trong tệp ZIP) nhanh nhất có thể. Mục tiêu đó thể hiện ở thi�
         ứng.
 \end{itemize}
 
-\begin{figure}[H]
+\begin{wrapfigure}[10]{r}{10cm}
     \centering
-    \includesvg[width=10cm,inkscapelatex=false]
+    \includesvg[width=\linewidth,inkscapelatex=false]
         {../images/ZIP-64_Internal_Layout.svg}
-    % \includegraphics[width=10cm]
-    %     {../images/ZIP-64_Internal_Layout.png}
     \caption{Cấu trúc tệp nén ZIP \cite{WIKI_ZIP}}
-    \label{fig:zip_layout}
-\end{figure}
+    \label{fig:zip-layout}
+\end{wrapfigure}
 
 Ta phân tích kĩ hơn:
 
@@ -752,6 +743,9 @@ Ta phân tích kĩ hơn:
         Cũng do nén riêng, việc thêm/sửa/xóa (gọi chung là sửa) và giải nén có
         thể được thực hiện với từng tệp nén lẻ, thay vì phải giải nén, sửa, rồi
         nén lại toàn bộ.
+\end{itemize}
+
+\begin{itemize}[resume, before = \vspace*{-\dimexpr\topsep+\partopsep\relax}]
     \item
         Nhờ mục lục (chứa vị trí tệp nén lẻ), việc sửa còn diễn ra nhanh do ứng
         dụng biết vị trí để đọc ghi dữ liệu.
@@ -765,12 +759,11 @@ Ta phân tích kĩ hơn:
                 vào mảng ở vị trí đầu: toàn bộ các phần tử sau bị đẩy lên để tạo
                 chỗ trống).
             \item
-                Do mục lục nằm ở cuối tệp tin, khi sửa tệp nén, chỉ cần đẩy các
-                tệp nén lẻ từ chỗ sửa. Đây có thể coi là một tối ưu nhỏ, nhưng
-                trước đây là một điểm sáng. Do đĩa mềm - phương tiện chia sẻ chủ
-                yếu thời đó - có dung lượng nhỏ, tệp ZIP có thể phải cắt ra cho
-                vừa \cite{WIKI_ZIP}. Cách sửa tệp linh động này cho phép chỉ ghi
-                lại dữ liệu ở một số đĩa mềm, thay vì ghi lại toàn bộ.
+                Do mục lục nằm ở cuối tệp ZIP, nên khi sửa chỉ cần đẩy các tệp
+                nén lẻ từ chỗ sửa. Trước đây tối ưu này rất quan trọng. Do đĩa
+                mềm - phương tiện chia sẻ chủ yếu thời đó - có dung lượng nhỏ,
+                tệp ZIP có thể phải cắt ra cho vừa \cite{WIKI_ZIP}. Thiết kế này
+                cho phép chỉ sửa lại dữ liệu ở một số đĩa, thay vì toàn bộ.
             \item
                 Hơn nữa, nếu mục lục ở đầu thì ngay trong khi nén, các tệp nén
                 lẻ bị di chuyển như trên do mục lục liên tục được cập nhật.

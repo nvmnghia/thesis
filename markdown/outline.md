@@ -78,10 +78,10 @@ Tuy vậy, nhược điểm chính của những trang web này là chất lư�
 Để giảm thời gian tải và tránh tốn băng thông, hình ảnh của truyện thường được
 nén khá nhiều, gây vỡ hình, mờ nhòe. Một bộ phận người đọc, hoặc kĩ tính, hoặc
 muốn sưu tầm truyện, thường chọn đọc những tệp truyện chất lượng cao, thường có
-đuôi CBZ hoặc `.cbr`. Bản chất tệp truyện này là các tệp nén zip bình thường,
-bên trong có các tệp ảnh thông dụng như `.jpg`, `.png`. Tuy nhiên, do được tải
-hẳn về máy rồi mới đọc, những tệp truyện này không bị giới hạn về băng thông hay
-thời gian, do đó hình ảnh trong tệp có thể có chất lượng rất cao.
+đuôi CBZ hoặc CBR. Bản chất tệp truyện này là các tệp nén zip bình thường, bên
+trong có các tệp ảnh thông dụng như JPG, PNG. Tuy nhiên, do được tải hẳn về máy
+rồi mới đọc, những tệp truyện này không bị giới hạn về băng thông hay thời gian,
+do đó hình ảnh trong tệp có thể có chất lượng rất cao.
 
 Trong khóa luận này, tôi viết một ứng dụng Android nhằm phục vụ số ít người dùng
 có nhu cầu đọc truyện tranh chất lượng cao đã giới thiệu ở trên. Tên của ứng
@@ -114,10 +114,10 @@ miễn phí và có quảng cáo, được cập nhật có thể nói là thư�
 Một ngoại lệ đáng kể ở đây là ứng dụng mã nguồn mở [Tachiyomi][3]. Ứng dụng này
 có hệ thống phần mở rộng, cho phép đọc truyện ở các trang web truyện tranh. Khi
 web truyện tranh thay đổi, hoặc hỗ trợ thêm trang mới, chỉ cần tải về phần mở
-rộng tương ứng ở dạng ứng dụng `.APK`. Tính năng này cùng mô hình mã nguồn mở
-khiến Tachiyomi mạnh hơn, cập nhật nhanh hơn toàn bộ các ứng dụng đã có và sẽ
-có. Tuy nhiên, Tachiyomi lại không thể được đưa lên Play Store, vì chính tính
-năng phần mở rộng đã [vi phạm chính sách][4] của Play Store.
+rộng tương ứng ở dạng ứng dụng APK. Tính năng này cùng mô hình mã nguồn mở khiến
+Tachiyomi mạnh hơn, cập nhật nhanh hơn toàn bộ các ứng dụng đã có và sẽ có. Tuy
+nhiên, Tachiyomi lại không thể được đưa lên Play Store, vì chính tính năng phần
+mở rộng đã [vi phạm chính sách][4] của Play Store.
 
 Một điểm khác biệt quan trọng của yacv với các ứng dụng có sẵn là việc hỗ trợ
 metadata của tệp truyện tranh, do các ứng dụng có sẵn trên Play Store đa số bỏ
@@ -131,7 +131,7 @@ tính năng này là [Kuro Reader][5], tuy nhiên đây là một tính năng tr
 - Đọc file truyện CBZ
 - Tìm kiếm truyện theo metadata
 
-Tính năng đọc tệp truyện `.cbr` hiện mới chỉ được cài đặt một phần, do khó khăn
+Tính năng đọc tệp truyện CBR hiện mới chỉ được cài đặt một phần, do khó khăn
 trong việc tích hợp thư viện đọc định dạng này.
 
 ### 1.4. Cấu trúc khóa luận <a name="P1.4-outline"></a>
@@ -168,20 +168,20 @@ Chương này giới thiệu sơ qua về các nền tảng trong quá trình x�
 
 ### 2.1. Hệ điều hành Android <a name="P2.1-android"></a>
 
-Android là một hệ điều hành do Google phát triển cho thiết bị di động. Android
-dùng nhân Linux và được thiết kế cho màn hình cảm ứng. Cùng với iOS của Apple,
-Android trở thành một phần không thể thiếu của cuộc cách mạng di động bắt đầu
-vào cuối những năm 2000.
+Android là một hệ điều hành di động do Google phát triển. Android dùng nhân
+Linux và được thiết kế cho màn hình cảm ứng. Cùng với iOS của Apple, Android trở
+thành một phần không thể thiếu của cuộc cách mạng di động bắt đầu vào cuối những
+năm 2000.
 
 Google mua lại phiên bản Android đầu của công ty khởi nghiệp cùng tên vào năm
-2005, và phát triển hệ điều hành này từ đó. Ngoài Google, Android còn nhận đóng
-góp lớn từ cộng đồng, do là một dự án mã nguồn mở (phần lớn mã nguồn dùng giấy
-phép Apache); tên chính thức của dự án là Android Open Source Project. Dù vậy,
-mọi thiết bị Android thương mại đều có ứng dụng độc quyền. Ví dụ đáng kể là bộ
-Google Mobile Service, chứa những ứng dụng không thể thiếu như trình duyệt
-Chrome hay chợ Play Store. Về mặt này, Android khá giống Chrome: thành phần cốt
-lõi kĩ thuật được phát triển theo mô hình mã nguồn mở (AOSP và Chromium), còn
-thành phần liên quan đến trải nghiệm người dùng được phát triển riêng.
+2005, và phát triển nó từ đó. Ngoài Google, Android còn nhận đóng góp lớn từ
+cộng đồng, do có mã nguồn mở (phần lớn dùng giấy phép Apache); tên chính thức
+của dự án là Android Open Source Project. Dù vậy, mọi thiết bị Android thương
+mại đều có ứng dụng độc quyền. Ví dụ đáng kể là bộ Google Mobile Services, chứa
+những ứng dụng thiết yếu như trình duyệt Chrome hay chợ Play Store. Về mặt này,
+Android khá giống Chrome: thành phần cốt lõi kĩ thuật được phát triển theo mô
+hình mã nguồn mở (AOSP và Chromium), còn thành phần liên quan đến trải nghiệm
+người dùng được phát triển riêng.
 
 ![Android software stack](../images/android-stack_2x.png)
 
@@ -191,15 +191,15 @@ Hệ điều hành Android được phân lớp như sau:
 
 - Nhân Linux (Linux Kernel):
 
-    Đây là tầng thấp nhất. Android dùng nhánh hỗ trợ dài hạn (LTS) của Linux.
-    Không như kiểu phát triển distro trên máy tính (chủ yếu thay đổi ở ngoài
-    nhân), Google sửa và thêm bớt nhiều thành phần vào nhân trước khi tích hợp.
+    Android dùng nhánh hỗ trợ dài hạn (LTS) của Linux. Không như kiểu phát triển
+    distro trên máy tính (chủ yếu thay đổi ở ngoài nhân), Google sửa và thêm bớt
+    nhiều thành phần vào nhân trước khi tích hợp.
 
 - Lớp phần cứng trừu tượng (Hardware Abstraction Layer):
 
-    Tầng này trừu tượng hóa các chi tiết phần cứng bằng cách đưa ra các giao
-    diện chung cho một kiểu phần cứng nào đó, giúp các tầng trên không cần quan
-    tâm đến chi tiết riêng của phần cứng.
+    Tầng này đưa ra giao diện chung cho mỗi kiểu phần cứng (máy ảnh, loa,...),
+    giúp các tầng trên có thể dùng phần cứng mà không cần quan tâm đến chi tiết
+    riêng.
 
 - Android Runtime (ART):
 
@@ -209,12 +209,10 @@ Hệ điều hành Android được phân lớp như sau:
     mã máy (trước khi chạy - AOT), còn JVM *thông dịch* bytecode thành mã máy
     (trong khi chạy).
 
-    ART hiện hỗ trợ đa số tính năng của Java 8.
-
 - Thư viện C/C++:
 
-    Tầng thư viện native nằm ngang hàng với ART, phục vụ các tiến trình hệ thống
-    và một số ứng dụng dùng NDK (tức gọi API C cấp thấp) như trò chơi điện tử.
+    Tầng thư viện native nằm ngang hàng với ART, phục vụ một số ứng dụng dùng
+    NDK (tức gọi API C cấp thấp) như trò chơi điện tử.
 
 - Khung phát triển ứng dụng (Java API Framework):
 
@@ -222,10 +220,9 @@ Hệ điều hành Android được phân lớp như sau:
     qua API Java. Tầng này cung cấp toàn bộ tính năng của Android cho lập trình
     viên, bao gồm các yếu tố cơ bản như giao diện (View System), truy xuất,...
 
-    Lập trình viên có quyền truy cập vào lớp này tương đương với ứng dụng hệ
-    thống. Đây có thể coi là một cam kết tránh độc quyền công nghệ, tức đa số
-    ứng dụng hệ thống không có khả năng đặc biệt, hay hiệu năng cao hơn ứng dụng
-    bên thứ ba tương tự.
+    Lập trình viên có thể truy cập vào lớp này tương đương với ứng dụng hệ
+    thống. Đây được coi là một cam kết tránh độc quyền công nghệ, tức đa số ứng
+    dụng hệ thống không có khả năng đặc biệt hơn ứng dụng bên thứ ba tương tự.
 
 - Ứng dụng hệ thống (System Apps)
 
@@ -311,9 +308,9 @@ dùng đa nhiệm ưu tiên (preemptive multitasking). Mấu chốt khác biệt
 coroutine có thể dừng lại, chủ động nhả CPU cho việc khác, rồi tiếp tục việc
 đang dở vào lúc thích hợp. Ngược lại, đa nhiệm ưu tiên có thể buộc một luồng
 đang chạy ngừng lại bất kì lúc nào để ưu tiên chạy một luồng khác. Đây cũng là
-điểm khiến coroutine nhẹ hơn: chi phí chuyển ngữ cảnh (context switching) được
-kiểm soát và cắt giảm, do chuyển sang thực thi một coroutine khác chưa chắc đã
-chuyển sang một luồng hệ điều hành khác.
+điểm khiến coroutine nhẹ hơn: việc chuyển ngữ cảnh (context switching) được kiểm
+soát và cắt giảm, do chuyển sang thực thi một coroutine khác chưa chắc đã chuyển
+sang một luồng hệ điều hành khác.
 
 Với những điều trên, coroutine chưa làm được nhiều. Roman Elizarov, trưởng dự án
 Kotlin, hướng coroutine trong Kotlin theo một ý tưởng mới: *tương tranh có cấu
@@ -324,9 +321,8 @@ ngừng tác vụ bất đồng bộ tốt hơn việc dùng luồng, hay các t
 như RxJava.
 
 Coroutine được dùng để tăng tốc những đoạn mã chạy chậm trong yacv (sẽ được mô
-tả sau). Ngoài cải thiện về hiệu năng, coroutine và tương tranh có cấu trúc còn
-cho phép viết mã ngắn gọn, rõ ràng hơn. Do có tác động lớn, coroutine sẽ được
-giới thiệu kĩ hơn ở phần này.
+tả sau). Ngoài cải thiện hiệu năng, coroutine và SC còn cho phép viết mã ngắn,
+rõ ràng hơn. Do có tác động lớn, cả hai sẽ được giới thiệu kĩ hơn ở phần này.
 
 ##### 2.2.1.2. Bài học từ quá khứ: lập trình có cấu trúc
 
@@ -453,9 +449,9 @@ tách biệt với luồng chương trình, như Hình 5 mô tả. Do không có
 chẽ kia, các tính năng ngôn ngữ mới cũng khó cài đặt như đã phân tích.
 
 Do trong các ngôn ngữ khác, nguyên tắc trên chỉ là một ca sử dụng, việc ép buộc
-viết theo ca sử dụng này đòi hỏi lập trình viên thay đổi suy nghĩ về mã tương
-tranh. Đổi lại, chương trình trở nên sáng rõ, giống với những đoạn mã viết theo
-kiểu tuần tự truyền thống.
+viết theo ca sử dụng này đòi hỏi lập trình viên thay đổi suy nghĩ về tương
+tranh. Đổi lại, chương trình trở nên sáng rõ, giống những đoạn mã viết theo kiểu
+tuần tự truyền thống.
 
 Một khi vấn đề tương tranh được giải quyết hoặc đơn giản hóa, việc song song hóa
 (paralellization) để tăng tốc ứng dụng chỉ còn là một chi tiết cài đặt.
@@ -515,10 +511,10 @@ Hiện nay, MVC trên Android được coi là lỗi thời, không phù hợp.
 
 <!-- Cite [13] -->
 Năm 2012, Robert Martin "Uncle Bob" xuất bản một bài viết nổi tiếng về kiến trúc
-phần mềm: Clean Architecture, tạo ra một trào lưu đưa Clean Architecture đi khắp
-nơi. MVP, vốn được phát triển từ lâu, được đông đảo lập trình viên chọn để triển
-khai Clean Architecture trên Android. Trước khi Google chọn MVVM, đây là hướng
-đi mới, có kì vọng cao sau nhiều thất bại trong việc đưa MVC vào Android.
+phần mềm: Clean Architecture. MVP, vốn được phát triển từ lâu, được đông đảo lập
+trình viên chọn để triển khai Clean Architecture trên Android. Trước khi Google
+chọn MVVM, đây là hướng đi mới, có kì vọng cao sau nhiều thất bại trong việc đưa
+MVC vào Android.
 
 Nhiệm vụ của ba thành phần như sau:
 
@@ -532,9 +528,9 @@ Nhiệm vụ của ba thành phần như sau:
 <!-- Cite [14] -->
 Hình 7: Kiến trúc MVP
 
-Ở đây, ta thấy điểm yếu View-Controller nhập nhằng của MVC được khắc phục, khi
-View kiêm luôn việc nhận tương tác. Đồng thời, Model và View hoàn toàn không
-biết nhau, đúng theo nguyên lý tách lớp của Clean Architecture.
+Ta thấy điểm yếu View-Controller nhập nhằng được khắc phục, khi View kiêm luôn
+việc nhận tương tác. Đồng thời, Model và View hoàn toàn không biết nhau, đúng
+theo nguyên lý tách lớp của Clean Architecture.
 
 Ta xét một ứng dụng ToDo đơn giản, trong đó các công việc có thể được đánh dấu
 đã hoàn thành. Trong ứng dụng, màn hình hiển thị số việc đã và chưa hoàn thành.
@@ -657,9 +653,9 @@ văn. Do đó, FTS có vai trò không thể thiếu để tăng tốc tìm ki�
 
 ### 2.5. Định dạng tệp nén ZIP và CBZ <a name="P2.5-zip-cbz"></a>
 
-Các tệp truyện mà yacv đọc có định dạng CBZ, về bản chất chính là tệp nén ZIP
-thông thường. Do yêu cầu của các phần sau, định dạng tệp ZIP cũng cần được trình
-bày ở mức cơ bản.
+Các tệp truyện mà yacv đọc có định dạng CBZ, bản chất chính là tệp nén ZIP. Do
+yêu cầu của các phần sau, định dạng tệp ZIP cũng cần được trình bày ở mức cơ
+bản.
 
 #### 2.5.1. Định dạng tệp nén ZIP <a name="P2.5.1-zip"></a>
 
@@ -670,7 +666,8 @@ gần như mọi nền tảng, bao gồm Android.
 ZIP thực chất là một định dạng chứa (container), chuyên chứa dữ liệu nén, chứ
 không phải thuật toán nén; thuật toán nén hay dùng nhất trong ZIP là DEFLATE.
 Một trong các mục tiêu của ZIP là giúp việc sửa tệp nén (thêm, sửa, xóa tệp con
-trong tệp ZIP) nhanh nhất có thể. Mục tiêu đó thể hiện ở thiết kế sau:
+trong tệp ZIP) nhanh nhất có thể. Mục tiêu đó thể hiện ở thiết kế sau, được biểu
+diễn trong Hình 10:
 
 - Thuật toán nén mỗi tệp gốc thành một tệp nhị phân, ở đây gọi là *tệp nén lẻ*
   (data trong Hình 10). Sau đó, các tệp nén lẻ này được nối thành tệp ZIP cuối
@@ -701,11 +698,11 @@ Ta phân tích kĩ hơn:
     - Giả sử mục lục đặt ở đầu. Khi sửa, toàn bộ các tệp nén lẻ phải di chuyển
       để tạo chỗ cho mục lục mới (giống như thêm một phần tử vào mảng ở vị trí
       đầu: toàn bộ các phần tử sau bị đẩy lên để tạo chỗ trống).
-    - Do mục lục nằm ở cuối tệp tin, khi sửa tệp nén, chỉ cần đẩy các tệp nén lẻ
-      từ chỗ sửa. Đây có thể coi là một tối ưu nhỏ, nhưng trước đây là một điểm
-      sáng. Do đĩa mềm - phương tiện chia sẻ chủ yếu thời đó - có dung lượng
-      nhỏ, tệp ZIP có thể phải cắt ra cho vừa. Cách sửa tệp linh động này cho
-      phép chỉ ghi lại dữ liệu ở một số đĩa mềm, thay vì ghi lại toàn bộ.
+    - Do mục lục nằm ở cuối tệp ZIP, nên khi sửa chỉ cần đẩy các tệp nén lẻ từ
+      chỗ sửa. Trước đây tối ưu này rất quan trọng. Do đĩa mềm - phương tiện
+      chia sẻ chủ yếu thời đó - có dung lượng nhỏ, tệp ZIP có thể phải cắt ra
+      cho vừa. Thiết kế này cho phép chỉ sửa lại dữ liệu ở một số đĩa, thay vì
+      toàn bộ.
     - Hơn nữa, nếu mục lục ở đầu thì ngay trong khi nén, các tệp nén lẻ bị di
       chuyển như trên do mục lục liên tục được cập nhật.
 
@@ -745,7 +742,7 @@ phát triển ứng dụng.
 Cả hai nhóm có điểm chung là kĩ tính, yêu cầu cao về trải nghiệm đọc truyện, cụ
 thể là về *chất lượng hình ảnh*. Cũng do kĩ tính, nên cả hai nhóm không cần
 nhiều chức năng, tuy nhiên có yêu cầu cao về từng chức năng. Nhóm người dùng sưu
-tầm truyện còn có yêu cầu về *xem thông tin (metadata)* của tệp truyện.
+tầm truyện còn có yêu cầu *xem thông tin (metadata)* của tệp truyện.
 
 #### 3.1.2. Mục đích <a name="P3.1.2-objectives"></a>
 
@@ -756,8 +753,8 @@ sản phẩm đã nhắc ở [mục 1.1](#P1.1-background).
   ứng dụng **ngoại tuyến** (tức đọc các tệp truyện có sẵn trên điện thoại).
 - Ứng dụng *không phải* là ứng dụng khách cho các trang đọc truyện hiện có, hay
   có máy chủ tập trung riêng để cung cấp truyện.
-- Ứng dụng *không có* khả năng đọc truyện đuôi `.pdf`, cùng với các định dạng
-  truyện thiên về chữ khác như `.txt`, `.epub`.
+- Ứng dụng *không có* khả năng đọc truyện đuôi PDF, cùng với các định dạng
+  truyện thiên về chữ khác như TXT, EPUB.
 
 Các giới hạn này nhằm tránh cho phần mềm quá phức tạp với tôi, đồng thời phù hợp
 (không thừa thiếu chức năng) so với nhu cầu của nhóm người dùng mục tiêu đã nêu
@@ -844,14 +841,15 @@ Do ứng dụng đơn giản, các ca sử dụng tách biệt, nên mỗi ca s�
     Nếu người đọc đã chọn một thư mục gốc, ca sử dụng này *thay thế* thư mục gốc
     đã chọn bằng thư mục vừa chọn.
 
-    Nếu người đọc không chọn thư mục, quay lại Màn hình Thư viện.
+    Nếu người đọc không chọn thư mục nào, quay lại Màn hình Thư viện và không
+    thay đổi gì.
 
 - **Luồng ngoại lệ**:
 
     Nếu có lỗi trong quá trình chọn thư mục, cần gợi ý người đọc chọn lại. Lỗi
     gồm:
 
-    - Thiếu quyền
+    - Thiếu quyền đọc
     - Không tìm được thư mục gốc
     - Thư mục gốc không có truyện
 
@@ -863,7 +861,7 @@ Do ứng dụng đơn giản, các ca sử dụng tách biệt, nên mỗi ca s�
     - Hậu điều kiện: Ứng dụng ở Màn hình Thư viện
 
         - Hiển thị thư mục truyện quét được
-        - Hiển thị lỗi nếu có (ba loại lỗi ở trên)
+        - Hiển thị lỗi nếu có (ba loại lỗi ở trên), và gợi ý xử lí
 
 - **Yêu cầu phi chức năng**:
 
@@ -961,9 +959,9 @@ thiết kế này:
     - Một cách xếp có thể nói là tốt là xếp theo Bộ truyện, tuy nhiên ta lại
       quay về vấn đề thiếu metada.
 
-Hơn nữa, các thư mục cần được "làm phẳng". "Làm phẳng" có nghĩa là hiển thị thư
-mục con (cháu,...) ngang hàng với thư mục gốc. Ví dụ sau cho thấy cách yacv làm
-phẳng cây thư mục:
+Hơn nữa, các thư mục cần được "làm phẳng", tức là hiển thị thư mục con
+(cháu,...) ngang hàng với thư mục gốc. Ví dụ sau cho thấy cách yacv làm phẳng
+cây thư mục:
 
 ```text
 | Cây thư mục gốc                   | yacv đã làm phẳng         |
@@ -979,7 +977,7 @@ phẳng cây thư mục:
 
 Bảng 2: Cách yacv làm phẳng thư mục
 
-Theo như cột phải Bảng 2, các màn hình trong yacv được tổ chức như sau:
+Theo như bảng trên, các màn hình trong yacv được tổ chức như sau:
 
 - Màn hình Thư viện: có 3 thư mục:
 
@@ -1158,12 +1156,12 @@ Hình 11: Mô tả Màn hình Tìm kiếm
 Tương tác của người đọc với Màn hình Tìm kiếm trên diễn ra như sau:
 
 - Khi ấn vào một mục trong danh sách "Truyện", người đọc được đưa đến thẳng Màn
-  hình Đọc truyện của truyện đó (và hiển thị ở trang đọc dở như đã mô tả ở trong
+  hình Đọc truyện của truyện đó (và hiển thị ở trang đọc dở như đã mô tả trong
   [ca sử dụng đọc truyện](#P3.3.3-read-comic)).
 - Khi ấn vào một mục trong danh sách "Bộ truyện", người đọc được đưa đến màn
-  hình chứa danh sách những truyện trong bộ truyện đã chọn. *Màn hình này cần
-  giống với Màn hình Thư mục*. Sau đó, người dùng chọn một truyện để đọc như
-  bình thường.
+  hình chứa danh sách truyện trong bộ truyện đã chọn. *Màn hình này cần giống
+  với Màn hình Thư mục*. Sau đó, người dùng chọn một truyện để đọc như bình
+  thường.
 
 Đây chỉ là ví dụ về một từ khóa có kết quả khi tìm theo tên tệp truyện và bộ
 truyện. Các trường metadata khác nếu có kết quả phù hợp cũng sẽ thể hiện theo

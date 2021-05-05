@@ -8,7 +8,27 @@
 \usepackage{lmodern}
 
 % Clickable link
-\usepackage[unicode=true,vietnamese]{hyperref}    % This sucker ignore polyglossia
+\usepackage[vietnamese, unicode]{hyperref}    % This sucker ignore polyglossia
+% \makeatletter
+% \def\HyLang@vietnamese{%
+%   \def\equationautorefname{Phương trình}%
+%   \def\footnoteautorefname{Chú thích}%
+%   \def\itemautorefname{Mục}%
+%   \def\figureautorefname{Hình}%
+%   \def\tableautorefname{Bảng}%
+%   \def\partautorefname{Phần}%
+%   \def\appendixautorefname{Phụ lục}%
+%   \def\chapterautorefname{Chương}%
+%   \def\sectionautorefname{Mục}%
+%   \def\subsectionautorefname{Mục}%
+%   \def\subsubsectionautorefname{Mục}%
+%   \def\paragraphautorefname{Đoạn}%
+%   \def\subparagraphautorefname{Đoạn}%
+%   \def\FancyVerbLineautorefname{Dòng}%
+%   \def\theoremautorefname{Định lý}%
+%   \def\pageautorefname{Trang}%
+% }
+% \makeatother
 
 \usepackage{amsthm}
 
@@ -20,7 +40,7 @@
 % Code
 \usepackage{minted}      % This one is used for syntax highlighting
 \usepackage{listings}    % This one is used to replace verbatim, not for syntax highlighting
-\lstset{
+\lstset{    % make listings looks like verbatim
   basicstyle=\ttfamily,
   columns=fullflexible,
 %  keepspaces=true,
