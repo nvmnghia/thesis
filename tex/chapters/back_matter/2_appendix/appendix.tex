@@ -1,0 +1,121 @@
+\documentclass[../../../thesis]{subfiles}
+
+
+\begin{document}
+
+\begin{appendices}
+
+\appendixpageoff
+
+%----------------------------------------------------------------------------------------
+%	Phụ lục A: Giải thích các trường metadata
+%----------------------------------------------------------------------------------------
+
+\chapter{Giải thích các trường metadata}
+
+Mô hình xuất bản của truyện tranh siêu anh hùng phương Tây là phức tạp nhất. Lí
+do là các nhân vật không đổi trong hàng chục năm xuất bản nhưng cốt truyện không
+ngừng được thêm mới, hoặc thậm chí viết lại; khác với các truyện tranh khác luôn
+đi đến hồi kết. Do đó, các thông tin của kiểu truyện tranh này được chọn để
+thiết kế các định dạng metadata.
+
+Ta xét một tập truyện \texttt{Wolverine\ 1982(1)\ \#1}:
+
+\begin{verbatim}
+    Wolverine 1982(1) #1
+    |         |       |
+    |         |       Tập truyện số (Number)
+    |         Volume
+    Bộ truyện (Series)
+\end{verbatim}
+
+\begin{itemize}
+    \item
+        Bộ truyện: Tên bộ truyện. Một bộ truyện gồm nhiều tập truyện.
+    \item
+        Tập truyện số: Thể hiện số thứ tự xuất bản của tệp truyện, tương tự như
+        chương trong manga. Từng tập truyện lẻ còn có thể có tên riêng.
+    \item
+        Volume: Các bộ truyện có thể trùng tên, do đó cần con số này để phân
+        biệt. Số này có thể là năm xuất bản hoặc lần xuất bản.
+\end{itemize}
+
+Số Volume cần thiết vì có rất nhiều bộ truyện cùng tên như sau:
+
+\begin{itemize}
+    \item
+        Có một bộ Wolverine ngắn gồm 4 tập, xuất bản năm 1982
+    \item
+        Có một bộ Wolverine gồm nhiều tập, xuất bản từ 1989 đến 2003
+    \item
+        Có một bộ Wolverine gồm nhiều tập, xuất bản từ 2003 đến 2010
+\end{itemize}
+
+Các bộ Wolverine trên đều có nội dung khác nhau, thậm chí cũng không cùng dòng
+thời gian, không cùng tác giả để có thể gom lại. Nhưng chúng cùng dùng một tên
+bộ truyện (là tên nhân vật chính), đều có những tập truyện số 1, 2, 3, 4. Số
+Volume là cách duy nhất để phân biệt ba bộ truyện này.
+
+Ngoài ra, một số metadata còn có số Count. Count là số tập truyện trong một bộ
+truyện.
+
+\begin{itemize}
+    \item
+        Bộ Wolverine đầu tiên được gọi là ``ngắn'' (miniseries) vì nhà xuất bản
+        xác định và thông báo trước rằng chỉ có bốn tập truyện.
+    \item
+        Hai bộ còn lại được coi là ``dài'' (on-going), do không xác định số tập
+        truyện từ đầu.
+\end{itemize}
+
+
+%----------------------------------------------------------------------------------------
+%	Phụ lục B: Lược đồ XSD ComicInfo
+%----------------------------------------------------------------------------------------
+
+\chapter{Lược đồ XSD ComicInfo}
+
+Phụ lục này trình bày phiên bản rút gọn của lược đồ XSD của định dạng metadata
+ComicInfo. Các trường nêu trong \protect\hyperlink{P9.1-metadata}{Phụ lục 1} đều
+được chứa trong định dạng này, ngoài ra còn có các trường về tác giả và nhân
+vật.
+
+% Somehow doesn't work
+% \inputminted{xml}{../assets/ComicInfo.xsd}
+
+\begin{minted}{xml}
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<xs:element name="ComicInfo" nillable="true" type="ComicInfo" />
+<xs:complexType name="ComicInfo">
+  <xs:sequence>
+    <xs:element name="Title"  type="xs:string"
+        minOccurs="0" maxOccurs="1" default="" />
+    <xs:element name="Series" type="xs:string"
+        minOccurs="0" maxOccurs="1" default="" />
+    <xs:element name="Number" type="xs:string"
+        minOccurs="0" maxOccurs="1" default="" />
+    <xs:element name="Count"  type="xs:int"
+        minOccurs="0" maxOccurs="1" default="-1" />
+    <xs:element name="Volume" type="xs:int"
+        minOccurs="0" maxOccurs="1" default="-1" />
+    <xs:element name="Summary" type="xs:string"
+        minOccurs="0" maxOccurs="1" default="" />
+    <xs:element name="Year"   type="xs:int"
+        minOccurs="0" maxOccurs="1" default="-1" />
+    <xs:element name="Month"  type="xs:int"
+        minOccurs="0" maxOccurs="1" default="-1" />
+    <xs:element name="Writer" type="xs:string"
+        minOccurs="0" maxOccurs="1" default="" />
+    <xs:element name="Publisher" type="xs:string"
+        minOccurs="0" maxOccurs="1" default="" />
+    <xs:element name="Genre"  type="xs:string"
+        minOccurs="0" maxOccurs="1" default="" />
+  </xs:sequence>
+</xs:complexType>
+</xs:schema>
+\end{minted}
+
+\end{appendices}
+
+\end{document}

@@ -1326,9 +1326,12 @@ bộ truyện (là tên nhân vật chính), đều có những tập truyện s
 Volume là cách duy nhất để phân biệt ba bộ truyện này.
 
 Ngoài ra, một số metadata còn có số Count. Count là số tập truyện trong một bộ
-truyện. Bộ Wolverine đầu tiên được gọi là "ngắn" (miniseries) vì nhà xuất bản
-xác định và thông báo trước rằng chỉ có bốn tập truyện. Hai bộ còn lại được coi
-là dài (on-going), do không xác định số tập truyện từ đầu.
+truyện.
+
+- Bộ Wolverine đầu tiên được gọi là "ngắn" (miniseries) vì nhà xuất bản xác định
+  và thông báo trước rằng chỉ có bốn tập truyện. Do đó, số Count là 4.
+- Hai bộ còn lại được coi là dài (on-going), do không xác định số tập truyện từ
+  đầu. Do đó, số Count có thể để trống.
 
 ### 8.2. Phụ lục 2: Lược đồ XSD ComicInfo <a name="P8.2-comicinfo.xsd">
 
