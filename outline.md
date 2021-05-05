@@ -641,7 +641,7 @@ Các biểu đồ trạng thái cũng có một số chi tiết chung:
   thường được ánh xạ đến một phương thức trong View.
 - Kí hiệu hình tròn đen chỉ dùng để tả trạng thái đầu *khi lần đầu dùng* yacv.
 
-#### 4.2.1. Nguồn dữ liệu - Repository - DAO - Scanner <a name="P4.2.1-mvvm-detail">
+#### 4.2.1. Nguồn dữ liệu - Repository - DAO - ComicParser <a name="P4.2.1-mvvm-detail">
 
 Như đã đề cập ở Chương 2, yacv sử dụng Kiến trúc Google khuyên dùng, vốn dựa
 trên MVVM. Phần này nêu rõ hơn cách triển khai MVVM của yacv trong phần nguồn dữ
@@ -649,17 +649,17 @@ liệu (Model/Repository).
 
 Dựa vào Hình 9, ta thiết kế được 3 nguồn dữ liệu (model) sau:
 
-|            | Thành phần tương đương | Mục đích                                                |
-|:-----------|:-----------------------|:--------------------------------------------------------|
-| Parser     | Remote Data Source     | Quét tệp để lấy metadata cập nhật nhất                  |
-| DAO        | Model                  | Lấy metadata từ cơ sở dữ liệu để tránh quét đi quét lại |
-| Repository | Repository             | Tổng hợp hai nguồn trên                                 |
+|             | Thành phần tương đương | Mục đích                                                |
+|:------------|:-----------------------|:--------------------------------------------------------|
+| ComicParser | Remote Data Source     | Quét tệp để lấy metadata cập nhật nhất                  |
+| DAO         | Model                  | Lấy metadata từ cơ sở dữ liệu để tránh quét đi quét lại |
+| Repository  | Repository             | Tổng hợp hai nguồn trên                                 |
 
 Bảng 3: Ba nguồn dữ liệu tương đương với Hình 9
 
 Cụ thể hơn:
 
-- *Parser* là bộ quét metadata tệp truyện (sẽ được mô tả sau), nhận vào URI, trả
+- *ComicParser* là bộ quét metadata tệp truyện (sẽ được mô tả sau), nhận vào URI, trả
   về metadata của tệp truyện tương ứng.
 - *DAO* (Data access object) là giao diện Room tạo ra giúp truy cập SQLite dễ
   hơn; mỗi bảng tương ứng với một DAO, mỗi câu truy vấn tương ứng với một hàm
@@ -671,9 +671,9 @@ Khi cần đọc dữ liệu metadata từ tệp truyện, ba thành phần này
 
 Hình 11: Tương tác của ba nguồn dữ liệu, mũi tên gạch đứt thể hiện tính năng data binding
 
-Mấu chốt ở đây là Parser dù có dữ liệu chính xác (trong trường hợp một ứng dụng
-khác sửa metadata tệp truyện) nhưng tốc độ rất chậm, còn cơ sở dữ liệu không
-chính xác nhưng rất nhanh, do đó *cơ sở dữ liệu làm bộ đệm cho parser*.
+Mấu chốt ở đây là ComicParser dù có dữ liệu chính xác (trong trường hợp một ứng
+dụng khác sửa metadata tệp truyện) nhưng tốc độ rất chậm, còn cơ sở dữ liệu
+không chính xác nhưng rất nhanh, do đó *cơ sở dữ liệu làm bộ đệm cho parser*.
 
 Repository làm nhiệm vụ gọi cả hai nguồn dữ liệu trên và cập nhật cơ sở dữ liệu
 (nếu cần) thay cho View/ViewModel. Hiện tại, Repository có thể không làm được
@@ -684,7 +684,7 @@ khi đó để tích hợp API thì chỉ cần sửa phần Repository.
 Cũng cần chú ý rằng việc đọc metadata từ tệp tin không phải là yêu cầu của mọi
 màn hình (cụ thể chỉ Màn hình Metadata cần), do đó trong đa số các ca sử dụng,
 *DAO đóng vai trò Model*, thay cho Repository. Tương tác trong Hình 11 vẫn được
-duy trì, tuy không có cả Repository lẫn Parser.
+duy trì, tuy không có cả Repository lẫn ComicParser.
 
 ##### 4.2.2. Màn hình Quyền đọc
 
@@ -714,7 +714,7 @@ Như đã phân tích ở [mục 3.3.2](#P3.3.2-show-library), Màn hình Thư v
 thị cả lỗi và gợi ý, bên cạnh việc hiển thị danh sách thư mục và chọn thư mục
 gốc. Do đó, phần này chia ra làm hai phần con tương ứng.
 
-##### 4.2.3.1. Chọn thư mục gốc và hiển thị danh sách thư mục
+###### 4.2.3.1. Chọn thư mục gốc và hiển thị danh sách thư mục
 
 Để chọn thư mục gốc, người dùng ấn nút Đổi thư mục gốc để kích hoạt hộp thoại
 Chọn thư mục (picker), rồi chọn một thư mục trong đó. Luồng chạy của yacv như
@@ -740,7 +740,7 @@ thư mục nhanh hơn BFS, Màn hình Thư viện, vốn hiển thị danh sách
 cũng hiển thị sớm hơn. Dù thời gian quét tổng thể không thay đổi, người dùng
 được thấy thư mục sớm hơn giúp tạo cảm giác ứng dụng khá nhanh.
 
-##### 4.2.3.2. Ngoại lệ trong Màn hình Thư mục
+###### 4.2.3.2. Ngoại lệ trong Màn hình Thư viện
 
 Ngoại lệ ở đây chỉ cả trường hợp không tìm thấy thư mục, lẫn trường hợp không
 quét được thư mục vì các lí do đã nêu trong [mục 3.1](#P3.3.1-scan). Khi này,
@@ -753,6 +753,24 @@ nêu trên.
 ![library state](images/Library_State.svg)
 
 Hình 14: Trạng thái của Màn hình Thư viện
+
+##### 4.2.4. Màn hình Thư mục
+
+Trong khi phân tích yêu cầu, ta đã phân tích được rằng màn hình hiển thị danh
+sách truyện - một phần trong ca sử dụng tìm kiếm - phải có giao diện giống Màn
+hình Thư mục, vì đều hiển thị danh sách truyện. Do đó, hai màn hình này được gộp
+lại, gọi chung là *Màn hình Danh sách truyện*, và sẽ được mô tả sau.
+
+##### 4.2.5. Màn hình Đọc truyện
+
+Để hiển thị các trang truyện, Màn hình Đọc truyện cần nhận `ComicID` (hoặc một
+đối tượng `Comic` hoàn chỉnh, tuy nhiên cốt yếu vẫn là thông tin `ComicID`) của
+một tệp truyện, sau đó đưa cho `ComicParser` để lấy luồng đọc cho từng trang
+truyện. Biểu đồ luồng của màn hình này là như sau:
+
+![reader](images/Reader.svg)
+
+Hình 15: Biểu đồ tuần tự của Màn hình Đọc truyện
 
 ## 5. Chương 5: Lập trình & Kiểm thử <a name="P5-implementation"></a>
 
