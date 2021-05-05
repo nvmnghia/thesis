@@ -1327,8 +1327,8 @@ thời gian, không cùng tác giả để có thể gom lại. Nhưng chúng c�
 bộ truyện (là tên nhân vật chính), đều có những tập truyện số 1, 2, 3, 4. Số
 Volume là cách duy nhất để phân biệt ba bộ truyện này.
 
-Ngoài ra, một số metadata còn có số Count. Count là số tập truyện trong một bộ
-truyện.
+Ngoài ra, một số định dạng metadata còn có số Count, chỉ số tập truyện trong một
+bộ truyện.
 
 - Bộ Wolverine đầu tiên được gọi là "ngắn" (miniseries) vì nhà xuất bản xác định
   và thông báo trước rằng chỉ có bốn tập truyện. Do đó, số Count là 4.
