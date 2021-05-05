@@ -224,33 +224,31 @@ Hệ điều hành Android được phân lớp như sau:
     lịch,... Google cho phép thay thế đa số các ứng dụng này với ứng dụng bên
     thứ ba, tuy nhiên có những ngoại lệ như ứng dụng Cài đặt (Settings).
 
-Gần như mọi ứng dụng Android cơ bản đều sử dụng thành phần View System trong
-tầng Khung phát triển để viết giao diện, và yacv không là ngoại lệ. yacv còn sử
-dụng thành phần Content Provider, cụ thể là bộ Storage Access Framework, và sẽ
-được đề cập ở các phần sau.
+Gần như mọi ứng dụng Android cơ bản đều dùng View System trong tầng Khung phát
+triển để viết giao diện, và yacv không là ngoại lệ. yacv còn sử dụng thành phần
+Content Provider, cụ thể là bộ Storage Access Framework, và sẽ được đề cập ở các
+phần sau.
 
 #### 2.1.1. Android Jetpack <a name="P2.1.1-jetpack"></a>
 
 Jetpack là bộ thư viện giúp viết ứng dụng Android nhanh gọn, ít lỗi hơn so với
 việc tự viết những đoạn mã tương tự. Jetpack gồm hai thành phần:
 
-- AndroidX: đưa *API* của phiên bản hệ điều hành mới lên máy cũ
+- AndroidX, trước gọi là Thư viện Hỗ trợ (Support Library): đưa *API* của hệ
+  điều hành mới lên máy cũ
 - Architecture Component: đưa ra *thư viện* hoàn toàn mới
 
 Việc cập nhật Android rất khó khăn do phải chờ nhà sản xuất tối ưu. Do đó,
-Google viết AndroidX, trước gọi là Thư viện Hỗ trợ (Support Library), để đưa API
-Android mới lên máy cũ. Chú ý rằng Jetpack chỉ có ích cho lập trình viên (API
-mới tiện hơn thực ra là wrapper của API sẵn có), chứ không cập nhật tính năng hệ
-điều hành.
+Jetpack, đặc biệt là AndroidX, rất cần thiết. Chú ý rằng Jetpack chỉ có ích cho
+lập trình viên (API mới tiện hơn thực ra là wrapper của API sẵn có), chứ không
+cập nhật tính năng hệ thống.
 
 yacv sử dụng nhiều thành phần của Jetpack, trong đó đáng kể đến ba thư viện sau:
 
 - LiveData: giúp giao diện luôn được cập nhật theo dữ liệu mới nhất
 - ViewModel: giúp tách dữ liệu và giao diện
-- Room: giúp việc lưu dữ liệu trong SQLite thuận tiện hơn
-
-Room là một phần quan trọng của yacv, do đó sẽ được giới thiệu chi tiết ở [mục
-sau](#P2.4.2-room).
+- Room: đơn giản hóa việc lưu dữ liệu trong SQLite (sẽ được giới thiệu ở [mục
+  sau](#P2.4.2-room))
 
 ### 2.2. Ngôn ngữ lập trình Kotlin <a name="P2.2-kotlin"></a>
 
@@ -278,14 +276,14 @@ Sau đây là tóm tắt một số đặc điểm kĩ thuật của Kotlin:
       (thay vì khi chạy, như Python, JavaScript,...)
     - Là kiểu mạnh (strongly typed), tức không cho phép chuyển kiểu ngầm
 - Về cú pháp, Kotlin gọn và hiện đại: bỏ dấu `;` cuối dòng, template literal,...
-- Về lỗi, Kotlin luôn được quảng cáo về khả năng chống `NullPointerException`.
-  Kotlin "né" lỗi này do buộc người viết đánh dấu cụ thể rằng một đối tượng có
-  thể bị `null` hay không bằng hậu tố `?` ở khai báo kiểu. Từ đó, Kotlin biết
-  chính xác đối tượng có thể là `null` hay không, và buộc xử lí nếu có.
+- Về chống lỗi, Kotlin "né" `NullPointerException` do buộc người viết đánh dấu
+  rõ rằng một đối tượng có thể bị `null` bằng hậu tố `?` ở khai báo kiểu. Từ đó,
+  Kotlin biết chính xác đối tượng có thể là `null` hay không, và buộc xử lí nếu
+  có.
 
-Do Google khuyên dùng Kotlin khi viết ứng dụng Android, tôi cho rằng khóa luận
-này là một cơ hội phù hợp để thử Kotlin thay vì dùng Java quen thuộc, và quyết
-định chọn viết yacv bằng Kotlin.
+Do Google khuyên dùng Kotlin, tôi cho rằng khóa luận này là một cơ hội phù hợp
+để thử Kotlin thay vì dùng Java quen thuộc, và quyết định chọn viết yacv bằng
+Kotlin.
 
 #### 2.2.1. Coroutine <a name="P2.2.1-coroutine"></a>
 
@@ -318,13 +316,13 @@ Coroutine được dùng để tăng tốc những đoạn mã chạy chậm tro
 tả sau). Ngoài cải thiện hiệu năng, coroutine và SC còn cho phép viết mã ngắn,
 rõ ràng hơn. Do có tác động lớn, cả hai sẽ được giới thiệu kĩ hơn ở phần này.
 
-##### 2.2.1.2. Bài học từ quá khứ: lập trình có cấu trúc
+##### 2.2.1.2. Bài học từ quá khứ: lập trình cấu trúc
 
 <!-- Cite [10] -->
-Để hiểu về SC, ta có thể so sánh nó với *lập trình có cấu trúc* (structured
-programming). Để hiểu sơ về lập trình có cấu trúc, ta phải tìm về *lập trình phi
-cấu trúc* (non-structured programming), với đặc điểm là lệnh nhảy `GOTO`. Trong
-buổi đầu của máy tính, lệnh này được dùng nhiều vì hợp với cách máy tính chạy.
+Để hiểu SC, ta so sánh nó với *lập trình cấu trúc* (structured programming). Để
+hiểu sơ lập trình cấu trúc, ta phải tìm về *lập trình phi cấu trúc*
+(non-structured programming), với đặc điểm là lệnh nhảy `GOTO`. Trong buổi đầu
+của máy tính, lệnh này được dùng nhiều vì hợp với cách máy tính chạy.
 
 ![non-structured programming](../images/sequential-and-go-to-schematic.svg)
 
@@ -334,9 +332,9 @@ Hình 2: Lập trình phi cấu trúc với `GOTO`
 
 Hình 3: Sự lộn xộn của lập trình phi cấu trúc
 
-Vấn đề của lập trình phi cấu trúc, hay của `GOTO`, có thể tóm gọn như sau:
+Vấn đề của lập trình phi cấu trúc, hay của `GOTO`, gồm:
 
-- Khó nắm bắt luồng chương trình
+1. Khó nắm bắt luồng chương trình
 
     Khi đã chạy `GOTO`, các lệnh phía sau nó không biết khi nào mới chạy, vì
     chương trình chuyển sang lệnh khác mà không trở lại. Luồng chạy trở thành
@@ -344,7 +342,7 @@ Vấn đề của lập trình phi cấu trúc, hay của `GOTO`, có thể tóm
     trừu tượng bị phá vỡ: khi gọi hàm, thay vì có thể bỏ qua chi tiết bên trong,
     ta phải biết rõ để xem có lệnh nhảy bất ngờ nào không.
 
-- Không cài đặt được các chức năng mới (ngoại lệ, quản lí tài nguyên tự
+2. Không cài đặt được các chức năng mới (ngoại lệ, quản lí tài nguyên tự
   động,...)
 
     Xét ví dụ Java sau về quản lí tài nguyên tự động:
@@ -361,24 +359,23 @@ Vấn đề của lập trình phi cấu trúc, hay của `GOTO`, có thể tóm
     Điều gần tương tự cũng khiến việc xử lí ngoại lệ và nhiều tính năng khác trở
     nên rất khó đạt được, một khi ngôn ngữ cho phép `GOTO`.
 
-Lập trình có cấu trúc đơn giản hóa luồng chạy bằng cách giới hạn các lệnh nhảy
-còn `if`, `for` và gọi hàm. Khác biệt mấu chốt của ba lệnh này so với `GOTO` là
-chúng *trả luồng điều khiển* về điểm gọi, thể hiện rõ ở Hình 4. Theo định nghĩa,
-ba lệnh trên giải quyết được hậu quả đầu tiên. Đồng thời, các hậu quả số hai
-cũng được giải quyết, do ngôn ngữ đã có cấu trúc (cụ thể là có call stack).
+Lập trình cấu trúc đơn giản hóa luồng chạy bằng cách giới hạn các lệnh nhảy còn
+`if`, `for` và gọi hàm. Khác biệt mấu chốt so với `GOTO` là chúng *trả luồng
+điều khiển* về điểm gọi, thể hiện rõ ở Hình 4. Theo định nghĩa, ba lệnh trên
+giải quyết được hậu quả 1. Đồng thời, hậu quả 2 cũng được giải quyết, do ngôn
+ngữ đã có cấu trúc (cụ thể là có call stack).
 
 ![3 basic constructs](../images/control-schematics.svg)
 
-Hình 4: Ba cấu trúc cơ bản của lập trình có cấu trúc: rẽ nhánh `if`, lặp `for`
-và gọi hàm
+Hình 4: Ba cấu trúc cơ bản: rẽ nhánh `if`, lặp `for` và gọi hàm
 
-Ngày nay, ba cấu trúc trên đã trở thành phần không thể thiếu trong mọi ngôn ngữ
-lập trình, và `GOTO` chỉ còn dùng trong hợp ngữ. Quá khứ cho thấy nếu áp dụng
-một số cấu trúc, giới hạn, ta có thể giải quyết vấn đề một cách tinh tế và gọn
-gàng. Trong trường hợp này, SC có thể loại bỏ một số điểm yếu của các API tương
-tranh/bất đồng bộ truyền thống, giống cách lập trình có cấu trúc đã làm.
+Ngày nay, ba cấu trúc trên là phần không thể thiếu trong mọi ngôn ngữ lập trình,
+còn `GOTO` chỉ dùng trong hợp ngữ. Quá khứ cho thấy nếu áp dụng một số cấu trúc,
+giới hạn, ta có thể giải quyết vấn đề một cách tinh tế và gọn gàng. Trong trường
+hợp này, SC có thể loại bỏ một số điểm yếu của các API tương tranh/bất đồng bộ
+truyền thống, giống cách lập trình cấu trúc đã làm.
 
-##### 2.2.1.3. Áp dụng vào hiện tại: tương tranh có cấu trúc
+##### 2.2.1.3. Áp dụng vào hiện tại: tương tranh cấu trúc
 
 Trước hết, ta xem xét hai kiểu API tương tranh hay dùng hiện nay:
 
@@ -403,17 +400,17 @@ Hình 5: Tương tranh phi cấu trúc với `goroutine` - API kiểu tương tr
 - Với tính năng bắt ngoại lệ, nếu có ngoại lệ ở luồng tương tranh, ta cũng không
   có cách nào để biết, và buộc phải kệ nó.
 
-Trên thực tế, có cách để thực hiện một số chức năng trên với API hiện tại, tuy
-vậy đó đều là cách xử lí riêng, do đó chưa thực sự thuận tiện khi dùng. Ví dụ,
-ES6 có `catch()` để bắt ngoại lệ trong `Promise` mà không (thể) dùng cấu trúc
-`try-catch` sẵn có. Với SC, các vấn đề này đều được giải quyết.
+Trên thực tế, có thể cài đặt chức năng trên với API hiện tại, tuy vậy đó đều là
+cách xử lí riêng, bất tiện. Ví dụ, ES6 có `catch()` để bắt ngoại lệ trong
+`Promise` mà không (thể) dùng cấu trúc `try-catch` sẵn có. Với SC, các vấn đề
+này đều được giải quyết.
 
 Ta xét một đoạn mã tương tranh dùng coroutine trong Kotlin, tức dùng SC (không
 phải coroutine trong mọi ngôn ngữ đều dùng mô hình này):
 
 ![kotlin coroutine](../images/kotlin-coroutine.svg)
 
-Hình 6: Tương tranh có cấu trúc dùng coroutine trong Kotlin
+Hình 6: Tương tranh cấu trúc dùng coroutine trong Kotlin
 
 Đoạn mã trong Hình 6 làm những việc sau:
 
@@ -437,10 +434,9 @@ nhiên, hai tính năng có vấn đề ở trên lại hoạt động:
   cha bắt.
 
 Chú ý là các API hiện tại không phải không làm được nguyên tắc trên, vấn đề là
-thực hiện một cách *tự động* và *đảm bảo*. Ví dụ, trong JS, để tuân theo nguyên
-tắc này, ta cần `await` với mọi hàm `async`; nếu không, luồng chạy của hàm đó sẽ
-tách biệt với luồng chương trình, như Hình 5 mô tả. Do không có ràng buộc chặt
-chẽ kia, các tính năng ngôn ngữ mới cũng khó cài đặt như đã phân tích.
+thực hiện một cách *tự động* và *đảm bảo*. Ví dụ, trong JS, để tuân theo SC, ta
+phải nhớ `await` với mọi hàm `async`. Do không có ràng buộc chặt chẽ này, các
+tính năng ngôn ngữ mới cũng khó cài đặt như đã phân tích.
 
 Do trong các ngôn ngữ khác, nguyên tắc trên chỉ là một ca sử dụng, việc ép buộc
 viết theo ca sử dụng này đòi hỏi lập trình viên thay đổi suy nghĩ về tương
@@ -452,14 +448,14 @@ Một khi vấn đề tương tranh được giải quyết hoặc đơn giản 
 
 ##### 2.2.1.4. Tóm tắt
 
-Coroutine với SC là một trong những tính năng quan trọng nhất của Kotlin, và
-được dùng để tăng tốc những đoạn mã chạy chậm trong yacv. Mấu chốt của SC được
-tóm gọn trong Hình 6. Dù khá mới (Martin Sústrik, tác giả của ZeroMQ, đưa ra ý
-tưởng này năm 2016) và còn tranh cãi, mô hình này vẫn được cải thiện liên tục,
-có thư viện ở nhiều ngôn ngữ như Java (Loom), Python (Trio),... Điều này cho
-thấy ý tưởng có tiềm năng lớn, giúp đơn giản hóa tư duy về tương tranh.
+Coroutine với SC là một trong những tính năng quan trọng nhất của Kotlin, giúp
+tăng tốc những đoạn mã chạy chậm trong yacv. Mấu chốt của SC được tóm gọn trong
+Hình 6. Dù khá mới (Martin Sústrik, tác giả của ZeroMQ, nêu ý tưởng này năm
+2016), mô hình này được cải thiện liên tục, có thư viện ở nhiều ngôn ngữ như
+Java (Loom), Python (Trio),... Điều này cho thấy ý tưởng có ý nghĩa lớn, giúp
+đơn giản hóa tư duy về tương tranh.
 
-### 2.3. Mẫu thiết kế MVVM và Kiến trúc Google khuyên dùng <a name="P2.3-mvvm-app-arch"></a>
+### 2.3. Mẫu thiết kế MVVM và Kiến trúc khuyên dùng <a name="P2.3-mvvm-app-arch"></a>
 
 #### 2.3.1. Mẫu thiết kế MVVM <a name="P2.3.1-mvvm"></a>
 
@@ -474,9 +470,9 @@ nghiệm cho thấy giao diện nên được chia làm hai phần chính tách 
 
 Sự tách biệt thể hiện ở chỗ Model không được biết View. Khi này, giao diện và
 nghiệp vụ có thể phát triển khá độc lập với nhau, giúp giảm thời gian phát
-triển. Ngược lại, View có thể biết đến Model hay không là tùy vào cách triển
-khai cụ thể. Có sự bất đối xứng này là do View thường có các mã liên quan chặt
-chẽ đến framework vốn phức tạp để kiểm thử, còn Model thường có các mã đơn giản.
+triển. Ngược lại, View có biết Model không là tùy vào cách triển khai cụ thể. Có
+sự bất đối xứng này là do View luôn liên quan chặt chẽ đến framework, khác với
+Model thường đơn giản.
 
 Khó khăn ở đây là làm sao để kết nối hai thành phần riêng biệt kia. Nhiều mô
 hình cố giải quyết vấn đề này, tiêu biểu là MVC, MVP và MVVM. Ta lần lượt xem
@@ -564,7 +560,7 @@ tảng cho Kiến trúc Google khuyên dùng.
 
 #### 2.3.2. Kiến trúc Google khuyên dùng <a name="P2.3.2-app-arch"></a>
 
-Kiến trúc Google khuyên dùng có gốc là mô hình MVVM, có dạng như sau:
+Kiến trúc Google khuyên dùng có gốc là mô hình MVVM, có dạng như Hình 9:
 
 ![Google recommended architecture](../images/final-architecture.png)
 
@@ -602,40 +598,41 @@ yacv dùng SQLite để lưu đệm thông tin truyện, tránh quét nhiều l�
 
 #### 2.4.1. Thư viện ORM Room <a name="P2.4.1-room"></a>
 
-Room là một thư viện thuộc Jetpack, giúp lập trình viên dùng SQLite tốt hơn. Đây
-có thể xem là một thư viện ORM đơn giản cho SQLite. Room tự động làm nhiều công
-việc liên quan đến SQL:
+Room là một thư viện thuộc Jetpack. Đây có thể xem là một thư viện ORM đơn giản
+cho SQLite. Room tự động làm nhiều công việc liên quan đến SQL:
 
-- Tạo bảng: Lập trình viên chỉ cần khai báo các đối tượng dữ liệu như một lớp
+- Tạo bảng: Người viết chỉ cần khai báo các đối tượng dữ liệu như một lớp
   hướng đối tượng thông thường, rồi đánh dấu với Annotation và interface của
   Room. Sau đó, Room sinh các bảng tương ứng.
-- Truy vấn: Lập trình viên chỉ cần viết câu lệnh SQL. Sau đó, Room sinh hàm truy
-  vấn tương ứng, chuyển dữ liệu dạng đối tượng sang dạng để lưu trong bảng và
-  ngược lại.
-- Kiểm tra truy vấn khi biên dịch: Lỗi lệnh SQL có thể được dò ra ngay khi biên
-  dịch chứ không cần chờ đến khi chạy.
+- Truy vấn: Người viết chỉ cần viết lệnh SQL. Sau đó, Room sinh hàm truy vấn
+  tương ứng, chuyển dữ liệu dạng đối tượng sang dạng để lưu trong bảng và ngược
+  lại.
+- Kiểm tra truy vấn khi biên dịch: Dò lỗi lệnh SQL mà không cần chờ đến khi
+  chạy.
 - Kiểm soát lược đồ (schema): Khi thêm/sửa/xóa bảng/cột, Room luôn phát hiện và
-  ép lập trình viên viết cơ chế cập nhật. Do đó, ứng dụng dùng lược đồ cũ khi
-  được cập nhật sẽ biết cách sửa cơ sở dữ liệu đến phiên bản lược đồ mới.
-- Tương thích với LiveData: Room cho phép View cập nhật dữ liệu theo cơ sở dữ
-  liệu chỉ bằng vài dòng mã dùng LiveData.
+  ép viết cơ chế cập nhật. Do đó, ứng dụng dùng lược đồ cũ khi được cập nhật sẽ
+  biết cách sửa cơ sở dữ liệu đến phiên bản lược đồ mới.
+- Tương thích với LiveData: Giúp View cập nhật theo cơ sở dữ liệu.
 
 #### 2.4.2. Tìm kiếm văn bản <a name="P2.4.2-fts"></a>
 
 <!-- Cite [17] -->
 Tìm kiếm văn bản (full-text search, hay gọi tắt là FTS) là một trong số ít các
 tính năng nâng cao được giữ lại trong SQLite. Cũng như các thư viện tìm kiếm
-khác, SQLite cài đặt chức năng này bằng chỉ mục đảo (inverted index):
+khác, SQLite cài đặt chức năng này bằng chỉ mục đảo (inverted index) - một cấu
+trúc giống từ điển:
 
 1. Khi dữ liệu văn bản được ghi, nó được tách thành các từ.
-2. Các từ được đưa vào chỉ mục đảo, với khóa là chính từ đó, còn giá trị là khóa
-   đại diện `rowid`.
+2. Các từ được đưa vào chỉ mục đảo: khóa là từ đó, giá trị là khóa đại diện
+   `rowid`.
 
 FTS khác với đánh chỉ mục thường (cũng là chỉ mục đảo nhưng cho kiểu dữ liệu
 thông thường) ở bước 1: *từng từ* được tách ra, còn chỉ mục thường dùng *cả* văn
-bản. Do đó, khi tìm từ lẻ, FTS có thể tìm các hàng chứa từ đó rất nhanh. Điểm
-yếu là ghi chậm, kích cỡ lớn hơn chỉ mục thường. Nếu bản thân dữ liệu văn bản
-trong cột là một khối, ví dụ như email, chỉ mục thường đã đủ tốt, không cần FTS.
+bản. Do đó, khi tìm từ lẻ, FTS có thể tìm hàng có từ đó rất nhanh. Điểm yếu là
+ghi chậm, kích cỡ lớn hơn chỉ mục thường. Nếu bản thân dữ liệu văn bản trong cột
+là một khối, ví dụ như email, chỉ mục thường đã đủ tốt, không cần FTS. Ngoài ra,
+nếu muốn, ở bước này có thể dùng kĩ thuật rút gọn từ (stemming; chỉ đúng với
+tiếng Anh), giúp tìm kiếm linh động hơn.
 
 Trong SQLite, một số kĩ thuật xử lí ngôn ngữ tự nhiên cơ bản cũng được áp dụng
 trong bước 1, như rút gọn từ (stemming, dùng thuật toán Porter, ví dụ khi tìm
@@ -667,7 +664,8 @@ diễn trong Hình 10:
   (data trong Hình 10). Sau đó, các tệp nén lẻ này được nối thành tệp ZIP cuối
   cùng.
 - Ở đầu mỗi tệp nén lẻ là một header gọi là *File Entry* để lưu thông tin liên
-  quan.
+  quan, trong đó có *tên tệp gốc* và *vị trí bắt đầu* (offset), tức số byte tính
+  từ đầu tệp ZIP đến tệp nén lẻ tương ứng.
 - Ở *cuối* tệp ZIP, sau khi đã nối các tệp nén lẻ cùng header lại, các header
   được gom lại, lưu một lần nữa vào một cấu trúc gọi là *Central Directory*. Có
   thể so sánh File Entry như các *đề mục*, còn Central Directory là *mục lục*.
@@ -680,11 +678,10 @@ Hình 10: Cấu trúc tệp nén ZIP
 
 Ta phân tích kĩ hơn:
 
-- Do từng tệp được nén riêng, có thể dùng thuật toán khác nhau cho hiệu quả tốt
-  với từng tệp.
-- Cũng do nén riêng, việc thêm/sửa/xóa (gọi chung là sửa) và giải nén có thể
-  được thực hiện với từng tệp nén lẻ, thay vì phải giải nén, sửa, rồi nén lại
-  toàn bộ.
+- Do nén riêng từng tệp, có thể dùng thuật toán khác nhau tối ưu với từng tệp.
+- Cũng do nén riêng và có mục lục, việc thêm/sửa/xóa (gọi chung là sửa) và
+  đọc có thể được thực hiện với từng tệp lẻ, thay vì phải giải nén, sửa, rồi nén
+  lại toàn bộ.
 - Nhờ mục lục (chứa vị trí tệp nén lẻ), việc sửa còn diễn ra nhanh do ứng dụng
   biết vị trí để đọc ghi dữ liệu.
 - Mục lục đặt ở cuối là tối ưu:
@@ -710,10 +707,12 @@ bộ các tệp vào rồi nén một thể. Trong trường hợp đó, tệp n
 
 Tệp truyện CBZ chỉ là một tệp nén ZIP thông thường, trong đó có:
 
-- Các tệp ảnh trang truyện: Các tệp này là tệp ảnh JPEG, PNG,... thông thường,
-  có tên được đánh số tăng dần để biểu thị thứ tự trang.
+- Các tệp ảnh trang truyện: Các tệp này là tệp ảnh JPEG, PNG,... thông thường.
+  Tên tệp được đánh số tăng dần để biểu thị thứ tự trang. Tuy nhiên, không có
+  một cấu trúc/định dạng tên tệp nào được thống nhất.
 - (Tùy chọn) Một tệp metadata: Có nhiều định dạng metadata. Hiện nay, yacv chấp
   nhận định dạng ComicInfo, được trình bày ở [Phụ lục 2](#P8.2-comicinfo.xsd).
+  Định dạng này lưu trong một tệp có tên `ComicInfo.xml`.
 
 ---
 
@@ -1332,7 +1331,8 @@ bộ truyện.
 ### 8.2. Phụ lục 2: Lược đồ XSD ComicInfo <a name="P8.2-comicinfo.xsd">
 
 Phụ lục này trình bày phiên bản rút gọn của lược đồ XSD của định dạng metadata
-ComicInfo. Các trường nêu trong [Phụ lục 1](#P9.1-metadata) đều được chứa trong
-định dạng này, ngoài ra còn có các trường về tác giả và nhân vật.
+ComicInfo. Định dạng này được lưu trong một tệp có tên `ComicInfo.xml`. Các
+trường nêu trong [Phụ lục 1](#P9.1-metadata) đều được chứa trong định dạng này,
+ngoài ra còn có các trường về tác giả và nhân vật.
 
 [ComicInfo.xsd](../assets/ComicInfo.xsd).

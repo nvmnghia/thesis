@@ -187,10 +187,10 @@ Sau đây là tóm tắt một số đặc điểm kĩ thuật của Kotlin:
         Về cú pháp, Kotlin gọn và hiện đại: bỏ dấu \texttt{;} cuối dòng,
         template literal,\ldots
     \item
-        Về chống lỗi, Kotlin ``né'' \texttt{NullPointerException} này do buộc
-        người viết đánh dấu rõ rằng một đối tượng có thể bị \texttt{null} hay
-        không bằng hậu tố \texttt{?} ở khai báo kiểu. Từ đó, Kotlin biết chính
-        xác đối tượng có thể là \texttt{null} hay không, và buộc xử lí nếu có.
+        Về chống lỗi, Kotlin ``né'' \texttt{NullPointerException} do buộc người
+        viết đánh dấu rõ rằng một đối tượng có thể bị \texttt{null} bằng hậu tố
+        \texttt{?} ở khai báo kiểu. Từ đó, Kotlin biết chính xác đối tượng có
+        thể là \texttt{null} hay không, và buộc xử lí nếu có.
 \end{itemize}
 
 Do Google khuyên dùng Kotlin, tôi cho rằng khóa luận này là một cơ hội phù hợp
@@ -255,7 +255,7 @@ chạy.
 
 Vấn đề của lập trình phi cấu trúc, hay của \texttt{GOTO}, gồm:
 
-\begin{itemize}
+\begin{enumerate}
     \item
         Khó nắm bắt luồng chương trình
 
@@ -265,9 +265,9 @@ Vấn đề của lập trình phi cấu trúc, hay của \texttt{GOTO}, gồm:
         tuần tự từ trên xuống. Tệ hơn, tính trừu tượng bị phá vỡ: khi gọi hàm,
         thay vì có thể bỏ qua chi tiết bên trong, ta phải biết rõ để xem có lệnh
         nhảy bất ngờ nào không.
-\end{itemize}
+\end{enumerate}
 
-\begin{itemize}[resume, before = \vspace*{-\dimexpr\topsep+\partopsep\relax}]
+\begin{enumerate}[resume, before = \vspace*{-\dimexpr\topsep+\partopsep\relax}]
     \item
         Không cài đặt được các chức năng mới (ngoại lệ, quản lí tài nguyên tự
         động,\ldots)
@@ -285,7 +285,7 @@ Vấn đề của lập trình phi cấu trúc, hay của \texttt{GOTO}, gồm:
 
         Điều gần tương tự cũng khiến việc xử lí ngoại lệ và nhiều tính năng khác
         trở nên rất khó đạt được, một khi ngôn ngữ cho phép \texttt{GOTO}.
-\end{itemize}
+\end{enumerate}
 
 Lập trình cấu trúc đơn giản hóa luồng chạy bằng cách giới hạn các lệnh nhảy còn
 \texttt{if}, \texttt{for} và gọi hàm. Khác biệt mấu chốt so với \texttt{GOTO} là
@@ -769,8 +769,8 @@ Tệp truyện CBZ chỉ là một tệp nén ZIP thông thường, trong đó c
     \item
         (Tùy chọn) Một tệp metadata: Có nhiều định dạng metadata. Hiện nay, yacv
         chấp nhận định dạng ComicInfo, được trình bày ở
-        \autoref{app:comic-info-xsd}; định dạng này lưu trong một tệp có tên
-        \texttt{ComicInfo.xml}
+        \autoref{app:comic-info-xsd}. Định dạng này lưu trong một tệp có tên
+        \texttt{ComicInfo.xml}.
 \end{itemize}
 
 \end{document}
