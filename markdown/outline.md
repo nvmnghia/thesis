@@ -185,7 +185,7 @@ thành phần liên quan đến trải nghiệm người dùng được phát tr
 
 ![Android software stack](../images/android-stack_2x.png)
 
-Hình 1. Các phân lớp của hệ điều hành Android
+Hình 1: Các phân lớp của hệ điều hành Android
 
 Hệ điều hành Android được phân lớp như sau:
 
@@ -1141,7 +1141,7 @@ Màn hình khi người đọc *xem kết quả tìm kiếm* gọi là *Màn hì
 hình này chỉ hiện ra khi người dùng ấn nút Enter để chính thức tìm kiếm; cho đến
 trước lúc đó, ứng dụng vẫn ở Màn hình Thư viện.
 
-Màn hình kết quả phải nhóm kết quả theo trường metadata mà kết quả tìm thấy
+Màn hình Tìm kiếm phải nhóm kết quả theo trường metadata mà kết quả tìm thấy
 được. Lấy ví dụ, người dùng tìm kiếm "Watchmen" sẽ nhận được Màn hình Tìm kiếm
 gần như sau:
 
@@ -1152,6 +1152,8 @@ Truyện
 Bộ truyện
 - Watchmen
 ```
+
+Hình 11: Mô tả Màn hình Tìm kiếm
 
 Tương tác của người đọc với Màn hình Tìm kiếm trên diễn ra như sau:
 

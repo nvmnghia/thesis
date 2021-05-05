@@ -650,10 +650,8 @@ Màn hình khi người đọc \emph{xem kết quả tìm kiếm} gọi là \emp
 kiếm}. Màn hình này chỉ hiện ra khi người dùng ấn nút Enter để chính thức tìm
 kiếm; cho đến trước lúc đó, ứng dụng vẫn ở Màn hình Thư viện.
 
-Màn hình kết quả phải nhóm kết quả theo trường metadata mà kết quả tìm thấy
-được. Lấy ví dụ, người dùng tìm kiếm ``Watchmen'' sẽ nhận được Màn hình Tìm kiếm
-gần như sau:
-
+\begin{wrapfigure}[11]{r}{4.5cm}
+\vspace*{-10mm}
 \begin{verbatim}
 Truyện
 - Watchmen #1.cbz
@@ -661,6 +659,13 @@ Truyện
 Bộ truyện
 - Watchmen
 \end{verbatim}
+\caption{Mô tả Màn hình Tìm kiếm}
+\label{fig:search-screen-mockup}
+\end{wrapfigure}
+
+Màn hình Tìm kiếm phải nhóm kết quả theo trường metadata mà kết quả tìm thấy
+được. Lấy ví dụ, người dùng tìm kiếm ``Watchmen'' sẽ nhận được Màn hình Tìm kiếm
+gần như \autoref{fig:search-screen-mockup}.
 
 Tương tác của người đọc với Màn hình Tìm kiếm trên diễn ra như sau:
 
@@ -669,6 +674,11 @@ Tương tác của người đọc với Màn hình Tìm kiếm trên diễn ra 
         Khi ấn vào một mục trong danh sách ``Truyện'', người đọc được đưa đến
         thẳng Màn hình Đọc truyện của truyện đó (và hiển thị ở trang đọc dở như
         đã mô tả ở trong \hyperref[sec:read-comic]{ca sử dụng đọc truyện}).
+\end{itemize}
+
+% Split itemize to avoid confusing wrapfigure
+% https://tex.stackexchange.com/a/285760/206774
+\begin{itemize}[resume, before = \vspace*{-\dimexpr\topsep+\partopsep\relax}]
     \item
         Khi ấn vào một mục trong danh sách ``Bộ truyện'', người đọc được đưa đến
         màn hình chứa danh sách những truyện trong bộ truyện đã chọn. \emph{Màn
