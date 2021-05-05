@@ -633,15 +633,14 @@ cho SQLite. Room tự động làm nhiều công việc liên quan đến SQL:
         vấn tương ứng, chuyển dữ liệu dạng đối tượng sang dạng để lưu trong bảng
         và ngược lại.
     \item
-        Kiểm tra truy vấn khi biên dịch: lỗi lệnh SQL có thể được dò ra ngay khi
-        biên dịch chứ không cần chờ đến khi chạy.
+        Kiểm tra truy vấn khi biên dịch: Dò lỗi lệnh SQL mà không cần chờ đến
+        khi chạy.
     \item
         Kiểm soát lược đồ (schema): Khi thêm/sửa/xóa bảng/cột, Room luôn phát
         hiện và ép viết cơ chế cập nhật. Do đó, ứng dụng dùng lược đồ cũ khi
         được cập nhật sẽ biết cách sửa cơ sở dữ liệu đến phiên bản lược đồ mới.
     \item
-        Tương thích với LiveData: Room cho phép View cập nhật dữ liệu theo cơ sở
-        dữ liệu chỉ bằng vài dòng mã dùng LiveData.
+        Tương thích với LiveData: Giúp View cập nhật theo cơ sở dữ liệu.
 \end{itemize}
 
 \subsection{Tìm kiếm văn bản}\label{sec:fts}
@@ -661,15 +660,11 @@ trúc giống từ điển:
 
 FTS khác với đánh chỉ mục thường (cũng là chỉ mục đảo nhưng cho kiểu dữ liệu
 thông thường) ở bước 1: \emph{từng từ} được tách ra, còn chỉ mục thường dùng
-\emph{cả} văn bản. Do đó, khi tìm từ lẻ, FTS có thể tìm các hàng chứa từ đó rất
-nhanh. Điểm yếu là ghi chậm, kích cỡ lớn hơn chỉ mục thường. Nếu bản thân dữ
-liệu văn bản trong cột là một khối, ví dụ như email, chỉ mục thường đã đủ tốt,
-không cần FTS.
-
-Trong SQLite, một số kĩ thuật xử lí ngôn ngữ tự nhiên cơ bản cũng được áp dụng
-trong bước 1, như rút gọn từ (stemming, dùng thuật toán Porter, ví dụ khi tìm
-``run'' sẽ ra được cả ``runs'', ``running'', ``ran''; tất nhiên chỉ đúng với
-tiếng Anh), giúp kết quả tìm kiếm linh động hơn.
+\emph{cả} văn bản. Do đó, khi tìm từ lẻ, FTS có thể tìm hàng có từ đó rất nhanh.
+Điểm yếu là ghi chậm, kích cỡ lớn hơn chỉ mục thường. Nếu bản thân dữ liệu văn
+bản trong cột là một khối, ví dụ như email, chỉ mục thường đã đủ tốt, không cần
+FTS. Ngoài ra, nếu muốn, ở bước này có thể dùng kĩ thuật rút gọn từ (stemming;
+chỉ đúng với tiếng Anh), giúp tìm kiếm linh động hơn.
 
 yacv có tính năng tìm kiếm tiêu đề, tên nhân vật,\ldots{} đều là những câu văn,
 đoạn văn. Do đó, FTS có vai trò không thể thiếu để tăng tốc tìm kiếm trong ứng
@@ -727,12 +722,12 @@ Ta phân tích kĩ hơn:
 
 \begin{itemize}
     \item
-        Do từng tệp được nén riêng, có thể dùng thuật toán khác nhau cho hiệu
-        quả tốt với từng tệp.
+        Do nén riêng từng tệp, có thể dùng thuật toán khác nhau tối ưu với từng
+        tệp.
     \item
-        Cũng do nén riêng và có mục lục (lưu vị trí tệp nén lẻ), việc
-        thêm/sửa/xóa (gọi chung là sửa) và giải nén có thể được thực hiện với
-        từng tệp nén lẻ, thay vì phải giải nén, sửa, rồi nén lại toàn bộ.
+        Cũng do nén riêng và có mục lục, việc thêm/sửa/xóa (gọi chung là sửa) và
+        đọc có thể được thực hiện với từng tệp lẻ, thay vì phải giải nén, sửa,
+        rồi nén lại toàn bộ.
 \end{itemize}
 
 \begin{itemize}[resume, before = \vspace*{-\dimexpr\topsep+\partopsep\relax}]
@@ -769,11 +764,13 @@ Tệp truyện CBZ chỉ là một tệp nén ZIP thông thường, trong đó c
 \begin{itemize}
     \item
         Các tệp ảnh trang truyện: Các tệp này là tệp ảnh JPEG, PNG,\ldots{}
-        thông thường, có tên được đánh số tăng dần để biểu thị thứ tự trang.
+        thông thường. Tên tệp được đánh số tăng dần để biểu thị thứ tự trang.
+        Tuy nhiên, không có một cấu trúc/định dạng tên tệp nào được thống nhất.
     \item
         (Tùy chọn) Một tệp metadata: Có nhiều định dạng metadata. Hiện nay, yacv
         chấp nhận định dạng ComicInfo, được trình bày ở
-        \autoref{app:comic-info-xsd}.
+        \autoref{app:comic-info-xsd}; định dạng này lưu trong một tệp có tên
+        \texttt{ComicInfo.xml}
 \end{itemize}
 
 \end{document}
