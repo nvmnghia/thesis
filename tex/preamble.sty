@@ -3,6 +3,7 @@
 
 \usepackage{polyglossia}
 \setdefaultlanguage{vietnamese}
+% \setdefaultlanguage{english}
 
 \usepackage[final]{microtype}
 \usepackage{lmodern}
@@ -73,20 +74,12 @@
 
 \usepackage{enumitem}
 
+\usepackage[acronym,toc]{glossaries}
 
 % https://uet.vnu.edu.vn/wp-content/uploads/2017/07/Quy-%C4%91i%CC%A3nh-v%C3%AA%CC%80-tri%CC%80nh-ba%CC%80y-kho%CC%81a-lu%C3%A2%CC%A3n-t%C3%B4%CC%81t-nghi%C3%AA%CC%A3pCLC.pdf
 \usepackage[top=2.5cm, bottom=3.0cm, left=3.0cm, right=2.0cm]{geometry}
 \renewcommand{\baselinestretch}{1.3}
 
-
-% Blank page
-% https://tex.stackexchange.com/a/374542/206774
-\def\blankpage{%
-  \clearpage%
-  \thispagestyle{empty}%
-  \addtocounter{page}{-1}%
-  \null%
-  \clearpage}
 
 % Temporarily change margins
 % https://tex.stackexchange.com/a/600/206774
@@ -94,8 +87,22 @@
 \let\endchangemargin=\endlist
 
 
-\usepackage{subfiles} % Best loaded last in the preamble
-
-
+% Info
 \author{Nguyễn Việt Minh Nghĩa}
 \title{ỨNG DỤNG ĐỌC TRUYỆN TRANH}
+
+
+% Acronyms, curently not used
+\makeglossaries
+
+\newacronym{mvc}{MVC}{Model - View - Controller}
+\newacronym{mvp}{MVP}{Model - View - Presenter}
+\newacronym{mvvm}{MVVM}{Model - View - ViewModel}
+
+\newacronym{rdbms}{RDBMS}{Relational Database Management System}
+\newacronym{orm}{ORM}{Object-relational mapping}
+
+\newacronym{sc}{SC}{Structured Programming}
+
+
+\usepackage{subfiles} % Best loaded last in the preamble

@@ -36,13 +36,7 @@ Khung sườn khóa luận kết thúc 6 năm luyện ngục của nvmnghia.
     - MVC
     - MVP
     - MVVM
-    - AOT
-    - JIT
-    - API
-    - JS
-    - ES6
     - RDBMS
-    - ACID
     - ORM
     - SC
 
