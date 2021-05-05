@@ -292,16 +292,15 @@ Một thư viện quan trọng của kotlin là *coroutine*. Coroutine giúp vi�
 có tính tương tranh (concurrency) và bất đồng bộ (asynchronous) một cách đơn
 giản hơn.
 
-Về cơ bản, coroutine giống với luồng (thread), nhưng nhẹ hơn. Coroutine luôn
-dùng mô hình *đa nhiệm hợp tác* (cooperative multitasking), khác với luồng hay
-dùng đa nhiệm ưu tiên (preemptive multitasking). Mấu chốt khác biệt của chúng là
-đa nhiệm hợp tác có các "điểm dừng" do người viết tạo; khi chạy đến đó,
-coroutine có thể dừng lại, chủ động nhả CPU cho việc khác, rồi tiếp tục việc
-đang dở vào lúc thích hợp. Ngược lại, đa nhiệm ưu tiên có thể buộc một luồng
-đang chạy ngừng lại bất kì lúc nào để ưu tiên chạy một luồng khác. Đây cũng là
-điểm khiến coroutine nhẹ hơn: việc chuyển ngữ cảnh (context switching) được kiểm
-soát và cắt giảm, do chuyển sang thực thi một coroutine khác chưa chắc đã chuyển
-sang một luồng hệ điều hành khác.
+Về cơ bản, coroutine giống với luồng (thread), nhưng nhẹ hơn. Coroutine dùng mô
+hình *đa nhiệm hợp tác* (cooperative multitasking), khác với luồng hay dùng đa
+nhiệm ưu tiên (preemptive multitasking). Mấu chốt khác biệt của chúng là đa
+nhiệm hợp tác có các "điểm dừng" do người viết tạo; khi chạy đến đó, coroutine
+có thể dừng, nhả CPU cho việc khác, rồi tiếp tục việc đang dở sau. Ngược lại, đa
+nhiệm ưu tiên có thể buộc luồng đang chạy ngừng lại bất kì lúc nào để ưu tiên
+chạy luồng khác. Đây cũng là điểm làm¡ coroutine nhẹ hơn: việc chuyển ngữ cảnh
+(context switching) được kiểm soát và cắt giảm, do chuyển sang coroutine khác
+chưa chắc đã chuyển sang luồng hệ điều hành khác.
 
 Với những điều trên, coroutine chưa làm được nhiều. Roman Elizarov, trưởng dự án
 Kotlin, hướng coroutine trong Kotlin theo một ý tưởng mới: *tương tranh có cấu
