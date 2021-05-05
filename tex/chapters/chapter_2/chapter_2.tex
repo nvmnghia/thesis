@@ -54,21 +54,21 @@ người dùng được phát triển riêng.
     \label{fig:android-stack}
 \end{wrapfigure}
 
-Hệ điều hành Android được phân lớp như sau:
+Android được phân lớp như sau:
 
 \begin{itemize}
     \item
         Nhân Linux (Linux Kernel):
 
-        Android dùng nhánh hỗ trợ dài hạn (LTS) của Linux. Không như kiểu phát
-        triển distro trên máy tính (chủ yếu thay đổi ở ngoài nhân), Google sửa
-        và thêm bớt nhiều thành phần vào nhân trước khi tích hợp.
+        Android dùng nhánh hỗ trợ dài hạn (LTS) của Linux. Khác kiểu phát triển
+        distro trên máy tính (chủ yếu thay đổi ngoài nhân), Google sửa nhân khá
+        nhiều trước khi tích hợp.
     \item
         Lớp phần cứng trừu tượng (Hardware Abstraction Layer):
 
         Tầng này đưa ra giao diện chung cho mỗi kiểu phần cứng (máy ảnh,
-        loa,\ldots), giúp các tầng trên có thể dùng phần cứng mà không cần quan
-        tâm đến chi tiết riêng.
+        loa,\ldots), giúp các tầng trên có thể dùng phần cứng mà không quan tâm
+        đến chi tiết riêng.
     \item
         Android Runtime (ART):
 
@@ -85,8 +85,8 @@ Hệ điều hành Android được phân lớp như sau:
     \item
         Thư viện C/C++:
 
-        Tầng thư viện native nằm ngang hàng với ART, phục vụ một số ứng dụng
-        dùng NDK (tức gọi API C cấp thấp) như trò chơi điện tử.
+        Tầng này phục vụ một số ứng dụng dùng NDK (từ Java gọi C) như trò chơi
+        điện tử.
     \item
         Khung phát triển ứng dụng (Java API Framework):
 
@@ -94,11 +94,6 @@ Hệ điều hành Android được phân lớp như sau:
         thông qua API Java. Tầng này cung cấp toàn bộ tính năng của Android cho
         lập trình viên, bao gồm các yếu tố cơ bản như giao diện (View System),
         truy xuất,\ldots
-
-        Lập trình viên có thể truy cập vào lớp này tương đương với ứng dụng hệ
-        thống. Đây được coi là một cam kết tránh độc quyền công nghệ, tức đa số
-        ứng dụng hệ thống không có khả năng đặc biệt hơn ứng dụng bên thứ ba
-        tương tự.
     \item
         Ứng dụng hệ thống (System Apps)
 
@@ -116,7 +111,7 @@ phần sau.
 \subsection{Android Jetpack}\label{sec:jetpack}
 
 Jetpack là bộ thư viện giúp viết ứng dụng Android nhanh gọn, ít lỗi hơn so với
-việc tự viết những đoạn mã tương tự. Jetpack gồm hai thành phần:
+việc tự viết những đoạn mã tương tự. Jetpack gồm hai thành phần chính:
 
 \begin{itemize}
     \item
@@ -127,9 +122,9 @@ việc tự viết những đoạn mã tương tự. Jetpack gồm hai thành ph
 \end{itemize}
 
 Việc cập nhật Android rất khó khăn do phải chờ nhà sản xuất tối ưu. Do đó,
-Jetpack, đặc biệt là AndroidX, rất cần thiết. Chú ý rằng Jetpack chỉ có ích cho
-lập trình viên (API mới tiện hơn thực ra là wrapper của API sẵn có), chứ không
-cập nhật tính năng hệ thống.
+Jetpack, nhất là AndroidX, rất cần thiết. Chú ý rằng Jetpack chỉ có ích cho lập
+trình viên (API mới tiện hơn thực ra là wrapper của API sẵn có), chứ không cập
+nhật tính năng hệ thống.
 
 yacv sử dụng nhiều thành phần của Jetpack, trong đó đáng kể đến ba thư viện sau:
 
@@ -157,13 +152,12 @@ ngôn ngữ mới do JetBrains phát triển. Giới thiệu lần đầu vào n
 Kotlin tương thích hoàn toàn với Java (từ Java gọi được Kotlin và ngược lại), do
 cùng được biên dịch thành JVM bytecode.
 
-Điểm mạnh của Kotlin so với Java là tính ngắn gọn. Do được phát triển mới,
-Kotlin không cần tương thích với phiên bản cũ, cho phép dùng các cú pháp hiện
-đại, gọn ghẽ. Ngoài ra, vì được một công ty tư nhân phát triển, Kotlin không cần
-chờ đến các cuộc họp phức tạp để đạt đồng thuận về tính năng mới, giúp ngôn ngữ
-liên tục được cải tiến. Đồng thời, công ty cũng mở mã nguồn của Kotlin và chương
-trình dịch, giúp đẩy nhanh quá trình phát triển và tạo thiện cảm cộng đồng cho
-một ngôn ngữ non trẻ.
+Kotlin hơn Java ở tính ngắn gọn. Do được phát triển mới, Kotlin không cần tương
+thích ngược, cho phép dùng các cú pháp hiện đại, gọn ghẽ. Do được một công ty
+phát triển, Kotlin không cần chờ các cuộc họp phức tạp để đạt đồng thuận về tính
+năng mới. Đồng thời, công ty cũng mở mã nguồn của Kotlin và chương trình dịch,
+giúp đẩy nhanh quá trình phát triển và tạo thiện cảm cộng đồng cho một ngôn ngữ
+non trẻ.
 
 Sau đây là tóm tắt một số đặc điểm kĩ thuật của Kotlin:
 
@@ -287,13 +281,6 @@ Vấn đề của lập trình phi cấu trúc, hay của \texttt{GOTO}, gồm:
         trở nên rất khó đạt được, một khi ngôn ngữ cho phép \texttt{GOTO}.
 \end{enumerate}
 
-Lập trình cấu trúc đơn giản hóa luồng chạy bằng cách giới hạn các lệnh nhảy còn
-\texttt{if}, \texttt{for} và gọi hàm. Khác biệt mấu chốt so với \texttt{GOTO} là
-chúng \emph{trả luồng điều khiển} về điểm gọi, thể hiện rõ ở
-\autoref{fig:3-basic-construct}. Theo định nghĩa, ba lệnh trên giải quyết được
-hậu quả 1. Đồng thời, hậu quả 2 cũng được giải quyết, do ngôn ngữ đã có cấu trúc
-(cụ thể là có call stack).
-
 \begin{wrapfigure}{r}{5cm}
     \centering
     \vspace*{-6mm}
@@ -303,6 +290,13 @@ hậu quả 1. Đồng thời, hậu quả 2 cũng được giải quyết, do n
         hàm \cite{NJS_SC}}
     \label{fig:3-basic-construct}
 \end{wrapfigure}
+
+Lập trình cấu trúc đơn giản hóa luồng chạy bằng cách giới hạn các lệnh nhảy còn
+\texttt{if}, \texttt{for} và gọi hàm. Khác biệt mấu chốt so với \texttt{GOTO} là
+chúng \emph{trả luồng điều khiển} về điểm gọi, thể hiện rõ ở
+\autoref{fig:3-basic-construct}. Theo định nghĩa, ba lệnh trên giải quyết được
+hậu quả 1. Đồng thời, hậu quả 2 cũng được giải quyết, do ngôn ngữ đã có cấu trúc
+(cụ thể là có call stack).
 
 Ngày nay, ba cấu trúc trên là phần không thể thiếu trong mọi ngôn ngữ lập trình,
 còn \texttt{GOTO} chỉ dùng trong hợp ngữ. Quá khứ cho thấy nếu áp dụng một số
@@ -338,6 +332,7 @@ Trước hết, ta xem xét hai kiểu API tương tranh hay dùng hiện nay \c
 
 \begin{wrapfigure}[5]{r}{5cm}
     \centering
+    \vspace*{-6mm}
     \includesvg[width=\linewidth]{../images/sequential-and-go-to-schematic.svg}
     \vspace*{-10mm}
     \caption{Tương tranh phi cấu trúc với \texttt{goroutine} - API kiểu tương
@@ -497,18 +492,18 @@ Nhiệm vụ của ba thành phần như sau:
         gọi/thay đổi Model, cập nhật View
 \end{itemize}
 
-\begin{wrapfigure}[8]{r}{7cm}
+Ta thấy điểm yếu View-Controller nhập nhằng được khắc phục, khi View kiêm luôn
+việc nhận tương tác. Đồng thời, Model và View hoàn toàn không biết nhau, đúng
+theo nguyên lý tách lớp của Clean Architecture.
+
+\begin{wrapfigure}[6]{r}{7cm}
     \centering
-    \vspace*{-10mm}
+    \vspace*{-3mm}
     \includegraphics[width=\linewidth]{../images/Model_View_Presenter_GUI_Design_Pattern.png}
     \vspace*{-10mm}
     \caption{Kiến trúc MVP \cite{WIKI_MVP}}
     \label{fig:mvp}
 \end{wrapfigure}
-
-Ta thấy điểm yếu View-Controller nhập nhằng được khắc phục, khi View kiêm luôn
-việc nhận tương tác. Đồng thời, Model và View hoàn toàn không biết nhau, đúng
-theo nguyên lý tách lớp của Clean Architecture.
 
 Ta xét một ứng dụng ToDo đơn giản, trong đó các công việc có thể được đánh dấu
 đã hoàn thành. Trong ứng dụng, màn hình hiển thị số việc đã và chưa hoàn thành.
@@ -519,6 +514,9 @@ Trong màn hình đó, tương tác của MVP như sau:
         Presenter lấy tất cả công việc trong Model
     \item
         Presenter đếm số việc hoàn thành, chưa hoàn thành
+\end{enumerate}
+
+\begin{enumerate}[resume, before = \vspace*{-\dimexpr\topsep+\partopsep\relax}]
     \item
         Presenter gọi hàm của View, truyền hai số đếm được ở trên vào
 \end{enumerate}
@@ -566,7 +564,7 @@ tảng cho Kiến trúc Google khuyên dùng.
 
 \begin{wrapfigure}[10]{r}{8cm}
     \centering
-    \vspace*{-8mm}
+    \vspace*{-3mm}
     \includegraphics[width=\linewidth]{../images/final-architecture.png}
     \vspace*{-10mm}
     \caption{Kiến trúc Google khuyên dùng \cite{GOOGL_APP_ARCH}}
@@ -626,8 +624,8 @@ cho SQLite. Room tự động làm nhiều công việc liên quan đến SQL:
 \begin{itemize}
     \item
         Tạo bảng: Người viết chỉ cần khai báo các đối tượng dữ liệu như một lớp
-        hướng đối tượng thông thường, rồi đánh dấu với Annotation và interface
-        của Room. Sau đó, Room sinh các bảng tương ứng.
+        (class) thông thường, rồi đánh dấu với Annotation và interface của Room.
+        Sau đó, Room sinh các bảng tương ứng.
     \item
         Truy vấn: Người viết chỉ cần viết lệnh SQL. Sau đó, Room sinh hàm truy
         vấn tương ứng, chuyển dữ liệu dạng đối tượng sang dạng để lưu trong bảng
@@ -699,8 +697,8 @@ gần như mọi nền tảng, bao gồm Android.
 ZIP thực chất là một định dạng chứa (container), chuyên chứa dữ liệu nén, chứ
 không phải thuật toán nén; thuật toán nén hay dùng nhất trong ZIP là DEFLATE.
 Một trong các mục tiêu của ZIP là giúp việc sửa tệp nén (thêm, sửa, xóa tệp con
-trong tệp ZIP) nhanh nhất có thể. Mục tiêu đó thể hiện ở thiết kế sau
-\cite{PKWARE_APPNOTE}, được biểu diễn trong \autoref{fig:zip-layout}:
+trong tệp ZIP) nhanh nhất có thể. Mục tiêu đó dẫn đến thiết kế sau
+\cite{PKWARE_APPNOTE}, được thể hiện trong \autoref{fig:zip-layout}:
 
 \begin{itemize}
     \item

@@ -181,18 +181,18 @@ người dùng được phát triển riêng.
 
 Hình 1: Các phân lớp của hệ điều hành Android
 
-Hệ điều hành Android được phân lớp như sau:
+Android được phân lớp như sau:
 
 - Nhân Linux (Linux Kernel):
 
-    Android dùng nhánh hỗ trợ dài hạn (LTS) của Linux. Không như kiểu phát triển
-    distro trên máy tính (chủ yếu thay đổi ở ngoài nhân), Google sửa và thêm bớt
-    nhiều thành phần vào nhân trước khi tích hợp.
+    Android dùng nhánh hỗ trợ dài hạn (LTS) của Linux. Khác kiểu phát triển
+    distro trên máy tính (chủ yếu thay đổi ở ngoài nhân), Google sửa nhân khá
+    nhiều trước khi tích hợp.
 
 - Lớp phần cứng trừu tượng (Hardware Abstraction Layer):
 
     Tầng này đưa ra giao diện chung cho mỗi kiểu phần cứng (máy ảnh, loa,...),
-    giúp các tầng trên có thể dùng phần cứng mà không cần quan tâm đến chi tiết
+    giúp các tầng trên có thể dùng phần cứng mà không quan tâm đến chi tiết
     riêng.
 
 - Android Runtime (ART):
@@ -205,8 +205,8 @@ Hệ điều hành Android được phân lớp như sau:
 
 - Thư viện C/C++:
 
-    Tầng thư viện native nằm ngang hàng với ART, phục vụ một số ứng dụng dùng
-    NDK (tức gọi API C cấp thấp) như trò chơi điện tử.
+    Tầng này phục vụ một số ứng dụng dùng NDK (từ Java gọi C) như trò chơi điện
+    tử.
 
 - Khung phát triển ứng dụng (Java API Framework):
 
@@ -232,16 +232,16 @@ phần sau.
 #### 2.1.1. Android Jetpack <a name="P2.1.1-jetpack"></a>
 
 Jetpack là bộ thư viện giúp viết ứng dụng Android nhanh gọn, ít lỗi hơn so với
-việc tự viết những đoạn mã tương tự. Jetpack gồm hai thành phần:
+việc tự viết những đoạn mã tương tự. Jetpack gồm hai thành phần chính:
 
 - AndroidX, trước gọi là Thư viện Hỗ trợ (Support Library): đưa *API* của hệ
   điều hành mới lên máy cũ
 - Architecture Component: đưa ra *thư viện* hoàn toàn mới
 
 Việc cập nhật Android rất khó khăn do phải chờ nhà sản xuất tối ưu. Do đó,
-Jetpack, đặc biệt là AndroidX, rất cần thiết. Chú ý rằng Jetpack chỉ có ích cho
-lập trình viên (API mới tiện hơn thực ra là wrapper của API sẵn có), chứ không
-cập nhật tính năng hệ thống.
+Jetpack, nhất là AndroidX, rất cần thiết. Chú ý rằng Jetpack chỉ có ích cho lập
+trình viên (API mới tiện hơn thực ra là wrapper của API sẵn có), chứ không cập
+nhật tính năng hệ thống.
 
 yacv sử dụng nhiều thành phần của Jetpack, trong đó đáng kể đến ba thư viện sau:
 
@@ -259,13 +259,12 @@ ngôn ngữ mới do JetBrains phát triển. Giới thiệu lần đầu vào n
 Kotlin tương thích hoàn toàn với Java (từ Java gọi được Kotlin và ngược lại), do
 cùng được biên dịch thành JVM bytecode.
 
-Điểm mạnh của Kotlin so với Java là tính ngắn gọn. Do được phát triển mới,
-Kotlin không cần tương thích với phiên bản cũ, cho phép dùng các cú pháp hiện
-đại, gọn ghẽ. Ngoài ra, vì được một công ty tư nhân phát triển, Kotlin không cần
-chờ đến các cuộc họp phức tạp để đạt đồng thuận về tính năng mới, giúp ngôn ngữ
-liên tục được cải tiến. Đồng thời, công ty cũng mở mã nguồn của Kotlin và chương
-trình dịch, giúp đẩy nhanh quá trình phát triển và tạo thiện cảm cộng đồng cho
-một ngôn ngữ non trẻ.
+Kotlin hơn Java ở tính ngắn gọn. Do được phát triển mới, Kotlin không cần tương
+thích ngược, cho phép dùng các cú pháp hiện đại, gọn ghẽ. Do được một công ty
+phát triển, Kotlin không cần chờ các cuộc họp phức tạp để đạt đồng thuận về tính
+năng mới. Đồng thời, công ty cũng mở mã nguồn của Kotlin và chương trình dịch,
+giúp đẩy nhanh quá trình phát triển và tạo thiện cảm cộng đồng cho một ngôn ngữ
+non trẻ.
 
 Sau đây là tóm tắt một số đặc điểm kĩ thuật của Kotlin:
 
@@ -602,8 +601,8 @@ Room là một thư viện thuộc Jetpack. Đây có thể xem là một thư v
 cho SQLite. Room tự động làm nhiều công việc liên quan đến SQL:
 
 - Tạo bảng: Người viết chỉ cần khai báo các đối tượng dữ liệu như một lớp
-  hướng đối tượng thông thường, rồi đánh dấu với Annotation và interface của
-  Room. Sau đó, Room sinh các bảng tương ứng.
+  (class) thông thường, rồi đánh dấu với Annotation và interface của Room. Sau
+  đó, Room sinh các bảng tương ứng.
 - Truy vấn: Người viết chỉ cần viết lệnh SQL. Sau đó, Room sinh hàm truy vấn
   tương ứng, chuyển dữ liệu dạng đối tượng sang dạng để lưu trong bảng và ngược
   lại.
@@ -657,8 +656,8 @@ gần như mọi nền tảng, bao gồm Android.
 ZIP thực chất là một định dạng chứa (container), chuyên chứa dữ liệu nén, chứ
 không phải thuật toán nén; thuật toán nén hay dùng nhất trong ZIP là DEFLATE.
 Một trong các mục tiêu của ZIP là giúp việc sửa tệp nén (thêm, sửa, xóa tệp con
-trong tệp ZIP) nhanh nhất có thể. Mục tiêu đó thể hiện ở thiết kế sau, được biểu
-diễn trong Hình 10:
+trong tệp ZIP) nhanh nhất có thể. Mục tiêu đó dẫn đến thiết kế sau, được thể
+hiện trong Hình 10:
 
 - Thuật toán nén mỗi tệp gốc thành một tệp nhị phân, ở đây gọi là *tệp nén lẻ*
   (data trong Hình 10). Sau đó, các tệp nén lẻ này được nối thành tệp ZIP cuối
