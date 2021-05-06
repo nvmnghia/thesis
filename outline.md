@@ -617,6 +617,10 @@ Ta xem xét đến các bảng nối:
 - `ComicGenreJoin`: Mỗi tập truyện có thể có nhiều thể loại khác nhau và ngược
   lại, do đó `Comic` và `Genre` có quan hệ Nhiều - Nhiều.
 
+Do dùng Room, mỗi bảng ứng với một lớp. Các truy vấn với bảng cần đóng gói dữ
+liệu vào các lớp này, trước khi gửi đến hoặc nhận về từ *DAO* (Data Access
+Object).
+
 ### 4.2. Thiết kế kiến trúc <a name="P4.2-arch-design></a>
 
 Phần này làm rõ kiến trúc hướng đối tượng của ứng dụng. Thiết kế hướng đối tượng
@@ -667,9 +671,8 @@ Cụ thể hơn:
 
 - *ComicParser* là bộ quét metadata tệp truyện (sẽ được mô tả sau), nhận vào URI, trả
   về metadata của tệp truyện tương ứng.
-- *DAO* (Data access object) là giao diện Room tạo ra giúp truy cập SQLite dễ
-  hơn; mỗi bảng tương ứng với một DAO, mỗi câu truy vấn tương ứng với một hàm
-  trong DAO.
+- *DAO* đã giải thích ở cuối [mục 4.2](#P4.2-db-design), mỗi câu truy vấn tương
+  ứng với một hàm trong DAO.
 
 Khi cần đọc dữ liệu metadata từ tệp truyện, ba thành phần này tương tác như sau:
 
@@ -801,6 +804,100 @@ Màn hình Metadata tuân theo biểu đồ tuần tự đã nêu ở Hình 11. 
 ![metadata mvvm](images/metadata_mvvm_class.svg)
 
 Hình 18: Biểu đồ lớp của Màn hình Metadata
+
+##### 4.2.7. Màn hình Tìm kiếm
+
+Màn hình Tìm kiếm là hai trong ba màn hình của ca sử dụng tìm kiếm truyện, bên
+cạnh Màn hình Danh sách truyện (là tổng quát hóa của Màn hình Thư mục, đã nhắc ở
+trên). Màn hình Danh sách truyện sẽ được thiết kế ở ngay mục sau, còn mục này
+tập trung vào Màn hình Tìm kiếm.
+
+Không khó để thấy thực ra Màn hình Tìm kiếm Tổng quan và Màn hình Tìm kiếm Chi
+tiết thực ra là một màn hình, về mặt thị giác:
+
+- Điểm giống:
+
+    - Cả hai cùng hiển thị danh sách.
+    - Các phần tử cùng loại trong hai màn hình có cách hiển thị giống nhau,
+      chuyển đến các màn hình giống nhau.
+
+- Điểm khác: Danh sách trong Màn hình Tìm kiếm Tổng quan có *thêm*:
+
+    - Hiển thị bìa với một số kết quả
+    - Có thanh ngăn cách
+    - Có nút "Xem thêm"
+
+Do vậy, nếu thiết kế phù hợp, hoàn toàn có thể gộp hai màn hình này. Tôi quyết
+định gộp lại, và gọi chung là Màn hình Tìm kiếm. Thiết kế sau giúp thỏa mãn việc
+gộp hai màn hình:
+
+- Màn hình nhận vào một tham số chứa *câu truy vấn*. Tham số này thuộc một trong
+  hai kiểu:
+
+    - `QuerySingleType`: chứa câu truy vấn và *một* bảng để tìm kiếm
+    - `QueryMultipleTypes`: chứa câu truy vấn và một *danh sách* bảng để tìm
+      kiếm
+
+    "Bảng để tìm kiếm" thực ra là một số quy định trước, ví dụ nếu là số `0` thì
+    bảng được tìm là `Comic`,...
+
+- ViewModel tìm kiếm dựa vào tham số truy vấn
+
+    - Nếu tham số là `QuerySingleType`: truy vấn và hiển thị kết quả như thông
+      thường
+    - Nếu tham số là `QueryMultipleTypes`: truy vấn các bảng, gộp kết quả lại và
+      thêm kiểu kết quả đặc biệt là *Placeholder* và *SeeMore* vào vị trí phù
+      hợp để hiển thị lần lượt nhóm kết quả và nút "Xem thêm"
+
+- Các kết quả, bao gồm hai dạng kết quả đặc biệt ở trên, cài đặt chung giao diện
+  `Metadata`, để có thể được gộp thành một danh sách
+
+Nói ngắn gọn, hai màn hình cùng hiển thị một danh sách, danh sách này có một số
+phần tử đánh dấu đặc biệt. Ta dùng lại ví dụ về truy vấn `Watchmen` ở Chương 3
+để minh họa:
+
+- Truy vấn `QueryMultipleTypes` được gửi đến Màn hình Tìm kiếm. Câu truy vấn là
+  `Watchmen`, các bảng cần tìm là mọi bảng.
+- ViewModel tìm `Watchmen` trong mọi bảng, tìm được:
+
+    - 3 tệp truyện trong bảng `Comic`
+    - 2 bộ truyện trong bảng `Series`
+
+- Màn hình hiển thị:
+
+    1. Dòng `Truyện`, rồi 3 tệp truyện (cùng với ảnh bìa)
+    2. Dòng `Bộ truyện`, 1 bộ truyện, rồi dòng `Xem thêm`
+
+- Khi ấn vào:
+
+    - Một trong ba tệp truyện: Đưa đến Màn hình Đọc truyện tương ứng.
+    - Một bộ truyện: Chuyển đến Màn hình Danh sách truyện, chứa các truyện trong
+      bộ đó.
+    - Nút `Xem thêm`: Chuyển đến Màn hình Tìm kiếm, lần này tham số là một
+      `QuerySingleType`, với câu truy vấn là `Watchmen`, còn bảng để tìm là
+      `Series`. Hai bộ truyện kết quả được hiển thị đầy đủ. Chọn một bộ truyện
+      lúc này giống với chọn bộ truyện ở trên.
+
+Biểu đồ lớp của các đối tượng liên quan như sau:
+
+![query class](images/query_class.svg)
+
+Hình 19a: Biểu đồ lớp `Query`
+
+![metadata class](images/metadata_class.svg)
+
+Hình 19b: Biểu đồ lớp `Metadata`
+
+Biểu đồ lớp của bản thân Màn hình Tìm kiếm như sau:
+
+![search mvvm](images/search_mvvm_class.svg)
+
+Hình 20: Biểu đồ lớp của Màn hình Tìm kiếm
+
+Do mỗi DAO trả kết quả của bảng tương ứng về ở dạng danh sách, nên khi dùng
+`QueryMultipleTypes`, các danh sách kết quả lẻ này tổng hợp, và thêm hai kiểu
+kết quả đặc biệt. Hàm `TransformSearchMultiple()` là để "làm phẳng" mảng kết quả
+hai chiều như trên.
 
 ## 5. Chương 5: Lập trình & Kiểm thử <a name="P5-implementation"></a>
 
