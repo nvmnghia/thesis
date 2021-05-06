@@ -619,7 +619,9 @@ Ta xem xét đến các bảng nối:
 
 ### 4.2. Thiết kế kiến trúc <a name="P4.2-arch-design></a>
 
-Phần này làm rõ kiến trúc hướng đối tượng của ứng dụng.
+Phần này làm rõ kiến trúc hướng đối tượng của ứng dụng. Thiết kế hướng đối tượng
+của từng màn hình được trình bày. Sau đó, thiết kế lớp của các lớp quan trọng
+liên quan đến đọc tệp được giới thiệu.
 
 Trong phần này có dùng nhiều biểu đồ tuần tự (sequence diagram) để minh họa
 tương tác của ba thành phần MVVM (cùng với một số thành phần liên quan) trong
@@ -641,7 +643,11 @@ Các biểu đồ trạng thái cũng có một số chi tiết chung:
   thường được ánh xạ đến một phương thức trong View.
 - Kí hiệu hình tròn đen chỉ dùng để tả trạng thái đầu *khi lần đầu dùng* yacv.
 
-#### 4.2.1. Nguồn dữ liệu - Repository - DAO - ComicParser <a name="P4.2.1-mvvm-detail">
+Biểu đồ lớp thường có một phương thức chung là "Get InputStream from ID". Cách
+truy cập để lấy `InputStream` của ảnh từ `ComicID` có thể tham khảo từ Màn hình
+Đọc truyện.
+
+#### 4.2.1. Nguồn dữ liệu - Repository - DAO - ComicParser <a name="P4.2.1-mvvm-design">
 
 Như đã đề cập ở Chương 2, yacv sử dụng Kiến trúc Google khuyên dùng, vốn dựa
 trên MVVM. Phần này nêu rõ hơn cách triển khai MVVM của yacv trong phần nguồn dữ
@@ -667,7 +673,7 @@ Cụ thể hơn:
 
 Khi cần đọc dữ liệu metadata từ tệp truyện, ba thành phần này tương tác như sau:
 
-![mvvm repo](images/MVVM_repo.svg)
+![mvvm repo](images/repo_mvvm_sequence.svg)
 
 Hình 11: Tương tác của ba nguồn dữ liệu, mũi tên gạch đứt thể hiện tính năng data binding
 
@@ -686,7 +692,7 @@ màn hình (cụ thể chỉ Màn hình Metadata cần), do đó trong đa số 
 *DAO đóng vai trò Model*, thay cho Repository. Tương tác trong Hình 11 vẫn được
 duy trì, tuy không có cả Repository lẫn ComicParser.
 
-##### 4.2.2. Màn hình Quyền đọc
+##### 4.2.2. Màn hình Quyền đọc <a name="P4.2.2-permission-design">
 
 Do sự phức tạp trong việc xin quyền của Android, một màn hình riêng để xin quyền
 đọc dữ liệu được tách ra khỏi Màn hình Thư viện, gọi là *Màn hình Quyền đọc*.
@@ -698,17 +704,17 @@ Màn hình này sẽ là *màn hình đầu tiên* hiển thị khi dùng ứng 
 Hình 12 mô tả trạng thái cấp quyền đọc của yacv (cũng như mọi quyền của một ứng
 dụng Android cơ bản nói chung).
 
-![permission state](images/Read_Permission_State.svg)
+![permission state](images/read_permission_state.svg)
 
 Hình 12: Trạng thái cấp quyền của yacv
 
 Dựa theo Hình 12, ta có biểu đồ lớp của ViewModel và View như sau:
 
-![permission mvvm](/images/Permission%20MVVM.svg)
+![permission mvvm](/images/read_permission_mvvm_class.svg)
 
 Hình 12: Biểu đồ lớp của Màn hình Quyền đọc
 
-##### 4.2.3. Màn hình Thư viện
+##### 4.2.3. Màn hình Thư viện <a name="P4.2.3-library-design">
 
 Như đã phân tích ở [mục 3.3.2](#P3.3.2-show-library), Màn hình Thư viện cần hiển
 thị cả lỗi và gợi ý, bên cạnh việc hiển thị danh sách thư mục và chọn thư mục
@@ -720,7 +726,7 @@ gốc. Do đó, phần này chia ra làm hai phần con tương ứng.
 Chọn thư mục (picker), rồi chọn một thư mục trong đó. Luồng chạy của yacv như
 sau (trường hợp ngoại lệ sẽ được nêu trong phần kế tiếp):
 
-![scanning](images/Scanning.svg)
+![scanning](images/scanning_sequence.svg)
 
 Hình 13: Quét tệp truyện khi thay đổi thư mục gốc và hiển thị
 
@@ -750,27 +756,51 @@ Hình sau là biểu đồ trạng thái, cũng là mô tả về nội dung g�
 thái "Có truyện" là trạng thái hiển thị danh sách thư mục trong luồng cơ bản đã
 nêu trên.
 
-![library state](images/Library_State.svg)
+![library state](images/library_state.svg)
 
 Hình 14: Trạng thái của Màn hình Thư viện
 
-##### 4.2.4. Màn hình Thư mục
+Tổng hợp lại, ta có biểu đồ lớp của Màn hình Thư viện như sau:
+
+![library mvvm](images/library_mvvm_class.svg)
+
+Hình 15: Biểu đồ lớp của Màn hình Thư viện
+
+Nhắc lại, cách truy cập để lấy `InputStream` của ảnh từ `ComicID` có thể tham
+khảo từ Màn hình Đọc truyện.
+
+##### 4.2.4. Màn hình Thư mục <a name="P4.2.4-folder-design">
 
 Trong khi phân tích yêu cầu, ta đã phân tích được rằng màn hình hiển thị danh
 sách truyện - một phần trong ca sử dụng tìm kiếm - phải có giao diện giống Màn
 hình Thư mục, vì đều hiển thị danh sách truyện. Do đó, hai màn hình này được gộp
 lại, gọi chung là *Màn hình Danh sách truyện*, và sẽ được mô tả sau.
 
-##### 4.2.5. Màn hình Đọc truyện
+##### 4.2.5. Màn hình Đọc truyện <a name="P4.2.5-reader-design">
 
 Để hiển thị các trang truyện, Màn hình Đọc truyện cần nhận `ComicID` (hoặc một
 đối tượng `Comic` hoàn chỉnh, tuy nhiên cốt yếu vẫn là thông tin `ComicID`) của
 một tệp truyện, sau đó đưa cho `ComicParser` để lấy luồng đọc cho từng trang
 truyện. Biểu đồ luồng của màn hình này là như sau:
 
-![reader](images/Reader.svg)
+![reader sequence](images/reader_sequence.svg)
 
-Hình 15: Biểu đồ tuần tự của Màn hình Đọc truyện
+Hình 16: Biểu đồ tuần tự của Màn hình Đọc truyện
+
+Ta cũng có biểu đồ lớp tương ứng:
+
+![reader class](images/reader_mvvm_class.svg)
+
+Hình 17: Biểu đồ lớp của Màn hình Đọc truyện
+
+##### 4.2.6. Màn hình Metadata
+
+Màn hình Metadata tuân theo biểu đồ tuần tự đã nêu ở Hình 11. Biểu đồ lớp tương
+ứng của màn hình này như sau:
+
+![metadata mvvm](images/metadata_mvvm_class.svg)
+
+Hình 18: Biểu đồ lớp của Màn hình Metadata
 
 ## 5. Chương 5: Lập trình & Kiểm thử <a name="P5-implementation"></a>
 
