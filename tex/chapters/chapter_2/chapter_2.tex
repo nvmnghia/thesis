@@ -67,16 +67,15 @@ Android được phân lớp như sau:
         Lớp phần cứng trừu tượng (Hardware Abstraction Layer):
 
         Tầng này đưa ra giao diện chung cho mỗi kiểu phần cứng (máy ảnh,
-        loa,\ldots), giúp các tầng trên có thể dùng phần cứng mà không quan tâm
-        đến chi tiết riêng.
+        loa,\ldots), giúp tầng trên có thể dùng phần cứng mà không cần quan tâm
+        chi tiết riêng.
     \item
         Android Runtime (ART):
 
-        Ứng dụng Java cần thêm một ứng dụng để chuyển bytecode thành mã máy.
-        Trên máy bàn, đó là các máy ảo Java (JVM). Trên Android, Android Runtime
-        nhận nhiệm vụ này. Hai máy ảo này khác nhau ở chỗ ART \emph{biên dịch}
-        bytecode thành mã máy (trước khi chạy - AOT), còn JVM \emph{thông dịch}
-        bytecode thành mã máy (trong khi chạy).
+        Trên máy bàn, máy ảo Java (JVM) dịch bytecode thành mã máy. Trên
+        Android, Android Runtime nhận nhiệm vụ này. Chúng khác nhau ở chỗ ART
+        \emph{biên dịch} bytecode thành mã máy (trước khi chạy - AOT), còn JVM
+        \emph{thông dịch} bytecode thành mã máy (trong khi chạy).
 \end{itemize}
 
 % Split itemize to avoid confusing wrapfigure
@@ -98,15 +97,13 @@ Android được phân lớp như sau:
         Ứng dụng hệ thống (System Apps)
 
         Android đi kèm với một số ứng dụng hệ thống như ứng dụng SMS, trình
-        duyệt,\ldots{} Google cho phép thay thế đa số các ứng dụng này với ứng
-        dụng bên thứ ba, tuy nhiên có những ngoại lệ như ứng dụng Cài đặt
-        (Settings).
+        duyệt,\ldots{}
 \end{itemize}
 
 Gần như mọi ứng dụng Android cơ bản đều dùng View System trong tầng Khung phát
 triển để viết giao diện, và yacv không là ngoại lệ. yacv còn sử dụng thành phần
-Content Provider, cụ thể là bộ Storage Access Framework, và sẽ được đề cập ở các
-phần sau.
+Content Provider, cụ thể là bộ Storage Access Framework, và sẽ được đề cập dưới
+đây.
 
 \subsection{Android Jetpack}\label{sec:jetpack}
 
@@ -137,6 +134,48 @@ yacv sử dụng nhiều thành phần của Jetpack, trong đó đáng kể đ�
         Room: đơn giản hóa việc lưu dữ liệu trong SQLite (sẽ được giới thiệu ở
         \hyperref[sec:room]{mục sau})
 \end{itemize}
+
+\subsection{Storage Access Framework}\label{sec:saf}
+
+Trước Android 4.4, Android không có sẵn hộp thoại chọn \emph{tệp} (file picker).
+Mỗi ứng dụng lại phải tự viết hộp thoại chọn tệp cho riêng nó, dẫn đến nhiều vấn
+đề: giao diện không thống nhất, mã không được kiểm tra kĩ,... Từ bản 4.4,
+Android mới có hộp thoại này, là một phần trong bộ Storage Access Framework (từ
+đây gọi là SAF) \cite{GOOGL_SAF}.
+
+Mục tiêu quan trọng nhất của SAF là trừu tượng hóa ``nguồn dữ liệu tệp''. Ví dụ,
+SAF giúp ứng dụng không chỉ đọc tệp lưu sẵn trên điện thoại, mà còn đọc tệp lưu
+trong Google Drive, vì ứng dụng Drive khai báo với SAF nó là một nguồn dữ liệu
+tệp. Để làm được điều này, SAF ép buộc hai thay đổi sau:
+
+\begin{itemize}
+    \item
+        Chỉ cho phép đọc ghi tuần tự
+
+        Do không còn phân biệt được tệp lưu tại máy hay trên mạng, việc truy cập
+        ngẫu nhiên vào tệp cũng không thể làm được.
+    \item
+        Dùng \texttt{DocumentFile} thay cho \texttt{File}
+
+        \texttt{DocumentFile} trừu tượng hóa tệp tin (tức ứng dụng không cần
+        biết là tệp sẵn có hay tệp ở trên máy chủ), khác với \texttt{File} trong
+        thư viện chuẩn chỉ hỗ trợ tệp lưu sẵn. SAF thậm chí không cho dùng
+        \text{File} nữa.
+
+        Tương tự, đường dẫn thông thường chỉ cho tệp ngoại tuyến. Đường dẫn với
+        SAF cần thể hiện nguồn dữ liệu là một ứng dụng. Do đó, SAF dùng URI làm
+        đường dẫn.
+\end{itemize}
+
+Hai yêu cầu trên phù hợp với một hệ thống sẵn có trên Android là Content
+Provider. Hệ thống này cũng dùng URI làm đường dẫn, cũng dùng để cung cấp dữ
+liệu, cũng chỉ cho truy cập tuần tự. Do đó, SAF được cài đặt dưới dạng một
+Content Provider.
+
+yacv chọn mốc Android cũ nhất còn hỗ trợ là 5.0 vì từ phiên bản này Android còn
+có hộp thoại chọn \emph{thư mục}. Đây là một hộp thoại không thể thiếu với yacv,
+là bước đầu tiên để ứng dụng hoạt động, do đó cần dùng cài đặt hộp thoại tốt,
+``chính chủ'' để tránh lỗi.
 
 
 %----------------------------------------------------------------------------------------
@@ -171,11 +210,11 @@ Sau đây là tóm tắt một số đặc điểm kĩ thuật của Kotlin:
 
         \begin{itemize}
             \item
-                Là kiểu tĩnh (statically typed), tức kiểu được kiểm tra khi biên
-                dịch (thay vì khi chạy, như Python, JavaScript,\ldots)
-            \item
                 Là kiểu mạnh (strongly typed), tức không cho phép chuyển kiểu
                 ngầm
+            \item
+                Là kiểu tĩnh (statically typed), tức kiểu được kiểm tra khi biên
+                dịch (thay vì khi chạy, như Python, JavaScript,\ldots)
         \end{itemize}
     \item
         Về cú pháp, Kotlin gọn và hiện đại: bỏ dấu \texttt{;} cuối dòng,
@@ -209,21 +248,19 @@ chạy luồng khác. Đây cũng là điểm làm coroutine nhẹ hơn: việc 
 (context switching) được kiểm soát và cắt giảm, do chuyển sang một coroutine
 khác chưa chắc đã chuyển sang một luồng hệ điều hành khác.
 
-Với những điều trên, coroutine chưa làm được nhiều. Roman Elizarov, trưởng dự án
-Kotlin, hướng coroutine trong Kotlin theo một ý tưởng mới: \emph{tương tranh có
-cấu trúc} (structured concurrency, từ đây gọi tắt là SC). Ý tưởng này tiếp tục
-đơn giản hóa việc viết những đoạn mã tương tranh bằng cách áp đặt một số giới
-hạn, cấu trúc cơ bản. Kết quả là coroutine trong Kotlin hỗ trợ việc xử lí lỗi và
-ngừng tác vụ bất đồng bộ tốt hơn việc dùng luồng, hay các thư viện tương tranh
-như RxJava.
+Roman Elizarov, trưởng dự án Kotlin, hướng coroutine trong Kotlin theo một ý
+tưởng mới: \emph{tương tranh có cấu trúc} (structured concurrency, từ đây gọi
+tắt là SC). Ý tưởng này tiếp tục đơn giản hóa việc viết những đoạn mã tương
+tranh bằng cách áp đặt một cấu trúc cha-con. Kết quả là coroutine trong Kotlin
+hỗ trợ việc xử lí lỗi và ngừng tác vụ bất đồng bộ tốt hơn việc dùng luồng, hay
+các thư viện tương tranh như RxJava.
 
-Coroutine được dùng để tăng tốc những đoạn mã chạy chậm trong yacv (sẽ được mô
-tả sau). Ngoài cải thiện hiệu năng, coroutine và SC còn cho phép viết mã ngắn,
-rõ ràng hơn. Do có tác động lớn, cả hai sẽ được giới thiệu kĩ hơn ở phần này.
+Coroutine giúp tăng tốc những đoạn mã chạy chậm trong yacv. SC giúp viết mã
+ngắn, rõ ràng. Do có tác động lớn, cả hai sẽ được giới thiệu kĩ hơn ở phần này.
 
 \subsubsection{Bài học từ quá khứ: lập trình cấu trúc}
 
-\begin{wrapfigure}[5]{r}{5cm}
+\begin{wrapfigure}[3]{r}{5cm}
     \centering
     \vspace*{-6mm}
     \includesvg[width=\linewidth]{../images/sequential-and-go-to-schematic.svg}
@@ -235,10 +272,8 @@ rõ ràng hơn. Do có tác động lớn, cả hai sẽ được giới thiệu
 Để hiểu SC, ta so sánh nó với \emph{lập trình cấu trúc} (structured
 programming). Để hiểu về lập trình cấu trúc, ta phải tìm về \emph{lập trình phi
 cấu trúc} (non-structured programming), với đặc điểm là lệnh nhảy \texttt{GOTO}.
-Trong buổi đầu của máy tính, lệnh này được dùng nhiều vì hợp với cách máy tính
-chạy.
 
-\begin{wrapfigure}[9]{r}{5cm}
+\begin{wrapfigure}[8]{r}{5cm}
     \centering
     \includesvg[width=\linewidth,inkscapelatex=false]
         {../images/flow-matic-4.svg}
@@ -252,12 +287,12 @@ Vấn đề của lập trình phi cấu trúc, hay của \texttt{GOTO}, gồm:
     \item
         Khó nắm bắt luồng chương trình
 
-        Khi đã chạy \texttt{GOTO}, các lệnh phía sau nó không biết khi nào mới
-        chạy, vì chương trình chuyển sang lệnh khác mà không trở lại. Luồng chạy
-        trở thành một đống ``mì trộn'' như \autoref{fig:goto-spaghetti}, thay vì
+        Khi đã chạy \texttt{GOTO}, các lệnh sau nó không biết khi nào mới chạy,
+        vì chương trình chuyển sang lệnh khác mà không trở lại. Luồng chạy trở
+        thành một đống ``mì trộn'' như \autoref{fig:goto-spaghetti}, thay vì
         tuần tự từ trên xuống. Tệ hơn, tính trừu tượng bị phá vỡ: khi gọi hàm,
         thay vì có thể bỏ qua chi tiết bên trong, ta phải biết rõ để xem có lệnh
-        nhảy bất ngờ nào không.
+        nhảy bất ngờ không.
 \end{enumerate}
 
 \begin{enumerate}[resume, before = \vspace*{-\dimexpr\topsep+\partopsep\relax}]
@@ -265,24 +300,24 @@ Vấn đề của lập trình phi cấu trúc, hay của \texttt{GOTO}, gồm:
         Không cài đặt được các chức năng mới (ngoại lệ, quản lí tài nguyên tự
         động,\ldots)
 
-        Xét ví dụ Java sau về quản lí tài nguyên tự động:
+        Xét ví dụ Java (giả sử có \texttt{GOTO}) sau về quản lí tài nguyên tự
+        động:
 
         \begin{minted}{Java}
-        try (Scanner scanner = new Scanner(new File("f.txt"))) {
-            goto(SOMEWHERE);    // Giả sử Java có GOTO
-        }
+try (Scanner scanner = new Scanner(new File("f.txt"))) {
+    goto(SOMEWHERE); // Nhảy đi đâu mất, do đó không đóng luồng nhập
+}                    // Dẫn đến rò rỉ tài nguyên
         \end{minted}
 
-        Do không trả lại luồng điều khiển, việc đóng luồng nhập từ tệp cũng
-        không chắc chắn xảy ra, dẫn đến rò rỉ tài nguyên, làm khối lệnh vô dụng.
+        Như comment chỉ ra, không trả luồng điều khiển làm khối lệnh vô dụng.
 
-        Điều gần tương tự cũng khiến việc xử lí ngoại lệ và nhiều tính năng khác
-        trở nên rất khó đạt được, một khi ngôn ngữ cho phép \texttt{GOTO}.
+        Điều gần tương tự làm xử lí ngoại lệ và nhiều tính năng khác rất khó cài
+        đặt, một khi ngôn ngữ cho phép \texttt{GOTO}.
 \end{enumerate}
 
-\begin{wrapfigure}{r}{5cm}
+\begin{wrapfigure}[7]{r}{5cm}
     \centering
-    \vspace*{-6mm}
+    \vspace*{-7mm}
     \includesvg[width=\linewidth]{../images/control-schematics.svg}
     \vspace*{-10mm}
     \caption{Ba cấu trúc cơ bản: rẽ nhánh \texttt{if}, lặp \texttt{for} và gọi
@@ -294,18 +329,19 @@ Lập trình cấu trúc đơn giản hóa luồng chạy bằng cách giới h�
 \texttt{if}, \texttt{for} và gọi hàm. Khác biệt mấu chốt so với \texttt{GOTO} là
 chúng \emph{trả luồng điều khiển} về điểm gọi, thể hiện rõ ở
 \autoref{fig:3-basic-construct}. Theo định nghĩa, ba lệnh trên giải quyết được
-hậu quả 1. Đồng thời, hậu quả 2 cũng được giải quyết, do ngôn ngữ đã có cấu trúc
-(cụ thể là có call stack).
+hậu quả 1. Đồng thời, do ngôn ngữ có cấu trúc (có call stack), hậu quả 2 cũng
+được giải quyết.
 
-Ngày nay, ba cấu trúc trên là phần không thể thiếu trong mọi ngôn ngữ lập trình,
-còn \texttt{GOTO} chỉ dùng trong hợp ngữ. Quá khứ cho thấy nếu áp dụng một số
-cấu trúc, giới hạn, ta có thể giải quyết vấn đề một cách tinh tế và gọn gàng.
-Trong trường hợp này, SC có thể loại bỏ một số điểm yếu của các API tương
-tranh/bất đồng bộ truyền thống, giống cách lập trình cấu trúc đã làm.
+Ngày nay, ba cấu trúc trên đều có trong mọi ngôn ngữ lập trình, còn
+\texttt{GOTO} chỉ dùng trong hợp ngữ. Quá khứ cho thấy nếu áp dụng một số cấu
+trúc, ta có thể giải quyết vấn đề một cách tinh tế và gọn gàng. Ở đây, SC khắc
+phục một số điểm yếu của các API tương tranh truyền thống, giống cách lập trình
+cấu trúc đã làm.
 
 \subsubsection{Áp dụng vào hiện tại: tương tranh cấu trúc}
 
-Trước hết, ta xem xét hai kiểu API tương tranh hay dùng hiện nay \cite{NJS_SC}:
+Trước hết, ta xem xét hai kiểu API tương tranh hay dùng hiện nay trong
+\autoref{tab:2-async-apis} \cite{NJS_SC}:
 
 % Verbatim can't be put inside macro
 % https://tex.stackexchange.com/questions/25190/defining-a-command-for-a-minted-environment#comment49208_25190
@@ -329,7 +365,7 @@ Trước hết, ta xem xét hai kiểu API tương tranh hay dùng hiện nay \c
     \end{tabular}
 \end{table}
 
-\begin{wrapfigure}[5]{r}{5cm}
+\begin{wrapfigure}[4]{r}{5cm}
     \centering
     \vspace*{-6mm}
     \includesvg[width=\linewidth]{../images/sequential-and-go-to-schematic.svg}
@@ -366,7 +402,7 @@ dùng mô hình này).
 
 \begin{wrapfigure}[8]{l}{8cm}
     \centering
-    \vspace*{-4mm}
+    \vspace*{-6mm}
     \includesvg[width=\linewidth,inkscapelatex=false]    % To leave text as is
         {../images/kotlin-coroutine.svg}                 % https://tex.stackexchange.com/a/595916/206774
     \vspace*{-10mm}
@@ -375,10 +411,10 @@ dùng mô hình này).
 \end{wrapfigure}
 
 Nguyên tắc của SC là: \emph{coroutine cha chờ mọi coroutine con chạy xong}, kể
-cả khi nó xong trước. Nguyên tắc này đảm bảo rằng khi một hàm kết thúc, không
-còn tác vụ tương tranh nữa, và điểm gọi nhận lại luồng điều khiển hợp nhất (các
-mũi tên chụm lại ở góc trái dưới \autoref{fig:kotlin-coroutine}). Đột nhiên, hai
-tính năng có vấn đề ở trên lại hoạt động:
+cả khi nó xong trước. Nó đảm bảo rằng khi một hàm kết thúc, không còn tác vụ
+tương tranh nữa, và điểm gọi nhận lại luồng điều khiển hợp nhất (các mũi tên
+chụm lại ở góc trái dưới \autoref{fig:kotlin-coroutine}). Đột nhiên, hai tính
+năng có vấn đề ở trên lại hoạt động:
 
 \begin{itemize}
     \item
@@ -397,7 +433,7 @@ tính năng có vấn đề ở trên lại hoạt động:
 Chú ý là các API hiện tại không phải không làm được nguyên tắc trên, vấn đề là
 thực hiện một cách \emph{tự động} và \emph{đảm bảo}. Ví dụ, trong JS, để tuân
 theo SC, ta phải nhớ \texttt{await} với mọi hàm \texttt{async}. Do không có ràng
-buộc chặt chẽ này, các tính năng ngôn ngữ mới cũng khó cài đặt như đã phân tích.
+buộc chặt chẽ này, các tính năng ngôn ngữ mới vẫn khó cài đặt như đã phân tích.
 
 Do trong các ngôn ngữ khác, nguyên tắc trên chỉ là một ca sử dụng, việc ép buộc
 viết theo ca sử dụng này đòi hỏi lập trình viên thay đổi suy nghĩ về tương
@@ -478,6 +514,15 @@ trúc phần mềm: Clean Architecture. MVP, vốn được phát triển từ l
 Google chọn MVVM, đây là hướng đi mới, có kì vọng cao sau nhiều thất bại trong
 việc đưa MVC vào Android.
 
+\begin{wrapfigure}[6]{r}{7cm}
+    \centering
+    \vspace*{-3mm}
+    \includegraphics[width=\linewidth]{../images/Model_View_Presenter_GUI_Design_Pattern.png}
+    \vspace*{-10mm}
+    \caption{Kiến trúc MVP \cite{WIKI_MVP}}
+    \label{fig:mvp}
+\end{wrapfigure}
+
 Nhiệm vụ của ba thành phần như sau:
 
 \begin{itemize}
@@ -495,18 +540,8 @@ Ta thấy điểm yếu View-Controller nhập nhằng được khắc phục, k
 việc nhận tương tác. Đồng thời, Model và View hoàn toàn không biết nhau, đúng
 theo nguyên lý tách lớp của Clean Architecture.
 
-\begin{wrapfigure}[6]{r}{7cm}
-    \centering
-    \vspace*{-3mm}
-    \includegraphics[width=\linewidth]{../images/Model_View_Presenter_GUI_Design_Pattern.png}
-    \vspace*{-10mm}
-    \caption{Kiến trúc MVP \cite{WIKI_MVP}}
-    \label{fig:mvp}
-\end{wrapfigure}
-
 Ta xét một ứng dụng ToDo đơn giản, trong đó các công việc có thể được đánh dấu
-đã hoàn thành. Trong ứng dụng, màn hình hiển thị số việc đã và chưa hoàn thành.
-Trong màn hình đó, tương tác của MVP như sau:
+đã hoàn thành. Ứng dụng hiển thị số việc đã và chưa hoàn thành như sau:
 
 \begin{enumerate}
     \item
@@ -524,15 +559,6 @@ Trong màn hình đó, tương tác của MVP như sau:
 
 \subsubsection{MVVM: Model - View - View Model}
 
-\begin{wrapfigure}{r}{11.5cm}
-    \centering
-    \vspace*{-6mm}
-    \includegraphics[width=\linewidth]{../images/MVVMPattern.png}
-    \vspace*{-10mm}
-    \caption{Kiến trúc MVVM \cite{MUN_MVVM}}
-    \label{fig:mvvm}
-\end{wrapfigure}
-
 Ta quay về chủ đề chính: MVVM. MVVM giống MVP ở chỗ View Model (từ đây gọi tắt
 là VM) kết nối View và Model như Presenter. Điểm khác biệt là cách truyền dữ
 liệu \cite{MUN_MVVM}:
@@ -546,6 +572,15 @@ liệu \cite{MUN_MVVM}:
     \item
           Trong MVVM, VM dùng \emph{data binding} để truyền dữ liệu cho View
 \end{itemize}
+
+\begin{wrapfigure}[7]{r}{11.5cm}
+    \centering
+    \vspace*{-4mm}
+    \includegraphics[width=\linewidth]{../images/MVVMPattern.png}
+    \vspace*{-10mm}
+    \caption{Kiến trúc MVVM \cite{MUN_MVVM}}
+    \label{fig:mvvm}
+\end{wrapfigure}
 
 Data binding là cơ chế để \emph{tự động} đưa dữ liệu vào thành phần hiển thị.
 Quay lại ví dụ ToDo ở trên, nếu dùng data binding để ``gắn'' (bind) danh sách
@@ -563,7 +598,7 @@ tảng cho Kiến trúc Google khuyên dùng.
 
 \begin{wrapfigure}[10]{r}{8cm}
     \centering
-    \vspace*{-3mm}
+    \vspace*{-6mm}
     \includegraphics[width=\linewidth]{../images/final-architecture.png}
     \vspace*{-10mm}
     \caption{Kiến trúc Google khuyên dùng \cite{GOOGL_APP_ARCH}}
@@ -622,16 +657,13 @@ cho SQLite. Room tự động làm nhiều công việc liên quan đến SQL:
 
 \begin{itemize}
     \item
-        Tạo bảng: Người viết chỉ cần khai báo các đối tượng dữ liệu như một lớp
-        (class) thông thường, rồi đánh dấu với Annotation và interface của Room.
-        Sau đó, Room sinh các bảng tương ứng.
+        Tạo bảng: Người viết chỉ cần khai báo đối tượng dữ liệu như lớp (class)
+        thông thường, rồi đánh dấu với Annotation của Room. Sau đó, Room sinh
+        các bảng tương ứng.
     \item
         Truy vấn: Người viết chỉ cần viết lệnh SQL. Sau đó, Room sinh hàm truy
         vấn tương ứng, chuyển dữ liệu dạng đối tượng sang dạng để lưu trong bảng
-        và ngược lại.
-    \item
-        Kiểm tra truy vấn khi biên dịch: Dò lỗi lệnh SQL mà không cần chờ đến
-        khi chạy.
+        và ngược lại. Room còn bắt lỗi lệnh SQL mà không cần chờ đến khi chạy.
     \item
         Kiểm soát lược đồ (schema): Khi thêm/sửa/xóa bảng/cột, Room luôn phát
         hiện và ép viết cơ chế cập nhật. Do đó, ứng dụng dùng lược đồ cũ khi
@@ -684,7 +716,12 @@ ZIP là một định dạng tệp nén không mất mát (lossless). Được p
 1989 bởi Phil Katz, ZIP đã trở thành định dạng nén tiêu chuẩn, được hỗ trợ trên
 gần như mọi nền tảng, bao gồm Android.
 
-\begin{wrapfigure}[10]{r}{10cm}
+ZIP thực chất là một định dạng chứa (container), chuyên chứa dữ liệu nén, chứ
+không phải thuật toán nén; thuật toán nén hay dùng nhất trong ZIP là DEFLATE.
+Một trong các mục tiêu của ZIP là giúp việc sửa tệp nén (thêm, sửa, xóa tệp con
+trong tệp ZIP) nhanh nhất có thể.
+
+\begin{wrapfigure}[8]{r}{10cm}
     \centering
     \vspace*{-6mm}
     \includesvg[width=\linewidth,inkscapelatex=false]
@@ -693,17 +730,17 @@ gần như mọi nền tảng, bao gồm Android.
     \label{fig:zip-layout}
 \end{wrapfigure}
 
-ZIP thực chất là một định dạng chứa (container), chuyên chứa dữ liệu nén, chứ
-không phải thuật toán nén; thuật toán nén hay dùng nhất trong ZIP là DEFLATE.
-Một trong các mục tiêu của ZIP là giúp việc sửa tệp nén (thêm, sửa, xóa tệp con
-trong tệp ZIP) nhanh nhất có thể. Mục tiêu đó dẫn đến thiết kế sau
-\cite{PKWARE_APPNOTE}, được thể hiện trong \autoref{fig:zip-layout}:
+Mục tiêu trên dẫn đến thiết kế thể hiện trong \autoref{fig:zip-layout}
+\cite{PKWARE_APPNOTE}:
 
 \begin{itemize}
     \item
         Thuật toán nén mỗi tệp gốc thành một tệp nhị phân, ở đây gọi là
         \emph{tệp nén lẻ} (data trong \autoref{fig:zip-layout}). Sau đó, các tệp
-        nén lẻ này được nối thành tệp ZIP cuối cùng.
+        nén lẻ được nối thành tệp ZIP kết quả.
+\end{itemize}
+
+\begin{itemize}[resume, before = \vspace*{-\dimexpr\topsep+\partopsep\relax}]
     \item
         Ở đầu mỗi tệp nén lẻ là một header gọi là \emph{File Entry} để lưu thông
         tin liên quan, trong đó có \emph{tên tệp gốc} và \emph{vị trí bắt đầu}

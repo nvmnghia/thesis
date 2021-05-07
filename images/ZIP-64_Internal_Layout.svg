@@ -7,11 +7,11 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="972"
-   height="527"
-   viewBox="0 89 972 527"
+   width="921.18829"
+   height="460.08777"
+   viewBox="0 89 921.18829 460.08777"
    version="1.1"
-   inkscape:version="1.0.2 (e86c870879, 2021-01-15)"
+   inkscape:version="1.0.2 (e86c8708, 2021-01-15)"
    sodipodi:docname="ZIP-64_Internal_Layout.svg"
    inkscape:export-filename="/home/ctodd/Pictures/zip64_structure.png"
    id="svg490">
@@ -25,16 +25,17 @@
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
      inkscape:window-width="2560"
-     inkscape:window-height="1378"
+     inkscape:window-height="1395"
      id="namedview492"
      showgrid="false"
      inkscape:zoom="1.3518519"
-     inkscape:cx="486"
-     inkscape:cy="263.5"
+     inkscape:cx="456.64008"
+     inkscape:cy="256.0815"
      inkscape:window-x="0"
-     inkscape:window-y="0"
+     inkscape:window-y="23"
      inkscape:window-maximized="1"
-     inkscape:current-layer="layer1" />
+     inkscape:current-layer="layer1"
+     inkscape:document-rotation="0" />
   <title
      id="title2">ZIP64 Header</title>
   <defs
@@ -299,6 +300,17 @@
          horiz-adv-x="556"
          unicode=" " />
     </font>
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath505">
+      <rect
+         style="fill:#0000ff;fill-rule:evenodd"
+         id="rect507"
+         width="921.18829"
+         height="460.08832"
+         x="29.359919"
+         y="27271.418" />
+    </clipPath>
   </defs>
   <metadata
      id="metadata58">
@@ -338,11 +350,12 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(9409.2857,-14497.362)">
+     transform="translate(9379.9258,-14504.781)">
     <g
-       style="fill-rule:evenodd;stroke-width:28.22200012;stroke-linejoin:round"
+       style="fill-rule:evenodd;stroke-width:28.222;stroke-linejoin:round"
        id="g5269"
-       transform="translate(-9409.2857,-12677.638)">
+       transform="translate(-9409.2857,-12677.638)"
+       clip-path="url(#clipPath505)">
       <g
          clip-path="url(#presentation_clip_path)"
          class="Master_Slide"
@@ -363,7 +376,7 @@
            id="g4239">
           <path
              id="path4241"
-             d="m 3835,20337 c -148,0 -296,148 -296,296 l 0,1186 c 0,148 148,297 296,297 l 13505,0 c 148,0 296,-149 296,-297 l 0,-1186 c 0,-148 -148,-296 -296,-296 l -13505,0 z m -296,0 0,0 z m 14098,1779 0,0 z"
+             d="m 3835,20337 c -148,0 -296,148 -296,296 v 1186 c 0,148 148,297 296,297 h 13505 c 148,0 296,-149 296,-297 v -1186 c 0,-148 -148,-296 -296,-296 z m -296,0 z m 14098,1779 z"
              style="fill:#ccffff;stroke:none" />
           <rect
              id="rect4243"
@@ -390,7 +403,7 @@
            id="g4249">
           <path
              id="path4251"
-             d="m 3836,20337 c -148,0 -296,148 -296,296 l 0,1186 c 0,148 148,297 296,297 l 4234,0 c 148,0 297,-149 297,-297 l 0,-1186 c 0,-148 -149,-296 -297,-296 l -4234,0 z m -296,0 0,0 z m 4827,1779 0,0 z"
+             d="m 3836,20337 c -148,0 -296,148 -296,296 v 1186 c 0,148 148,297 296,297 h 4234 c 148,0 297,-149 297,-297 v -1186 c 0,-148 -149,-296 -297,-296 z m -296,0 z m 4827,1779 z"
              style="fill:#000080;stroke:none" />
           <rect
              id="rect4253"
@@ -417,7 +430,7 @@
            id="g4259">
           <path
              id="path4261"
-             d="m 14405,20337 c -148,0 -296,148 -296,296 l 0,1186 c 0,148 148,297 296,297 l 3091,0 c 148,0 297,-149 297,-297 l 0,-1186 c 0,-148 -149,-296 -297,-296 l -3091,0 z m -296,0 0,0 z m 3684,1779 0,0 z"
+             d="m 14405,20337 c -148,0 -296,148 -296,296 v 1186 c 0,148 148,297 296,297 h 3091 c 148,0 297,-149 297,-297 v -1186 c 0,-148 -149,-296 -297,-296 z m -296,0 z m 3684,1779 z"
              style="fill:#800080;stroke:none" />
           <rect
              id="rect4263"
@@ -444,7 +457,7 @@
            id="g4269">
           <path
              id="path4271"
-             d="m 16494,22115 -1016,0 0,-1778 2032,0 0,1778 -1016,0 z"
+             d="m 16494,22115 h -1016 v -1778 h 2032 v 1778 z"
              style="fill:#9966cc;stroke:none" />
           <rect
              id="rect4273"
@@ -471,7 +484,7 @@
            id="g4279">
           <path
              id="path4281"
-             d="m 13573,22115 -889,0 0,-1778 1778,0 0,1778 -889,0 z"
+             d="m 13573,22115 h -889 v -1778 h 1778 v 1778 z"
              style="fill:#000080;stroke:none" />
           <rect
              id="rect4283"
@@ -498,7 +511,7 @@
            id="g4289">
           <path
              id="path4291"
-             d="m 13763,22115 -826,0 0,-1778 1651,0 0,1778 -825,0 z"
+             d="m 13763,22115 h -826 v -1778 h 1651 v 1778 z"
              style="fill:#0066cc;stroke:none" />
           <rect
              id="rect4293"
@@ -525,7 +538,7 @@
            id="g4299">
           <path
              id="path4301"
-             d="m 8747,22115 -889,0 0,-1778 1778,0 0,1778 -889,0 z"
+             d="m 8747,22115 h -889 v -1778 h 1778 v 1778 z"
              style="fill:#0066cc;stroke:none" />
           <rect
              id="rect4303"
@@ -552,7 +565,7 @@
            id="g4309">
           <path
              id="path4311"
-             d="m 6716,22115 -889,0 0,-1778 1778,0 0,1778 -889,0 z"
+             d="m 6716,22115 h -889 v -1778 h 1778 v 1778 z"
              style="fill:#0066cc;stroke:none" />
           <rect
              id="rect4313"
@@ -579,7 +592,7 @@
            id="g4319">
           <path
              id="path4321"
-             d="m 4692,22115 -826,0 0,-1778 1651,0 0,1778 -825,0 z"
+             d="m 4692,22115 h -826 v -1778 h 1651 v 1778 z"
              style="fill:#0066cc;stroke:none" />
           <rect
              id="rect4323"
@@ -616,7 +629,7 @@
              font-weight="700"
              font-style="normal"
              font-size="353px"
-             style="font-size:353px;font-style:normal;font-weight:700;font-family:Liberation Sans embedded">
+             style="font-style:normal;font-weight:700;font-size:353px;font-family:'Liberation Sans embedded'">
             <g
                id="g4367"
                style="fill:#ffffff;stroke:none">
@@ -731,7 +744,7 @@
              font-weight="700"
              font-style="normal"
              font-size="353px"
-             style="font-size:353px;font-style:normal;font-weight:700;font-family:Liberation Sans embedded">
+             style="font-style:normal;font-weight:700;font-size:353px;font-family:'Liberation Sans embedded'">
             <g
                id="g4427"
                style="fill:#ffffff;stroke:none">
@@ -846,7 +859,7 @@
              font-weight="700"
              font-style="normal"
              font-size="353px"
-             style="font-size:353px;font-style:normal;font-weight:700;font-family:Liberation Sans embedded">
+             style="font-style:normal;font-weight:700;font-size:353px;font-family:'Liberation Sans embedded'">
             <g
                id="g4487"
                style="fill:#ffffff;stroke:none">
@@ -964,7 +977,7 @@
              font-weight="700"
              font-style="normal"
              font-size="353px"
-             style="font-size:353px;font-style:normal;font-weight:700;font-family:Liberation Sans embedded"
+             style="font-style:normal;font-weight:700;font-size:353px;font-family:'Liberation Sans embedded'"
              inkscape:export-filename="/home/ctodd/Pictures/zip64_structure.png"
              inkscape:export-xdpi="150"
              inkscape:export-ydpi="150">
@@ -1072,7 +1085,7 @@
            id="g4645">
           <path
              id="path4647"
-             d="m 3667,22336 0,3556"
+             d="m 3667,22336 v 2856"
              style="fill:none;stroke:#000000" />
         </g>
       </g>
@@ -1085,7 +1098,7 @@
            id="g4651">
           <path
              id="path4653"
-             d="m 5699,22236 0,2921"
+             d="m 5699,22236 v 2321"
              style="fill:none;stroke:#000000" />
         </g>
       </g>
@@ -1098,7 +1111,7 @@
            id="g4657">
           <path
              id="path4659"
-             d="m 7731,22209 0,2286"
+             d="m 7731,22209 v 1586"
              style="fill:none;stroke:#000000" />
         </g>
       </g>
@@ -1111,7 +1124,7 @@
            id="g4663">
           <path
              id="path4665"
-             d="m 12811,22209 0,3429"
+             d="m 12811,22209 v 2829"
              style="fill:none;stroke:#000000" />
         </g>
       </g>
@@ -1124,7 +1137,7 @@
            id="g4669">
           <path
              id="path4671"
-             d="m 14716,22209 0,2667"
+             d="m 14716,22209 v 1967"
              style="fill:none;stroke:#000000" />
         </g>
       </g>
@@ -1137,7 +1150,7 @@
            id="g4675">
           <path
              id="path4677"
-             d="m 14970,22209 0,2159"
+             d="m 14970,22209 v 1459"
              style="fill:none;stroke:#000000" />
         </g>
       </g>
@@ -1150,7 +1163,7 @@
            id="g4681">
           <path
              id="path4683"
-             d="m 15251,22209 0,1524"
+             d="m 15251,22209 v 824"
              style="fill:none;stroke:#000000" />
         </g>
       </g>
@@ -1163,7 +1176,7 @@
            id="g4687">
           <path
              id="path4689"
-             d="m 17764,22236 0,1016"
+             d="m 17764,22236 v 516"
              style="fill:none;stroke:#000000" />
         </g>
       </g>
@@ -1176,11 +1189,11 @@
            id="g4693">
           <path
              id="path4695"
-             d="m 3667,18526 0,1380"
+             d="m 3667,18526 v 1380"
              style="fill:none;stroke:#808080" />
           <path
              id="path4697"
-             d="m 3667,20177 95,-283 -189,0 94,283 z"
+             d="m 3667,20177 95,-283 h -189 z"
              style="fill:#808080;stroke:none" />
         </g>
       </g>
@@ -1193,11 +1206,11 @@
            id="g4701">
           <path
              id="path4703"
-             d="m 5691,19034 0,872"
+             d="m 5691,19034 v 872"
              style="fill:none;stroke:#808080" />
           <path
              id="path4705"
-             d="m 5691,20177 95,-283 -189,0 94,283 z"
+             d="m 5691,20177 95,-283 h -189 z"
              style="fill:#808080;stroke:none" />
         </g>
       </g>
@@ -1210,11 +1223,11 @@
            id="g4709">
           <path
              id="path4711"
-             d="m 7715,19415 0,491"
+             d="m 7715,19415 v 491"
              style="fill:none;stroke:#808080" />
           <path
              id="path4713"
-             d="m 7715,20177 95,-283 -189,0 94,283 z"
+             d="m 7715,20177 95,-283 h -189 z"
              style="fill:#808080;stroke:none" />
         </g>
       </g>
@@ -1227,11 +1240,11 @@
            id="g4717">
           <path
              id="path4719"
-             d="m 12739,19796 0,109"
+             d="m 12739,19796 v 109"
              style="fill:none;stroke:#808080" />
           <path
              id="path4721"
-             d="m 12739,20176 95,-283 -189,0 94,283 z"
+             d="m 12739,20176 95,-283 h -189 z"
              style="fill:#808080;stroke:none" />
         </g>
       </g>
@@ -1244,7 +1257,7 @@
            id="g4725">
           <path
              id="path4727"
-             d="m 14712,18526 0,1651"
+             d="m 14712,18526 v 1651"
              style="fill:none;stroke:#808080" />
         </g>
       </g>
@@ -1257,7 +1270,7 @@
            id="g4731">
           <path
              id="path4733"
-             d="m 15015,19034 0,1143"
+             d="m 15015,19034 v 1143"
              style="fill:none;stroke:#808080" />
         </g>
       </g>
@@ -1270,7 +1283,7 @@
            id="g4737">
           <path
              id="path4739"
-             d="m 15339,19414 0,762"
+             d="m 15339,19414 v 762"
              style="fill:none;stroke:#808080" />
         </g>
       </g>
@@ -1283,7 +1296,7 @@
            id="g4743">
           <path
              id="path4745"
-             d="m 17563,19795 0,380"
+             d="m 17563,19795 v 380"
              style="fill:none;stroke:#808080" />
         </g>
       </g>
@@ -1296,7 +1309,7 @@
            id="g4749">
           <path
              id="path4751"
-             d="m 5691,19034 9324,0"
+             d="m 5691,19034 h 9324"
              style="fill:none;stroke:#808080" />
         </g>
       </g>
@@ -1309,7 +1322,7 @@
            id="g4755">
           <path
              id="path4757"
-             d="m 3667,18526 11045,0"
+             d="M 3667,18526 H 14712"
              style="fill:none;stroke:#808080" />
         </g>
       </g>
@@ -1322,7 +1335,7 @@
            id="g4761">
           <path
              id="path4763"
-             d="m 7715,19415 3853,0 0,-1 3771,0"
+             d="m 7715,19415 h 3853 v -1 h 3771"
              style="fill:none;stroke:#808080" />
         </g>
       </g>
@@ -1335,7 +1348,7 @@
            id="g4767">
           <path
              id="path4769"
-             d="m 12739,19796 2453,0 0,-1 2371,0"
+             d="m 12739,19796 h 2453 v -1 h 2371"
              style="fill:none;stroke:#808080" />
         </g>
       </g>
@@ -1358,68 +1371,68 @@
              font-weight="400"
              font-style="normal"
              font-size="353px"
-             style="font-size:353px;font-style:normal;font-weight:400;font-family:Liberation Sans embedded">
+             style="font-style:normal;font-weight:400;font-size:353px;font-family:'Liberation Sans embedded'">
             <g
                id="g4779"
                style="fill:#3c3c3c;stroke:none">
               <text
                  id="text4781"
-                 y="25935"
+                 y="25335"
                  x="3844"
                  style="line-height:0%">L</text>
               <text
                  id="text4783"
-                 y="25935"
+                 y="25335"
                  x="4039"
                  style="line-height:0%">o</text>
               <text
                  id="text4785"
-                 y="25935"
+                 y="25335"
                  x="4233"
                  style="line-height:0%">c</text>
               <text
                  id="text4787"
-                 y="25935"
+                 y="25335"
                  x="4411"
                  style="line-height:0%">a</text>
               <text
                  id="text4789"
-                 y="25935"
+                 y="25335"
                  x="4606"
                  style="line-height:0%">l</text>
               <text
                  id="text4793"
-                 y="25935"
+                 y="25335"
                  x="4780"
                  style="line-height:0%">h</text>
               <text
                  id="text4795"
-                 y="25935"
+                 y="25335"
                  x="4974"
                  style="line-height:0%">e</text>
               <text
                  id="text4797"
-                 y="25935"
+                 y="25335"
                  x="5169"
                  style="line-height:0%">a</text>
               <text
                  id="text4799"
-                 y="25935"
+                 y="25335"
                  x="5364"
                  style="line-height:0%">d</text>
               <text
                  id="text4801"
-                 y="25935"
+                 y="25335"
                  x="5559"
                  style="line-height:0%">e</text>
               <text
                  id="text4803"
-                 y="25935"
+                 y="25335"
                  x="5753"
                  style="line-height:0%">r</text>
               <text
                  id="text4807"
-                 y="25935"
+                 y="25335"
                  x="5969"
                  style="line-height:0%">1</text>
             </g>
@@ -1445,68 +1458,68 @@
              font-weight="400"
              font-style="normal"
              font-size="353px"
-             style="font-size:353px;font-style:normal;font-weight:400;font-family:Liberation Sans embedded">
+             style="font-style:normal;font-weight:400;font-size:353px;font-family:'Liberation Sans embedded'">
             <g
                id="g4817"
                style="fill:#3c3c3c;stroke:none">
               <text
                  id="text4819"
-                 y="25236"
+                 y="24636"
                  x="5944"
                  style="line-height:0%">L</text>
               <text
                  id="text4821"
-                 y="25236"
+                 y="24636"
                  x="6139"
                  style="line-height:0%">o</text>
               <text
                  id="text4823"
-                 y="25236"
+                 y="24636"
                  x="6333"
                  style="line-height:0%">c</text>
               <text
                  id="text4825"
-                 y="25236"
+                 y="24636"
                  x="6511"
                  style="line-height:0%">a</text>
               <text
                  id="text4827"
-                 y="25236"
+                 y="24636"
                  x="6706"
                  style="line-height:0%">l</text>
               <text
                  id="text4831"
-                 y="25236"
+                 y="24636"
                  x="6880"
                  style="line-height:0%">h</text>
               <text
                  id="text4833"
-                 y="25236"
+                 y="24636"
                  x="7074"
                  style="line-height:0%">e</text>
               <text
                  id="text4835"
-                 y="25236"
+                 y="24636"
                  x="7269"
                  style="line-height:0%">a</text>
               <text
                  id="text4837"
-                 y="25236"
+                 y="24636"
                  x="7464"
                  style="line-height:0%">d</text>
               <text
                  id="text4839"
-                 y="25236"
+                 y="24636"
                  x="7659"
                  style="line-height:0%">e</text>
               <text
                  id="text4841"
-                 y="25236"
+                 y="24636"
                  x="7853"
                  style="line-height:0%">r</text>
               <text
                  id="text4845"
-                 y="25236"
+                 y="24636"
                  x="8069"
                  style="line-height:0%">2</text>
             </g>
@@ -1532,68 +1545,68 @@
              font-weight="400"
              font-style="normal"
              font-size="353px"
-             style="font-size:353px;font-style:normal;font-weight:400;font-family:Liberation Sans embedded">
+             style="font-style:normal;font-weight:400;font-size:353px;font-family:'Liberation Sans embedded'">
             <g
                id="g4855"
                style="fill:#3c3c3c;stroke:none">
               <text
                  id="text4857"
-                 y="24536"
+                 y="23836"
                  x="7944"
                  style="line-height:0%">L</text>
               <text
                  id="text4859"
-                 y="24536"
+                 y="23836"
                  x="8139"
                  style="line-height:0%">o</text>
               <text
                  id="text4861"
-                 y="24536"
+                 y="23836"
                  x="8333"
                  style="line-height:0%">c</text>
               <text
                  id="text4863"
-                 y="24536"
+                 y="23836"
                  x="8511"
                  style="line-height:0%">a</text>
               <text
                  id="text4865"
-                 y="24536"
+                 y="23836"
                  x="8706"
                  style="line-height:0%">l</text>
               <text
                  id="text4869"
-                 y="24536"
+                 y="23836"
                  x="8880"
                  style="line-height:0%">h</text>
               <text
                  id="text4871"
-                 y="24536"
+                 y="23836"
                  x="9074"
                  style="line-height:0%">e</text>
               <text
                  id="text4873"
-                 y="24536"
+                 y="23836"
                  x="9269"
                  style="line-height:0%">a</text>
               <text
                  id="text4875"
-                 y="24536"
+                 y="23836"
                  x="9464"
                  style="line-height:0%">d</text>
               <text
                  id="text4877"
-                 y="24536"
+                 y="23836"
                  x="9659"
                  style="line-height:0%">e</text>
               <text
                  id="text4879"
-                 y="24536"
+                 y="23836"
                  x="9853"
                  style="line-height:0%">r</text>
               <text
                  id="text4883"
-                 y="24536"
+                 y="23836"
                  x="10069"
                  style="line-height:0%">3</text>
             </g>
@@ -1619,68 +1632,68 @@
              font-weight="400"
              font-style="normal"
              font-size="353px"
-             style="font-size:353px;font-style:normal;font-weight:400;font-family:Liberation Sans embedded">
+             style="font-style:normal;font-weight:400;font-size:353px;font-family:'Liberation Sans embedded'">
             <g
                id="g4893"
                style="fill:#3c3c3c;stroke:none">
               <text
                  id="text4895"
-                 y="25736"
+                 y="25136"
                  x="12944"
                  style="line-height:0%">L</text>
               <text
                  id="text4897"
-                 y="25736"
+                 y="25136"
                  x="13139"
                  style="line-height:0%">o</text>
               <text
                  id="text4899"
-                 y="25736"
+                 y="25136"
                  x="13333"
                  style="line-height:0%">c</text>
               <text
                  id="text4901"
-                 y="25736"
+                 y="25136"
                  x="13511"
                  style="line-height:0%">a</text>
               <text
                  id="text4903"
-                 y="25736"
+                 y="25136"
                  x="13706"
                  style="line-height:0%">l</text>
               <text
                  id="text4907"
-                 y="25736"
+                 y="25136"
                  x="13880"
                  style="line-height:0%">h</text>
               <text
                  id="text4909"
-                 y="25736"
+                 y="25136"
                  x="14074"
                  style="line-height:0%">e</text>
               <text
                  id="text4911"
-                 y="25736"
+                 y="25136"
                  x="14269"
                  style="line-height:0%">a</text>
               <text
                  id="text4913"
-                 y="25736"
+                 y="25136"
                  x="14464"
                  style="line-height:0%">d</text>
               <text
                  id="text4915"
-                 y="25736"
+                 y="25136"
                  x="14659"
                  style="line-height:0%">e</text>
               <text
                  id="text4917"
-                 y="25736"
+                 y="25136"
                  x="14853"
                  style="line-height:0%">r</text>
               <text
                  id="text4921"
-                 y="25736"
+                 y="25136"
                  x="15069"
                  style="line-height:0%">n</text>
             </g>
@@ -1706,7 +1719,7 @@
              font-weight="400"
              font-style="normal"
              font-size="282px"
-             style="font-size:282px;font-style:normal;font-weight:400;font-family:Liberation Sans embedded">
+             style="font-style:normal;font-weight:400;font-size:282px;font-family:'Liberation Sans embedded'">
             <g
                id="g4931"
                style="fill:#3c3c3c;stroke:none">
@@ -1808,7 +1821,7 @@
              font-weight="400"
              font-style="normal"
              font-size="282px"
-             style="font-size:282px;font-style:normal;font-weight:400;font-family:Liberation Sans embedded">
+             style="font-style:normal;font-weight:400;font-size:282px;font-family:'Liberation Sans embedded'">
             <g
                id="g4975"
                style="fill:#3c3c3c;stroke:none">
@@ -1910,7 +1923,7 @@
              font-weight="400"
              font-style="normal"
              font-size="282px"
-             style="font-size:282px;font-style:normal;font-weight:400;font-family:Liberation Sans embedded">
+             style="font-style:normal;font-weight:400;font-size:282px;font-family:'Liberation Sans embedded'">
             <g
                id="g5019"
                style="fill:#3c3c3c;stroke:none">
@@ -2012,7 +2025,7 @@
              font-weight="400"
              font-style="normal"
              font-size="282px"
-             style="font-size:282px;font-style:normal;font-weight:400;font-family:Liberation Sans embedded">
+             style="font-style:normal;font-weight:400;font-size:282px;font-family:'Liberation Sans embedded'">
             <g
                id="g5063"
                style="fill:#3c3c3c;stroke:none">
@@ -2114,58 +2127,58 @@
              font-weight="400"
              font-style="normal"
              font-size="282px"
-             style="font-size:282px;font-style:normal;font-weight:400;font-family:Liberation Sans embedded">
+             style="font-style:normal;font-weight:400;font-size:282px;font-family:'Liberation Sans embedded'">
             <g
                id="g5107"
                style="fill:#3c3c3c;stroke:none">
               <text
                  id="text5109"
-                 y="24878"
+                 y="24278"
                  x="14812"
                  style="line-height:0%">F</text>
               <text
                  id="text5111"
-                 y="24878"
+                 y="24278"
                  x="14986"
                  style="line-height:0%">i</text>
               <text
                  id="text5113"
-                 y="24878"
+                 y="24278"
                  x="15049"
                  style="line-height:0%">l</text>
               <text
                  id="text5115"
-                 y="24878"
+                 y="24278"
                  x="15113"
                  style="line-height:0%">e</text>
               <text
                  id="text5119"
-                 y="24878"
+                 y="24278"
                  x="15350"
                  style="line-height:0%">e</text>
               <text
                  id="text5121"
-                 y="24878"
+                 y="24278"
                  x="15506"
                  style="line-height:0%">n</text>
               <text
                  id="text5123"
-                 y="24878"
+                 y="24278"
                  x="15663"
                  style="line-height:0%">t</text>
               <text
                  id="text5125"
-                 y="24878"
+                 y="24278"
                  x="15743"
                  style="line-height:0%">r</text>
               <text
                  id="text5127"
-                 y="24878"
+                 y="24278"
                  x="15836"
                  style="line-height:0%">y</text>
               <text
                  id="text5131"
-                 y="24878"
+                 y="24278"
                  x="16061"
                  style="line-height:0%">1</text>
             </g>
@@ -2191,58 +2204,58 @@
              font-weight="400"
              font-style="normal"
              font-size="282px"
-             style="font-size:282px;font-style:normal;font-weight:400;font-family:Liberation Sans embedded">
+             style="font-style:normal;font-weight:400;font-size:282px;font-family:'Liberation Sans embedded'">
             <g
                id="g5141"
                style="fill:#3c3c3c;stroke:none">
               <text
                  id="text5143"
-                 y="24379"
+                 y="23679"
                  x="15013"
                  style="line-height:0%">F</text>
               <text
                  id="text5145"
-                 y="24379"
+                 y="23679"
                  x="15187"
                  style="line-height:0%">i</text>
               <text
                  id="text5147"
-                 y="24379"
+                 y="23679"
                  x="15250"
                  style="line-height:0%">l</text>
               <text
                  id="text5149"
-                 y="24379"
+                 y="23679"
                  x="15314"
                  style="line-height:0%">e</text>
               <text
                  id="text5153"
-                 y="24379"
+                 y="23679"
                  x="15551"
                  style="line-height:0%">e</text>
               <text
                  id="text5155"
-                 y="24379"
+                 y="23679"
                  x="15707"
                  style="line-height:0%">n</text>
               <text
                  id="text5157"
-                 y="24379"
+                 y="23679"
                  x="15864"
                  style="line-height:0%">t</text>
               <text
                  id="text5159"
-                 y="24379"
+                 y="23679"
                  x="15944"
                  style="line-height:0%">r</text>
               <text
                  id="text5161"
-                 y="24379"
+                 y="23679"
                  x="16037"
                  style="line-height:0%">y</text>
               <text
                  id="text5165"
-                 y="24379"
+                 y="23679"
                  x="16262"
                  style="line-height:0%">2</text>
             </g>
@@ -2268,58 +2281,58 @@
              font-weight="400"
              font-style="normal"
              font-size="282px"
-             style="font-size:282px;font-style:normal;font-weight:400;font-family:Liberation Sans embedded">
+             style="font-style:normal;font-weight:400;font-size:282px;font-family:'Liberation Sans embedded'">
             <g
                id="g5175"
                style="fill:#3c3c3c;stroke:none">
               <text
                  id="text5177"
-                 y="23679"
+                 y="23079"
                  x="15313"
                  style="line-height:0%">F</text>
               <text
                  id="text5179"
-                 y="23679"
+                 y="23079"
                  x="15487"
                  style="line-height:0%">i</text>
               <text
                  id="text5181"
-                 y="23679"
+                 y="23079"
                  x="15550"
                  style="line-height:0%">l</text>
               <text
                  id="text5183"
-                 y="23679"
+                 y="23079"
                  x="15614"
                  style="line-height:0%">e</text>
               <text
                  id="text5187"
-                 y="23679"
+                 y="23079"
                  x="15851"
                  style="line-height:0%">e</text>
               <text
                  id="text5189"
-                 y="23679"
+                 y="23079"
                  x="16007"
                  style="line-height:0%">n</text>
               <text
                  id="text5191"
-                 y="23679"
+                 y="23079"
                  x="16164"
                  style="line-height:0%">t</text>
               <text
                  id="text5193"
-                 y="23679"
+                 y="23079"
                  x="16244"
                  style="line-height:0%">r</text>
               <text
                  id="text5195"
-                 y="23679"
+                 y="23079"
                  x="16337"
                  style="line-height:0%">y</text>
               <text
                  id="text5199"
-                 y="23679"
+                 y="23079"
                  x="16562"
                  style="line-height:0%">3</text>
             </g>
@@ -2345,13 +2358,13 @@
              font-weight="400"
              font-style="normal"
              font-size="282px"
-             style="font-size:282px;font-style:normal;font-weight:400;font-family:Liberation Sans embedded">
+             style="font-style:normal;font-weight:400;font-size:282px;font-family:'Liberation Sans embedded'">
             <g
                id="g5209"
                style="fill:#3c3c3c;stroke:none">
               <text
                  id="text5211"
-                 y="23279"
+                 y="22779"
                  x="17813"
                  style="line-height:0%">n</text>
             </g>
@@ -2359,7 +2372,7 @@
         </g>
       </g>
       <path
-         style="fill:#ffffff;fill-opacity:0;stroke:#800080;stroke-width:9.33998013;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:9.33997973, 9.33997973;stroke-dashoffset:4.66998984"
+         style="fill:#ffffff;fill-opacity:0;stroke:#800080;stroke-width:9.33998;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:9.33998, 9.33998;stroke-dashoffset:4.66999;stroke-opacity:1"
          d="m 928.97038,27471.753 -153.19607,1.021"
          id="path7571" />
       <g
@@ -2381,7 +2394,7 @@
              font-weight="700"
              font-style="normal"
              font-size="353px"
-             style="font-size:353px;font-style:normal;font-weight:700;font-family:Liberation Sans embedded">
+             style="font-style:normal;font-weight:700;font-size:353px;font-family:'Liberation Sans embedded'">
             <g
                id="g4607"
                style="fill:#ffffff;stroke:none">
@@ -2474,8 +2487,8 @@
         </g>
       </g>
       <path
-         style="fill:#0066cc;fill-opacity:1;stroke:#0066cc;stroke-width:8.76351261;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:8.76351262, 8.76351262;stroke-dashoffset:0"
-         d="m 607.91775,27472.812 -181.47948,0"
+         style="fill:#0066cc;fill-opacity:1;stroke:#0066cc;stroke-width:8.76351;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:8.76351, 8.76351;stroke-dashoffset:0;stroke-opacity:1"
+         d="M 607.91775,27472.812 H 426.43827"
          id="path4057" />
     </g>
   </g>
