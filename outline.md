@@ -876,17 +876,15 @@ phần tử đánh dấu đặc biệt. Ta dùng lại ví dụ về truy vấn 
     - Nút `Xem thêm`: Chuyển đến Màn hình Tìm kiếm, lần này tham số là một
       `QuerySingleType`, với câu truy vấn là `Watchmen`, còn bảng để tìm là
       `Series`. Hai bộ truyện kết quả được hiển thị đầy đủ. Chọn một bộ truyện
-      lúc này giống với chọn bộ truyện ở trên.
+      lúc này giống với chọn bộ truyện ở trên (sang Màn hình Danh sách truyện).
 
 Biểu đồ lớp của các đối tượng liên quan như sau:
 
-![query class](images/query_class.svg)
+| Hình 19a: Biểu đồ lớp `Query`          | Hình 19b: Biểu đồ lớp `Metadata`             |
+|:---------------------------------------|:---------------------------------------------|
+| ![query class](images/query_class.svg) | ![metadata class](images/metadata_class.svg) |
 
-Hình 19a: Biểu đồ lớp `Query`
-
-![metadata class](images/metadata_class.svg)
-
-Hình 19b: Biểu đồ lớp `Metadata`
+Hình 19: Biểu đồ các lớp liên quan đến Màn hình Tìm kiếm
 
 Biểu đồ lớp của bản thân Màn hình Tìm kiếm như sau:
 
@@ -898,6 +896,21 @@ Do mỗi DAO trả kết quả của bảng tương ứng về ở dạng danh s
 `QueryMultipleTypes`, các danh sách kết quả lẻ này tổng hợp, và thêm hai kiểu
 kết quả đặc biệt. Hàm `TransformSearchMultiple()` là để "làm phẳng" mảng kết quả
 hai chiều như trên.
+
+##### 4.2.8. Màn hình Danh sách truyện
+
+Màn hình này là màn hình thứ ba trong chuỗi các màn hình liên quan đến ca sử
+dụng tìm kiếm, đồng thời đóng vai trò của Màn hình Thư mục (do là phiên bản tổng
+quát hơn của nó).
+
+Màn hình này nhận vào một tham số kiểu `Metadata` thay vì một `Query`, và trả về
+danh sách các *tệp truyện* - `Comic` - có liên kết với tham số đầu vào.
+
+Biểu đồ lớp của Màn hình Danh sách truyện như sau:
+
+![list comic mvvm](images/list_comics_mvvm_class.svg)
+
+Hình 21: Biểu đồ lớp của Màn hình Danh sách truyện
 
 ## 5. Chương 5: Lập trình & Kiểm thử <a name="P5-implementation"></a>
 
