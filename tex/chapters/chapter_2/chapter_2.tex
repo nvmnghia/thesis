@@ -18,8 +18,8 @@ Chương này giới thiệu sơ qua về các nền tảng trong quá trình x�
         Tiếp theo, lựa chọn về kiến trúc tổng quan, liên quan đến giao diện của
         ứng dụng được trình bày.
     \item
-        Sau đó, cơ sở dữ liệu một số phần mở rộng của nó dùng trong ứng dụng sẽ
-        được nhắc qua.
+        Sau đó, cơ sở dữ liệu SQLite cùng một số phần mở rộng của nó dùng trong
+        ứng dụng sẽ được nhắc qua.
     \item
         Cuối cùng là thông tin về CBZ - định dạng tệp tin mà ứng dụng đọc.
 \end{itemize}
@@ -305,14 +305,13 @@ Vấn đề của lập trình phi cấu trúc, hay của \texttt{GOTO}, gồm:
 
         \begin{minted}{Java}
 try (Scanner scanner = new Scanner(new File("f.txt"))) {
-    goto(SOMEWHERE); // Nhảy đi đâu mất, do đó không đóng luồng nhập
-}                    // Dẫn đến rò rỉ tài nguyên
+    goto(SOMEWHERE); // Nhảy đi đâu mất
+}                    // Không chạy lệnh đóng
         \end{minted}
 
-        Như comment chỉ ra, không trả luồng điều khiển làm khối lệnh vô dụng.
-
-        Điều gần tương tự làm xử lí ngoại lệ và nhiều tính năng khác rất khó cài
-        đặt, một khi ngôn ngữ cho phép \texttt{GOTO}.
+        Như comment chỉ ra, không trả luồng điều khiển dẫn đến không thực hiện
+        mục tiêu tự động đóng. Điều gần tương tự làm xử lí ngoại lệ và nhiều
+        tính năng khác rất khó cài đặt, một khi ngôn ngữ cho phép \texttt{GOTO}.
 \end{enumerate}
 
 \begin{wrapfigure}[7]{r}{5cm}
@@ -396,11 +395,10 @@ cách xử lí riêng, bất tiện. Ví dụ, ES6 có \texttt{catch()} để b�
 \texttt{Promise} mà không (thể) dùng cấu trúc \texttt{try-catch} sẵn có. Với SC,
 các vấn đề này đều được giải quyết.
 
-Trong \autoref{fig:kotlin-coroutine}, ta xét một đoạn mã tương tranh dùng
-coroutine trong Kotlin, tức dùng SC (không phải coroutine trong mọi ngôn ngữ đều
-dùng mô hình này).
+Trong \autoref{fig:kotlin-coroutine}, ta xét đoạn mã tương tranh dùng SC trong
+Kotlin.
 
-\begin{wrapfigure}[8]{l}{8cm}
+\begin{wrapfigure}[9]{l}{7cm}
     \centering
     \vspace*{-6mm}
     \includesvg[width=\linewidth,inkscapelatex=false]    % To leave text as is
@@ -411,10 +409,10 @@ dùng mô hình này).
 \end{wrapfigure}
 
 Nguyên tắc của SC là: \emph{coroutine cha chờ mọi coroutine con chạy xong}, kể
-cả khi nó xong trước. Nó đảm bảo rằng khi một hàm kết thúc, không còn tác vụ
-tương tranh nữa, và điểm gọi nhận lại luồng điều khiển hợp nhất (các mũi tên
-chụm lại ở góc trái dưới \autoref{fig:kotlin-coroutine}). Đột nhiên, hai tính
-năng có vấn đề ở trên lại hoạt động:
+cả khi nó xong trước. Nguyên tắc này đảm bảo rằng khi một hàm kết thúc, không
+còn tác vụ tương tranh nữa, và điểm gọi nhận lại luồng điều khiển hợp nhất (các
+mũi tên chụm lại ở góc trái dưới \autoref{fig:kotlin-coroutine}). Đột nhiên, hai
+tính năng có vấn đề ở trên lại hoạt động:
 
 \begin{itemize}
     \item
@@ -432,8 +430,8 @@ năng có vấn đề ở trên lại hoạt động:
 
 Chú ý là các API hiện tại không phải không làm được nguyên tắc trên, vấn đề là
 thực hiện một cách \emph{tự động} và \emph{đảm bảo}. Ví dụ, trong JS, để tuân
-theo SC, ta phải nhớ \texttt{await} với mọi hàm \texttt{async}. Do không có ràng
-buộc chặt chẽ này, các tính năng ngôn ngữ mới vẫn khó cài đặt như đã phân tích.
+theo SC, ta phải nhớ \texttt{await} mọi hàm \texttt{async}. Do không ràng buộc
+chặt chẽ, các tính năng ngôn ngữ mới vẫn khó cài đặt như đã phân tích.
 
 Do trong các ngôn ngữ khác, nguyên tắc trên chỉ là một ca sử dụng, việc ép buộc
 viết theo ca sử dụng này đòi hỏi lập trình viên thay đổi suy nghĩ về tương
@@ -471,26 +469,26 @@ nghiệm cho thấy giao diện nên được chia làm hai phần chính tách 
         đối tượng, mảng,\ldots
     \item
         View: cách để hiển thị dữ liệu đó (trả lời câu hỏi ``như thế nào'');
-        liên quan đến các yếu tố giao diện như nút, danh sách,\ldots
+        liên quan đến các yếu tố giao diện như nút, hộp thoại,\ldots
 \end{itemize}
 
 Sự tách biệt thể hiện ở chỗ Model không được biết View. Khi này, giao diện và
 nghiệp vụ có thể phát triển khá độc lập với nhau, giúp giảm thời gian phát
-triển. Ngược lại, View có biết Model không là tùy vào cách triển khai cụ thể. Có
+triển. Ngược lại, View có biết Model không là tùy vào cách triển khai cụ thể; có
 sự bất đối xứng này là do View luôn liên quan chặt chẽ đến framework, khác với
 Model thường đơn giản.
 
-Khó khăn ở đây là làm sao để kết nối hai thành phần riêng biệt kia. Nhiều mô
-hình cố giải quyết vấn đề này, tiêu biểu là MVC, MVP và MVVM. Ta lần lượt xem
-xét chúng để thấy rằng MVVM phù hợp nhất với Android, do đó được chọn làm nền
-tảng cho Kiến trúc Google khuyên dùng.
+Khó khăn ở đây là làm sao để kết nối Model và View. Nhiều mô hình cố giải quyết
+vấn đề này, tiêu biểu là MVC, MVP và MVVM. Ta xem xét chúng để thấy rằng MVVM
+phù hợp nhất với Android, do đó được chọn làm nền tảng cho Kiến trúc Google
+khuyên dùng.
 
 \subsubsection{MVC: Model - View - Controller}
 
 Phương hướng đầu tiên được thử là MVC, vốn phổ biến vào thời điểm Android ra
-đời. Do được phát minh từ lâu và mỗi framework lại có cách giải thích khác nhau,
-nên không có một mô hình cụ thể về cách ba thành phần trên tương tác. Tuy vậy,
-vẫn có vài điểm chung không đổi:
+đời. Do được phát minh từ lâu và không được định nghĩa chặt chẽ, nên không có
+một mô hình cụ thể về cách ba thành phần trên tương tác. Tuy vậy, vẫn có vài
+điểm chung không đổi:
 
 \begin{enumerate}
     \item
@@ -559,6 +557,15 @@ Ta xét một ứng dụng ToDo đơn giản, trong đó các công việc có t
 
 \subsubsection{MVVM: Model - View - View Model}
 
+\begin{wrapfigure}[7]{r}{11.5cm}
+    \centering
+    \vspace*{-4mm}
+    \includegraphics[width=\linewidth]{../images/MVVMPattern.png}
+    \vspace*{-10mm}
+    \caption{Kiến trúc MVVM \cite{MUN_MVVM}}
+    \label{fig:mvvm}
+\end{wrapfigure}
+
 Ta quay về chủ đề chính: MVVM. MVVM giống MVP ở chỗ View Model (từ đây gọi tắt
 là VM) kết nối View và Model như Presenter. Điểm khác biệt là cách truyền dữ
 liệu \cite{MUN_MVVM}:
@@ -572,15 +579,6 @@ liệu \cite{MUN_MVVM}:
     \item
           Trong MVVM, VM dùng \emph{data binding} để truyền dữ liệu cho View
 \end{itemize}
-
-\begin{wrapfigure}[7]{r}{11.5cm}
-    \centering
-    \vspace*{-4mm}
-    \includegraphics[width=\linewidth]{../images/MVVMPattern.png}
-    \vspace*{-10mm}
-    \caption{Kiến trúc MVVM \cite{MUN_MVVM}}
-    \label{fig:mvvm}
-\end{wrapfigure}
 
 Data binding là cơ chế để \emph{tự động} đưa dữ liệu vào thành phần hiển thị.
 Quay lại ví dụ ToDo ở trên, nếu dùng data binding để ``gắn'' (bind) danh sách

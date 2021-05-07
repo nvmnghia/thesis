@@ -3,6 +3,11 @@
 
 \begin{document}
 
+% Disable page numbering
+% Somehow \thispagestyle{empty} in the files doesn't work
+\pagenumbering{gobble}
+
+
 %----------------------------------------------------------------------------------------
 %	Cover
 %----------------------------------------------------------------------------------------
@@ -71,5 +76,9 @@
 %----------------------------------------------------------------------------------------
 
 \subfile{10_glossaries/glossaries}
+
+
+% Reenable page numbering
+\pagenumbering{arabic}
 
 \end{document}
