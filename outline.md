@@ -757,7 +757,7 @@ quét được thư mục vì các lí do đã nêu trong [mục 3.1](#P3.3.1-sc
 
 Hình sau là biểu đồ trạng thái, cũng là mô tả về nội dung gợi ý. Riêng trạng
 thái "Có truyện" là trạng thái hiển thị danh sách thư mục trong luồng cơ bản đã
-nêu trên.
+nêu trên, tức thư mục được hiển thị đầy đủ thay vì chỉ hiện thông báo lỗi.
 
 ![library state](images/library_state.svg)
 
@@ -911,6 +911,119 @@ Biểu đồ lớp của Màn hình Danh sách truyện như sau:
 ![list comic mvvm](images/list_comics_mvvm_class.svg)
 
 Hình 21: Biểu đồ lớp của Màn hình Danh sách truyện
+
+##### 4.2.9. `ComicParser`
+
+`ComicParser` là một trong các thành phần trung tâm của yacv. Lớp này nhận vào
+URI trỏ đến một tệp truyện, và đọc nội dung tệp truyện đó ra. Cần gọi đủ tên là
+`ComicParser`, vì phải phân biệt với hai parser (bộ đọc/giải mã) khác nhưng tích
+hợp trong nó:
+
+|         | Parser cho tệp nén | Parser cho metadata |
+|:--------|:-------------------|:--------------------|
+| Đầu vào | Tệp nén            | Tệp metadata        |
+| Đầu ra  | Các tệp con hoặc tương đương (ví dụ như luồng đọc đến tệp con) | Đối tượng `Comic` |
+
+Bảng 4: Hai kiểu parser trong `ComicParser`
+
+`ComicParser` được thiết kế theo kiểu "lười", có nghĩa là không có thông tin nào
+được đọc ra cho đến khi thực sự cần. Lý do vẫn là vấn đề về hiệu năng, vì gần
+như mọi thao tác đọc trong SAF - hệ thống đọc ghi tệp của Android - đều rất
+chậm.
+
+###### 4.2.9.1. Parser cho tệp nén
+
+Parser cho tệp nén hiện gồm một giao diện và hai lớp
+
+- `ArchiveParser`: giao diện chung cho mọi parser tệp nén
+- `CBZParser`: parser riêng cho tệp CBZ
+- `ArchiveParserFactory`: giúp khởi tạo các parser
+
+`ArchiveParser` là một giao diện (interface), định nghĩa một số phương thức
+chung mọi parser cho tệp nén đều phải có. Do hiện tại yacv mới hỗ trợ định dạng
+CBZ, chỉ có lớp `CBZParser` cài đặt giao diện này.
+
+Trong `ArchiveParser`, phương thức quan trọng nhất là `getEntryOffsets()`.
+Phương thức này trả về một mảng số nguyên `offsets`. Mảng này chứa offset, tức
+vị trí của các tệp lẻ trong tệp nén, đã sắp xếp theo *thứ tự trang truyện*. Khi
+biết được số offset này, ứng dụng có thể "nhảy cóc" số byte tương ứng đến đúng
+vị trí trang truyện để đọc.
+
+<!-- Để thuận tiện khi dùng, cùng với cân đối về hiệu năng, `getEntries()` có hai
+tiêu chí thiết kế như sau:
+
+- Chỉ được duyệt tệp ảnh và tệp metadata: Các tệp khác, đặc biệt là các tệp đệm
+  phải bị bỏ qua (tệp đệm như `.DS_Store` trên macOS, `Thumbs.db` trên
+  Windows,... đặc biệt macOS thường tạo ra tệp đệm có đuôi giống với tệp chính,
+  gây khó khăn khi phân biệt).
+- Đồng thời, để đảm bảo hiệu năng, thứ tự duyệt của hàm này là thứ tự tệp lẻ
+  trong tệp nén, chứ *không đảm bảo* theo thứ tự trang truyện.
+
+Để chứa cả dữ liệu tệp ảnh và metadata, ta đưa ra giao diện `ArchiveEntry`, giúp
+định nghĩa một số thuộc tính cần dùng khi duyệt tệp lẻ (entry) trong tệp nén:
+
+- `path`: đường dẫn đầy đủ trong bản thân tệp nén
+- `inputStream`: giải nén entry đó và trả lại dữ liệu ở dạng luồng nhập (là hàm
+  sử dụng trong các hàm "Show Image from InputStream" ở trên)
+
+`getEntries()` sẽ trả về iterator của `ArchiveEntry` để duyệt tệp. Ngoài ra, do
+thường làm việc với luồng nhập, cần chú ý đến việc đóng luồng.
+
+Ở cuối Chương 2, ta đã thấy rằng việc đọc ghi *ngẫu nhiên* trên tệp ZIP là có
+thể, vậy tại sao giao diện `ArchiveParser` lại chỉ cung cấp chức năng đọc *tuần
+tự* theo thứ tự tệp lẻ ở dạng iterator? Lí do là vẫn là bộ SAF - hệ thống đọc
+ghi tệp của Android - chỉ cho phép đọc ghi tuần tự. -->
+
+`CBZParser` là lớp cài đặt giao diện `ArchiveParser`. Như đã phân tích ở Chương
+2, hệ thống đọc ghi tệp SAF của Android chỉ cho phép đọc ghi tuần tự. Việc tạo
+ra mảng offset là khó khăn, do phần mục lục của tệp ZIP nằm ở cuối, và có nhiều
+thao tác cần dò ngược từ cuối lên.
+
+Để giải quyết vấn đề danh sách offset, cách tốt nhất là chép toàn bộ tệp truyện
+vào phần bộ nhớ riêng của ứng dụng. Phần bộ nhớ này vẫn được dùng API File của
+Java, do đó có khả năng đọc ghi ngẫu nhiên, cho phép đọc mục lục rất nhanh. Vấn
+đề ở đây không chỉ là chép tệp tin lâu, mà còn là tệp tin rất lớn: một tệp
+truyện có kích cỡ từ vài chục đến vài trăm MB, hoặc thậm chí hơn; và đọc mục lục
+xong lại phải xóa ngay. Do đó, cách đơn giản này không chỉ chậm mà còn tốn dung
+lượng bộ nhớ.
+
+`CBZParse` giải quyết vấn đề này bằng cách làm giả một luồng đọc ngẫu nhiên,
+được miêu tả rõ hơn trong Phụ lục 3. Cách làm đó có thể được tóm tắt như sau:
+
+- Hai phần đầu tệp nén được lưu đệm trong RAM, do là hai phần có nhiều truy cập
+  nhất trong khi đọc mục lục
+- Các phần còn lại được đọc xuôi khi cần theo luồng nhập `InputStream`, nếu đọc
+  ngược sẽ phải tạo mới luồng nhập
+
+Hiệu quả là tệp cần được đọc theo luồng nhập trung bình hai lần, không phải ghi
+ra đĩa, đồng thời vẫn đọc được mục lục.
+
+`ArchiveParserFactory` là một lớp theo mẫu thiết kế factory, nhận vào URI của
+tệp truyện và trả về `ArchiveParser` để đọc loại tệp truyện đó (ví dụ, nếu URI
+có đuôi CBZ thì trả về một đối tượng `CBZParser`). Do `ArchiveParser` cần một số
+cài đặt khởi tạo riêng, nên mới cần một lớp riêng để tạo parser. Chữ "Factory"
+thể hiện lớp này sử dụng mẫu thiết kế factory. Tương tác của ba đối tượng này
+được thể hiện trong hình 21:
+
+![parser sequence](/images/parser_sequence.svg)
+
+Hình 21: Một ca sử dụng thông dụng của `ArchiveParser`
+
+Do ca sử dụng đơn giản, ta thấy `ComicParser` không được vẽ. Trên thực tế, nó là
+đối tượng thay `CBZParser` nhận và trả yêu cầu.
+
+###### 4.2.9.2. Parser cho metadata
+
+yacv hiện hỗ trợ định dạng ComicRack, được giới thiệu chi tiết trong Phụ lục 2.
+Định dạng này là một tệp tin XML, do đó được đọc đơn giản bằng các thư viện XML
+sẵn có.
+
+Để mở rộng định dạng tệp đọc, có thể dùng mẫu thiết kế factory như đã dùng với
+parser cho tệp. Theo cách này, các parser cần có hàm `parse()` trả về một đối
+tượng `Comic` và nhận hai tham số:
+
+- Nội dung tệp metadata: ở dạng chuỗi thông thường
+- Tên tệp metadata: tên tệp giúp phân biệt các định dạng tệp với nhau
 
 ## 5. Chương 5: Lập trình & Kiểm thử <a name="P5-implementation"></a>
 
