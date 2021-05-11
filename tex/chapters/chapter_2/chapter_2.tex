@@ -366,8 +366,8 @@ Trước hết, ta xem xét hai kiểu API tương tranh hay dùng hiện nay tr
 
 \begin{wrapfigure}[4]{r}{5cm}
     \centering
-    \vspace*{-6mm}
-    \includesvg[width=\linewidth]{../images/sequential-and-go-to-schematic.svg}
+    \vspace*{-7mm}
+    \includesvg[width=\linewidth]{../images/go-schematic-and-go-to-schematic.svg}
     \vspace*{-10mm}
     \caption{Tương tranh phi cấu trúc với \texttt{goroutine} - API kiểu tương
         tranh \cite{NJS_SC}}
@@ -757,9 +757,8 @@ Ta phân tích kĩ hơn:
         Do nén riêng từng tệp, có thể dùng thuật toán khác nhau tối ưu với từng
         tệp.
     \item
-        Cũng do nén riêng và có mục lục, việc thêm/sửa/xóa (gọi chung là sửa) và
-        đọc có thể được thực hiện với từng tệp lẻ, thay vì phải giải nén, sửa,
-        rồi nén lại toàn bộ.
+        Cũng do nén riêng và có mục lục, việc sửa và đọc có thể được thực hiện
+        với từng tệp lẻ, thay vì phải giải nén, sửa, rồi nén lại toàn bộ.
 \end{itemize}
 
 \begin{itemize}[resume, before = \vspace*{-\dimexpr\topsep+\partopsep\relax}]
@@ -768,19 +767,16 @@ Ta phân tích kĩ hơn:
 
         \begin{itemize}
             \item
-                Giả sử mục lục đặt ở đầu. Khi sửa, toàn bộ các tệp nén lẻ phải
-                di chuyển để tạo chỗ cho mục lục mới (giống như thêm một phần tử
-                vào mảng ở vị trí đầu: toàn bộ các phần tử sau bị đẩy lên để tạo
-                chỗ trống).
+                Giả sử mục lục đặt ở đầu. Khi nén hoặc sửa, toàn bộ các tệp nén
+                lẻ phải di chuyển để tạo chỗ cho mục lục mới (giống như thêm một
+                phần tử vào mảng ở vị trí đầu: toàn bộ các phần tử sau bị đẩy
+                lên để tạo chỗ trống).
             \item
                 Do mục lục nằm ở cuối tệp ZIP, nên khi sửa chỉ cần đẩy các tệp
                 nén lẻ từ chỗ sửa. Trước đây tối ưu này rất quan trọng. Do đĩa
                 mềm - phương tiện chia sẻ chủ yếu thời đó - có dung lượng nhỏ,
                 tệp ZIP có thể phải cắt ra cho vừa \cite{WIKI_ZIP}. Thiết kế này
                 cho phép chỉ sửa lại dữ liệu ở một số đĩa, thay vì toàn bộ.
-            \item
-                Hơn nữa, nếu mục lục ở đầu thì ngay trong khi nén, các tệp nén
-                lẻ bị di chuyển như trên do mục lục liên tục được cập nhật.
         \end{itemize}
 \end{itemize}
 

@@ -29,15 +29,18 @@ Ta xét một tập truyện \texttt{Wolverine\ 1982(1)\ \#1}:
     Bộ truyện (Series)
 \end{verbatim}
 
+Chú ý ở đây không có \emph{tiêu đề} (ta sẽ quay lại điểm này sau). Trước hết các
+thành phần trong tên tập truyện trên gồm:
+
 \begin{itemize}
     \item
-        Bộ truyện: Tên bộ truyện. Một bộ truyện gồm nhiều tập truyện.
+        \emph{Bộ truyện}: Tên bộ truyện. Một bộ truyện gồm nhiều tập truyện.
     \item
-        Tập truyện số: Thể hiện số thứ tự xuất bản của tệp truyện, tương tự như
-        chương trong manga. Từng tập truyện lẻ còn có thể có tên riêng.
+        \emph{Tập truyện số}: Thể hiện số thứ tự xuất bản của tệp truyện, tương
+        tự như chương trong manga. Từng tập truyện lẻ còn có thể có tên riêng.
     \item
-        Volume: Các bộ truyện có thể trùng tên, do đó cần con số này để phân
-        biệt. Số này có thể là năm xuất bản hoặc lần xuất bản.
+        \emph{Volume}: Các bộ truyện có thể trùng tên, do đó cần con số này để
+        phân biệt. Số này có thể là năm xuất bản hoặc lần xuất bản.
 \end{itemize}
 
 Số Volume cần thiết vì có rất nhiều bộ truyện cùng tên như sau:
@@ -56,8 +59,11 @@ thời gian, không cùng tác giả để có thể gom lại. Nhưng chúng c�
 bộ truyện (là tên nhân vật chính), đều có những tập truyện số 1, 2, 3, 4. Số
 Volume là cách duy nhất để phân biệt ba bộ truyện này.
 
+Số Volume thường là số của lần xuất bản, nhưng cũng có thể là số của năm xuất
+bản trong trường hợp bộ truyện được xuất bản trong một năm.
+
 Ngoài ra, một số định dạng metadata còn có số Count, chỉ số tập truyện trong một
-bộ truyện.
+bộ truyện:
 
 \begin{itemize}
     \item
@@ -68,6 +74,10 @@ bộ truyện.
         Hai bộ còn lại được coi là ``dài'' (on-going), do không xác định số tập
         truyện từ đầu. Do đó, số Count có thể để trống.
 \end{itemize}
+
+Ta quay lại vấn đề về \emph{tiêu đề}. Tiêu đề có thể nói giống như tên của
+chương truyện, lại chỉ phổ biến trong truyện tranh Nhật, hoặc ít nhất là không
+phổ biến trong đặt tên truyện tranh siêu anh hùng phương Tây.
 
 
 %----------------------------------------------------------------------------------------
@@ -91,28 +101,17 @@ ngoài ra còn có các trường về tác giả và nhân vật.
 <xs:element name="ComicInfo" nillable="true" type="ComicInfo" />
 <xs:complexType name="ComicInfo">
   <xs:sequence>
-    <xs:element name="Title"  type="xs:string"
-      minOccurs="0" maxOccurs="1" default="" />
-    <xs:element name="Series" type="xs:string"
-      minOccurs="0" maxOccurs="1" default="" />
-    <xs:element name="Number" type="xs:string"
-      minOccurs="0" maxOccurs="1" default="" />
-    <xs:element name="Count"  type="xs:int"
-      minOccurs="0" maxOccurs="1" default="-1" />
-    <xs:element name="Volume" type="xs:int"
-      minOccurs="0" maxOccurs="1" default="-1" />
-    <xs:element name="Summary" type="xs:string"
-      minOccurs="0" maxOccurs="1" default="" />
-    <xs:element name="Year"   type="xs:int"
-      minOccurs="0" maxOccurs="1" default="-1" />
-    <xs:element name="Month"  type="xs:int"
-      minOccurs="0" maxOccurs="1" default="-1" />
-    <xs:element name="Writer" type="xs:string"
-      minOccurs="0" maxOccurs="1" default="" />
-    <xs:element name="Publisher" type="xs:string"
-      minOccurs="0" maxOccurs="1" default="" />
-    <xs:element name="Genre"  type="xs:string"
-      minOccurs="0" maxOccurs="1" default="" />
+    <xs:element name="Title"  type="xs:string" />
+    <xs:element name="Series" type="xs:string" />
+    <xs:element name="Number" type="xs:string" />
+    <xs:element name="Count"  type="xs:int" default="-1" />
+    <xs:element name="Volume" type="xs:int" default="-1" />
+    <xs:element name="Summary" type="xs:string" />
+    <xs:element name="Year"   type="xs:int" default="-1" />
+    <xs:element name="Month"  type="xs:int" default="-1" />
+    <xs:element name="Writer" type="xs:string" />
+    <xs:element name="Publisher" type="xs:string" />
+    <xs:element name="Genre"  type="xs:string" />
   </xs:sequence>
 </xs:complexType>
 </xs:schema>
