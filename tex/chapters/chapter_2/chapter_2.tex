@@ -635,12 +635,12 @@ dữ liệu đệm và dữ liệu quét thực tế.
 SQLite là một hệ quản trị cơ sở dữ liệu quan hệ (RDBMS). Từ ``Lite'' trong tên
 có nghĩa là ``nhỏ'', thể hiện mục tiêu thiết kế chính của nó là nhỏ gọn. SQLite
 có thể được nhúng vào phần mềm khác ở dạng thư viện, thay vì là một phần mềm
-riêng với cấu trúc chủ-khách như MySQL,\ldots{} Ngay từ những phiên bản đầu,
+riêng với kiến trúc khách-chủ như MySQL,\ldots{} Ngay từ những phiên bản đầu,
 Android đã tích hợp SQLite, giúp lập trình viên không phải nhúng SQLite vào từng
 ứng dụng.
 
 Để đạt mục tiêu, SQLite chỉ giữ các tính năng SQL cốt lõi (tạo/đọc/sửa/xóa),
-giao dịch (có ACID), và chỉ tối ưu cho việc truy cập từ một ứng dụng cùng lúc.
+giao dịch (có ACID), và chỉ tối ưu cho việc truy cập từ một ứng dụng một lúc.
 Các tính năng thường có trong RDBMS cho máy chủ, như nhân bản (replication),
 chia dữ liệu tự động (sharding), khóa dòng, đọc ghi nhiều luồng cùng
 lúc,\ldots{} được loại bỏ. Do đó, với nhu cầu lưu trữ đơn giản, SQLite vừa nhanh
@@ -688,10 +688,10 @@ trúc giống từ điển:
 FTS khác với đánh chỉ mục thường (cũng là chỉ mục đảo nhưng cho kiểu dữ liệu
 thông thường) ở bước 1: \emph{từng từ} được tách ra, còn chỉ mục thường dùng
 \emph{cả} văn bản. Do đó, khi tìm từ lẻ, FTS có thể tìm hàng có từ đó rất nhanh.
-Điểm yếu là ghi chậm, kích cỡ lớn hơn chỉ mục thường. Nếu bản thân dữ liệu văn
-bản trong cột là một khối, ví dụ như email, chỉ mục thường đã đủ tốt, không cần
-FTS. Ngoài ra, nếu muốn, ở bước này có thể dùng kĩ thuật rút gọn từ (stemming;
-chỉ đúng với tiếng Anh), giúp tìm kiếm linh động hơn.
+Điểm yếu của FTS là ghi chậm, kích cỡ lớn hơn chỉ mục thường. Nếu bản thân dữ
+liệu trong cột là một khối, ví dụ như email, chỉ mục thường là đủ. Ngoài ra, ở
+bước này có thể dùng kĩ thuật rút gọn từ (stemming; chỉ đúng với tiếng Anh, ví
+dụ tìm "run" ra được cả "runs",...), giúp tìm kiếm linh động hơn.
 
 yacv có tính năng tìm kiếm tiêu đề, tên nhân vật,\ldots{} đều là những câu văn,
 đoạn văn. Do đó, FTS có vai trò không thể thiếu để tăng tốc tìm kiếm trong ứng
@@ -768,9 +768,9 @@ Ta phân tích kĩ hơn:
         \begin{itemize}
             \item
                 Giả sử mục lục đặt ở đầu. Khi nén hoặc sửa, toàn bộ các tệp nén
-                lẻ phải di chuyển để tạo chỗ cho mục lục mới (giống như thêm một
-                phần tử vào mảng ở vị trí đầu: toàn bộ các phần tử sau bị đẩy
-                lên để tạo chỗ trống).
+                lẻ phải di chuyển (thậm chí là nhiều lần) để tạo chỗ cho mục lục
+                mới. Trường hợp này giống như thêm một phần tử vào đầu mảng:
+                toàn bộ các phần tử sau bị đẩy lên để tạo chỗ trống.
             \item
                 Do mục lục nằm ở cuối tệp ZIP, nên khi sửa chỉ cần đẩy các tệp
                 nén lẻ từ chỗ sửa. Trước đây tối ưu này rất quan trọng. Do đĩa
@@ -780,10 +780,10 @@ Ta phân tích kĩ hơn:
         \end{itemize}
 \end{itemize}
 
-Tóm lại, cấu trúc tệp nén ZIP cho phép sửa và giải nén từng tệp gốc rất dễ dàng.
-Nhiều định dạng tệp nén khác (TAR, 7z,\ldots) không có tính năng này, do gộp
-toàn bộ các tệp vào rồi nén một thể. Trong trường hợp đó, tệp nén được gọi là
-\emph{đặc} (solid), và rất khó để đọc/sửa tệp lẻ.
+Tóm lại, cấu trúc tệp nén ZIP cho phép sửa và giải nén từng tệp gốc dễ dàng.
+Nhiều định dạng nén khác (TAR, 7z,\ldots) không có tính năng này, do gộp toàn bộ
+các tệp vào rồi nén một thể. Khi đó, tệp nén được gọi là \emph{đặc} (solid), và
+rất khó để đọc/sửa tệp lẻ.
 
 \subsection{Định dạng tệp truyện CBZ}\label{sec:cbz}
 
