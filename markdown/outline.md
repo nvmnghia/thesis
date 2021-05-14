@@ -716,10 +716,10 @@ Tệp truyện CBZ chỉ là một tệp nén ZIP thông thường, trong đó c
 
 ## 3. Chương 3: Phân tích yêu cầu <a name="P3-requirements"></a>
 
-<!-- Nếu C3 ngắn quá thì gộp Thiết kế vào, nhưng giờ chắc phải tách cmnr -->
-
-Chương này phân tích yêu cầu để lập ra đặc tả yêu cầu, là bộ khung cho quá trình
-phát triển ứng dụng.
+Chương này tìm hiểu đối tượng người dùng nhắm tới để tìm ra *Nhu cầu* của họ.
+Nhu cầu này sau đó được phân tích thành các *Yêu cầu chức năng* và *phi chức
+năng*. Cuối cùng, các chức năng được mổ xẻ, mô tả kĩ để được *Đặc tả ca sử
+dụng*, là bộ khung cho quá trình phát triển ứng dụng.
 
 ### 3.1. Mô tả chung <a name="P3.1-overview"></a>
 
@@ -732,8 +732,13 @@ phát triển ứng dụng.
 
 Cả hai nhóm có điểm chung là kĩ tính, yêu cầu cao về trải nghiệm đọc truyện, cụ
 thể là về *chất lượng hình ảnh*. Cũng do kĩ tính, nên cả hai nhóm không cần
-nhiều chức năng, tuy nhiên có yêu cầu cao về từng chức năng. Nhóm người dùng sưu
+nhiều chức năng, tuy nhiên từng chức năng cần hoàn thiện. Nhóm người dùng sưu
 tầm truyện còn có yêu cầu *xem thông tin (metadata)* của tệp truyện.
+
+Tóm lại, ta thu được hai *Nhu cầu* của nhóm người dùng hướng đến:
+
+- Đọc truyện trong tệp truyện
+- Xem metadata
 
 #### 3.1.2. Mục đích <a name="P3.1.2-objectives"></a>
 
@@ -768,6 +773,11 @@ Các giới hạn này nhằm tránh cho phần mềm quá phức tạp với t�
 
 Ứng dụng cần đạt một số tiêu chí sau:
 
+- *Không trói buộc người dùng* (vendor lock-in): Đây là một tiêu chí quan trọng
+  (trên thực tế nó có ảnh hưởng lớn đến thiết kế kĩ thuật của yacv). Điểm thể
+  hiện rõ tiêu chí này là truyện phải được lưu trong *phân vùng chung*, để ứng
+  dụng nào cũng có thể đọc, thay vì lưu trong phân vùng của riêng yacv. Do đó,
+  người dùng có thể xóa, đổi ứng dụng bất kì lúc nào.
 - Phản hồi nhanh: Các thao tác cần có thời gian phản hồi nhanh. Phản hồi nhanh
   không nhất thiết là thời gian thực thi ngắn, mà là luôn có các thông báo tiến
   độ cho người dùng.
@@ -825,17 +835,24 @@ Do ứng dụng đơn giản, các ca sử dụng tách biệt, nên mỗi ca s�
     3. Trình chọn thư mục của Android hiện ra, cho phép người đọc chọn thư mục
        làm thư mục gốc.
     4. Màn hình Thư viện trở lại, quét và hiển thị các thư mục chứa truyện trong
-       thư mục gốc.
+       thư mục gốc, đồng thời lưu kết quả quét vào cơ sở dữ liệu.
+
+        Nếu người đọc đã chọn một thư mục gốc, ca sử dụng này *thay thế* thư mục
+        gốc đã chọn bằng thư mục vừa chọn.
 
 - **Luồng thay thế**:
 
-    Nếu người đọc đã chọn một thư mục gốc, ca sử dụng này *thay thế* thư mục gốc
-    đã chọn bằng thư mục vừa chọn.
+    Khi người dùng bật ứng dụng, và đã chọn một thư mục gốc từ lần sử dụng trước
+    đó, tức ứng dụng cần *quét lại*, khác với Luồng chính là *quét mới*:
+
+    - Người đọc bật ứng dụng (tức ở Màn hình Thư viện).
+    - Ứng dụng quét lại truyện trong thư mục gốc, và cập nhật các thay đổi vào
+      cơ sở dữ liệu.
+
+- **Luồng ngoại lệ**:
 
     Nếu người đọc không chọn thư mục nào, quay lại Màn hình Thư viện và không
     thay đổi gì.
-
-- **Luồng ngoại lệ**:
 
     Nếu có lỗi trong quá trình chọn thư mục, cần gợi ý người đọc chọn lại. Lỗi
     gồm:
@@ -846,32 +863,40 @@ Do ứng dụng đơn giản, các ca sử dụng tách biệt, nên mỗi ca s�
 
     Nếu có lỗi trong quá trình quét cần phải giảm thiểu và giấu khỏi người đọc.
 
+- **Kích hoạt khi**:
+
+    Người dùng ấn vào nút thay đổi thư mục gốc.
+
 - **Điều kiện**:
 
-    - Tiền điều kiện: Ứng dụng ở Màn hình Thư viện
+    - Tiền điều kiện:
+
+        - Ứng dụng ở Màn hình Thư viện
+        - Nếu là quét lại, cần có thư mục gốc
+
     - Hậu điều kiện: Ứng dụng ở Màn hình Thư viện
 
+        - Lưu truyện quét được vào cơ sở dữ liệu. Nếu là quét mới, cần xóa hẳn
+          cơ sở dữ liệu cũ. Quét lại thì phải giữ cơ sở dữ liệu sẵn có.
         - Hiển thị thư mục truyện quét được
         - Hiển thị lỗi nếu có (ba loại lỗi ở trên), và gợi ý xử lí
 
 - **Yêu cầu phi chức năng**:
 
-    Nếu đang quét, Màn hình Thư viện cần hiển thị danh sách thư mục theo tiến độ, ứng dụng quét
-    đến đâu hiển thị đến đấy.
-
-    Mỗi thư mục cần hiển thị:
-
-    - Tên thư mục
-    - Ảnh đại diện cho thư mục: bìa một truyện bất kì tìm được trong thư mục
+    Nếu đang quét, Màn hình Thư viện cần hiển thị danh sách thư mục theo tiến
+    độ, ứng dụng quét đến đâu hiển thị đến đấy.
 
 Đây là ca sử dụng đầu tiên khi người đọc chạy ứng dụng lần đầu. Các tệp truyện
 sẽ được quét từ thư mục gốc, rồi được gom lại theo thư mục như mô tả ở [ca sử
-dụng kế tiếp](#P3.3.2-show-library).
+dụng kế tiếp](#P3.3.2-browsing).
 
 Màn hình đầu tiên khi người đọc bật lên gọi là *Màn hình Thư viện* (Library
 screen). Các thư mục chứa truyện, hoặc thông báo lỗi liên quan đến bản thân quá
 trình chọn truyện (đã miêu tả trong bước 6 ở trên) sẽ được hiển thị ở màn hình
 này.
+
+Ca sử dụng này có luồng thay thế là trường hợp quét tự động chạy mỗi khi khi
+chạy ứng dụng mà không cần người dùng kích hoạt.
 
 Khi quét, ứng dụng phải đọc luôn cả metadata của tệp truyện nếu có. Các trường
 trong metadata được giải thích chi tiết trong [Phụ lục 1](#P8.1-metadata). Hiện
@@ -887,68 +912,74 @@ trích xuất từ tên tệp truyện.
 Tới đây người đọc có thể thực hiện các ca sử dụng khác, trong đó quan trọng nhất
 là duyệt theo thư mục rồi xem truyện.
 
-#### 3.3.2. Hiển thị danh sách truyện <a name="P3.3.2-show-library"></a>
+#### 3.3.2. Duyệt truyện <a name="P3.3.2-browsing"></a>
 
 - **Mô tả**:
 
-    Người đọc duyệt truyện theo thư mục, rồi chọn truyện và xem.
+    Ứng dụng hiển thị những thư mục chứa tệp truyện, khi ấn vào sẽ hiển thị tệp
+    truyện trong thư mục đó.
 
 - **Luồng chính**:
 
-    1. Người đọc bật ứng dụng (tức ở Màn hình Thư viện), có danh sách truyện
-       (tức đã chọn thư mục gốc và quét được ít nhất một thư mục chứa truyện).
-    2. Người đọc chọn một thư mục.
-    3. Ứng dụng chuyển sang Màn hình Thư mục, hiển thị *danh sách truyện* trong
-       thư mục đó cho người đọc xem và chọn.
+    1. Người đọc bật ứng dụng (tức ở Màn hình Thư viện).
+    2. Người đọc duyệt danh sách thư mục truyện, và chọn một thư mục.
+    3. Người đọc duyệt danh sách truyện trong thư mục.
+
+- **Kích hoạt khi**:
+
+    Người dùng bật ứng dụng.
 
 - **Điều kiện**:
 
-    - Tiền điều kiện:
-
-        - Ứng dụng ở Màn hình Thư viện
-        - Đã chọn thư mục gốc và đã quét được ít nhất một thư mục chứa truyện
-
+    - Tiền điều kiện: Ứng dụng đã quét được ít nhất một thư mục chứa truyện.
     - Hậu điều kiện: Ứng dụng ở Màn hình Thư mục.
 
 - **Yêu cầu phi chức năng**:
 
-    Nếu đang quét, màn hình Thư mục cần hiển thị danh sách truyện theo tiến độ,
-    ứng dụng quét đến đâu hiển thị đến đấy.
+    Nếu đang quét, Màn hình Thư viện cần hiển thị danh sách thư mục theo tiến
+    độ, ứng dụng quét đến đâu hiển thị đến đấy.
 
-    Mỗi truyện cần hiển thị:
+    Mỗi thư mục cần hiển thị:
+
+    - Tên thư mục
+    - Ảnh đại diện cho thư mục: bìa một truyện bất kì tìm được trong thư mục
+
+    Mỗi tệp truyện cần hiển thị:
 
     - Tên truyện
     - Bìa truyện
     - Tiến độ đọc
     - Đánh giá yêu thích
 
-Đây là một trong hai ca sử dụng chính của ứng dụng, bên cạnh (và là tiền điều
-kiện cho) [ca sử dụng đọc truyện](#P3.3.3-read-comic) sẽ được miêu tả tiếp theo.
+Đây là ca sử dụng đầu tiên cho phép người dùng duyệt truyện, là một trong hai ca
+sử dụng mặc định khi người dùng mở ứng dụng (cùng với ca sử dụng quét lại). Ca
+sử dụng này liên quan đến hai màn hình.
 
-Màn hình khi người đọc chọn một thư mục gọi là *Màn hình Thư mục* (Directory
-screen). Cũng giống như Màn hình Thư viện, ảnh bìa và tên của truyện được hiển
-thị để người đọc chọn.
+Màn hình đầu tiên khi người đọc bật lên gọi là \emph{Màn hình Thư viện} (Library
+screen). Màn hình này hiển thị các thư mục chứa truyện, hoặc thông báo lỗi nếu
+có của quá trình quét truyện (đã mô tả ở Luồng ngoại lệ của [mục
+trước](#P3.3.1-scan)).
 
-Trong yacv, truyện được quản lí và duyệt theo thư mục. Có hai lí do cho lựa chọn
-thiết kế này:
+Màn hình khi người đọc chọn một thư mục gọi là \emph{Màn hình Thư mục}
+(Directory screen). Màn hình này hiển thị các tệp truyện trong thư mục đó.
 
-- Giảm độ phức tạp khi lập trình
-- Các phương pháp duyệt khác không trực quan
+Trong yacv, truyện được quản lí và duyệt theo thư mục. Lí do cho lựa chọn thiết
+kế này là vì các phương pháp duyệt khác không trực quan:
 
-    - Các phương pháp duyệt khác chỉ bao gồm duyệt theo metadata, tức duyệt theo
-      các thông tin đi kèm như Tác giả, Nhân vật, Bộ truyện,... thì yêu cầu
-      truyện phải có đủ metadata. Trên thực tế, không phải tệp truyện nào cũng
-      có đủ thông tin này, do vậy sẽ có trường hợp rất nhiều truyện bị gom vào
-      mục "Không đủ thông tin". Hơn nữa, giả sử truyện có đi kèm metadata, ta
-      xem xét tiếp trường hợp dưới.
-    - Giả sử ta quản lí theo Nhân vật: Vậy để trực quan, yacv phải hiển thị ảnh
-      nhân vật. Hiện nay, việc nhận diện và cắt đúng ảnh phần mặt nhân vật ra để
-      tạo ảnh đại diện có thể nói là bất khả thi. Do vậy, khi duyệt theo Nhân
-      vật, người đọc chỉ có thể thấy tên, không thấy một hình ảnh gợi ý nào
-      khác, dẫn đến khó khăn khi sử dụng. Lập luận tương tự có thể dùng với các
-      cách xếp khác.
-    - Một cách xếp có thể nói là tốt là xếp theo Bộ truyện, tuy nhiên ta lại
-      quay về vấn đề thiếu metada.
+- Các phương pháp duyệt khác chỉ bao gồm duyệt theo metadata, tức duyệt theo
+  các thông tin đi kèm như Tác giả, Nhân vật, Bộ truyện,... thì yêu cầu
+  truyện phải có đủ metadata. Trên thực tế, không phải tệp truyện nào cũng
+  có đủ thông tin này, do vậy sẽ có trường hợp rất nhiều truyện bị gom vào
+  mục "Không đủ thông tin". Hơn nữa, giả sử truyện có đi kèm metadata, ta
+  xem xét tiếp trường hợp dưới.
+- Giả sử ta quản lí theo Nhân vật: Vậy để trực quan, yacv phải hiển thị ảnh
+  nhân vật. Hiện nay, việc nhận diện và cắt đúng ảnh phần mặt nhân vật ra để
+  tạo ảnh đại diện có thể nói là bất khả thi. Do vậy, khi duyệt theo Nhân
+  vật, người đọc chỉ có thể thấy tên, không thấy một hình ảnh gợi ý nào
+  khác, dẫn đến khó khăn khi sử dụng. Lập luận tương tự có thể dùng với các
+  cách xếp khác.
+- Một cách xếp có thể nói là tốt là xếp theo Bộ truyện, tuy nhiên ta lại
+  quay về vấn đề thiếu metada.
 
 Hơn nữa, các thư mục cần được "làm phẳng", tức là hiển thị thư mục con
 (cháu,...) ngang hàng với thư mục gốc. Ví dụ sau cho thấy cách yacv làm phẳng
@@ -1041,8 +1072,7 @@ Theo như bảng trên, các màn hình trong yacv được tổ chức như sau
     - Trải nghiệm cuộn trang mượt mà nhất có thể.
 
 Đây là một trong hai ca sử dụng chính của ứng dụng, bên cạnh (và là mục đích
-của) [ca sử dụng hiển thị danh sách truyện](#P3.3.2-show-library) đã được miêu
-tả ở trên.
+của) [ca sử dụng duyệt truyện](#P3.3.2-browsing) đã được miêu tả ở trên.
 
 Màn hình khi người đọc đọc một truyện gọi là *Màn hình Đọc truyện*. Màn hình này
 cho phép người đọc duyệt các trang truyện theo phương ngang. Mục tiêu là thiết
@@ -1063,6 +1093,10 @@ kế màn hình này sao cho có trải nghiệm gần giống nhất với ứn
        của truyện cũng được hiển thị kèm.
     4. Người dùng có thể đánh giá truyện bằng nút Yêu thích trong màn hình này,
        hoặc ngược lại (bỏ đánh giá Yêu thích).
+
+- **Kích hoạt khi**:
+
+    Người dùng ấn vào nút Xem metadata trong Màn hình Đọc truyện.
 
 - **Điều kiện**:
 
@@ -1085,7 +1119,7 @@ không.
 Hệ thống đánh giá của ứng dụng chỉ ở mức cơ bản, gồm duy nhất tính năng Yêu
 thích. Tính năng này cũng chỉ phục vụ hai mục đích là thể hiện sự đánh giá của
 người dùng và lọc nhanh truyện về mặt thị giác (đã nhắc đến trong phần Mô tả
-từng bước của [ca sử dụng hiển thị danh sách truyện](#P3.3.2-show-library)).
+từng bước của [ca sử dụng duyệt truyện](#P3.3.2-browsing)).
 
 Các tính năng nâng cao hơn như gợi ý không xuất hiện, do một số lí do sau:
 
@@ -1112,6 +1146,10 @@ Các tính năng nâng cao hơn như gợi ý không xuất hiện, do một s�
 
     Nếu không tìm thấy truyện, ứng dụng cần thông báo ở Màn hình Tìm kiếm.
 
+- **Kích hoạt khi**:
+
+    Người dùng ấn nút Tìm kiếm trong Màn hình Thư viện.
+
 - **Điều kiện**:
 
     - Tiền điều kiện: Ứng dụng ở Màn hình Thư viện.
@@ -1135,11 +1173,13 @@ Màn hình Tìm kiếm phải nhóm kết quả theo trường metadata mà kế
 gần như sau:
 
 ```text
-Truyện
-- Watchmen #1.cbz
-- Watchmen #2.cbz
-Bộ truyện
-- Watchmen
+Truyện                     | Watchmen
+- Watchmen #1.cbz          | Watchmen Ultimate
+- Watchmen #2.cbz          |
+- Watchmen Ultimate #1.cbz |
+Bộ truyện                  |
+- Watchmen                 |
+- Xem thêm...              |
 ```
 
 Hình 11: Mô tả Màn hình Tìm kiếm
@@ -1153,6 +1193,13 @@ Tương tác của người đọc với Màn hình Tìm kiếm trên diễn ra 
   hình chứa danh sách truyện trong bộ truyện đã chọn. *Màn hình này cần giống
   với Màn hình Thư mục*. Sau đó, người dùng chọn một truyện để đọc như bình
   thường.
+- Khi ấn vào nút "Xem thêm", người đọc được đưa đến màn hình chứa danh sách két
+  quả đầy đủ của kiểu kết quả đó.
+
+    Ví dụ, nếu ấn vào "Xem thêm" trong màn hình trên, người dùng sẽ thấy một màn
+    hình khác hiển thị đủ các bộ truyện tìm thấy được (`Watchmen` và `Watchmen
+    Ultimate`). Tiếp tục ấn vào một kết quả sẽ ra màn hình danh sách truyện như
+    trên.
 
 Đây chỉ là ví dụ về một từ khóa có kết quả khi tìm theo tên tệp truyện và bộ
 truyện. Các trường metadata khác nếu có kết quả phù hợp cũng sẽ thể hiện theo
@@ -1161,7 +1208,7 @@ hình thức trên.
 Chú ý rằng bìa truyện luôn được thể hiện khi có thể. Trong ví dụ trên, chắc chắn
 phải có bìa truyện cho mọi mục con trong danh sách "Truyện". Còn mục con của "Bộ
 truyện" thì không, lí do là không có đủ dữ liệu (không có dữ liệu cho logo,
-banner,.. của bộ truyện). Tương ứng, không có dữ liệu hiển thị cho danh sách
+banner,... của bộ truyện). Tương ứng, không có dữ liệu hiển thị cho danh sách
 "Nhân vật", "Tác giả",... Đây là một hạn chế quan trọng về giao diện mà hiện
 chưa có cách thiết kế hợp lý.
 
@@ -1206,12 +1253,18 @@ Với độ phức tạp dự kiến của việc hiển thị ảnh bìa truy�
     8. Sau khi tắt hộp thoại, màn hình trở về chế độ ban đầu, biểu tượng thùng
        rác cũng biến mất, truyện được xóa cũng biến mất.
 
+- **Kích hoạt khi**:
+
+    Người dùng ấn giữ một tệp truyện trong màn hình chứa danh sách truyện.
+
 - **Điều kiện**
 
-    Tiền và hậu điều kiện đều là màn hình chứa danh sách truyện, gồm:
+    - Tiền điều kiện: Màn hình chứa danh sách truyện
+    - Hậu điều kiện:
 
-    - Màn hình Thư mục
-    - Màn hình Tìm kiếm
+        - Màn hình chứa danh sách truyện
+        - Nếu người dùng đồng ý xóa, truyện được xóa khỏi bộ nhớ và cơ sở dữ
+          liệu
 
 Ca sử dụng này không có màn hình riêng biệt, mà sử dụng một chế độ của các màn
 hình hiển thị danh sách truyện.
