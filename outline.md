@@ -543,17 +543,38 @@ hình hiển thị danh sách truyện.
 Chương này tập trung vào thiết kế của ứng dụng, là triển khai cụ thể của [Chương
 3](#P3-specification).
 
-Kiến trúc tổng quan của yacv rất đơn giản:
+Kiến trúc tổng quan của yacv rất đơn giản, gồm 4 module như hình:
 
-1. yacv *quét* metadata tệp truyện và lưu kết quả quét vào *cơ sở dữ liệu*
-2. Các *Màn hình* hiển thị dữ liệu cho người dùng
-3. Khi người dùng đọc truyện, yacv trích xuất và hiển thị tệp ảnh
+1. yacv *quét* metadata tệp truyện bằng module **Parser & Scanner**
+2. và lưu kết quả quét vào *cơ sở dữ liệu*, tức module **Database**
+3. Các *Màn hình* trong module **View** hiển thị dữ liệu cho người dùng
+4. Khi người dùng đọc truyện:
+
+    - yacv trích xuất và hiển thị tệp ảnh lên Màn hình bằng module **Image
+      Loader**
+    - yacv trích xuất và hiển thị thông tin tệp truyện lên Màn hình bằng data
+      binding với module **Database**
+
+![overall architecture](images/overall_architecture.svg)
+
+Hình 1: Kiến trúc tổng quan của yacv
+
+Ở Chương 2, trong phần về MVVM, yacv được giới thiệu là có sử dụng kiến trúc
+này. Tuy nhiên, MVVM chỉ là một phần nhỏ của ứng dụng, chủ yếu liên quan đến
+việc hiển thị dữ liệu nên chỉ có ý nghĩa khi xét đến các thành phần trong module
+**View**.
 
 yacv chỉ thiết kế cho *một người dùng*, do đó có rất ít tương tác, dẫn đến kiến
-trúc tối giản như trên. Các tiểu mục sau sẽ đi sâu vào các phần con rời rạc
-trong kiến trúc tổng thể.
+trúc tối giản và rời rạc như trên. Các tiểu mục sau sẽ đi sâu vào các module
+này.
 
-### 4.1. Thiết kế Cơ sở dữ liệu <a name="P4.2-db-design"></a>
+### 4.1. Module Cơ sở dữ liệu <a name="P4.2-db-module"></a>
+
+Thông thường mục này được tách riêng ra, xếp vào mục *Thiết kế cơ sở dữ liệu*,
+ngang hàng với mục "Thiết kế hướng đối tượng". Tuy nhiên, yacv còn cần xử lí dữ
+liệu khác quan trọng không kém là dữ liệu ảnh. Do không còn có vai trò trung
+tâm, duy nhất, phần cơ sở dữ liệu được coi là một module trong thiết kế hướng
+đối tượng.
 
 yacv chọn SQLite vì đây là một cơ sở dữ liệu gọn nhẹ nhúng sẵn trong Android.
 SQLite sử dụng mô hình quan hệ, do đó thiết kế bảng cần đảm bảo được chuẩn hóa
@@ -619,13 +640,11 @@ Ta xem xét đến các bảng nối:
 
 Do dùng Room, mỗi bảng ứng với một lớp. Các truy vấn với bảng cần đóng gói dữ
 liệu vào các lớp này, trước khi gửi đến hoặc nhận về từ *DAO* (Data Access
-Object).
+Object). Mỗi câu lệnh lại được chuyển thành một hàm trong DAO.
 
-### 4.2. Thiết kế kiến trúc <a name="P4.2-arch-design></a>
+### 4.2. Module View <a name="P4.2-view-module></a>
 
-Phần này làm rõ kiến trúc hướng đối tượng của ứng dụng. Thiết kế hướng đối tượng
-của từng màn hình được trình bày. Sau đó, thiết kế lớp của các lớp quan trọng
-liên quan đến đọc tệp được giới thiệu.
+Phần này tập trung vào các Màn hình, và phân tích chúng theo hướng MVVM.
 
 Trong phần này có dùng nhiều biểu đồ tuần tự (sequence diagram) để minh họa
 tương tác của ba thành phần MVVM (cùng với một số thành phần liên quan) trong
@@ -667,12 +686,9 @@ Dựa vào Hình 9, ta thiết kế được 3 nguồn dữ liệu (model) sau:
 
 Bảng 3: Ba nguồn dữ liệu tương đương với Hình 9
 
-Cụ thể hơn:
-
-- *ComicParser* là bộ quét metadata tệp truyện (sẽ được mô tả sau), nhận vào URI, trả
-  về metadata của tệp truyện tương ứng.
-- *DAO* đã giải thích ở cuối [mục 4.2](#P4.2-db-design), mỗi câu truy vấn tương
-  ứng với một hàm trong DAO.
+Cụ thể hơn, *ComicParser* là bộ quét metadata tệp truyện (thuộc module Parser &
+Scanner, sẽ được mô tả sau). Lớp này nhận vào URI rồi trả về metadata của tệp
+truyện tương ứng dưới dạng đối tượng `Comic`.
 
 Khi cần đọc dữ liệu metadata từ tệp truyện, ba thành phần này tương tác như sau:
 
@@ -912,7 +928,9 @@ Biểu đồ lớp của Màn hình Danh sách truyện như sau:
 
 Hình 21: Biểu đồ lớp của Màn hình Danh sách truyện
 
-##### 4.2.9. `ComicParser`
+#### 4.3. Module Parser & Scanner
+
+##### 4.3.1. `ComicParser`
 
 `ComicParser` là một trong các thành phần trung tâm của yacv. Lớp này nhận vào
 URI trỏ đến một tệp truyện, và đọc nội dung tệp truyện đó ra. Cần gọi đủ tên là
@@ -931,7 +949,7 @@ Bảng 4: Hai kiểu parser trong `ComicParser`
 như mọi thao tác đọc trong SAF - hệ thống đọc ghi tệp của Android - đều rất
 chậm.
 
-###### 4.2.9.1. Parser cho tệp nén
+###### 4.3.1.1. Parser cho tệp nén
 
 Parser cho tệp nén hiện gồm một giao diện và hai lớp
 
@@ -943,41 +961,41 @@ Parser cho tệp nén hiện gồm một giao diện và hai lớp
 chung mọi parser cho tệp nén đều phải có. Do hiện tại yacv mới hỗ trợ định dạng
 CBZ, chỉ có lớp `CBZParser` cài đặt giao diện này.
 
-Trong `ArchiveParser`, phương thức quan trọng nhất là `getEntryOffsets()`.
-Phương thức này trả về một mảng số nguyên `offsets`. Mảng này chứa offset, tức
-vị trí của các tệp lẻ trong tệp nén, đã sắp xếp theo *thứ tự trang truyện*. Khi
-biết được số offset này, ứng dụng có thể "nhảy cóc" số byte tương ứng đến đúng
-vị trí trang truyện để đọc.
+Trong `ArchiveParser`, có hai phương thức quan trọng:
 
-<!-- Để thuận tiện khi dùng, cùng với cân đối về hiệu năng, `getEntries()` có hai
-tiêu chí thiết kế như sau:
+- `getEntryOffsets()`: Phương thức này trả về một từ điển như sau:
 
-- Chỉ được duyệt tệp ảnh và tệp metadata: Các tệp khác, đặc biệt là các tệp đệm
-  phải bị bỏ qua (tệp đệm như `.DS_Store` trên macOS, `Thumbs.db` trên
-  Windows,... đặc biệt macOS thường tạo ra tệp đệm có đuôi giống với tệp chính,
-  gây khó khăn khi phân biệt).
-- Đồng thời, để đảm bảo hiệu năng, thứ tự duyệt của hàm này là thứ tự tệp lẻ
-  trong tệp nén, chứ *không đảm bảo* theo thứ tự trang truyện.
+    - Khóa: tên tệp lẻ
+    - Giá trị: offset tệp lẻ, tức vị trí tệp lẻ trong tệp nén
 
-Để chứa cả dữ liệu tệp ảnh và metadata, ta đưa ra giao diện `ArchiveEntry`, giúp
-định nghĩa một số thuộc tính cần dùng khi duyệt tệp lẻ (entry) trong tệp nén:
+- `readEntryAtOffset()`: Phương thức này nhận vào một offset, và trả về luồng
+  đọc tương ứng với tệp lẻ ở offset đó bằng cách "nhảy cóc" đến đúng chỗ và đọc.
 
-- `path`: đường dẫn đầy đủ trong bản thân tệp nén
-- `inputStream`: giải nén entry đó và trả lại dữ liệu ở dạng luồng nhập (là hàm
-  sử dụng trong các hàm "Show Image from InputStream" ở trên)
+`ArchiveParserFactory` là một lớp theo mẫu thiết kế factory, nhận vào URI của
+tệp truyện và trả về `ArchiveParser` để đọc loại tệp truyện đó (ví dụ, nếu URI
+có đuôi CBZ thì trả về một đối tượng `CBZParser`). Do `ArchiveParser` cần một số
+cài đặt khởi tạo riêng, nên mới cần một lớp riêng để tạo parser. Chữ "Factory"
+thể hiện lớp này sử dụng mẫu thiết kế factory.
 
-`getEntries()` sẽ trả về iterator của `ArchiveEntry` để duyệt tệp. Ngoài ra, do
-thường làm việc với luồng nhập, cần chú ý đến việc đóng luồng.
+###### 4.3.1.2. Parser cho metadata
 
-Ở cuối Chương 2, ta đã thấy rằng việc đọc ghi *ngẫu nhiên* trên tệp ZIP là có
-thể, vậy tại sao giao diện `ArchiveParser` lại chỉ cung cấp chức năng đọc *tuần
-tự* theo thứ tự tệp lẻ ở dạng iterator? Lí do là vẫn là bộ SAF - hệ thống đọc
-ghi tệp của Android - chỉ cho phép đọc ghi tuần tự. -->
+yacv hiện hỗ trợ định dạng ComicRack, được giới thiệu chi tiết trong Phụ lục 2.
+Định dạng này là một tệp tin XML, do đó được đọc đơn giản bằng các thư viện XML
+sẵn có.
+
+Để mở rộng định dạng tệp đọc, có thể dùng mẫu thiết kế factory như đã dùng với
+parser cho tệp. Theo cách này, các parser cần có hàm `parse()` trả về một đối
+tượng `Comic` và nhận hai tham số:
+
+- Nội dung tệp metadata: ở dạng chuỗi thông thường
+- Tên tệp metadata: tên tệp giúp phân biệt các định dạng tệp với nhau
+
+##### 4.3.2. `CBZParser`
 
 `CBZParser` là lớp cài đặt giao diện `ArchiveParser`. Như đã phân tích ở Chương
 2, hệ thống đọc ghi tệp SAF của Android chỉ cho phép đọc ghi tuần tự. Việc tạo
-ra mảng offset là khó khăn, do phần mục lục của tệp ZIP nằm ở cuối, và có nhiều
-thao tác cần dò ngược từ cuối lên.
+ra mảng offset không đơn giản, do phần mục lục của tệp ZIP nằm ở cuối, và có
+nhiều thao tác cần dò ngược từ cuối lên.
 
 Để giải quyết vấn đề danh sách offset, cách tốt nhất là chép toàn bộ tệp truyện
 vào phần bộ nhớ riêng của ứng dụng. Phần bộ nhớ này vẫn được dùng API File của
@@ -998,32 +1016,63 @@ lượng bộ nhớ.
 Hiệu quả là tệp cần được đọc theo luồng nhập trung bình hai lần, không phải ghi
 ra đĩa, đồng thời vẫn đọc được mục lục.
 
-`ArchiveParserFactory` là một lớp theo mẫu thiết kế factory, nhận vào URI của
-tệp truyện và trả về `ArchiveParser` để đọc loại tệp truyện đó (ví dụ, nếu URI
-có đuôi CBZ thì trả về một đối tượng `CBZParser`). Do `ArchiveParser` cần một số
-cài đặt khởi tạo riêng, nên mới cần một lớp riêng để tạo parser. Chữ "Factory"
-thể hiện lớp này sử dụng mẫu thiết kế factory. Tương tác của ba đối tượng này
-được thể hiện trong hình 21:
+##### 4.3.3. Tổng hợp lại `ComicParser`
+
+Tương tác trong một ca sử dụng hiển thị của `ComicParser` được mô tả như sau:
 
 ![parser sequence](/images/parser_sequence.svg)
 
-Hình 21: Một ca sử dụng thông dụng của `ArchiveParser`
+Hình 22: `ComicParser` và các thành phần của nó
 
-Do ca sử dụng đơn giản, ta thấy `ComicParser` không được vẽ. Trên thực tế, nó là
-đối tượng thay `CBZParser` nhận và trả yêu cầu.
+Ở đây cần làm rõ chi tiết về việc sắp xếp tệp theo tên. Không có quy chuẩn cho
+tên trang truyện, tuy nhiên đa số các tệp truyện đặt tên theo định dạng sau:
 
-###### 4.2.9.2. Parser cho metadata
+```text
+X-Men Vol 40 1.jpg
+|     |      |
+|     |      Trang truyện số
+|     Số Volume, Number,...
+Tên tệp truyện
+```
 
-yacv hiện hỗ trợ định dạng ComicRack, được giới thiệu chi tiết trong Phụ lục 2.
-Định dạng này là một tệp tin XML, do đó được đọc đơn giản bằng các thư viện XML
-sẵn có.
+Vấn đề với định dạng này xuất hiện khi truyện có nhiều hơn 10 trang. Khi sắp
+xếp tệp ảnh theo ABC, các trang sẽ có thứ tự như sau:
 
-Để mở rộng định dạng tệp đọc, có thể dùng mẫu thiết kế factory như đã dùng với
-parser cho tệp. Theo cách này, các parser cần có hàm `parse()` trả về một đối
-tượng `Comic` và nhận hai tham số:
+```text
+X-Men Vol 40 1.jpg
+X-Men Vol 40 10.jpg
+X-Men Vol 40 11.jpg
+...
+X-Men Vol 40 19.jpg
+X-Men Vol 40 2.jpg
+...
+```
 
-- Nội dung tệp metadata: ở dạng chuỗi thông thường
-- Tên tệp metadata: tên tệp giúp phân biệt các định dạng tệp với nhau
+Ta thấy ngay rằng thứ tự tệp ảnh bị đảo lộn. Để giải quyết vấn đề này, cần viết
+hàm so sánh riêng cho tên tệp ảnh. Ý tưởng ở đây là gom những kí tự số liên tiếp
+với nhau thành một "kí tự" rồi mới so sánh. Đoạn mã giả sau trình bày thuật toán:
+
+```text
+def compare(str1, str2):
+    arrs = []
+
+    for str in [str1, str2]:
+        arrtmp = []
+        acc = []
+
+        for char in str:
+            if is_number(char):
+                acc.append(char)
+            else:
+                if len(acc) != 0:
+                    acc = ''.join(acc)
+                    acc = to_num(acc)
+                    arrtmp.append(acc)
+                    acc = 0
+                arrtmp.append(to_codepoint(char))
+
+    return compare_left_to_right(arrs[0], arrs[1])
+```
 
 ## 5. Chương 5: Lập trình & Kiểm thử <a name="P5-implementation"></a>
 
