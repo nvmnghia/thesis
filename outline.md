@@ -548,12 +548,10 @@ Kiến trúc tổng quan của yacv rất đơn giản, gồm 4 module như hìn
 1. yacv *quét* metadata tệp truyện bằng module **Parser & Scanner**
 2. và lưu kết quả quét vào *cơ sở dữ liệu*, tức module **Database**
 3. Các *Màn hình* trong module **View** hiển thị dữ liệu cho người dùng
-4. Khi người dùng đọc truyện:
-
-    - yacv trích xuất và hiển thị tệp ảnh lên Màn hình bằng module **Image
-      Loader**
-    - yacv trích xuất và hiển thị thông tin tệp truyện lên Màn hình bằng data
-      binding với module **Database**
+4. Khi người dùng đọc truyện, yacv trích xuất và lưu đệm tệp ảnh bằng module
+   **Image Loader**
+5. Khi người dùng xem metadata, yacv trích xuất và hiển thị thông tin tệp truyện
+   lên Màn hình bằng data binding với module **Database**
 
 ![overall architecture](images/overall_architecture.svg)
 
@@ -568,13 +566,13 @@ yacv chỉ thiết kế cho *một người dùng*, do đó có rất ít tươn
 trúc tối giản và rời rạc như trên. Các tiểu mục sau sẽ đi sâu vào các module
 này.
 
-### 4.1. Module Cơ sở dữ liệu <a name="P4.2-db-module"></a>
+### 4.1. Module Database <a name="P4.2-db-module"></a>
 
 Thông thường mục này được tách riêng ra, xếp vào mục *Thiết kế cơ sở dữ liệu*,
-ngang hàng với mục "Thiết kế hướng đối tượng". Tuy nhiên, yacv còn cần xử lí dữ
+ngang hàng với mục Thiết kế hướng đối tượng. Tuy nhiên, yacv còn cần xử lí dữ
 liệu khác quan trọng không kém là dữ liệu ảnh. Do không còn có vai trò trung
-tâm, duy nhất, phần cơ sở dữ liệu được coi là một module trong thiết kế hướng
-đối tượng.
+tâm, duy nhất, phần cơ sở dữ liệu chỉ được coi là một module trong thiết kế
+hướng đối tượng của ứng dụng.
 
 yacv chọn SQLite vì đây là một cơ sở dữ liệu gọn nhẹ nhúng sẵn trong Android.
 SQLite sử dụng mô hình quan hệ, do đó thiết kế bảng cần đảm bảo được chuẩn hóa
@@ -997,13 +995,23 @@ tượng `Comic` và nhận hai tham số:
 ra mảng offset không đơn giản, do phần mục lục của tệp ZIP nằm ở cuối, và có
 nhiều thao tác cần dò ngược từ cuối lên.
 
-Để giải quyết vấn đề danh sách offset, cách tốt nhất là chép toàn bộ tệp truyện
-vào phần bộ nhớ riêng của ứng dụng. Phần bộ nhớ này vẫn được dùng API File của
-Java, do đó có khả năng đọc ghi ngẫu nhiên, cho phép đọc mục lục rất nhanh. Vấn
-đề ở đây không chỉ là chép tệp tin lâu, mà còn là tệp tin rất lớn: một tệp
-truyện có kích cỡ từ vài chục đến vài trăm MB, hoặc thậm chí hơn; và đọc mục lục
-xong lại phải xóa ngay. Do đó, cách đơn giản này không chỉ chậm mà còn tốn dung
-lượng bộ nhớ.
+Để giải quyết vấn đề danh sách offset, có hai cách đơn giản nhất:
+
+- Chép toàn bộ tệp truyện vào phần bộ nhớ riêng của ứng dụng
+
+    - Ưu: Phần bộ nhớ này vẫn được dùng API File của Java, do đó có thể đọc ghi
+      ngẫu nhiên, cho phép đọc mục lục rất nhanh.
+
+    - Nhược: Tệp truyện rất nặng (vài chục đến vài trăm MB) dẫn đến tốn cả dung
+      lượng đĩa lẫn băng thông đọc/ghi. Ghi xóa liên tục cũng có hại cho bộ nhớ
+      thể rắn của điện thoại.
+
+- Đọc tệp ZIP ở chế độ đọc tuần tự
+
+    - Ưu: Dùng ngay được với cơ chế đọc qua `InputStream` của SAF
+    - Nhược: Do không có mục lục, dữ liệu phải được "dò" từ từ để đọc từng tệp
+      lẻ một. Hậu quả là phương pháp này vừa tốn băng thông đọc, vừa tốn CPU để
+      giải nén những tệp không cần thiết.
 
 `CBZParse` giải quyết vấn đề này bằng cách làm giả một luồng đọc ngẫu nhiên,
 được miêu tả rõ hơn trong Phụ lục 3. Cách làm đó có thể được tóm tắt như sau:
@@ -1013,8 +1021,11 @@ lượng bộ nhớ.
 - Các phần còn lại được đọc xuôi khi cần theo luồng nhập `InputStream`, nếu đọc
   ngược sẽ phải tạo mới luồng nhập
 
-Hiệu quả là tệp cần được đọc theo luồng nhập trung bình hai lần, không phải ghi
-ra đĩa, đồng thời vẫn đọc được mục lục.
+Kết quả là mục lục đọc được mà chỉ cần:
+
+- Trung bình hai lần đọc tuần tự theo `InputStream`
+- Không phải ghi ra đĩa
+- Không phải giải nén những tệp không cần thiết
 
 ##### 4.3.3. Tổng hợp lại `ComicParser`
 
@@ -1073,6 +1084,160 @@ def compare(str1, str2):
 
     return compare_left_to_right(arrs[0], arrs[1])
 ```
+
+#### 4.4. Module Image Loader
+
+Module Image Loader chịu trách nhiệm trích xuất và lưu đệm (cache) tệp ảnh.
+Module này gồm hai phần như sau:
+
+##### 4.4.1. Image Extractor
+
+Đây thực chất là một lớp đóng gói quanh `ComicParser`. Bản thân chức năng trích
+xuất được thực hiện trong `ComicParser` (qua các đối tượng `ArchiveParser`), tuy
+nhiên Image Extractor thực hiện một số tối ưu giúp việc hiển thị ảnh nhanh chóng
+hơn.
+
+Ở các mục trước, ta đã tệp lẻ trang truyện không được lưu theo thứ tự đọc. Do
+đó, cần mục lục tệp nén để có thể nhảy cóc đến trang truyện theo yêu cầu. Tuy
+nhiên, việc tải ảnh còn có thể tối ưu hơn nữa. Ta xét ví dụ sau:
+
+| Thứ tự trong tệp nén | Tên tệp ảnh | Dung lượng |
+|:---------------------|:------------|:-----------|
+| 1                    | `7.jpg`     | 100KB      |
+| 2                    | `6.jpg`     | 100KB      |
+| 3                    | `8.jpg`     | 100KB      |
+| 4                    | `1.jpg`     | 100KB      |
+| 5                    | `3.jpg`     | 100KB      |
+| 6                    | `4.jpg`     | 100KB      |
+| 7                    | `2.jpg`     | 100KB      |
+| 8                    | `5.jpg`     | 100KB      |
+
+Bảng 3: Danh sách các tệp ảnh trong một tệp truyện nén
+
+Hiển nhiên, thứ tự ảnh cần xem là từ tệp `1.jpg` đến tệp `8.jpg`. Ta xem xét và
+cải tiến các chiến lược tải ảnh qua các tiểu mục tiếp theo.
+
+###### 4.4.1.1. Tải theo yêu cầu
+
+Ảnh được tải theo đúng yêu cầu ngay lúc đó. Quá trình đọc tệp tin như sau:
+
+- Đọc `1.jpg`: 100KB (bản thân ảnh) + 300KB (do trước khi đọc được `1.jpg` cần
+  đi qua 3 ảnh `7.jpg`, `6.jpg`, `8.jpg`)
+- Đọc `2.jpg`: 100KB + 600KB
+- ...
+
+Vậy để đọc hết truyện, cần đọc 4500KB. Chưa hết, luồng đọc phải được tạo mới mỗi
+lần đọc (tức bằng số trang truyện), gây ra nhiều overhead. Lý do là bản thân SAF
+là một Content Provider, do đó nó nằm ở một tiến trình (process) riêng, và cần
+cơ chế liên lạc xuyên tiến trình (IPC) - vốn đắt đỏ về mặt tính toán trên mọi hệ
+điều hành - để gọi.
+
+Nguyên nhân của cả hai điểm yếu trên là việc không sử dụng lại luồng đọc (mỗi
+luồng chỉ đọc một ảnh). Phương án tiếp theo cần xử lí được điểm yếu này.
+
+###### 4.4.1.2. Tối thiểu hóa số luồng đọc
+
+Để giảm số luồng đọc, ta cần kiểm soát một vài luồng đọc, và phân mỗi trang
+truyện cho một luồng đọc cụ thể. Để tối thiểu hóa số luồng đọc, ta cần dùng thêm
+thuật toán *chuỗi con tăng dài nhất* (longest increasing subsequence). Thuật
+toán cuối cùng thể hiện bằng mã giả như sau:
+
+```text
+def minStream(pages):
+    stream_count = 0
+    map_idx_to_stream = []    # Từ điển ánh xạ số trang - số luồng
+
+    while len(pages) != 0:
+        # Dây trang tiến lên
+        lis = longest_increasing_subsequence(pages)
+
+        for page in lis:
+            pages.remove_at(page)    # Bỏ trang trong dây khỏi danh sách
+            map_idx_to_stream[page] = stream_count    # Gán số luồng hiện tại
+
+        stream_count += 1
+
+    return map_idx_to_stream
+```
+
+Thuật toán nhận vào một mảng `pages` là *thứ tự trong tệp nén* của từng trang
+truyện. Thuật toán trả về một từ điển như sau:
+
+- Khóa: trang truyện số (bắt đầu từ trang 1)
+- Giá trị: số luồng
+
+Ta nhận thấy thuật toán hiển nhiên cho (xấp xỉ) số luồng ít nhất có thể, vì mỗi
+lần chia trang cho các luồng, ta chọn một bộ trang tăng dần dài nhất lúc đó.
+
+Áp dụng vào ví dụ đang dùng, ta có:
+
+- Luồng 0: đọc trang 1, 3, 4, 5
+- Luồng 1: đọc trang 7, 8
+- Luồng 2: đọc trang 6
+- Luồng 3: đọc trang 2
+
+Vậy để đọc hết truyện, cần đọc 2000KB, và 4 lần tạo mới luồng đọc, khá tốt so
+với phương pháp đầu. Tới đây chỉ cần một số chỉnh sửa nhỏ:
+
+- Giới hạn số luồng đọc: Trường hợp xấu nhất là thứ tự trong tệp ZIP ngược với
+  thứ tự đọc, do đó có nhiều luồng mà mỗi luồng chỉ phục vụ một trang truyện.
+  yacv tránh điều này bằng cách giới hạn chỉ có 4 luồng đọc cùng lúc. Những
+  trang không ở trong phạm vi của các luồng này quay về cách đọc nhảy cóc thông
+  thường, không dùng lại luồng đọc chờ sẵn.
+
+##### 4.4.2. Image Cache
+
+Bản thân Image Cache *không* phải là một đoạn mã, đối tượng, mà chỉ là một thư
+mục. Thư viện hiển thị ảnh sẽ tự động nhận luồng đọc ảnh, ghi vào thư mục cache,
+và xóa ảnh để giải phóng dung lượng.
+
+yacv có 2 loại/thư mục cache, cho hai trường hợp hiển thị:
+
+- Cache ảnh bìa
+- Cache trang truyện
+
+Lý do cần đến hai bộ cache khác nhau là vì dung lượng lớn của truyện. Các thư
+viện cache ảnh chọn mốc 100-200MB cho thư mục cache ảnh, đồng thời dùng cố định
+phương pháp thay thế LRU (nếu cache đầy sẽ xóa ảnh lâu nhất không được dùng).
+Khi đọc một bộ truyện dung lượng lớn hơn mốc này, toàn bộ ảnh trong cache sẽ sớm
+bị thay thế bởi ảnh của trang truyện. Sau khi đọc, quay về các màn hình, ảnh bìa
+dùng để hiển thị trong hai màn hình duyệt truyện bị mất, gây suy giảm trải
+nghiệm người dùng. Do đó, cần phải tách hai thư mục cache này ra để tránh ảnh
+hưởng đến cache trang bìa.
+
+###### 4.4.2.1. Cache trang truyện
+
+Cache trang truyện có liên quan chặt chẽ đến Image Extractor. Khi đọc một trang
+truyện, 3 trang kế và 1 trang trước được đảm bảo nằm sẵn trong cache.
+
+yacv chọn mốc 200MB để cache trang truyện. Android có thể xóa thư mục cache này
+khi nào cần thêm dung lượng bộ nhớ.
+
+###### 4.4.2.2. Cache trang bìa
+
+Khác với cache trang truyện, cache trang bìa *không* có liên quan tới Image
+Loader. Thực ra ảnh bìa thì cũng được trích xuất bởi `ComicParser`, tuy nhiên
+với mỗi tệp truyện chỉ cần trích ra một ảnh bìa, do đó không cần cơ chế tái sử
+dụng luồng đọc phức tạp của Image Loader.
+
+Cache trang bìa lại gồm 2 thư mục cache:
+
+1. Cache ảnh hiển thị thực tế
+
+    Cache ảnh được hiển thị bởi `ImageView`. Ảnh này là ảnh bìa đã được cắt (xem
+    phần thiết kế màn hình duyệt truyện) và được thu phóng về chính xác kích cỡ
+    khung nhìn. Dung lượng cache là 100MB.
+
+2. Cache ảnh bìa thu nhỏ
+
+    Cache ảnh bìa thu nhỏ, khoảng 50KB mỗi ảnh, chưa bị cắt. Dung lượng cache là
+    10MB.
+
+Lí do riêng phần bìa cần hai thư mục cache là vì cache ảnh hiển thị thực tế,
+giống với cache trang truyện, có thể bị xóa bất cứ lúc nào. Do đó cần có một
+cache rất nhỏ gọn, nằm ở thư mục riêng mà Android không xóa được, chứa ảnh bìa
+chất lượng thấp, để khi ảnh bìa bị xóa vẫn có một bản bìa nhỏ để hiển thị trong
+khi chờ ảnh bìa chất lượng cao, có cắt cúp phù hợp được sinh lại.
 
 ## 5. Chương 5: Lập trình & Kiểm thử <a name="P5-implementation"></a>
 
