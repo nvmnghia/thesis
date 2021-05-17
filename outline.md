@@ -733,6 +733,9 @@ Hình 12: Biểu đồ lớp của Màn hình Quyền đọc
 
 ##### 4.2.3. Màn hình Thư viện <a name="P4.2.3-library-design">
 
+Màn hình Thư viện là một trong hai màn hình của ca sử dụng Duyệt truyện, bên
+cạnh Màn hình Thư mục.
+
 Như đã phân tích ở [mục 3.3.2](#P3.3.2-show-library), Màn hình Thư viện cần hiển
 thị cả lỗi và gợi ý, bên cạnh việc hiển thị danh sách thư mục và chọn thư mục
 gốc. Do đó, phần này chia ra làm hai phần con tương ứng.
@@ -788,10 +791,14 @@ khảo từ Màn hình Đọc truyện.
 
 ##### 4.2.4. Màn hình Thư mục <a name="P4.2.4-folder-design">
 
+Màn hình Thư mục là một trong hai màn hình của ca sử dụng Duyệt truyện, bên cạnh
+Màn hình Thư viện.
+
 Trong khi phân tích yêu cầu, ta đã phân tích được rằng màn hình hiển thị danh
-sách truyện - một phần trong ca sử dụng tìm kiếm - phải có giao diện giống Màn
-hình Thư mục, vì đều hiển thị danh sách truyện. Do đó, hai màn hình này được gộp
-lại, gọi chung là *Màn hình Danh sách truyện*, và sẽ được mô tả sau.
+sách truyện - một phần trong [ca sử dụng tìm kiếm](#P3.3.5-search-comic) - phải
+có giao diện giống Màn hình Thư mục, vì đều hiển thị danh sách truyện. Do đó,
+hai màn hình này được gộp lại, gọi chung là *Màn hình Danh sách truyện*, và sẽ
+được mô tả sau.
 
 ##### 4.2.5. Màn hình Đọc truyện <a name="P4.2.5-reader-design">
 
@@ -810,7 +817,7 @@ Ta cũng có biểu đồ lớp tương ứng:
 
 Hình 17: Biểu đồ lớp của Màn hình Đọc truyện
 
-##### 4.2.6. Màn hình Metadata
+##### 4.2.6. Màn hình Metadata <a name="P4.2.6-metadata-design">
 
 Màn hình Metadata tuân theo biểu đồ tuần tự đã nêu ở Hình 11. Biểu đồ lớp tương
 ứng của màn hình này như sau:
@@ -819,12 +826,12 @@ Màn hình Metadata tuân theo biểu đồ tuần tự đã nêu ở Hình 11. 
 
 Hình 18: Biểu đồ lớp của Màn hình Metadata
 
-##### 4.2.7. Màn hình Tìm kiếm
+##### 4.2.7. Màn hình Tìm kiếm <a name="P4.2.7-search-design">
 
-Màn hình Tìm kiếm là hai trong ba màn hình của ca sử dụng tìm kiếm truyện, bên
-cạnh Màn hình Danh sách truyện (là tổng quát hóa của Màn hình Thư mục, đã nhắc ở
-trên). Màn hình Danh sách truyện sẽ được thiết kế ở ngay mục sau, còn mục này
-tập trung vào Màn hình Tìm kiếm.
+Màn hình Tìm kiếm là hai trong ba màn hình của [ca sử dụng tìm kiếm
+truyện](#P3.3.5-search-comic), bên cạnh Màn hình Danh sách truyện (là tổng quát
+hóa của Màn hình Thư mục, đã nhắc ở trên). Màn hình Danh sách truyện sẽ được
+thiết kế ở ngay mục sau, còn mục này tập trung vào Màn hình Tìm kiếm.
 
 Không khó để thấy thực ra Màn hình Tìm kiếm Tổng quan và Màn hình Tìm kiếm Chi
 tiết thực ra là một màn hình, về mặt thị giác:
@@ -911,7 +918,7 @@ Do mỗi DAO trả kết quả của bảng tương ứng về ở dạng danh s
 kết quả đặc biệt. Hàm `TransformSearchMultiple()` là để "làm phẳng" mảng kết quả
 hai chiều như trên.
 
-##### 4.2.8. Màn hình Danh sách truyện
+##### 4.2.8. Màn hình Danh sách truyện <a name="P4.2.5-list-comic-design">
 
 Màn hình này là màn hình thứ ba trong chuỗi các màn hình liên quan đến ca sử
 dụng tìm kiếm, đồng thời đóng vai trò của Màn hình Thư mục (do là phiên bản tổng
@@ -926,9 +933,9 @@ Biểu đồ lớp của Màn hình Danh sách truyện như sau:
 
 Hình 21: Biểu đồ lớp của Màn hình Danh sách truyện
 
-#### 4.3. Module Parser & Scanner
+### 4.3. Module Parser & Scanner <a name="P4.3-parser-scanner-module></a>
 
-##### 4.3.1. `ComicParser`
+#### 4.3.1. `ComicParser` <a name="P4.3.1-comic-parser></a>
 
 `ComicParser` là một trong các thành phần trung tâm của yacv. Lớp này nhận vào
 URI trỏ đến một tệp truyện, và đọc nội dung tệp truyện đó ra. Cần gọi đủ tên là
@@ -947,7 +954,7 @@ Bảng 4: Hai kiểu parser trong `ComicParser`
 như mọi thao tác đọc trong SAF - hệ thống đọc ghi tệp của Android - đều rất
 chậm.
 
-###### 4.3.1.1. Parser cho tệp nén
+##### 4.3.1.1. Parser cho tệp nén
 
 Parser cho tệp nén hiện gồm một giao diện và hai lớp
 
@@ -975,7 +982,7 @@ có đuôi CBZ thì trả về một đối tượng `CBZParser`). Do `ArchivePa
 cài đặt khởi tạo riêng, nên mới cần một lớp riêng để tạo parser. Chữ "Factory"
 thể hiện lớp này sử dụng mẫu thiết kế factory.
 
-###### 4.3.1.2. Parser cho metadata
+##### 4.3.1.2. Parser cho metadata
 
 yacv hiện hỗ trợ định dạng ComicRack, được giới thiệu chi tiết trong Phụ lục 2.
 Định dạng này là một tệp tin XML, do đó được đọc đơn giản bằng các thư viện XML
@@ -988,7 +995,7 @@ tượng `Comic` và nhận hai tham số:
 - Nội dung tệp metadata: ở dạng chuỗi thông thường
 - Tên tệp metadata: tên tệp giúp phân biệt các định dạng tệp với nhau
 
-##### 4.3.2. `CBZParser`
+#### 4.3.2. `CBZParser` <a name="P4.3.2-cbzparser></a>
 
 `CBZParser` là lớp cài đặt giao diện `ArchiveParser`. Như đã phân tích ở Chương
 2, hệ thống đọc ghi tệp SAF của Android chỉ cho phép đọc ghi tuần tự. Việc tạo
@@ -1027,7 +1034,7 @@ Kết quả là mục lục đọc được mà chỉ cần:
 - Không phải ghi ra đĩa
 - Không phải giải nén những tệp không cần thiết
 
-##### 4.3.3. Tổng hợp lại `ComicParser`
+#### 4.3.3. Tổng hợp lại `ComicParser` <a name="P4.3.3-comic-parser-revisited></a>
 
 Tương tác trong một ca sử dụng hiển thị của `ComicParser` được mô tả như sau:
 
@@ -1085,12 +1092,29 @@ def compare(str1, str2):
     return compare_left_to_right(arrs[0], arrs[1])
 ```
 
-#### 4.4. Module Image Loader
+#### 4.3.4. Scanner <a name="P4.3.4-scanner></a>
+
+Đây là lớp phục vụ cho tính năng quét truyện trong yacv. Biểu đồ luồng của ca sử
+dụng *quét mới* là như sau:
+
+![new scan](/images/scan_new_sequence.svg)
+
+Hình 23: Biểu đồ tuần tự của ca sử dụng quét mới tệp truyện
+
+Một chi tiết mới trong biểu đồ này là lớp `ImageCache`, sẽ được giới thiệu ở mục
+về cache ảnh.
+
+Ca sử dụng quét lại cũng có thiết kế gần tương tự, trong đó bỏ bước xóa dữ liệu,
+và thêm một bước quét cơ sở dữ liệu sau cùng để xóa truyện không còn trong bộ
+nhớ. Việc cập nhật và thêm truyện mới được thực hiện trong vòng lặp lớn bình
+thường.
+
+### 4.4. Module Image Loader <a name="P4.4-image-loader-module></a>
 
 Module Image Loader chịu trách nhiệm trích xuất và lưu đệm (cache) tệp ảnh.
 Module này gồm hai phần như sau:
 
-##### 4.4.1. Image Extractor
+#### 4.4.1. Image Extractor <a name="P4.4.1-image-extractor></a>
 
 Đây thực chất là một lớp đóng gói quanh `ComicParser`. Bản thân chức năng trích
 xuất được thực hiện trong `ComicParser` (qua các đối tượng `ArchiveParser`), tuy
@@ -1117,7 +1141,7 @@ Bảng 3: Danh sách các tệp ảnh trong một tệp truyện nén
 Hiển nhiên, thứ tự ảnh cần xem là từ tệp `1.jpg` đến tệp `8.jpg`. Ta xem xét và
 cải tiến các chiến lược tải ảnh qua các tiểu mục tiếp theo.
 
-###### 4.4.1.1. Tải theo yêu cầu
+##### 4.4.1.1. Tải theo yêu cầu
 
 Ảnh được tải theo đúng yêu cầu ngay lúc đó. Quá trình đọc tệp tin như sau:
 
@@ -1135,7 +1159,7 @@ cơ chế liên lạc xuyên tiến trình (IPC) - vốn đắt đỏ về mặt
 Nguyên nhân của cả hai điểm yếu trên là việc không sử dụng lại luồng đọc (mỗi
 luồng chỉ đọc một ảnh). Phương án tiếp theo cần xử lí được điểm yếu này.
 
-###### 4.4.1.2. Tối thiểu hóa số luồng đọc
+##### 4.4.1.2. Tối thiểu hóa số luồng đọc
 
 Để giảm số luồng đọc, ta cần kiểm soát một vài luồng đọc, và phân mỗi trang
 truyện cho một luồng đọc cụ thể. Để tối thiểu hóa số luồng đọc, ta cần dùng thêm
@@ -1185,13 +1209,10 @@ với phương pháp đầu. Tới đây chỉ cần một số chỉnh sửa nh
   trang không ở trong phạm vi của các luồng này quay về cách đọc nhảy cóc thông
   thường, không dùng lại luồng đọc chờ sẵn.
 
-##### 4.4.2. Image Cache
+#### 4.4.2. Image Cache <a name="P4.4.2-image-cache></a>
 
 Bản thân Image Cache *không* phải là một đoạn mã, đối tượng, mà chỉ là một thư
-mục. Thư viện hiển thị ảnh sẽ tự động nhận luồng đọc ảnh, ghi vào thư mục cache,
-và xóa ảnh để giải phóng dung lượng.
-
-yacv có 2 loại/thư mục cache, cho hai trường hợp hiển thị:
+mục. yacv có 2 loại/thư mục cache, cho hai trường hợp hiển thị:
 
 - Cache ảnh bìa
 - Cache trang truyện
@@ -1205,7 +1226,7 @@ dùng để hiển thị trong hai màn hình duyệt truyện bị mất, gây 
 nghiệm người dùng. Do đó, cần phải tách hai thư mục cache này ra để tránh ảnh
 hưởng đến cache trang bìa.
 
-###### 4.4.2.1. Cache trang truyện
+##### 4.4.2.1. Cache trang truyện
 
 Cache trang truyện có liên quan chặt chẽ đến Image Extractor. Khi đọc một trang
 truyện, 3 trang kế và 1 trang trước được đảm bảo nằm sẵn trong cache.
@@ -1213,7 +1234,11 @@ truyện, 3 trang kế và 1 trang trước được đảm bảo nằm sẵn tr
 yacv chọn mốc 200MB để cache trang truyện. Android có thể xóa thư mục cache này
 khi nào cần thêm dung lượng bộ nhớ.
 
-###### 4.4.2.2. Cache trang bìa
+Thư mục cache này được quản lí bởi thư viện hiển thị ảnh. Thư viện đó nhận luồng
+đọc ảnh (từ Image Loader), ghi vào thư mục cache này, và xóa ảnh để giải phóng
+dung lượng khi cần.
+
+##### 4.4.2.2. Cache trang bìa
 
 Khác với cache trang truyện, cache trang bìa *không* có liên quan tới Image
 Loader. Thực ra ảnh bìa thì cũng được trích xuất bởi `ComicParser`, tuy nhiên
@@ -1228,6 +1253,12 @@ Cache trang bìa lại gồm 2 thư mục cache:
     phần thiết kế màn hình duyệt truyện) và được thu phóng về chính xác kích cỡ
     khung nhìn. Dung lượng cache là 100MB.
 
+    Cùng một bìa có hai kiểu hiển thị
+
+    Thư mục cache này được quản lí bởi thư viện hiển thị ảnh. Thư viện đó nhận
+    luồng đọc ảnh (từ `ComicParser`), ghi vào thư mục cache này, và xóa ảnh để
+    giải phóng dung lượng khi cần.
+
 2. Cache ảnh bìa thu nhỏ
 
     Cache ảnh bìa thu nhỏ, khoảng 50KB mỗi ảnh, chưa bị cắt. Dung lượng cache là
@@ -1238,6 +1269,9 @@ giống với cache trang truyện, có thể bị xóa bất cứ lúc nào. Do
 cache rất nhỏ gọn, nằm ở thư mục riêng mà Android không xóa được, chứa ảnh bìa
 chất lượng thấp, để khi ảnh bìa bị xóa vẫn có một bản bìa nhỏ để hiển thị trong
 khi chờ ảnh bìa chất lượng cao, có cắt cúp phù hợp được sinh lại.
+
+Trong Hình 23, có một lớp `ImageCache` nhận `InputStream` của ảnh bìa và cache
+ảnh, đó chính là lớp quản lí và sinh ảnh bìa thu nhỏ.
 
 ## 5. Chương 5: Lập trình & Kiểm thử <a name="P5-implementation"></a>
 
