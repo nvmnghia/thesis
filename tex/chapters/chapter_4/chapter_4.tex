@@ -1,0 +1,57 @@
+\providecommand{\main}{../..}
+
+\documentclass[../../thesis]{subfiles}
+
+
+\begin{document}
+
+
+\chapter{Thiết kế}\label{chap:design}
+
+Chương này tập trung vào thiết kế của ứng dụng, là triển khai cụ thể của
+\autoref{chap:requirements}.
+
+\begin{figure}[H]
+    \centering
+    \includesvg[width=0.6\linewidth,inkscapelatex=false]
+        {../images/overall_architecture.svg}
+    \caption{Kiến trúc tổng quan của ứng dụng}
+    \label{fig:overall-architecture}
+\end{figure}
+
+Kiến trúc tổng quan của yacv rất đơn giản, gồm 4 module như hình:
+
+\begin{enumerate}
+    \item
+        yacv \emph{quét} metadata tệp truyện bằng module \textbf{Parser \&
+        Scanner} và lưu kết quả quét vào \emph{cơ sở dữ liệu}, tức module
+        \textbf{Database}
+    \item
+        Các \emph{Màn hình} trong module \textbf{View} hiển thị dữ liệu cho
+        người dùng
+    \item
+        Khi người dùng đọc truyện, yacv trích xuất và lưu đệm tệp ảnh bằng
+        module \textbf{Image Loader}
+    \item
+        Khi người dùng xem metadata, yacv trích xuất và hiển thị thông tin tệp
+        truyện lên Màn hình bằng data binding với module \textbf{Database}
+\end{enumerate}
+
+Ở \fullref{chap:fundamental}, trong phần về MVVM, yacv được giới thiệu là có sử
+dụng kiến trúc này. Tuy nhiên, MVVM chỉ là một phần nhỏ của ứng dụng, chủ yếu
+liên quan đến việc hiển thị dữ liệu nên chỉ có ý nghĩa khi xét đến các thành
+phần trong module \textbf{View}.
+
+yacv chỉ thiết kế cho \emph{một người dùng}, do đó có rất ít tương tác, dẫn đến
+kiến trúc tối giản và rời rạc như trên. Các tiểu mục sau sẽ đi sâu vào các
+module này.
+
+
+%----------------------------------------------------------------------------------------
+%	4.1: Module Database
+%----------------------------------------------------------------------------------------
+
+% 4_1 instead of 4.1 because maybe makeglossary doesn't recognize file with dot in name
+\subfile{sections/section_4.1/section_4_1}
+
+\end{document}
