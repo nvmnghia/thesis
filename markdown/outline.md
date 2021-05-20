@@ -1651,6 +1651,9 @@ Do mỗi DAO trả kết quả của bảng tương ứng về ở dạng danh s
 kết quả đặc biệt. Hàm `TransformSearchMultiple()` là để "làm phẳng" mảng kết quả
 hai chiều như trên.
 
+Chương 5 sẽ có một ví dụ về việc tìm kiếm, cho thấy yacv có thể hiển thị từ từ
+kết quả tìm kiếm theo quá trình tìm như thế nào.
+
 ##### 4.2.8. Màn hình Danh sách truyện <a name="P4.2.5-list-comic-design">
 
 Màn hình này là màn hình thứ ba trong chuỗi các màn hình liên quan đến ca sử
@@ -1667,6 +1670,9 @@ Biểu đồ lớp của Màn hình Danh sách truyện như sau:
 Hình 21: Biểu đồ lớp của Màn hình Danh sách truyện
 
 ### 4.3. Module Parser & Scanner <a name="P4.3-parser-scanner-module></a>
+
+Điểm chung để gom hai thành phần này vào một module là chúng làm việc trực tiếp
+với tệp truyện nén.
 
 #### 4.3.1. `ComicParser` <a name="P4.3.1-comic-parser></a>
 
@@ -1753,8 +1759,8 @@ nhiều thao tác cần dò ngược từ cuối lên.
       lẻ một. Hậu quả là phương pháp này vừa tốn băng thông đọc, vừa tốn CPU để
       giải nén những tệp không cần thiết.
 
-`CBZParse` giải quyết vấn đề này bằng cách làm giả một luồng đọc ngẫu nhiên,
-được miêu tả rõ hơn trong Phụ lục 3. Cách làm đó có thể được tóm tắt như sau:
+`CBZParser` giải quyết vấn đề này bằng cách làm giả một luồng đọc ngẫu nhiên,
+được miêu tả rõ hơn trong Chương 5. Cách làm đó có thể được tóm tắt như sau:
 
 - Hai phần đầu tệp nén được lưu đệm trong RAM, do là hai phần có nhiều truy cập
   nhất trong khi đọc mục lục
@@ -2006,26 +2012,243 @@ khi chờ ảnh bìa chất lượng cao, có cắt cúp phù hợp được sin
 Trong Hình 23, có một lớp `ImageCache` nhận `InputStream` của ảnh bìa và cache
 ảnh, đó chính là lớp quản lí và sinh ảnh bìa thu nhỏ.
 
-
 ---
 
 ## 5. Chương 5: Lập trình & Kiểm thử <a name="P5-implementation"></a>
 
+Chương này nêu một số đoạn mã trong quá trình lập trình và kiểm thử, cùng với
+ảnh chụp màn hình của kết quả cuối cùng.
+
 ### 5.1. Lập trình <a name="P5.1-coding"></a>
 
-<!-- Mô tả một số phần quan trọng trong source -->
+#### 5.1.1. Coroutine
+
+Về mặt lập trình, trong quá trình viết ứng dụng, một trong các  khó khăn chủ yếu
+là tăng tốc ứng dụng bằng coroutine. Sau đây trình bày một trong những đoạn mã
+dùng coroutine trong ca sử dụng tìm kiếm, có sử dụng cả LiveData:
+
+```kotlin
+suspend fun search(query: QueryMultipleTypes, limit: Int):
+        LiveData<List<List<Metadata>>> = liveData(timeoutInMs = 3000) {
+    val results2D = mutableListOf<List<Metadata>>()
+    val latch = CountDownLatch(daos.size)
+
+    withContext(Dispatchers.IO) {
+        daos.parallelForEach { dao ->
+            val results = dao.search(query.query, limit)
+            var shouldEmit = false
+
+            // TODO: How about making use of the other search function...
+            synchronized(results2D) {
+                if (results.isNotEmpty()) {
+                    results2D.add(results)
+                    shouldEmit = true
+                }
+
+                latch.countDown()
+                if (latch.count == 0 && results2D.size == 0) {
+                    shouldEmit = true
+                }
+            }
+
+            if (shouldEmit) emit(results2D)
+        }
+    }
+}
+```
+
+Đoạn mã này trả về một đối tượng `LiveData<List<List<Metadata>>>`:
+
+- `Metadata`: Đối tượng chứa một kết quả tìm kiếm, có thể là `Comic`,
+  `Series`,...
+- `List<Metadata>`: Chứa kết quả tìm kiếm của một DAO, các `Metadata` trong danh
+  sách này thuộc cùng một kiểu.
+- `List<List<Metadata>>`: Danh sách kết quả của một DAO, nếu có kết quả (không
+  rỗng) sẽ được thêm vào danh sách tổng hợp. Danh sách tổng hợp chính là danh
+  sách kết quả tìm kiếm *chưa làm phẳng* (xem lại [ca sử dụng tìm
+  kiếm](#P3.3.2-browsing) về cách làm phẳng).
+- `LiveData`: Dùng cho tính năng data binding với View.
+
+Đoạn mã làm những việc sau:
+
+- Tạo ra 6 coroutine cho 6 DAO, tương ứng với 6 bảng, để tìm kiếm dữ liệu.
+
+    ```kotlin
+    daos.parallelForEach
+    ```
+
+    Cụ thể hơn, đây là một hàm tự viết, có chữ kí như sau:
+
+    ```kotlin
+    suspend fun <A> Iterable<A>.parallelForEach(f: suspend (A) -> Unit): Unit =
+        coroutineScope { forEach { launch { f(it) } } }
+    ```
+
+    Hàm này "mở rộng" giao diện `Iterable<A>` (trong trường hợp này là `daos`,
+    có kiểu là `List<Dao>`). Nó nhận một hàm `f`, tạo một coroutine (`launch`)
+    ứng với mỗi phần tử trong `Iterable<A>`, và chạy hàm `f` trong coroutine
+    riêng đó.
+
+    Bản thân hàm `f` nhận vào một phần tử `A` (trong trường hợp này là `Dao`),
+    và thực hiện tính toán trên coroutine riêng.
+
+- Mỗi khi có kết quả (danh sách kết quả không rỗng), thêm vào danh sách tổng
+  hợp, và thông báo cho `View` để hiển thị.
+
+    Biến `shouldEmit` kiểm soát xem có cần thông báo (emit) cho `View` không.
+    Nếu danh sách kết quả từ một `Dao` không rỗng, danh sách đó được đưa vào
+    danh sách tổng hợp.
+
+    6 `Dao` sẽ có tối đa 6 lần thông báo khác nhau, giúp Màn hình Tìm kiếm được
+    hiển thị từ từ theo quá trình tìm kiếm, đúng với yêu cầu phi chức năng về
+    việc liên tục cập nhật.
+
+- Thông báo cho view ít nhất một lần để báo kết thúc tìm mà không có kết quả.
+
+    Trong trường hợp không có kết quả từ cả 6 `Dao`, thì cần thông báo danh sách
+    tổng hợp rỗng cho `View`. Việc này được thực hiện bằng một `CountDownLatch`.
+
+    Mỗi khi `Dao` tìm xong, `latch` sẽ giảm đi 1 (`countDown()`). Khi `latch`
+    bằng không, tức đã xong cả 6 `Dao`, mà danh sách tổng hợp vẫn trống (không
+    tìm thấy gì), thì đặt `shouldEmit` để báo một lần cho `View`.
+
+    Do coroutine có thể chạy trên nhiều luồng khác nhau, nên cần một
+    `CountDownLatch` để đếm (chứ không thể dùng một biến đếm thông thường) và
+    môi trường `synchronized` để chạy. Nói cách khác, đoạn mã này là một
+    "critical section" trong lập trình đa luồng.
+
+- Toàn bộ 6 coroutine được chạy trên (các) luồng IO.
+
+    ```kotlin
+    withContext(Dispatchers.IO)
+    ```
+
+    Đây là mấu chốt để ứng dụng có cảm giác mượt mà khi tìm kiếm.
+
+    Việc tạo ra 6 coroutine có thể so sánh với cùng lúc tìm kiếm song song trên
+    6 luồng (thread) khác nhau, giúp giảm thời gian tìm kiếm. Tuy nhiên, nếu
+    trong 6 luồng này lại có một luồng là *luồng giao diện* (UI thread), thì ứng
+    dụng sẽ bị treo, không phản ứng cho đến khi `Dao` trong luồng đó tìm xong.
+
+    Để tránh việc này, coroutine cần được đảm bảo không chạy trên luồng giao
+    diện. Trong trường hợp này, 6 coroutine được chạy trên các luồng IO - một
+    thread pool dành riêng cho nhập/xuất - phù hợp với bản chất công việc là đọc
+    cơ sở dữ liệu.
+
+Đoạn mã trên thể hiện hai tác dụng quan trọng của coroutine:
+
+- Chạy song song: giúp tăng tốc ứng dụng
+- Chạy trên luồng không phải luồng giao diện: giúp ứng dụng không bị treo
+
+| Đặc điểm       | Vấn đề giải quyết |
+|:---------------|:------------------|
+| Chạy song song | Tăng tốc ứng dụng |
+| Không chạy trên luồng giao diện | Giúp ứng dụng luôn phản hồi (responsive) |
+
+Mỗi khi ứng dụng cần đọc ảnh từ tệp nén, và khi truy cập cơ sở dữ liệu, hai vấn
+đề trên xảy ra và cần coroutine để giải quyết.
+
+<!-- #### 5.1.2. Giữ trạng thái khi xoay màn hình
+
+Ví dụ, trong ca sử dụng tìm kiếm, nếu hoạt động tìm kiếm diễn ra trong 5s, và
+trong thời gian đó người dùng xoay màn hình, thì kết quả tìm kiếm đến lúc đó vẫn
+phải được hiển thị, và quá trình tìm kiếm tiếp diễn, chứ không phải bắt đầu lại
+từ đầu.
+
+Để làm được việc này, các tác vụ chạy lâu (long-running) phải được tách ra khỏi
+luồng chính và được lưu ở đâu đó. Việc tách khỏi luồng chính đã được coroutine
+giải quyết như đã nói ở trên. Phần việc còn lại được giải quyết bằng cách lưu dữ
+liệu trong ViewModel.
+
+yacv giữ các kết quả truy vấn -->
+
+#### 5.1.2. `CBZParser`
+
+[Mục 4.3.2](#P4.3.2-cbzparser) đã giới thiệu sơ lược về cách `CBZParser` hoạt
+động, là lưu đệm hai phần đầu-cuối tệp tin. Cụ thể hơn, mã nguồn của thư viện
+Apache Commons Compress được phân tích để tìm mẫu đọc (read pattern), và cache
+những phần được đọc nhiều. Sau đó, `CBZParser` tạo ra một luồng đọc ngẫu nhiên -
+là đầu vào yêu cầu của thư viện - nhưng bên dưới là `InputStream` thông thường
+và dữ liệu cache.
+
+Thư viện Apache Commons Compress được chọn vì những lí do sau:
+
+- Viết bằng Java: tiêu chí này loại được zlib, dù là thư viện mạnh nhất nhưng
+  viết bằng C++ và có API phức tạp; hơn nữa đằng nào mọi thư viện đọc tệp ZIP
+  đều chỉ là "vỏ", "lõi" thực chất đều là zlib
+- Mở rộng: tiêu chí này loại được thư viện ZIP tích hợp trong Java, vì nếu hỗ
+  trợ Apache Commons Compress thì sau này có thể thêm một số định dạng nén được
+  thư viện này hỗ trợ.
+
+Mẫu đọc *tệp ZIP*, không phải chế độ luồng (phù hợp với `InputStream` nhưng chậm
+và không thể nhảy cóc), có thể tóm tắt như sau:
+
+1. Tìm "mục lục" - Central Directory
+
+    1. Tìm đuôi mục lục
+
+        "Đuôi" mục lục được đánh dấu bằng chuỗi `0x06054b50`. Chuỗi này được dò
+        ngược từ cuối tệp ZIP, và có thể dò tối đa 65557 byte.
+
+    2. Đặt vị trí đọc ở đầu mục lục
+
+        Sau khi tìm được đuôi mục lục, ta tìm được vị trí trong tệp (offset) của
+        mục lục, và cần đặt vị trí đọc ở đó.
+
+2. Đọc mục lục
+
+    1. Đọc một đoạn nhỏ 4 byte ở đầu để kiểm tra có lỗi không
+    2. Đọc mục lục để có offset của từng "đề mục" - File Entry.
+
+3. Đọc đề mục
+
+    Đọc đề mục từ đầu đến cuối để kiểm tra một số thông tin.
+
+Dựa theo mẫu đọc trên, `CBZParser` cache - hay trong trường hợp này từ chính xác
+hơn là *buffer* - và đọc dữ liệu như sau:
+
+- Một luồng đọc `InputStream` đọc đến hết tệp, buffer lại 128KB đầu tiên và 1MB
+  cuối cùng.
+
+    Theo kinh nghiệm, 1MB là đủ để chứa mục lục. 1MB này sẽ giúp cho việc dò
+    ngược và đọc mục lục không cần tạo mới luồng nhập, miễn là truy cập trong
+    vòng 1MB cuối.
+
+    128KB ở đầu giúp cho một số kiểm tra chạy được.
+
+    Đến đây, luồng đọc đầu tiên có thể được bỏ đi. Nếu truy cập ra ngoài phạm vi
+    đã lưu, ném ngoại lệ và ứng dụng thử lại với bộ đệm lớn hơn.
+
+- Tạo mới luồng đọc thứ hai: chuẩn bị cho một loạt hoạt động đọc tuần tự các
+  File Entry.
+
+Quá trình sử dụng các thao tác trên trong `CBZParser` như sau:
+
+- Toàn bộ các thao tác trên được cài đặt trong `ZipBuffer` là một lớp cài đặt
+  giao diện `SeekableByteChannel` - một luồng đọc ngẫu nhiên.
+- `ZipBuffer` được truyền vào bộ đọc `ZipFile` của thư viện.
+- Sau khi `ZipFile` khởi tạo xong, tức đọc xong mục lục, `CBZParser` lấy ra từ
+  `ZipFile` danh sách tệp lẻ (File Entry) cùng với offset của nó.
 
 ### 5.2. Kiểm thử <a name="P5.2-testing"></a>
 
-#### 5.2.1 Unit test. E2E test, auto + manual test <a name="P5.2.1-functional-test"></a>
+#### 5.2.1. `ZipBuffer`
 
-#### 5.2.2 Kiểm thử phi chức năng <a name="P5.2.2-non-functional-test"></a>
+Lớp này được kiểm thử riêng, do có quan hệ chặt chẽ với thư viện Apache Commons
+Compress. Cách kiểm thử là chép nguyên các unit test cho `ZipFile`, nhưng thay
+vì truyền vào `SeekableByteChannel` thì truyền vào một `ZipBuffer`.
+
+<!-- #### 5.2.1 Unit test. E2E test, auto + manual test <a name="P5.2.1-functional-test"></a>
+
+
+
+#### 5.2.2 Kiểm thử phi chức năng <a name="P5.2.2-non-functional-test"></a> -->
 
 <!-- Bench nhanh chậm -->
 
-### 5.3 Đánh giá người dùng <a name="P5.3-user-reviews"></a>
+### 5.3. Sản phẩm kết quả <a name="P5.3-results"></a>
 
-<!-- Hình ảnh sản phẩm. -->
+
 
 ---
 
