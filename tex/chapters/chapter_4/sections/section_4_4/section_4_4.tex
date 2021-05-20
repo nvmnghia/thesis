@@ -66,14 +66,15 @@ tiểu mục tiếp theo.
         \ldots{}
 \end{itemize}
 
-Vậy để đọc hết truyện, cần đọc 4500KB. Chưa hết, luồng đọc phải được tạo mới mỗi
+Vậy để đọc hết truyện, cần đọc 4500KB. Chưa hết, luồng nhập phải được tạo mới mỗi
 lần đọc (tức bằng số trang truyện), gây ra nhiều overhead. Lý do là bản thân SAF
 là một Content Provider, do đó nó nằm ở một tiến trình (process) riêng, và cần
 cơ chế liên lạc xuyên tiến trình (IPC) - vốn đắt đỏ về mặt tính toán trên mọi hệ
 điều hành - để gọi.
 
-Nguyên nhân của cả hai điểm yếu trên là việc không sử dụng lại luồng đọc (mỗi
-luồng chỉ đọc một ảnh). Phương án tiếp theo cần xử lí được điểm yếu này.
+Nguyên nhân của cả hai điểm yếu trên là việc không sử dụng lại luồng nhập (mỗi
+\texttt{InputStream} chỉ đọc một ảnh). Phương án tiếp theo cần xử lí được điểm
+yếu này.
 
 \subsubsection{Tối thiểu hóa số luồng đọc}
 
@@ -126,14 +127,14 @@ lần chia trang cho các luồng, ta chọn một bộ trang tăng dần dài n
         Luồng 3: đọc trang 2
 \end{itemize}
 
-Vậy để đọc hết truyện, cần đọc 2000KB, và 4 lần tạo mới luồng đọc, khá tốt so
+Vậy để đọc hết truyện, cần đọc 2000KB, và 4 lần tạo mới luồng nhập, khá tốt so
 với phương pháp đầu.
 
-Tới đây chỉ cần một số chỉnh sửa nhỏ: Giới hạn số luồng đọc. Trường hợp xấu nhất
-là thứ tự trong tệp ZIP ngược với thứ tự đọc, do đó có nhiều luồng mà mỗi luồng
-chỉ phục vụ một trang truyện. yacv tránh điều này bằng cách giới hạn chỉ có 4
-luồng đọc cùng lúc. Những trang không ở trong phạm vi của các luồng này quay về
-cách đọc nhảy cóc thông thường, không dùng lại luồng đọc chờ sẵn.
+Tới đây chỉ cần một số chỉnh sửa nhỏ: Giới hạn số luồng nhập. Trường hợp xấu
+nhất là thứ tự trong tệp ZIP ngược với thứ tự đọc, do đó có nhiều luồng mà mỗi
+luồng chỉ để đọc một trang truyện. yacv tránh điều này bằng cách giới hạn chỉ có
+4 luồng nhập cùng lúc. Những trang không ở trong phạm vi của các luồng này quay
+về cách đọc nhảy cóc thông thường, không dùng lại luồng nhập chờ sẵn.
 
 
 %----------------------------------------------------------------------------------------

@@ -23,12 +23,12 @@ mã) khác nhưng tích hợp trong nó:
     \centering
     \caption{Hai kiểu parser trong \texttt{ComicParser}}
     \label{tab:2-parsers}
-    \begin{tabular}{l l l}
+    \begin{tabular}{l p{6cm} l}
         \toprule
                 & Parser cho tệp nén & Parser cho metadata \\
         \midrule
         Đầu vào & Tệp nén            & Tệp metadata \\
-        Đầu ra  & Các tệp con hoặc luồng đọc & Đối tượng \texttt{Comic} \\
+        Đầu ra  & Các tệp con hoặc tương đương (\texttt{InputStream},\ldots) & Đối tượng \texttt{Comic} \\
         \bottomrule
     \end{tabular}
 \end{table}
@@ -74,8 +74,8 @@ Trong \texttt{ArchiveParser}, có hai phương thức quan trọng:
         \end{itemize}
     \item
         \texttt{readEntryAtOffset()}: Phương thức này nhận vào một offset, và
-        trả về luồng đọc tương ứng với tệp lẻ ở offset đó bằng cách ``nhảy cóc''
-        đến đúng chỗ và đọc.
+        trả về \texttt{InputStream} tương ứng với tệp lẻ ở offset đó bằng cách
+        ``nhảy cóc'' đến đúng chỗ và đọc.
 \end{itemize}
 
 \texttt{ArchiveParserFactory} là một lớp theo mẫu thiết kế factory, nhận
@@ -141,7 +141,7 @@ cuối, và có nhiều thao tác cần dò ngược từ cuối lên.
         \end{itemize}
 \end{itemize}
 
-\texttt{CBZParse} giải quyết vấn đề này bằng cách làm giả một luồng đọc ngẫu
+\texttt{CBZParse} giải quyết vấn đề này bằng cách làm giả một luồng nhập ngẫu
 nhiên, được miêu tả rõ hơn trong Phụ lục 3. Cách làm đó có thể được tóm tắt như
 sau:
 
@@ -196,7 +196,7 @@ X-Men Vol 40 2.jpg
 
 \begin{figure}[H]
     \centering
-    \includesvg[width=0.8\textwidth,inkscapelatex=false]
+    \includesvg[scale=0.85,inkscapelatex=false]
         {../images/parser_sequence.svg}
     \caption{\texttt{ComicParser} và các thành phần của nó}
     \label{fig:parser_sequence}
@@ -208,26 +208,25 @@ với nhau thành một ``kí tự'' rồi mới so sánh. Đoạn mã giả ở
 thuật toán:
 
 \begin{Verbatim}[samepage=true]
-    def compare(str1, str2):
-        arrs = []
+def compare(str1, str2):
+    arrs = []
 
-        for str in [str1, str2]:
-            arrtmp = []
-            acc = []
+    for str in [str1, str2]:
+        arrtmp = []
+        acc = []
 
-            for char in str:
-                if is_number(char):
-                    acc.append(char)
-                else:
-                    if len(acc) != 0:
-                        acc = ''.join(acc)
-                        acc = to_num(acc)
-                        arrtmp.append(acc)
-                        acc = 0
-                    arrtmp.append(to_codepoint(char))
+        for char in str:
+            if is_number(char):
+                acc.append(char)
+            else:
+                if len(acc) != 0:
+                    acc = ''.join(acc)
+                    acc = to_num(acc)
+                    arrtmp.append(acc)
+                    acc = 0
+                arrtmp.append(to_codepoint(char))
 
-                    return compare_left_to_right(arrs[0], arrs[1])
-    \end{verbatim}
+    return compare_left_to_right(arrs[0], arrs[1])
 \end{Verbatim}
 
 
@@ -240,6 +239,14 @@ thuật toán:
 Đây là lớp phục vụ cho tính năng quét truyện trong yacv. Biểu đồ luồng của ca sử
 dụng \emph{quét mới} được thể hiện trong \autoref{fig:scan_new_sequence}.
 
+\begin{figure}[H]
+    \centering
+    \includesvg[scale=0.85,inkscapelatex=false]
+        {../images/scan_new_sequence.svg}
+    \caption{Biểu đồ tuần tự của ca sử dụng quét mới tệp truyện}
+    \label{fig:scan_new_sequence}
+\end{figure}
+
 Một chi tiết mới trong biểu đồ này là lớp \texttt{ImageCache}, sẽ được giới
 thiệu ở mục về cache ảnh.
 
@@ -248,12 +255,24 @@ và thêm một bước quét cơ sở dữ liệu sau cùng để xóa truyện
 nhớ. Việc cập nhật và thêm truyện mới được thực hiện trong vòng lặp lớn bình
 thường.
 
-\begin{figure}[H]
-    \centering
-    \includesvg[width=0.8\textwidth,inkscapelatex=false]
-        {../images/scan_new_sequence.svg}
-    \caption{Biểu đồ tuần tự của ca sử dụng quét mới tệp truyện}
-    \label{fig:scan_new_sequence}
-\end{figure}
+Scanner nhận vào URI của thư mục gốc, rồi lặp qua từng tệp con, cháu,\ldots{}
+Nếu đó là tệp truyện, nó gọi `ComicParser' để lấy metadata, rồi lưu vào cơ sở dữ
+liệu qua DAO.
+
+Quá trình quét tệp này giống như duyệt cây, do đó có hai cách cơ bản:
+
+\begin{itemize}
+    \item
+        Duyệt theo độ sâu (depth-first search, gọi tắt là DFS)
+    \item
+        Duyệt theo độ rộng (breadth-first search, gọi tắt là BFS)
+\end{itemize}
+
+Trong trường hợp cụ thể này, DFS được chọn. Lý do cho lựa chọn này là DFS có thể
+phát hiện \emph{thư mục} nhanh hơn nhiều so với BFS. Mỗi khi gặp thư mục, DFS xử
+lí (đi xuống các thư mục con) ngay, thay vì thêm vào hàng đợi. Do phát hiện được
+thư mục nhanh hơn BFS, Màn hình Thư viện, vốn hiển thị danh sách các \emph{thư
+mục}, cũng hiển thị sớm hơn. Dù thời gian quét tổng thể không thay đổi, người
+dùng được thấy thư mục sớm hơn giúp tạo cảm giác ứng dụng khá nhanh.
 
 \end{document}

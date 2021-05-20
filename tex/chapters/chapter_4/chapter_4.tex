@@ -42,6 +42,22 @@ dụng kiến trúc này. Tuy nhiên, MVVM chỉ là một phần nhỏ của �
 liên quan đến việc hiển thị dữ liệu nên chỉ có ý nghĩa khi xét đến các thành
 phần trong module \textbf{View}.
 
+Ở \autoref{chap:requirements}, yêu cầu về tránh trói buộc người dùng được nên
+lên đầu tiên trong các yêu cầu phi chức năng. Ở chương này, yêu cầu đó được hiện
+thực hóa bằng việc \emph{yacv dùng phân vùng bộ nhớ chung}.
+
+\begin{itemize}
+    \item
+        Nếu dùng phân vùng bộ nhớ riêng, yacv phải chép các tệp truyện vào đó
+        (tốn thời gian và dung lượng), hơn nữa các ứng dụng đọc truyện khác
+        không thể thấy được tệp truyện ở khu vực này. Tuy nhiên, dữ liệu lưu ở
+        phân vùng này có thể truy cập bằng API File của Java, giúp đơn giản đáng
+        kể thiết kế ứng dụng.
+    \item
+        Dùng phân vùng bộ nhớ chung tránh được mọi điều trên, không buộc người
+        dùng vào ứng dụng, tuy nhiên lại bị giới hạn chỉ được dùng API SAF.
+\end{itemize}
+
 yacv chỉ thiết kế cho \emph{một người dùng}, do đó có rất ít tương tác, dẫn đến
 kiến trúc tối giản và rời rạc như trên. Các tiểu mục sau sẽ đi sâu vào các
 module này.
