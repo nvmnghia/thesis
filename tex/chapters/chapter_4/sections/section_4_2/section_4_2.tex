@@ -15,29 +15,29 @@ các ca sử dụng. Có một số điểm chung về các biểu đồ này:
 
 \begin{itemize}
     \item
-          Trừ khi cần thiết, thành phần View sẽ được lược bỏ cho ngắn gọn.
+        Trừ khi cần thiết, thành phần View sẽ được lược bỏ cho ngắn gọn.
     \item
-          Đường thẳng nét đứt thể hiện tính năng data binding (tự động cập nhật
-          View), và thường trỏ về ViewModel. Đáng ra, mũi tên này phải trỏ về
-          View, nhưng do View bị ẩn đi, nên nó trỏ về ViewModel. Mặc dù không được
-          đề cập đến trong phần giới thiệu về MVVM, đây thực ra là một chi tiết
-          đúng về mặt kĩ thuật: ViewModel hoàn toàn đọc được luồng dữ liệu gửi đến
-          View (hoặc ít nhất là đúng trong cách viết ứng dụng Android thông
-          thường).
+        Đường thẳng nét đứt thể hiện tính năng data binding (tự động cập nhật
+        View), và thường trỏ về ViewModel. Đáng ra, mũi tên này phải trỏ về
+        View, nhưng do View bị ẩn đi, nên nó trỏ về ViewModel. Mặc dù không được
+        đề cập đến trong phần giới thiệu về MVVM, đây thực ra là một chi tiết
+        đúng về mặt kĩ thuật: ViewModel hoàn toàn đọc được luồng dữ liệu gửi đến
+        View (hoặc ít nhất là đúng trong cách viết ứng dụng Android thông
+        thường).
 \end{itemize}
 
 Các biểu đồ trạng thái cũng có một số chi tiết chung:
 
 \begin{itemize}
     \item
-          Trừ khi nêu rõ, mọi trạng thái đều có thể là trạng thái bắt đầu (trạng
-          thái khi mở ứng dụng) hoặc kết thúc (khi đóng ứng dụng).
+        Trừ khi nêu rõ, mọi trạng thái đều có thể là trạng thái bắt đầu (trạng
+        thái khi mở ứng dụng) hoặc kết thúc (khi đóng ứng dụng).
     \item
-          Mũi tên chuyển trạng thái tương ứng với \emph{tương tác của người dùng},
-          do vậy thường được ánh xạ đến một phương thức trong View.
+        Mũi tên chuyển trạng thái tương ứng với \emph{tương tác của người dùng},
+        do vậy thường được ánh xạ đến một phương thức trong View.
     \item
-          Kí hiệu hình tròn đen chỉ dùng để tả trạng thái đầu \emph{khi lần đầu
-              dùng} yacv.
+        Kí hiệu hình tròn đen chỉ dùng để tả trạng thái đầu \emph{khi lần đầu
+        dùng} yacv.
 \end{itemize}
 
 Biểu đồ lớp thường có một phương thức chung là ``Get InputStream from ID''. Cách
@@ -164,6 +164,11 @@ này chia ra làm hai phần con tương ứng.
 Để chọn thư mục gốc, người dùng ấn nút Đổi thư mục gốc để kích hoạt hộp thoại
 Chọn thư mục (picker), rồi chọn một thư mục trong đó. Luồng chạy của yacv sẽ
 được nêu sau, ở mục riêng về Scanner.
+
+Khi hiển thị danh sách thư mục, cần hiển thị từng phần tử theo tỉ lệ ngang, để
+thể hiện tính chất lớn hơn, bao trùm so với tệp truyện trong Màn hình Thư mục.
+Do hiển thị theo tỉ lệ ngang mà trang truyện là trang dọc, cần cắt sát phần bên
+trên để lấy được phần tên bìa.
 
 % \begin{figure}[H]
 %     \centering
@@ -440,6 +445,11 @@ quát hơn của nó).
 Màn hình này nhận vào một tham số kiểu \texttt{Metadata} thay vì một
 \texttt{Query}, và trả về danh sách các \emph{tệp truyện} - \texttt{Comic} - có
 liên kết với tham số đầu vào.
+
+Khi hiển thị danh sách tệp truyện, cần hiển thị từng phần tử theo tỉ lệ dọc,
+khác với tỉ lệ ngang của phần tử thư mục trong \hyperref[sec:library-design]{Màn
+hình Thư viện}. Do hiển thị theo chiều dọc, mà trang truyện cũng dọc, cần thu
+nhỏ kích cỡ phần tử bằng cách một dòng cho hiển thị 2-3 phần tử.
 
 Biểu đồ lớp của Màn hình Danh sách truyện như sau:
 

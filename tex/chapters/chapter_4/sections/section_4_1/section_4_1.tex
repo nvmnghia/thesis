@@ -26,33 +26,17 @@ Các bảng thực thể gồm:
 
 \begin{itemize}
     \item
-          \texttt{Comic}: lưu thông tin \emph{tập truyện lẻ}, là bảng trung tâm
+        \texttt{Comic}: lưu thông tin \emph{tập truyện lẻ}, là bảng trung tâm
     \item
-          \texttt{Series}: lưu thông tin \emph{bộ truyện}
+        \texttt{Series}: lưu thông tin \emph{bộ truyện}
     \item
-          \texttt{Author}: lưu tên tác giả
+        \texttt{Author}: lưu tên tác giả
     \item
-          \texttt{Role}: lưu vai trò của tác giả trong một tập truyện
+        \texttt{Role}: lưu vai trò của tác giả trong một tập truyện
     \item
-          \texttt{Character}: lưu tên nhân vật
+        \texttt{Character}: lưu tên nhân vật
     \item
-          \texttt{Genre}: lưu tên thể loại truyện
-\end{itemize}
-
-Một hạn chế quan trọng của các bảng \texttt{Character} và \texttt{Author} là
-chúng chỉ lưu thông tin tên, và chỉ phân biệt với nhau bằng tên. Nếu có hai tác
-giả/nhân vật trùng tên, yacv không thể phát hiện và hiển thị riêng.
-
-Xét bảng trung tâm \texttt{Comic}. Bảng này có một số trường không phải metadata
-mà dùng để lưu thông tin của riêng ứng dụng, gồm:
-
-\begin{itemize}
-    \item
-          \texttt{CurrentPage}: lưu trang đang đọc
-    \item
-          \texttt{Love}: lưu trạng thái Yêu thích
-    \item
-          \texttt{ReadCount}: lưu số lần đọc
+        \texttt{Genre}: lưu tên thể loại truyện
 \end{itemize}
 
 \begin{wrapfigure}[26]{r}{10cm}
@@ -64,20 +48,41 @@ mà dùng để lưu thông tin của riêng ứng dụng, gồm:
     \label{fig:db-schema}
 \end{wrapfigure}
 
+Một hạn chế quan trọng của các bảng \texttt{Character} và \texttt{Author} là
+chúng chỉ lưu thông tin tên, và chỉ phân biệt với nhau bằng tên. Nếu có hai tác
+giả/nhân vật trùng tên, yacv không thể phát hiện và hiển thị riêng.
+
+Xét bảng trung tâm \texttt{Comic}. Bảng này có một số trường không phải metadata
+mà dùng để lưu thông tin của riêng ứng dụng, gồm:
+
+\begin{itemize}
+    \item
+        \texttt{CurrentPage}: lưu trang đang đọc
+    \item
+        \texttt{Love}: lưu trạng thái Yêu thích
+    \item
+        \texttt{ReadCount}: lưu số lần đọc
+\end{itemize}
+
 Trong lược đồ, có nhiều trường nhìn qua không cần thiết nhưng thực tế có ích, do
 thư viện SAF đã mô tả ở \autoref{chap:fundamental}:
 
 \begin{itemize}
     \item
-          Trường \texttt{FileUri} trong \texttt{Comic}: Lưu đường dẫn của tệp
-          truyện ở dạng URI.
+        Trường \texttt{FileUri} trong \texttt{Comic}: Lưu đường dẫn của tệp
+        truyện ở dạng URI.
     \item
-          Trường \texttt{FolderUri} trong \texttt{Folder}: Lưu đường dẫn của thư
-          mục ở dạng URI.
+        Trường \texttt{FolderUri} trong \texttt{Folder}: Lưu đường dẫn của thư
+        mục ở dạng URI.
+\end{itemize}
+
+% Split itemize to avoid confusing wrapfigure
+% https://tex.stackexchange.com/a/285760/206774
+\begin{itemize}[resume, before = \vspace*{-\dimexpr\topsep+\partopsep\relax}]
     \item
-          Trường \texttt{Name} trong \texttt{Folder}: Tên thư mục. Thông thường
-          nếu có đường dẫn, có thể tìm ra tên thư mục rất nhanh, tuy nhiên cũng
-          do SAF mà việc này trở nên khó khăn, nên cần lưu riêng trường này.
+        Trường \texttt{Name} trong \texttt{Folder}: Tên thư mục. Thông thường
+        nếu có đường dẫn, có thể tìm ra tên thư mục rất nhanh, tuy nhiên cũng do
+        SAF mà việc này trở nên khó khăn, nên cần lưu riêng trường này.
 \end{itemize}
 
 Các trường URI đều cần có ràng buộc \texttt{UNIQUE}, do mỗi URI trỏ đích danh
@@ -87,42 +92,41 @@ Ta xem xét đến các bảng nối:
 
 \begin{itemize}
     \item
-          \texttt{ComicCharacterJoin}:
+        \texttt{ComicCharacterJoin}:
 
-          \begin{itemize}
-              \item
-                  Mỗi tập truyện có thể có nhiều nhân vật và ngược lại, do đó
-                  \texttt{Comic} và \texttt{Character} có quan hệ Nhiều - Nhiều.
-              \item
-                  Chú ý rằng các nhân vật có quan hệ với tập truyện chứ không
-                  phải bộ truyện, vì có nhân vật phụ (không xuất hiện trong mọi
-                  tập truyện).
-          \end{itemize}
+        \begin{itemize}
+            \item
+                Mỗi tập truyện có thể có nhiều nhân vật và ngược lại, do đó
+                \texttt{Comic} và \texttt{Character} có quan hệ Nhiều - Nhiều.
+            \item
+                Chú ý rằng các nhân vật có quan hệ với tập truyện chứ không phải
+                bộ truyện, vì có nhân vật phụ (không xuất hiện trong mọi tập
+                truyện).
+        \end{itemize}
     \item
-          \texttt{ComicAuthorJoin}:
+        \texttt{ComicAuthorJoin}:
 
-          \begin{itemize}
-              \item
-                  Mỗi tập truyện có thể có nhiều tác giả và ngược lại, do đó
-                  \texttt{Comic} và \texttt{Author} có quan hệ Nhiều - Nhiều.
-              \item
-                  Chú ý rằng các tác giả có quan hệ với tập truyện chứ không
-                  phải bộ truyện, vì mô hình xuất bản nhiều truyện tranh là nhà
-                  xuất bản sở hữu nhân vật và thuê người viết.
-              \item
-                  Đồng thời, một tác giả có thể giữ vai trò khác nhau trong các
-                  bộ truyện khác nhau, do đó bảng này còn nối với bảng
-                  \texttt{Role}.
-          \end{itemize}
+        \begin{itemize}
+            \item
+                Mỗi tập truyện có thể có nhiều tác giả và ngược lại, do đó
+                \texttt{Comic} và \texttt{Author} có quan hệ Nhiều - Nhiều.
+            \item
+                Chú ý rằng các tác giả có quan hệ với tập truyện chứ không phải
+                bộ truyện, vì mô hình xuất bản nhiều truyện tranh là nhà xuất
+                bản sở hữu nhân vật và thuê người viết.
+            \item
+                Đồng thời, một tác giả có thể giữ vai trò khác nhau trong các bộ
+                truyện khác nhau, do đó bảng này còn nối với bảng \texttt{Role}.
+        \end{itemize}
 \end{itemize}
 
 % Split itemize to avoid confusing wrapfigure
 % https://tex.stackexchange.com/a/285760/206774
 \begin{itemize}[resume, before = \vspace*{-\dimexpr\topsep+\partopsep\relax}]
     \item
-          \texttt{ComicGenreJoin}: Mỗi tập truyện có thể có nhiều thể loại khác
-          nhau và ngược lại, do đó \texttt{Comic} và \texttt{Genre} có quan hệ
-          Nhiều - Nhiều.
+        \texttt{ComicGenreJoin}: Mỗi tập truyện có thể có nhiều thể loại khác
+        nhau và ngược lại, do đó \texttt{Comic} và \texttt{Genre} có quan hệ
+        Nhiều - Nhiều.
 \end{itemize}
 
 Do dùng Room, mỗi bảng ứng với một lớp. Các truy vấn với bảng cần đóng gói dữ
