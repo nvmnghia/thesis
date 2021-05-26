@@ -1,0 +1,83 @@
+\providecommand{\main}{../..}
+
+\documentclass[../../thesis]{subfiles}
+
+
+\begin{document}
+
+\chapter{Kết luận}\label{chap:conclusion}
+
+\section{Tổng kết nội dung}\label{sec:summary}
+
+Khóa luận mang tên "Ứng dụng đọc truyện tranh". Do vô tâm, khóa luận không được
+sửa thành "yacv: Ứng dụng đọc truyện tranh ngoại tuyến trên Android" khi tên
+yacv được quyết định và có cơ hội sửa. Nội dung của khóa luận là xây dựng một
+ứng dụng trên Android giúp đọc các tệp truyện có sẵn trên điện thoại.
+
+Các chức năng của ứng dụng được xây dựng theo một nhóm nhỏ người dùng say mê
+(enthusiast). Chức năng chính của ứng dụng gồm xem truyện, xem metadata truyện,
+và tìm theo metadata.
+
+\section{Kết quả đạt được}\label{sec:thesis_result}
+
+Ứng dụng thực hiện được một số kết quả sau:
+
+\begin{itemize}
+    \item Có đủ ba chức năng cơ bản
+    \item Có chức năng xóa truyện, Yêu thích truyện
+    \item Tốc độ cuộn trang chấp nhận được
+\end{itemize}
+
+Tuy nhiên, ứng dụng chưa thực hiện được một số mục tiêu cá nhân:
+
+\begin{itemize}
+    \item Hỗ trợ nhiều loại tệp truyện
+        \item CBR (tệp nén RAR), CBT (tệp nén RAR),\ldots
+        \item Hỗ trợ tệp nén đặc (xem giải thích ở cuối \autoref{sec:zip})
+    \item Hỗ trợ nhiều loại metadata
+    \item Test bao phủ 80\%
+    \item Chức năng xem trước trang truyện
+    \item Liên kết với một số nguồn thông tin truyện tranh như
+        GrandComicDatabase
+\end{itemize}
+
+\section{Định hướng phát triển}\label{sec:future-work}
+
+Do nhắm đến một tập người dùng nhỏ, ứng dụng có thể xếp vào loại thị trường
+ngách (niche market). Người dùng ở thị trường này khá trung thành, do đó bản
+thân họ không cần tính năng nào mới mà cần độ hoàn thiện cho sản phẩm.
+
+Tuy nhiên, vẫn có hai tính năng mới đáng kể có thể được đưa vào ứng dụng, nếu
+xét đến các vấn đề kĩ thuật liên quan thay vì nhu cầu thực của người dùng:
+
+\begin{itemize}
+    \item
+        Tự động tải truyện:
+
+        Các trang web truyện cụ thể có thể được hỗ trợ trong ứng dụng, hoặc phát
+        triển một bộ lấy dữ liệu (scraper) có khả năng tự động phát hiện ảnh
+        trong một trang web và tải về.
+
+        Truyện khi tải về có thể được đóng gói thành định dạng CBZ.
+    \item
+        Tăng chất lượng truyện:
+
+        Đây là tính năng bổ sung cho tính năng trên, do nhu cầu cốt yếu của
+        người dùng là đọc tệp truyện chất lượng cao.
+
+        Một hướng phát triển cho tính năng này là dùng Tensorflow Lite để nhúng
+        các mô hình học máy giúp tăng chất lượng ảnh như ESRGAN hay đặc biệt là
+        SRCNN - tối ưu cho ảnh anime - vào ứng dụng.
+\end{itemize}
+
+\section{Đánh giá cá nhân}\label{sec:personal-assessment}
+
+Toàn bộ khóa luận được hoàn thành trễ ba tháng so với kì vọng ban đầu là xong mã
+nguồn trước Tết Âm lịch Tân Sửu 2021, và không thực hiện được bất kì mục tiêu cá
+nhân nào.
+
+Cách thức làm việc trong thời gian thực hiện khóa luận cũng khiến thầy giáo
+hướng dẫn và bản thân em không hài lòng, dù vậy vẫn không chịu thay đổi. So với
+thời điểm thực tập ở Viettel hai năm trước, đây là sau tháng bước lùi.
+
+\end{document}
