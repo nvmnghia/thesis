@@ -98,7 +98,7 @@ Android được phân lớp như sau:
         Ứng dụng hệ thống (System Apps)
 
         Android đi kèm với một số ứng dụng hệ thống như ứng dụng SMS, trình
-        duyệt,\ldots{}
+        duyệt,\ldots
 \end{itemize}
 
 Gần như mọi ứng dụng Android cơ bản đều dùng View System trong tầng Khung phát
@@ -601,7 +601,7 @@ tảng cho Kiến trúc Google khuyên dùng.
 
 \subsection{Kiến trúc Google khuyên dùng}\label{sec:app-arch}
 
-\begin{wrapfigure}[10]{r}{8cm}
+\begin{wrapfigure}[13]{r}{10cm}
     \centering
     \vspace*{-6mm}
     \includegraphics[width=\linewidth]{../images/final-architecture.png}
@@ -727,7 +727,7 @@ không phải thuật toán nén; thuật toán nén hay dùng nhất trong ZIP 
 Một trong các mục tiêu của ZIP là giúp việc sửa tệp nén (thêm, sửa, xóa tệp con
 trong tệp ZIP) nhanh nhất có thể.
 
-\begin{wrapfigure}[8]{r}{10cm}
+\begin{wrapfigure}[10]{r}{11cm}
     \centering
     \vspace*{-6mm}
     \includesvg[width=\linewidth,inkscapelatex=false]
@@ -736,8 +736,8 @@ trong tệp ZIP) nhanh nhất có thể.
     \label{fig:zip-layout}
 \end{wrapfigure}
 
-Mục tiêu trên dẫn đến thiết kế thể hiện trong \autoref{fig:zip-layout}
-\cite{PKWARE_APPNOTE}:
+Mục tiêu trên dẫn đến thiết kế \cite{PKWARE_APPNOTE} thể hiện qua
+\autoref{fig:zip-layout}:
 
 \begin{itemize}
     \item
@@ -792,6 +792,18 @@ Tóm lại, cấu trúc tệp nén ZIP cho phép sửa và giải nén từng t�
 Nhiều định dạng nén khác (TAR, 7z,\ldots) không có tính năng này, do gộp toàn bộ
 các tệp vào rồi nén một thể. Khi đó, tệp nén được gọi là \emph{đặc} (solid), và
 rất khó để đọc/sửa tệp lẻ.
+
+Cấu trúc này cũng dẫn đến hai kiểu API nén/giải nén:
+
+\begin{enumerate}
+    \item Dựa trên tệp: đọc phần mục lục trước, sau đó giải nén bất kì tệp nén
+        lẻ nào một cách nhanh chóng (có thể gọi là ``nhảy cóc'')
+    \item Dựa trên luồng: đọc lần lượt (do đó chậm) từng tệp nén lẻ theo luồng
+        đọc, đồng thời phải giải nén toàn bộ tệp đó trước khi "dò" được tệp kế
+\end{enumerate}
+
+Trong các phần sau, ta sẽ thấy SAF chỉ cho phép dùng cách 2, nhưng yacv cố gắng
+thiết kế để dùng cách 1.
 
 \subsection{Định dạng tệp truyện CBZ}\label{sec:cbz}
 

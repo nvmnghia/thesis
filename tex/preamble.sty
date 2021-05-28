@@ -54,6 +54,18 @@
 
 % Directory tree symbols
 \usepackage{pmboxdraw}
+\begingroup
+  \def\DeclareUnicodeCharacter#1{%
+    \begingroup
+      \lccode`\~="#1\relax
+    \lowercase{\endgroup
+      \global\catcode`~=\active
+      \gdef~%
+    }%
+  }%
+  \input{pmboxdrawenc.dfu}%
+\endgroup
+
 
 % Table shit
 \usepackage{booktabs}

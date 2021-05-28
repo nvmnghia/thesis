@@ -20,41 +20,10 @@ Chương này nêu một số đoạn mã trong quá trình lập trình và ki�
 \subsection{Coroutine}
 
 Về mặt lập trình, trong quá trình viết ứng dụng, một trong các khó khăn chủ yếu
-là tăng tốc ứng dụng bằng coroutine. Sau đây trình bày một trong những đoạn mã
+là tăng tốc ứng dụng bằng coroutine. Trang sau trình bày một trong những đoạn mã
 dùng coroutine trong ca sử dụng tìm kiếm, có sử dụng cả LiveData:
 
-\begin{minted}{kotlin}
-suspend fun search(query: QueryMultipleTypes, limit: Int):
-        LiveData<List<List<Metadata>>> = liveData(timeoutInMs = 3000) {
-    val results2D = mutableListOf<List<Metadata>>()
-    val latch = CountDownLatch(daos.size)
-
-    withContext(Dispatchers.IO) {
-        daos.parallelForEach { dao ->
-            val results = dao.search(query.query, limit)
-            var shouldEmit = false
-
-            // TODO: How about making use of the other search function...
-            synchronized(results2D) {
-                if (results.isNotEmpty()) {
-                    results2D.add(results)
-                    shouldEmit = true
-                }
-
-                latch.countDown()
-                if (latch.count == 0 && results2D.size == 0) {
-                    shouldEmit = true
-                }
-            }
-
-            if (shouldEmit) emit(results2D)
-        }
-    }
-}
-
-\end{minted}
-
-Đoạn mã này trả về một đối tượng \texttt{LiveData<List<List<Metadata>>>}:
+Đoạn mã đó trả về một đối tượng \texttt{LiveData<List<List<Metadata>>>}:
 
 \begin{itemize}
     \item
@@ -71,6 +40,34 @@ suspend fun search(query: QueryMultipleTypes, limit: Int):
     \item
         \texttt{LiveData}: Dùng cho tính năng data binding với View.
 \end{itemize}
+
+\begin{minted}[samepage=true]{kotlin}
+suspend fun search(query: QueryMultipleTypes, limit: Int):
+        LiveData<List<List<Metadata>>> = liveData(timeoutInMs = 3000) {
+    val results2D = mutableListOf<List<Metadata>>()
+    var latch = daos.size
+
+    withContext(Dispatchers.IO) {
+        daos.parallelForEach { dao ->
+            val results = dao.search(query.query, limit)
+            var shouldEmit = false
+
+            synchronized(results2D) {
+                if (results.isNotEmpty()) {
+                    results2D.add(results)
+                    shouldEmit = true
+                }
+
+                if (--latch == 0 && results2D.size == 0) {
+                    shouldEmit = true
+                }
+            }
+
+            if (shouldEmit) emit(results2D)
+        }
+    }
+}
+\end{minted}
 
 Đoạn mã làm những việc sau:
 
@@ -102,13 +99,13 @@ suspend fun <A> Iterable<A>.parallelForEach
         Mỗi khi có kết quả (danh sách kết quả không rỗng), thêm vào danh sách
         tổng hợp, và thông báo cho \texttt{View} để hiển thị.
 
-        Biến \texttt{shouldEmit} kiểm soát xem có cần thông báo (emit) cho
-        \texttt{View} không. Nếu danh sách kết quả từ một \texttt{Dao} không
-        rỗng, danh sách đó được đưa vào danh sách tổng hợp.
+        Biến \texttt{shouldEmit} kiểm soát xem có cần thông báo (\texttt{emit})
+        cho \texttt{View} không. Nếu danh sách kết quả từ một \texttt{Dao} không
+        rỗng, nó được đưa vào danh sách tổng hợp.
 
-        6 \texttt{Dao} sẽ có tối đa 6 lần thông báo khác nhau, giúp Màn hình Tìm
-        kiếm được hiển thị từ từ theo quá trình tìm kiếm, đúng với yêu cầu phi
-        chức năng về việc liên tục cập nhật.
+        6 \texttt{Dao} có tối đa 6 lần thông báo, giúp Màn hình Tìm kiếm được
+        hiển thị từ từ theo quá trình tìm kiếm, đúng với yêu cầu phi chức năng
+        về việc liên tục cập nhật.
     \item
         Thông báo cho view ít nhất một lần để báo kết thúc tìm mà không có kết
         quả.
@@ -151,7 +148,6 @@ withContext(Dispatchers.IO)
 
 \begin{table}[H]
     \centering
-    % \caption[]{}
     \begin{tabular}{l l}
         \toprule
         Tính năng      & Vấn đề giải quyết \\
@@ -165,7 +161,7 @@ withContext(Dispatchers.IO)
 Mỗi khi ứng dụng cần đọc ảnh từ tệp nén, và khi truy cập cơ sở dữ liệu,
 hai vấn đề trên xảy ra và cần coroutine để giải quyết.
 
-\subsection{\texttt{CBZParser}}
+\subsection{\texttt{CBZParser}}\label{sec:cbzparser}
 
 \fullref{chap:design} đã giới thiệu sơ lược về cách \texttt{CBZParser} hoạt
 động, là lưu đệm hai phần đầu-cuối tệp tin. Cụ thể hơn, mã nguồn của thư viện
@@ -187,8 +183,9 @@ Thư viện Apache Commons Compress được chọn vì những lí do sau:
         nén được thư viện này hỗ trợ.
 \end{itemize}
 
-Mẫu đọc \emph{tệp ZIP}, không phải chế độ luồng (phù hợp với
-\texttt{InputStream} nhưng chậm và không thể nhảy cóc), có thể tóm tắt như sau:
+Mẫu đọc của API dùng chế độ tệp (xem lại \autoref{sec:zip}), không phải chế độ
+luồng (phù hợp với \texttt{InputStream} nhưng chậm và không thể nhảy cóc), có
+thể tóm tắt như sau:
 
 \begin{enumerate}
     \item

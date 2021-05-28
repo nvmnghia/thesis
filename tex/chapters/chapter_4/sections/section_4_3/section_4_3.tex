@@ -38,11 +38,6 @@ thông tin nào được đọc ra cho đến khi thực sự cần. Lý do vẫ
 năng, vì gần như mọi thao tác đọc trong SAF - hệ thống đọc ghi tệp của Android -
 đều rất chậm.
 
-
-%----------------------------------------------------------------------------------------
-%	4.3.2: Parser cho tệp nén
-%----------------------------------------------------------------------------------------
-
 \subsubsection{Parser cho tệp nén}
 
 Parser cho tệp nén hiện gồm một giao diện và hai lớp:
@@ -85,11 +80,6 @@ vào URI của tệp truyện và trả về \texttt{ArchiveParser} để đọc
 riêng để tạo parser. Chữ ``Factory'' thể hiện lớp này sử dụng mẫu thiết kế
 factory.
 
-
-%----------------------------------------------------------------------------------------
-%	4.3.3: Parser cho metadata
-%----------------------------------------------------------------------------------------
-
 \subsubsection{Parser cho metadata}
 
 yacv hiện hỗ trợ định dạng ComicRack, được giới thiệu chi tiết trong Phụ lục 2.
@@ -106,6 +96,13 @@ parser cho tệp. Theo cách này, các parser cần có hàm \texttt{parse()} t
     \item
         Tên tệp metadata: tên tệp giúp phân biệt các định dạng tệp với nhau
 \end{itemize}
+
+
+%----------------------------------------------------------------------------------------
+%	4.3.2: CBZParser
+%----------------------------------------------------------------------------------------
+
+\subsection{\texttt{CBZParser}}
 
 \texttt{CBZParser} là lớp cài đặt giao diện \texttt{ArchiveParser}. Như đã phân
 tích ở Chương 2, hệ thống đọc ghi tệp SAF của Android chỉ cho phép đọc ghi tuần
@@ -142,8 +139,8 @@ cuối, và có nhiều thao tác cần dò ngược từ cuối lên.
 \end{itemize}
 
 \texttt{CBZParse} giải quyết vấn đề này bằng cách làm giả một luồng nhập ngẫu
-nhiên, được miêu tả rõ hơn trong Phụ lục 3. Cách làm đó có thể được tóm tắt như
-sau:
+nhiên, sẽ được miêu tả rõ hơn trong \autoref{sec:cbzparser}. Cách làm đó có thể
+được tóm tắt như sau:
 
 \begin{itemize}
     \item
@@ -165,20 +162,25 @@ Kết quả là mục lục đọc được mà chỉ cần:
         Không phải giải nén những tệp không cần thiết
 \end{itemize}
 
-\subsubsection{Tổng hợp lại \texttt{ComicParser}}
+
+%----------------------------------------------------------------------------------------
+%	4.3.3: Tổng hợp lại ComicParser
+%----------------------------------------------------------------------------------------
+
+\subsection{Tổng hợp lại \texttt{ComicParser}}
 
 Tương tác trong một ca sử dụng hiển thị của \texttt{ComicParser} được mô tả
 trong \autoref{fig:parser_sequence}.
 
-Ở đây cần làm rõ chi tiết về việc sắp xếp tệp theo tên. Không có quy chuẩn cho
-tên trang truyện, tuy nhiên đa số các tệp truyện đặt tên theo định dạng sau:
+Nhắc lại rằng do metadata không chỉ định, thứ tự trang truyện chỉ có thể suy ra
+từ thứ tự tên tệp ảnh. Không có quy chuẩn cho tên trang truyện, tuy nhiên đa số
+các tệp truyện đặt tên theo định dạng sau:
 
 \begin{verbatim}
 X-Men Vol 40 1.jpg
-|     |      |
-|     |      Trang truyện số
-|     Số Volume, Number,...
-Tên tệp truyện
+│     │      └─ Trang truyện số
+│     └─ Số Volume, Number,...
+└─ Tên tệp truyện
 \end{verbatim}
 
 Vấn đề với định dạng này xuất hiện khi truyện có nhiều hơn 10 trang. Khi sắp xếp
@@ -194,18 +196,10 @@ X-Men Vol 40 2.jpg
 ...
 \end{verbatim}
 
-\begin{figure}[H]
-    \centering
-    \includesvg[scale=0.8,inkscapelatex=false]
-        {../images/parser_sequence.svg}
-    \caption{\texttt{ComicParser} và các thành phần của nó}
-    \label{fig:parser_sequence}
-\end{figure}
-
-Ta thấy ngay rằng thứ tự tệp ảnh bị đảo lộn. Để giải quyết vấn đề này, cần viết
-hàm so sánh riêng cho tên tệp ảnh. Ý tưởng ở đây là gom những kí tự số liên tiếp
-với nhau thành một ``kí tự'' rồi mới so sánh. Đoạn mã giả ở trang sau trình bày
-thuật toán:
+Ta thấy ngay rằng thứ tự tệp ảnh trang truyện bị đảo lộn. Để giải quyết vấn đề
+này, cần viết hàm so sánh riêng cho tên tệp ảnh. Ý tưởng ở đây là gom những kí
+tự số liên tiếp với nhau thành một ``kí tự'' rồi mới so sánh. Đoạn mã giả sau
+đây trình bày thuật toán:
 
 \begin{Verbatim}[samepage=true]
 def compare(str1, str2):
@@ -228,6 +222,14 @@ def compare(str1, str2):
 
     return compare_left_to_right(arrs[0], arrs[1])
 \end{Verbatim}
+
+\begin{figure}[H]
+    \centering
+    \includesvg[scale=0.8,inkscapelatex=false]
+        {../images/parser_sequence.svg}
+    \caption{\texttt{ComicParser} và các thành phần của nó}
+    \label{fig:parser_sequence}
+\end{figure}
 
 
 %----------------------------------------------------------------------------------------
