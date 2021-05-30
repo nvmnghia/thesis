@@ -1,7 +1,9 @@
-\providecommand{\main}{../..}
-
 \documentclass[../../thesis]{subfiles}
 
+\IfEq{\jobname}{\detokenize{thesis}}{}{%
+    \setcounterref{chapter}{chap:conclusion}
+    \addtocounter{chapter}{-1}
+}
 
 \begin{document}
 

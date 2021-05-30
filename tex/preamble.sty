@@ -8,7 +8,10 @@
 \usepackage[final]{microtype}
 \usepackage{lmodern}
 
-% Clickable link
+% Clickable link & cross references
+\usepackage{xr-hyper}    % Must be before hyperref
+\usepackage{refcount}
+\usepackage{xstring}
 \usepackage[vietnamese, unicode]{hyperref}    % This sucker ignore polyglossia
 \makeatletter
 \gappto\captionsvietnamese{\HyLang@vietnamese}    % Polyglossia specific, babel doesn't need this
@@ -77,9 +80,7 @@
 
 
 % References
-\providecommand{\main}{.}    % https://tex.stackexchange.com/a/216321/206774
 \usepackage[date=short]{biblatex}
-\addbibresource{\main/references.bib}
 \emergencystretch=1em
 
 % Appendix
@@ -127,3 +128,5 @@
 
 
 \usepackage{subfiles} % Best loaded last in the preamble
+\addbibresource{\subfix{references.bib}}
+\externaldocument{\subfix{thesis}}

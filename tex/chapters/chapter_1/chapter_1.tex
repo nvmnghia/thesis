@@ -1,6 +1,9 @@
-\providecommand{\main}{../..}
-
 \documentclass[../../thesis]{subfiles}
+
+\IfEq{\jobname}{\detokenize{thesis}}{}{%
+    \setcounterref{chapter}{chap:intro}
+    \addtocounter{chapter}{-1}
+}
 
 
 \begin{document}
@@ -137,15 +140,13 @@ Các phần còn lại của khóa luận có cấu trúc như sau:
         \fullref{chap:requirements}: Phân tích nhu cầu và ca sử dụng để có đặc
         tả yêu cầu.
     \item
-        \protect\hyperlink{P4-design}{Chương 4 - Thiết kế}: Thiết kế ứng dụng,
-        gồm thiết kế cơ sở dữ liệu, giao diện, logic nghiệp vụ.
+        \fullref{chap:design}: Thiết kế ứng dụng, gồm thiết kế cơ sở dữ liệu,
+        giao diện, logic nghiệp vụ.
     \item
-        \protect\hyperlink{P5-implementation}{Chương 5 - Lập trình \& Kiểm thử}:
-        Một số cài đặt và ca kiểm thử trong ứng dụng sẽ được nêu một cách có
-        chọn lọc.
+        \fullref{chap:implementation}: Một số cài đặt và ca kiểm thử trong ứng
+        dụng sẽ được nêu một cách có chọn lọc.
     \item
-        \protect\hyperlink{P6-comclusion}{Chương 6 - Kết luận}: Kết thúc khóa
-        luận.
+        \fullref{chap:conclusion}: Kết thúc khóa luận.
 \end{itemize}
 
 Sau phần Tài liệu Tham khảo, khóa luận có hai phụ lục về metadata của truyện
