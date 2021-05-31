@@ -4,10 +4,28 @@
     \setcounterref{chapter}{chap:design}
 }
 
+\IfEq{\jobname}{\detokenize{thesis}}{}{%
+    \StrBehind{\getrefnumber{sec:module-parser-scanner}}{.}[\tempsectioncounter]
+    \setcounter{section}{\tempsectioncounter}
+    \addtocounter{section}{-1}
+}
+
+\IfEq{\jobname}{\detokenize{thesis}}{}{%
+    \StrBehind{\getrefnumber{fig:parser_sequence}}{.}[\tempfigurecounter]
+    \setcounter{figure}{\tempfigurecounter}
+    \addtocounter{figure}{-1}
+}
+
+\IfEq{\jobname}{\detokenize{thesis}}{}{%
+    \StrBehind{\getrefnumber{tab:2-parsers}}{.}[\temptablecounter]
+    \setcounter{table}{\temptablecounter}
+    \addtocounter{table}{-1}
+}
+
 
 \begin{document}
 
-\section{Module Parser \& Scanner}\label{parser-scanner-module}
+\section{Module Parser \& Scanner}\label{sec:module-parser-scanner}
 
 
 %----------------------------------------------------------------------------------------

@@ -4,6 +4,24 @@
     \setcounterref{chapter}{chap:design}
 }
 
+\IfEq{\jobname}{\detokenize{thesis}}{}{%
+    \StrBehind{\getrefnumber{sec:module-view}}{.}[\tempsectioncounter]
+    \setcounter{section}{\tempsectioncounter}
+    \addtocounter{section}{-1}
+}
+
+\IfEq{\jobname}{\detokenize{thesis}}{}{%
+    \StrBehind{\getrefnumber{fig:3-models}}{.}[\tempfigurecounter]
+    \setcounter{figure}{\tempfigurecounter}
+    \addtocounter{figure}{-1}
+}
+
+\IfEq{\jobname}{\detokenize{thesis}}{}{%
+    \StrBehind{\getrefnumber{tab:3-models}}{.}[\temptablecounter]
+    \setcounter{table}{\temptablecounter}
+    \addtocounter{table}{-1}
+}
+
 
 \begin{document}
 

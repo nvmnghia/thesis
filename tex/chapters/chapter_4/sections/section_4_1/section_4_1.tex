@@ -4,6 +4,18 @@
     \setcounterref{chapter}{chap:design}
 }
 
+\IfEq{\jobname}{\detokenize{thesis}}{}{%
+    \StrBehind{\getrefnumber{sec:module-database}}{.}[\tempsectioncounter]
+    \setcounter{section}{\tempsectioncounter}
+    \addtocounter{section}{-1}
+}
+
+\IfEq{\jobname}{\detokenize{thesis}}{}{%
+    \StrBehind{\getrefnumber{fig:db-schema}}{.}[\tempfigurecounter]
+    \setcounter{figure}{\tempfigurecounter}
+    \addtocounter{figure}{-1}
+}
+
 
 \begin{document}
 

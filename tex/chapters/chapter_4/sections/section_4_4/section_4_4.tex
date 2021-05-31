@@ -4,6 +4,18 @@
     \setcounterref{chapter}{chap:design}
 }
 
+\IfEq{\jobname}{\detokenize{thesis}}{}{%
+    \StrBehind{\getrefnumber{sec:module-image-loader}}{.}[\tempsectioncounter]
+    \setcounter{section}{\tempsectioncounter}
+    \addtocounter{section}{-1}
+}
+
+\IfEq{\jobname}{\detokenize{thesis}}{}{%
+    \StrBehind{\getrefnumber{tab:example-archive-entries}}{.}[\temptablecounter]
+    \setcounter{table}{\temptablecounter}
+    \addtocounter{table}{-1}
+}
+
 
 \begin{document}
 
