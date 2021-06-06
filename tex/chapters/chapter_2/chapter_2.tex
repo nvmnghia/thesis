@@ -715,9 +715,9 @@ dụng.
 
 \section{Định dạng tệp nén ZIP và CBZ}\label{sec:zip-cbz}
 
-Các tệp truyện mà yacv đọc có định dạng CBZ, bản chất chính là tệp nén ZIP. Do
-yêu cầu của các phần sau, định dạng tệp ZIP cũng cần được trình bày ở mức cơ
-bản.
+Các tệp truyện mà yacv đọc có định dạng CBZ, bản chất chính là tệp nén ZIP
+(\textbf{C}omic \textbf{Book} \textbf{Z}IP). Do yêu cầu của các phần sau, định
+dạng tệp ZIP cũng cần được trình bày ở mức cơ bản.
 
 \subsection{Định dạng tệp nén ZIP}\label{sec:zip}
 
@@ -808,6 +808,9 @@ Cấu trúc này cũng dẫn đến hai kiểu API nén/giải nén:
 Trong các phần sau, ta sẽ thấy SAF chỉ cho phép dùng cách 2, nhưng yacv cố gắng
 thiết kế để dùng cách 1.
 
+Một điểm quan trọng nữa trong tệp ZIP, đó là gần như không kiểm soát được thứ tự
+tệp nén lẻ.
+
 \subsection{Định dạng tệp truyện CBZ}\label{sec:cbz}
 
 Tệp truyện CBZ chỉ là một tệp nén ZIP thông thường, trong đó có:
@@ -823,5 +826,8 @@ Tệp truyện CBZ chỉ là một tệp nén ZIP thông thường, trong đó c
         \autoref{app:comic-info-xsd}. Định dạng này lưu trong một tệp có tên
         \texttt{ComicInfo.xml}.
 \end{itemize}
+
+Cũng cần nhắc lại rằng thứ tự tệp nén lẻ không được đảm bảo. Ví dụ, tệp ảnh
+\texttt{1.jpg} có thể đứng sau tệp \texttt{2.jpg}.
 
 \end{document}

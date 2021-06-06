@@ -27,12 +27,30 @@
 
 \section{Module Parser \& Scanner}\label{sec:module-parser-scanner}
 
+Đây là module làm việc trực tiếp với tệp truyện, và có thể nói là quan trọng
+nhất trong toàn ứng dụng. Mạch tư duy của toàn bộ phần này như sau:
+
+\begin{enumerate}
+    \item
+        \textbf{Yêu cầu}: đọc tệp nén ngẫu nhiên (sẽ giải thích ở
+        \autoref{sec:comicparser})
+    \item
+        \textbf{Thuận lợi}: tệp nén ZIP có Central Directory, do đó có thể
+        ``nhảy cóc'' (đã giải thích ở \autoref{sec:zip})
+    \item
+        \textbf{Khó khăn}: cần dùng SAF, do đó chỉ có thể đọc tuần tự (đã giải
+        thích ở \autoref{sec:saf})
+    \item
+        \textbf{Giải pháp}: tìm offset ứng với mỗi tệp ảnh trong tệp ZIP và nhảy
+        cóc đến đó khi cần (sẽ giải thích ở \autoref{sec:comicparser})
+\end{enumerate}
+
 
 %----------------------------------------------------------------------------------------
 %	4.3.1: ComicParser
 %----------------------------------------------------------------------------------------
 
-\subsection{\texttt{ComicParser}}
+\subsection{\texttt{ComicParser}}\label{sec:comicparser}
 
 \texttt{ComicParser} là một trong các thành phần trung tâm của yacv. Lớp này
 nhận vào URI trỏ đến một tệp truyện, và đọc nội dung tệp truyện đó ra. Cần gọi
@@ -53,10 +71,10 @@ mã) khác nhưng tích hợp trong nó:
     \end{tabular}
 \end{table}
 
-\texttt{ComicParser} được thiết kế theo kiểu ``lười'', có nghĩa là không có
-thông tin nào được đọc ra cho đến khi thực sự cần. Lý do vẫn là vấn đề về hiệu
-năng, vì gần như mọi thao tác đọc trong SAF - hệ thống đọc ghi tệp của Android -
-đều rất chậm.
+% \texttt{ComicParser} được thiết kế theo kiểu ``lười'', có nghĩa là không có
+% thông tin nào được đọc ra cho đến khi thực sự cần. Lý do vẫn là vấn đề về hiệu
+% năng, vì gần như mọi thao tác đọc trong SAF - hệ thống đọc ghi tệp của Android -
+% đều rất chậm.
 
 \subsubsection{Parser cho tệp nén}
 
@@ -93,12 +111,19 @@ Trong \texttt{ArchiveParser}, có hai phương thức quan trọng:
         ``nhảy cóc'' đến đúng chỗ và đọc.
 \end{itemize}
 
+Ý tưởng cho thiết kế này xuất phát từ yêu cầu phải \emph{đọc ngẫu nhiên} tệp
+nén. Như đã giải thích trong \autoref{sec:cbz}, tệp ảnh trang truyện không bắt
+buộc lưu theo thứ tự nào trong tệp truyện nén. Ví dụ, tệp \texttt{2.jpg} được
+lưu trước tệp \texttt{1.jpg}, trong khi người dùng cần đọc trang 1 trước trang
+2. Do đó, để người dùng được đọc \emph{tuần tự}, ứng dụng phải đọc \emph{ngẫu
+nhiên}.
+
+Từ yêu cầu đọc ngẫu nhiên trên, ta thấy ngay thiết kế của \texttt{ArchiveParser}
+như trên là đơn giản và rõ ràng nhất.
+
 \texttt{ArchiveParserFactory} là một lớp theo mẫu thiết kế factory, nhận
 vào URI của tệp truyện và trả về \texttt{ArchiveParser} để đọc loại tệp truyện
-đó (ví dụ, nếu URI có đuôi CBZ thì trả về một đối tượng \texttt{CBZParser}). Do
-\texttt{ArchiveParser} cần một số cài đặt khởi tạo riêng, nên mới cần một lớp
-riêng để tạo parser. Chữ ``Factory'' thể hiện lớp này sử dụng mẫu thiết kế
-factory.
+đó (ví dụ, nếu URI có đuôi CBZ thì trả về một đối tượng \texttt{CBZParser}).
 
 \subsubsection{Parser cho metadata}
 
@@ -122,27 +147,27 @@ parser cho tệp. Theo cách này, các parser cần có hàm \texttt{parse()} t
 %	4.3.2: CBZParser
 %----------------------------------------------------------------------------------------
 
-\subsection{\texttt{CBZParser}}
+\subsection{\texttt{CBZParser}}\label{sec:cbzparser_design}
 
-\texttt{CBZParser} là lớp cài đặt giao diện \texttt{ArchiveParser}. Như đã phân
-tích ở Chương 2, hệ thống đọc ghi tệp SAF của Android chỉ cho phép đọc ghi tuần
-tự. Việc tạo ra mảng offset không đơn giản, do phần mục lục của tệp ZIP nằm ở
-cuối, và có nhiều thao tác cần dò ngược từ cuối lên.
+\texttt{CBZParser} là một parser cho tệp nén CBZ/ZIP, cài đặt giao diện
+\texttt{ArchiveParser}. Như đã phân tích ở \autoref{chap:fundamental}, hệ thống
+đọc ghi tệp SAF của Android chỉ cho phép đọc ghi tuần tự. Việc tạo ra mảng
+offset không đơn giản, do phần mục lục của tệp ZIP nằm ở cuối, và có nhiều thao
+tác cần dò ngược từ cuối lên.
 
 Để giải quyết vấn đề danh sách offset, có hai cách đơn giản nhất:
 
 \begin{itemize}
     \item
-        Chép toàn bộ tệp truyện vào phần bộ nhớ riêng của ứng dụng
+        Chép tệp truyện vào bộ nhớ riêng của ứng dụng, rồi xóa khi đọc xong
 
         \begin{itemize}
             \item
                 Ưu: Phần bộ nhớ này vẫn được dùng API File của Java, do đó có
                 thể đọc ghi ngẫu nhiên, cho phép đọc mục lục rất nhanh.
             \item
-                Nhược: Tệp truyện rất nặng (vài chục đến vài trăm MB) dẫn đến
-                tốn cả dung lượng đĩa lẫn băng thông đọc/ghi. Ghi xóa liên tục
-                cũng có hại cho bộ nhớ thể rắn của điện thoại.
+                Nhược: Các nhược điểm của việc dùng bộ nhớ riêng đã trình bày ở
+                đầu chương.
         \end{itemize}
     \item
         Đọc tệp ZIP ở chế độ đọc tuần tự
@@ -152,13 +177,13 @@ cuối, và có nhiều thao tác cần dò ngược từ cuối lên.
                 Ưu: Dùng ngay được với cơ chế đọc qua \texttt{InputStream} của
                 SAF
             \item
-                Nhược: Do không có mục lục, dữ liệu phải được ``dò'' từ từ để
-                đọc từng tệp lẻ một. Hậu quả là phương pháp này vừa tốn băng
-                thông đọc, vừa tốn CPU để giải nén những tệp không cần thiết.
+                Nhược: Do không có mục lục, dữ liệu phải được ``dò'' từ từ. Hậu
+                quả là vừa tốn băng thông đọc, vừa tốn CPU để giải nén những tệp
+                không cần thiết.
         \end{itemize}
 \end{itemize}
 
-\texttt{CBZParse} giải quyết vấn đề này bằng cách làm giả một luồng nhập ngẫu
+\texttt{CBZParser} giải quyết vấn đề này bằng cách làm giả một luồng nhập ngẫu
 nhiên, sẽ được miêu tả rõ hơn trong \autoref{sec:cbzparser}. Cách làm đó có thể
 được tóm tắt như sau:
 
