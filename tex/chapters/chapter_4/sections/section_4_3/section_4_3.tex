@@ -217,9 +217,23 @@ Kết quả là mục lục đọc được mà chỉ cần:
 Tương tác trong một ca sử dụng hiển thị của \texttt{ComicParser} được mô tả
 trong \autoref{fig:parser_sequence}.
 
-Nhắc lại rằng do metadata không chỉ định, thứ tự trang truyện chỉ có thể suy ra
-từ thứ tự tên tệp ảnh. Không có quy chuẩn cho tên trang truyện, tuy nhiên đa số
-các tệp truyện đặt tên theo định dạng sau:
+Ca sử dụng chính của \texttt{ComicParser} là truyền vào \emph{số trang} và nhận
+lại \emph{luồng đọc} cho tệp ảnh tương ứng. Nhắc lại rằng do metadata không chỉ
+định, thứ tự trang truyện chỉ có thể suy ra từ thứ tự tên tệp ảnh, do đó
+\texttt{ComicParser} cũng phải chịu trách nhiệm tìm tệp ảnh tương ứng với số
+trang bằng cách \emph{xếp thứ tự theo tên}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.8]{../images/parser_sequence.pdf}
+    \caption{\texttt{ComicParser} và các thành phần của nó}
+    \label{fig:parser_sequence}
+\end{figure}
+
+\subsubsection{Lưu ý về tên tệp ảnh trang truyện}
+
+Không có quy chuẩn cho tên trang truyện, tuy nhiên đa số các tệp truyện đặt tên
+theo định dạng sau:
 
 \begin{verbatim}
 X-Men Vol 40 1.jpg
@@ -246,41 +260,33 @@ này, cần viết hàm so sánh riêng cho tên tệp ảnh. Ý tưởng ở đ
 tự số liên tiếp với nhau thành một ``kí tự'' rồi mới so sánh. Đoạn mã giả sau
 đây trình bày thuật toán:
 
-\begin{Verbatim}[samepage=true]
+\begin{Verbatim}
 def compare(str1, str2):
     arrs = []
 
     for str in [str1, str2]:
-        arrtmp = []
-        acc = []
+        arrtmp = [], acc = []
 
         for char in str:
             if is_number(char):
                 acc.append(char)
             else:
                 if len(acc) != 0:
-                    acc = ''.join(acc)
-                    acc = to_num(acc)
-                    arrtmp.append(acc)
-                    acc = 0
+                    arrtmp.append(int(''.join(acc)))
+                    acc = []
                 arrtmp.append(to_codepoint(char))
+
+        arrs.append(arrtmp)
 
     return compare_left_to_right(arrs[0], arrs[1])
 \end{Verbatim}
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[scale=0.8]{../images/parser_sequence.pdf}
-    \caption{\texttt{ComicParser} và các thành phần của nó}
-    \label{fig:parser_sequence}
-\end{figure}
 
 
 %----------------------------------------------------------------------------------------
 %	4.3.4: Scanner
 %----------------------------------------------------------------------------------------
 
-\subsubsection{Scanner}
+\subsection{Scanner}
 
 Đây là lớp phục vụ cho tính năng quét truyện trong yacv. Biểu đồ luồng của ca sử
 dụng \emph{quét mới} được thể hiện trong \autoref{fig:scan_new_sequence}.

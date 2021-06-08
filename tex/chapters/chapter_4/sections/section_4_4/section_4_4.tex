@@ -80,22 +80,25 @@ tiểu mục tiếp theo.
         \ldots{}
 \end{itemize}
 
-Vậy để đọc hết truyện, cần đọc 4500KB. Chưa hết, luồng nhập phải được tạo mới mỗi
-lần đọc (tức bằng số trang truyện), gây ra nhiều overhead. Lý do là bản thân SAF
-là một Content Provider, do đó nó nằm ở một tiến trình (process) riêng, và cần
-cơ chế liên lạc xuyên tiến trình (IPC) - vốn đắt đỏ về mặt tính toán trên mọi hệ
-điều hành - để gọi.
+Hai điểm yếu của phương pháp này là:
 
-Nguyên nhân của cả hai điểm yếu trên là việc không sử dụng lại luồng nhập (mỗi
-\texttt{InputStream} chỉ đọc một ảnh). Phương án tiếp theo cần xử lí được điểm
-yếu này.
+\begin{itemize}
+    \item Tốn IO: Đọc 4500KB (như đã giải thích ở \autoref{sec:cbz}).
+    \item Inter-process communication overhead: 8 luồng nhập được tạo ra, tức 8
+        lần liên hệ với Content Provider (đã giải thích ở \autoref{sec:saf}).
+\end{itemize}
+
+Nguyên nhân của hai điểm yếu trên là do không dùng lại luồng nhập (mỗi
+\texttt{InputStream} chỉ đọc một ảnh). Chú ý rằng ở đây không có điểm yếu về tốn
+CPU để giải nén, do đã khắc phục trong \texttt{ComicParser}. Phương án tiếp theo
+cần xử lí được điểm yếu này.
 
 \subsubsection{Tối thiểu hóa số luồng đọc}
 
-Để giảm số luồng đọc, ta cần kiểm soát một vài luồng đọc, và phân mỗi trang
-truyện cho một luồng đọc cụ thể. Để tối thiểu hóa số luồng đọc, ta cần dùng thêm
-thuật toán \emph{chuỗi con tăng dài nhất} (longest increasing subsequence).
-Thuật toán cuối cùng thể hiện bằng mã giả như sau:
+Để giảm số luồng đọc, ta cần mở sẵn một vài luồng đọc, và phân mỗi trang truyện
+cho một luồng đọc cụ thể. Để tối thiểu hóa số luồng đọc, ta cần dùng thêm thuật
+toán \emph{chuỗi con tăng dài nhất} (longest increasing subsequence). Thuật toán
+cuối cùng thể hiện bằng mã giả như sau:
 
 \begin{verbatim}
 def minStream(pages):
@@ -143,6 +146,14 @@ lần chia trang cho các luồng, ta chọn một bộ trang tăng dần dài n
 
 Vậy để đọc hết truyện, cần đọc 2000KB, và 4 lần tạo mới luồng nhập, khá tốt so
 với phương pháp đầu.
+
+Cũng cần nói thêm rằng thuật toán này là kiểu \emph{tham lam} (greedy), không
+phải thuật toán tối ưu nhất. Thuật toán này có hai lợi thế:
+
+\begin{itemize}
+    \item Đơn giản
+    \item Giới hạn được số luồng nhập:
+\end{itemize}
 
 Tới đây chỉ cần một số chỉnh sửa nhỏ: Giới hạn số luồng nhập. Trường hợp xấu
 nhất là thứ tự trong tệp ZIP ngược với thứ tự đọc, do đó có nhiều luồng mà mỗi

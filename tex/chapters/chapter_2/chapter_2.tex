@@ -752,13 +752,16 @@ Mục tiêu trên dẫn đến thiết kế \cite{PKWARE_APPNOTE} thể hiện q
 \begin{itemize}[resume, before = \vspace*{-\dimexpr\topsep+\partopsep\relax}]
     \item
         Ở đầu mỗi tệp nén lẻ là một header gọi là \emph{File Entry} để lưu thông
-        tin liên quan, trong đó có \emph{tên tệp gốc} và \emph{vị trí bắt đầu}
-        (offset), tức số byte tính từ đầu tệp ZIP đến tệp nén lẻ tương ứng.
+        tin liên quan, trong đó có \emph{tên tệp gốc}.
     \item
-        Ở \emph{cuối} tệp ZIP, sau khi đã nối các tệp nén lẻ cùng header lại,
-        các header được gom lại, lưu một lần nữa vào một cấu trúc gọi là
-        \emph{Central Directory}. Có thể so sánh File Entry như các \emph{đề
-        mục}, còn Central Directory là \emph{mục lục}.
+        Ở \emph{cuối} tệp ZIP, các header được gom lại, lưu một lần nữa vào một
+        cấu trúc gọi là \emph{Central Directory}. Hơn nữa, từng header còn lưu
+        thêm \emph{vị trí bắt đầu} (offset), tức số byte tính từ đầu tệp ZIP đến
+        tệp nén lẻ tương ứng.
+
+        Có thể so sánh File Entry như các \emph{đề mục}, còn Central Directory
+        là \emph{mục lục}. Từ đây, ta tạm dùng hai cụm từ này thay vì cụm tiếng
+        Anh gốc cho dễ hiểu.
 \end{itemize}
 
 Ta phân tích kĩ hơn:
@@ -778,16 +781,24 @@ Ta phân tích kĩ hơn:
 
         \begin{itemize}
             \item
+                Thuận lợi cho đọc-ghi từng tệp lẻ:
+
                 Giả sử mục lục đặt ở đầu. Khi nén hoặc sửa, toàn bộ các tệp nén
                 lẻ phải di chuyển (thậm chí là nhiều lần) để tạo chỗ cho mục lục
                 mới. Trường hợp này giống như thêm một phần tử vào đầu mảng:
                 toàn bộ các phần tử sau bị đẩy lên để tạo chỗ trống.
+
+                Trước đây tối ưu này rất quan trọng. Do đĩa mềm - phương tiện
+                chia sẻ chủ yếu thời đó - có dung lượng nhỏ, tệp ZIP có thể phải
+                cắt ra cho vừa \cite{WIKI_ZIP}. Thiết kế này cho phép chỉ sửa
+                lại dữ liệu ở một số đĩa, thay vì toàn bộ.
             \item
-                Do mục lục nằm ở cuối tệp ZIP, nên khi sửa chỉ cần đẩy các tệp
-                nén lẻ từ chỗ sửa. Trước đây tối ưu này rất quan trọng. Do đĩa
-                mềm - phương tiện chia sẻ chủ yếu thời đó - có dung lượng nhỏ,
-                tệp ZIP có thể phải cắt ra cho vừa \cite{WIKI_ZIP}. Thiết kế này
-                cho phép chỉ sửa lại dữ liệu ở một số đĩa, thay vì toàn bộ.
+                Cho phép ghi (nén) theo luồng xuất:
+
+                Theo định nghĩa, mục lục tổng hợp các thông tin trong tệp nén.
+                Do đó, nếu ghi ra luồng xuất, hiển nhiên nó phải ở cuối cùng.
+                Nếu nó ở đầu thì lúc ghi mục lục không có thông tin gì, làm bản
+                thân nó vô dụng.
         \end{itemize}
 \end{itemize}
 
@@ -799,10 +810,10 @@ rất khó để đọc/sửa tệp lẻ.
 Cấu trúc này cũng dẫn đến hai kiểu API nén/giải nén:
 
 \begin{enumerate}
-    \item Dựa trên tệp: đọc phần mục lục trước, sau đó giải nén bất kì tệp nén
-        lẻ nào một cách nhanh chóng (có thể gọi là ``nhảy cóc'')
-    \item Dựa trên luồng: đọc lần lượt (do đó chậm) từng tệp nén lẻ theo luồng
-        đọc, đồng thời phải giải nén toàn bộ tệp đó trước khi "dò" được tệp kế
+    \item Dựa trên tệp: đọc phần mục lục trước, sau đó nhảy cóc đến vị trí
+        (offset) của bất kì tệp nén lẻ nào rồi giải nén nó
+    \item Dựa trên luồng: đọc lần lượt từng tệp nén lẻ theo luồng đọc, đồng thời
+        phải giải nén toàn bộ tệp đó trước khi "dò" được tệp kế
 \end{enumerate}
 
 Trong các phần sau, ta sẽ thấy SAF chỉ cho phép dùng cách 2, nhưng yacv cố gắng

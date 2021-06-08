@@ -76,7 +76,7 @@ suspend fun search(query: QueryMultipleTypes, limit: Int):
 
 \begin{itemize}
     \item
-        Tạo ra 6 coroutine cho 6 DAO, tương ứng với 6 bảng, để tìm kiếm dữ liệu.
+        Tạo ra 6 coroutine cho 6 DAO, tương ứng với 6 bảng, để tìm metadata.
 
         \begin{minted}{kotlin}
 daos.parallelForEach
@@ -177,11 +177,11 @@ Thư viện Apache Commons Compress được chọn vì những lí do sau:
 
 \begin{itemize}
     \item
-        Viết bằng Java: tiêu chí này loại được zlib, dù là thư viện mạnh nhất
+        Viết bằng Java: Tiêu chí này loại được zlib, dù là thư viện mạnh nhất
         nhưng viết bằng C++ và có API phức tạp; hơn nữa đằng nào mọi thư viện
-        đọc tệp ZIP đều chỉ là ``vỏ'', ``lõi'' thực chất đều là zlib
+        đọc tệp ZIP đều chỉ là ``vỏ'', ``lõi'' thực chất đều là zlib.
     \item
-        Mở rộng: tiêu chí này loại được thư viện ZIP tích hợp trong Java, vì nếu
+        Mở rộng: Tiêu chí này loại được thư viện ZIP tích hợp trong Java, vì nếu
         hỗ trợ Apache Commons Compress thì sau này có thể thêm một số định dạng
         nén được thư viện này hỗ trợ.
 \end{itemize}
