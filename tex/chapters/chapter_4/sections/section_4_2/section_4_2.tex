@@ -61,8 +61,8 @@ Các biểu đồ trạng thái cũng có một số chi tiết chung:
 \end{itemize}
 
 Biểu đồ lớp thường có một phương thức chung là ``Get InputStream from ID''. Cách
-truy cập để lấy \texttt{InputStream} của ảnh từ \texttt{ComicID} có thể tham
-khảo từ Màn hình Đọc truyện.
+truy cập để lấy \texttt{InputStream} của ảnh từ \texttt{ComicID} có thể xem ở
+Màn hình Đọc truyện.
 
 
 %----------------------------------------------------------------------------------------
@@ -114,10 +114,10 @@ liệu không chính xác nhưng rất nhanh, do đó \emph{cơ sở dữ liệu
     parser}.
 
 Repository làm nhiệm vụ gọi cả hai nguồn dữ liệu trên và cập nhật cơ sở dữ liệu
-(nếu cần) thay cho View/ViewModel. Hiện tại, Repository có thể không làm được
-nhiều, tuy nhiên nó giúp ích cho \emph{khả năng mở rộng} của ứng dụng. Ví dụ,
-trong tương lai yacv có thể liên kết với một bên thứ ba cung cấp metadata cho
-truyện, khi đó để tích hợp API thì chỉ cần sửa phần Repository.
+nếu cần. Hiện tại, Repository không làm được nhiều, tuy nhiên nó tăng \emph{khả
+năng mở rộng} của ứng dụng. Ví dụ, trong tương lai yacv có thể liên kết với một
+bên thứ ba cung cấp metadata cho truyện, khi đó để tích hợp API thì chỉ cần sửa
+phần Repository.
 
 Cũng cần chú ý rằng việc đọc metadata từ tệp tin không phải là yêu cầu của mọi
 màn hình (cụ thể chỉ Màn hình Metadata cần), do đó trong đa số các ca sử dụng,
@@ -175,8 +175,8 @@ Màn hình Thư viện là một trong hai màn hình của \hyperref[sec:browsi
 dụng Duyệt truyện}, bên cạnh Màn hình Thư mục.
 
 Như đã phân tích ở \autoref{sec:scan}, Màn hình Thư viện cần hiển thị cả lỗi và
-gợi ý, bên cạnh việc hiển thị danh sách thư mục và chọn thư mục gốc. Do đó, phần
-này chia ra làm hai phần con tương ứng.
+gợi ý, bên cạnh hiển thị danh sách thư mục. Do đó, phần này chia ra làm hai phần
+con tương ứng.
 
 \subsubsection{Chọn thư mục gốc và hiển thị danh sách thư mục}
 
@@ -224,7 +224,7 @@ Tổng hợp lại, ta có biểu đồ lớp của Màn hình Thư viện như 
 \end{figure}
 
 Nhắc lại, cách truy cập để lấy \texttt{InputStream} của ảnh từ \texttt{ComicID}
-có thể tham khảo từ Màn hình Đọc truyện.
+có thể xem ở Màn hình Đọc truyện.
 
 
 %----------------------------------------------------------------------------------------
@@ -449,9 +449,9 @@ phẳng'' mảng kết quả hai chiều như trên.
 
 \subsection{Màn hình Danh sách truyện}\label{sec:list-comic-design}
 
-Màn hình này là màn hình thứ ba trong chuỗi các màn hình liên quan đến ca sử
-dụng tìm kiếm, đồng thời đóng vai trò của Màn hình Thư mục (do là phiên bản tổng
-quát hơn của nó).
+Đây là màn hình thứ ba trong chuỗi các màn hình liên quan đến ca sử dụng tìm
+kiếm, đồng thời đóng vai trò của Màn hình Thư mục (do là phiên bản tổng quát hơn
+của nó).
 
 Màn hình này nhận vào một tham số kiểu \texttt{Metadata} thay vì một
 \texttt{Query}, và trả về danh sách các \emph{tệp truyện} - \texttt{Comic} - có
@@ -459,8 +459,8 @@ liên kết với tham số đầu vào.
 
 Khi hiển thị danh sách tệp truyện, cần hiển thị từng phần tử theo tỉ lệ dọc,
 khác với tỉ lệ ngang của phần tử thư mục trong \hyperref[sec:library-design]{Màn
-hình Thư viện}. Do hiển thị theo chiều dọc, mà trang truyện cũng dọc, cần thu
-nhỏ kích cỡ phần tử bằng cách một dòng cho hiển thị 2-3 phần tử.
+hình Thư viện}. Do trang truyện cũng dọc, cần thu nhỏ kích cỡ phần tử bằng cách
+một dòng cho hiển thị 2-3 phần tử.
 
 Biểu đồ lớp của Màn hình Danh sách truyện như sau:
 

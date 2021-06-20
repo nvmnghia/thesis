@@ -145,15 +145,8 @@ lần chia trang cho các luồng, ta chọn một bộ trang tăng dần dài n
 \end{itemize}
 
 Vậy để đọc hết truyện, cần đọc 2000KB, và 4 lần tạo mới luồng nhập, khá tốt so
-với phương pháp đầu.
-
-Cũng cần nói thêm rằng thuật toán này là kiểu \emph{tham lam} (greedy), không
-phải thuật toán tối ưu nhất. Thuật toán này có hai lợi thế:
-
-\begin{itemize}
-    \item Đơn giản
-    \item Giới hạn được số luồng nhập:
-\end{itemize}
+với phương pháp đầu. Cũng cần nói thêm rằng thuật toán này là kiểu \emph{tham
+lam} (greedy), không phải thuật toán tối ưu nhất.
 
 Tới đây chỉ cần một số chỉnh sửa nhỏ: Giới hạn số luồng nhập. Trường hợp xấu
 nhất là thứ tự trong tệp ZIP ngược với thứ tự đọc, do đó có nhiều luồng mà mỗi

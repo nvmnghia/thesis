@@ -99,8 +99,8 @@ thư viện SAF đã mô tả ở \autoref{chap:fundamental}:
         SAF mà việc này trở nên khó khăn, nên cần lưu riêng trường này.
 \end{itemize}
 
-Các trường URI đều cần có ràng buộc \texttt{UNIQUE}, do mỗi URI trỏ đích danh
-đến một đối tượng.
+Các trường URI đều có ràng buộc \texttt{UNIQUE}, do mỗi URI trỏ đích danh một
+đối tượng.
 
 Ta xem xét đến các bảng nối:
 
@@ -125,9 +125,9 @@ Ta xem xét đến các bảng nối:
                 Mỗi tập truyện có thể có nhiều tác giả và ngược lại, do đó
                 \texttt{Comic} và \texttt{Author} có quan hệ Nhiều - Nhiều.
             \item
-                Chú ý rằng các tác giả có quan hệ với tập truyện chứ không phải
-                bộ truyện, vì mô hình xuất bản nhiều truyện tranh là nhà xuất
-                bản sở hữu nhân vật và thuê người viết.
+                Chú ý rằng tác giả có quan hệ với tập truyện chứ không phải bộ
+                truyện, vì có thể nhà xuất bản sở hữu nhân vật và thuê người
+                viết.
             \item
                 Đồng thời, một tác giả có thể giữ vai trò khác nhau trong các bộ
                 truyện khác nhau, do đó bảng này còn nối với bảng \texttt{Role}.
